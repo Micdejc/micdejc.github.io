@@ -1,0 +1,2244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Michael Tchuindjang | Cybersecurity & AI Security Researcher</title>
+
+    <meta name="description"
+          content="Michael Tchuindjang is a cybersecurity researcher specialising in AI security, LLM security, multi-turn jailbreaks, adversarial AI and representation engineering.">
+
+    <meta name="author" content="Michael Tchuindjang">
+
+    <meta property="og:title"
+          content="Michael Tchuindjang | Cybersecurity & AI Security Researcher">
+
+    <meta property="og:description"
+          content="Cybersecurity researcher working at the intersection of artificial intelligence, cybersecurity and LLM security.">
+
+    <meta property="og:type" content="website">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <style>
+
+        :root {
+            --bg: #f8fafc;
+            --surface: #ffffff;
+            --surface-alt: #f1f5f9;
+            --text: #0f172a;
+            --muted: #64748b;
+            --border: #e2e8f0;
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --accent: #7c3aed;
+            --nav: rgba(248, 250, 252, 0.92);
+            --shadow: 0 12px 35px rgba(15, 23, 42, 0.07);
+        }
+
+        body.dark {
+            --bg: #0b1120;
+            --surface: #111827;
+            --surface-alt: #1e293b;
+            --text: #f8fafc;
+            --muted: #94a3b8;
+            --border: #334155;
+            --primary: #60a5fa;
+            --primary-dark: #93c5fd;
+            --accent: #a78bfa;
+            --nav: rgba(11, 17, 32, 0.94);
+            --shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Inter", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            transition: background 0.25s ease, color 0.25s ease;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .container {
+            width: min(1150px, 92%);
+            margin: auto;
+        }
+
+        /* ================= NAVIGATION ================= */
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(14px);
+            background: var(--nav);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-inner {
+            min-height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 1.15rem;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 21px;
+            list-style: none;
+            font-size: 0.86rem;
+            font-weight: 500;
+        }
+
+        .nav-links a {
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .theme-toggle {
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            background: var(--surface);
+            color: var(--text);
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        /* ================= HERO ================= */
+
+        .hero {
+            min-height: calc(100vh - 70px);
+            display: flex;
+            align-items: center;
+            padding: 90px 0;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.35fr 0.65fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .eyebrow {
+            color: var(--primary);
+            font-size: 0.83rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 18px;
+        }
+
+        h1 {
+            font-size: clamp(3rem, 7vw, 5.5rem);
+            line-height: 1;
+            letter-spacing: -0.07em;
+            margin-bottom: 25px;
+        }
+
+        .gradient {
+            background: linear-gradient(
+                90deg,
+                var(--primary),
+                var(--accent)
+            );
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero-description {
+            max-width: 750px;
+            color: var(--muted);
+            font-size: 1.12rem;
+            margin-bottom: 28px;
+        }
+
+        .buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 11px 19px;
+            border-radius: 9px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--surface);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .profile-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .profile-image {
+            width: 145px;
+            height: 145px;
+            margin: 0 auto 22px;
+            display: block;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid var(--surface-alt);
+        }
+
+        .profile-fallback {
+            width: 145px;
+            height: 145px;
+            margin: 0 auto 22px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: linear-gradient(
+                135deg,
+                var(--primary),
+                var(--accent)
+            );
+            color: white;
+            font-size: 2.4rem;
+            font-weight: 800;
+        }
+
+        .profile-card h3 {
+            text-align: center;
+            margin-bottom: 4px;
+        }
+
+        .profile-card p {
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.86rem;
+        }
+
+        .socials {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 22px;
+        }
+
+        .socials a {
+            width: 38px;
+            height: 38px;
+            display: grid;
+            place-items: center;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            font-size: 0.73rem;
+            font-weight: 700;
+            transition: 0.2s;
+        }
+
+        .socials a:hover {
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        /* ================= GENERAL SECTIONS ================= */
+
+        section {
+            padding: 100px 0;
+            scroll-margin-top: 70px;
+        }
+
+        section:nth-child(even) {
+            background: var(--surface-alt);
+        }
+
+        .section-header {
+            margin-bottom: 45px;
+        }
+
+        .section-number {
+            color: var(--primary);
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+        }
+
+        h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            line-height: 1.15;
+            letter-spacing: -0.05em;
+            margin-top: 7px;
+        }
+
+        .section-intro {
+            max-width: 750px;
+            color: var(--muted);
+            margin-top: 13px;
+        }
+
+        /* ================= ABOUT ================= */
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1.35fr 0.65fr;
+            gap: 55px;
+        }
+
+        .about-text p {
+            color: var(--muted);
+            margin-bottom: 18px;
+        }
+
+        .stats {
+            display: grid;
+            gap: 13px;
+        }
+
+        .stat {
+            padding: 22px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+        }
+
+        .stat strong {
+            display: block;
+            color: var(--primary);
+            font-size: 1.45rem;
+        }
+
+        .stat span {
+            color: var(--muted);
+            font-size: 0.84rem;
+        }
+
+        /* ================= RESEARCH ================= */
+
+        .research-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .research-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 30px;
+            transition: 0.2s ease;
+        }
+
+        .research-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow);
+        }
+
+        .research-icon {
+            font-size: 1.7rem;
+            margin-bottom: 13px;
+        }
+
+        .research-card h3 {
+            margin-bottom: 9px;
+        }
+
+        .research-card p {
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        /* ================= RESEARCH STATEMENT ================= */
+
+        .research-statement {
+            max-width: 950px;
+            margin: auto;
+            text-align: center;
+        }
+
+        .research-statement blockquote {
+            font-size: clamp(1.5rem, 3vw, 2.3rem);
+            line-height: 1.4;
+            letter-spacing: -0.03em;
+            font-weight: 600;
+        }
+
+        .research-statement p {
+            max-width: 800px;
+            margin: 22px auto 0;
+            color: var(--muted);
+        }
+
+        /* ================= FLAGSHIP PROJECT ================= */
+
+        .flagship {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            padding: 42px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            box-shadow: var(--shadow);
+        }
+
+        .flagship-label {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 0.78rem;
+            letter-spacing: 0.08em;
+        }
+
+        .flagship h3 {
+            font-size: 2rem;
+            margin: 8px 0 14px;
+        }
+
+        .flagship p {
+            color: var(--muted);
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 20px 0;
+        }
+
+        .tag {
+            background: var(--surface-alt);
+            color: var(--primary);
+            padding: 5px 10px;
+            border-radius: 999px;
+            font-size: 0.73rem;
+            font-weight: 600;
+        }
+
+        .flagship-features {
+            display: grid;
+            gap: 12px;
+        }
+
+        .feature {
+            padding: 16px;
+            border: 1px solid var(--border);
+            border-radius: 11px;
+            background: var(--surface-alt);
+        }
+
+        .feature strong {
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        .feature span {
+            color: var(--muted);
+            font-size: 0.82rem;
+        }
+
+        /* ================= PUBLICATIONS ================= */
+
+        .publication {
+            padding: 0 0 30px 25px;
+            margin-bottom: 30px;
+            border-left: 3px solid var(--primary);
+        }
+
+        .publication-year {
+            color: var(--primary);
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .publication h3 {
+            margin: 6px 0 8px;
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+
+        .publication p {
+            color: var(--muted);
+            font-size: 0.88rem;
+        }
+
+        .publication-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .text-link {
+            color: var(--primary);
+            font-size: 0.82rem;
+            font-weight: 600;
+        }
+
+        /* ================= DATASETS ================= */
+
+        .dataset-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .dataset {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 28px;
+        }
+
+        .dataset h3 {
+            margin-bottom: 9px;
+        }
+
+        .dataset p {
+            color: var(--muted);
+            font-size: 0.88rem;
+            margin-bottom: 18px;
+        }
+
+        /* ================= PROJECTS ================= */
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .project {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 27px;
+        }
+
+        .project-tag {
+            display: inline-block;
+            color: var(--primary);
+            background: var(--surface-alt);
+            border-radius: 999px;
+            padding: 4px 9px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+        }
+
+        .project h3 {
+            margin-bottom: 9px;
+        }
+
+        .project p {
+            color: var(--muted);
+            font-size: 0.87rem;
+            margin-bottom: 18px;
+        }
+
+        /* ================= TIMELINE ================= */
+
+        .timeline {
+            border-left: 2px solid var(--border);
+            margin-left: 8px;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding: 0 0 38px 30px;
+        }
+
+        .timeline-item::before {
+            content: "";
+            position: absolute;
+            left: -7px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--primary);
+        }
+
+        .timeline-year {
+            color: var(--primary);
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .timeline-item h3 {
+            margin: 5px 0;
+        }
+
+        .timeline-item p {
+            color: var(--muted);
+        }
+
+        /* ================= PROFILE LINKS ================= */
+
+        .profile-links {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+        }
+
+        .profile-link {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 18px;
+            border-radius: 12px;
+            text-align: center;
+            transition: 0.2s;
+        }
+
+        .profile-link:hover {
+            transform: translateY(-3px);
+            border-color: var(--primary);
+        }
+
+        .profile-link strong {
+            display: block;
+            font-size: 0.88rem;
+        }
+
+        .profile-link span {
+            color: var(--muted);
+            font-size: 0.73rem;
+        }
+
+        /* ================= AWARDS ================= */
+
+        .awards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .award {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 24px;
+        }
+
+        .award strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .award span {
+            color: var(--muted);
+            font-size: 0.85rem;
+        }
+
+        /* ================= SERVICE ================= */
+
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .service {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 26px;
+        }
+
+        .service h3 {
+            margin-bottom: 9px;
+        }
+
+        .service p {
+            color: var(--muted);
+            font-size: 0.87rem;
+        }
+
+        /* ================= CONTACT ================= */
+
+        .contact-box {
+            text-align: center;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            padding: 60px 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .contact-box p {
+            max-width: 700px;
+            margin: 15px auto 25px;
+            color: var(--muted);
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 30px 0;
+            color: var(--muted);
+            font-size: 0.8rem;
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 900px) {
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero-grid,
+            .about-grid,
+            .flagship {
+                grid-template-columns: 1fr;
+            }
+
+            .research-grid,
+            .dataset-grid,
+            .awards {
+                grid-template-columns: 1fr;
+            }
+
+            .project-grid,
+            .service-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-links {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .hero {
+                padding: 70px 0;
+            }
+
+            section {
+                padding: 75px 0;
+            }
+        }
+
+        @media (max-width: 500px) {
+
+            .profile-links {
+                grid-template-columns: 1fr;
+            }
+
+            .flagship {
+                padding: 25px;
+            }
+
+            h1 {
+                font-size: 3rem;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     NAVIGATION
+========================================================= -->
+
+<nav>
+
+    <div class="container nav-inner">
+
+        <a href="#home" class="logo">
+            Michael<span>.</span>
+        </a>
+
+        <ul class="nav-links">
+
+            <li><a href="#about">About</a></li>
+            <li><a href="#research">Research</a></li>
+            <li><a href="#publications">Publications</a></li>
+            <li><a href="#datasets">Datasets</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#contact">Contact</a></li>
+
+        </ul>
+
+        <button class="theme-toggle"
+                id="themeToggle"
+                aria-label="Toggle dark mode">
+            ☾
+        </button>
+
+    </div>
+
+</nav>
+
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+
+<header class="hero" id="home">
+
+    <div class="container hero-grid">
+
+        <div>
+
+            <div class="eyebrow">
+                Cybersecurity · Artificial Intelligence · Research
+            </div>
+
+            <h1>
+                Michael<br>
+                <span class="gradient">Tchuindjang</span>
+            </h1>
+
+            <p class="hero-description">
+
+                Cybersecurity researcher working at the intersection of
+                <strong>AI security, LLM security, adversarial AI and
+                cybersecurity</strong>.
+
+            </p>
+
+            <p class="hero-description">
+
+                My research explores how adversarial interactions can
+                manipulate AI systems and how we can build more reliable,
+                interpretable and scalable defences.
+
+            </p>
+
+            <div class="buttons">
+
+                <a href="#research"
+                   class="btn btn-primary">
+                    Explore my research
+                </a>
+
+                <a href="CV.pdf"
+                   class="btn btn-secondary">
+                    Download CV
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <aside class="profile-card">
+
+            <!--
+                OPTION 1:
+                Replace this fallback with:
+
+                <img src="assets/profile.jpg"
+                     alt="Michael Tchuindjang"
+                     class="profile-image">
+            -->
+
+            <div class="profile-fallback">
+                MT
+            </div>
+
+            <h3>
+                Cybersecurity Researcher
+            </h3>
+
+            <p>
+                AI Security · LLM Security · Cybersecurity
+            </p>
+
+            <div class="socials">
+
+                <a href="https://github.com/YOUR-GITHUB-USERNAME"
+                   target="_blank">
+                    GH
+                </a>
+
+                <a href="https://www.linkedin.com/in/YOUR-LINKEDIN/"
+                   target="_blank">
+                    IN
+                </a>
+
+                <a href="https://scholar.google.com/citations?user=YOUR-ID"
+                   target="_blank">
+                    GS
+                </a>
+
+                <a href="https://orcid.org/YOUR-ORCID"
+                   target="_blank">
+                    OR
+                </a>
+
+                <a href="mailto:YOUR-EMAIL@example.com">
+                    @
+                </a>
+
+            </div>
+
+        </aside>
+
+    </div>
+
+</header>
+
+
+<!-- =========================================================
+     ABOUT
+========================================================= -->
+
+<section id="about">
+
+    <div class="container">
+
+        <div class="section-header">
+
+            <span class="section-number">
+                01 / ABOUT
+            </span>
+
+            <h2>
+                Researcher. Educator. Cybersecurity practitioner.
+            </h2>
+
+            <p class="section-intro">
+                My work focuses on making increasingly capable AI systems
+                more secure, reliable and resilient against adversarial
+                behaviour.
+            </p>
+
+        </div>
+
+
+        <div class="about-grid">
+
+            <div class="about-text">
+
+                <p>
+                    I am a cybersecurity researcher specialising in
+                    <strong>AI security and Large Language Model security</strong>,
+                    with particular interests in jailbreak attacks,
+                    adversarial AI, safety evaluation and defensive
+                    mechanisms.
+                </p>
+
+                <p>
+                    My research investigates how attackers manipulate
+                    language models through linguistic reformulation,
+                    conversation history and multi-turn interactions,
+                    and how these behaviours can be detected and mitigated.
+                </p>
+
+                <p>
+                    I am particularly interested in the intersection of
+                    <strong>cybersecurity, artificial intelligence,
+                    machine learning and human judgement</strong>.
+                </p>
+
+            </div>
+
+
+            <div class="stats">
+
+                <div class="stat">
+                    <strong>AI Security</strong>
+                    <span>
+                        Primary research area
+                    </span>
+                </div>
+
+                <div class="stat">
+                    <strong>LLM Security</strong>
+                    <span>
+                        Jailbreaks and defensive AI
+                    </span>
+                </div>
+
+                <div class="stat">
+                    <strong>Open Research</strong>
+                    <span>
+                        Code, datasets and reproducible research
+                    </span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     RESEARCH STATEMENT
+========================================================= -->
+
+<section>
+
+    <div class="container">
+
+        <div class="research-statement">
+
+            <span class="section-number">
+                RESEARCH QUESTION
+            </span>
+
+            <blockquote>
+
+                "How can we make increasingly capable AI systems
+                more difficult to manipulate and more reliable
+                to evaluate?"
+
+            </blockquote>
+
+            <p>
+
+                My research addresses this question through the study
+                of adversarial interactions, multi-turn jailbreaks,
+                semantic representations and practical AI defence
+                mechanisms.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     RESEARCH
+========================================================= -->
+
+<section id="research">
+
+    <div class="container">
+
+        <div class="section-header">
+
+            <span class="section-number">
+                02 / RESEARCH
+            </span>
+
+            <h2>
+                Research interests
+            </h2>
+
+            <p class="section-intro">
+                My research spans several connected areas of
+                cybersecurity and artificial intelligence.
+            </p>
+
+        </div>
+
+
+        <div class="research-grid">
+
+            <article class="research-card">
+
+                <div class="research-icon">
+                    🧠
+                </div>
+
+                <h3>
+                    LLM Security
+                </h3>
+
+                <p>
+                    Security, robustness and reliability of large
+                    language models operating in adversarial
+                    environments.
+                </p>
+
+            </article>
+
+
+            <article class="research-card">
+
+                <div class="research-icon">
+                    🛡️
+                </div>
+
+                <h3>
+                    Multi-turn Jailbreaks
+                </h3>
+
+                <p>
+                    Understanding how harmful intent can emerge through
+                    conversation history, linguistic reformulation and
+                    gradual escalation.
+                </p>
+
+            </article>
+
+
+            <article class="research-card">
+
+                <div class="research-icon">
+                    📐
+                </div>
+
+                <h3>
+                    Representation Engineering
+                </h3>
+
+                <p>
+                    Exploring semantic and internal representations as
+                    mechanisms for understanding and defending AI systems.
+                </p>
+
+            </article>
+
+
+            <article class="research-card">
+
+                <div class="research-icon">
+                    🔬
+                </div>
+
+                <h3>
+                    AI Evaluation
+                </h3>
+
+                <p>
+                    Human-machine agreement, semantic evaluation and
+                    reliable safety assessment of AI systems.
+                </p>
+
+            </article>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     FLAGSHIP PROJECT
+========================================================= -->
+
+<section id="refusalguard">
+
+    <div class="container">
+
+        <div class="section-header">
+
+            <span class="section-number">
+                FLAGSHIP RESEARCH
+            </span>
+
+            <h2>
+                RefusalGuard-M
+            </h2>
+
+        </div>
+
+
+        <div class="flagship">
+
+            <div>
+
+                <span class="flagship-label">
+                    OPEN-SOURCE AI SECURITY RESEARCH
+                </span>
+
+                <h3>
+                    Semantic evaluation of LLM jailbreaks
+                </h3>
+
+                <p>
+
+                    RefusalGuard-M is an open-source semantic evaluation
+                    framework for assessing LLM jailbreak interactions.
+                    It constructs a semantic refusal manifold from
+                    human-validated refusal responses and uses
+                    embedding-based geometric representations to identify
+                    deviations from expected refusal behaviour.
+
+                </p>
+
+
+                <div class="tags">
+
+                    <span class="tag">
+                        LLM Security
+                    </span>
+
+                    <span class="tag">
+                        Jailbreak Evaluation
+                    </span>
+
+                    <span class="tag">
+                        Semantic Representations
+                    </span>
+
+                    <span class="tag">
+                        Human-Aligned Evaluation
+                    </span>
+
+                    <span class="tag">
+                        Cybersecurity
+                    </span>
+
+                </div>
+
+
+                <div class="buttons">
+
+                    <a href="https://github.com/YOUR-GITHUB-USERNAME/refusalguard-m"
+                       target="_blank"
+                       class="btn btn-primary">
+                        GitHub →
+                    </a>
+
+                    <a href="https://huggingface.co/datasets/YOUR-DATASET"
+                       target="_blank"
+                       class="btn btn-secondary">
+                        Hugging Face →
+                    </a>
+
+                    <a href="YOUR-PAPER-LINK"
+                       target="_blank"
+                       class="btn btn-secondary">
+                        Paper →
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <div class="flagship-features">
+
+                <div class="feature">
+
+                    <strong>
+                        Human-validated refusal representations
+                    </strong>
+
+                    <span>
+                        Builds the reference space from validated
+                        refusal responses.
+                    </span>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <strong>
+                        Multi-turn jailbreak evaluation
+                    </strong>
+
+                    <span>
+                        Designed to evaluate adversarial conversations,
+                        not only isolated prompts.
+                    </span>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <strong>
+                        Lightweight evaluation
+                    </strong>
+
+                    <span>
+                        Provides an alternative to relying exclusively
+                        on LLM-based judges.
+                    </span>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <strong>
+                        Reproducible research
+                    </strong>
+
+                    <span>
+                        Open-source implementation and research datasets.
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     PUBLICATIONS
+========================================================= -->
+
+<section id="publications">
+
+    <div class="container">
+
+        <div class="section-header">
+
+            <span class="section-number">
+                03 / PUBLICATIONS
+            </span>
+
+            <h2>
+                Selected publications
+            </h2>
+
+            <p class="section-intro">
+                Research contributions across AI security,
+                cybersecurity and adversarial machine learning.
+            </p>
+
+        </div>
+
+
+        <article class="publication">
+
+            <span class="publication-year">
+                2026
+            </span>
+
+            <h3>
+                RefusalGuard-M: A semantic evaluation framework
+                for LLM jailbreak interactions
+            </h3>
+
+            <p>
+                Michael Tchuindjang et al.
+                <em>Cybersecurity</em>, Springer Nature.
+            </p>
+
+            <div class="publication-links">
+
+                <a href="YOUR-PAPER-LINK"
+                   target="_blank"
+                   class="text-link">
+                    Paper →
+                </a>
+
+                <a href="https://github.com/YOUR-GITHUB-USERNAME/refusalguard-m"
+                   target="_blank"
+                   class="text-link">
+                    Code →
+                </a>
+
+                <a href="https://huggingface.co/datasets/YOUR-DATASET"
+                   target="_blank"
+                   class="text-link">
+                    Dataset →
+                </a>
+
+            </div>
+
+        </article>
+
+
+        <article class="publication">
+
+            <span class="publication-year">
+                2026
+            </span>
+
+            <h3>
+                Your IEEE / conference publication title
+            </h3>
+
+            <p>
+                Add the final publication title, authors and
+                conference details here.
+            </p>
+
+            <div class="publication-links">
+
+                <a href="YOUR-DOI-LINK"
+                   target="_blank"
+                   class="text-link">
+                    DOI →
+                </a>
+
+                <a href="YOUR-PAPER-LINK"
+                   target="_blank"
+                   class="text-link">
+                    Paper →
+                </a>
+
+            </div>
+
+        </article>
+
+
+        <article class="publication">
+
+            <span class="publication-year">
+                2025
+            </span>
+
+            <h3>
+                Your UKCI publication
+            </h3>
+
+            <p>
+                Add your final paper title, authors and publication
+                information.
+            </p>
+
+            <div class="publication-links">
+
+                <a href="YOUR-PAPER-LINK"
+                   target="_blank"
+                   class="text-link">
+                    Paper →
+                </a>
+
+            </div>
+
+        </article>
+
+
+        <div style="margin-top:30px;">
+
+            <a href="https://scholar.google.com/citations?user=YOUR-ID"
+               target="_blank"
+               class="btn btn-secondary">
+                View all publications on Google Scholar →
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     DATASETS
+========================================================= -->
+
+<section id="datasets">
+
+    <div class="container">
+
+        <div class="section-header">
+
+            <span class="section-number">
+                04 / DATASETS
+            </span>
+
+            <h2>
+                Open research datasets
+            </h2>
+
+            <p class="section-intro">
+                Research datasets supporting reproducible experimentation
+                in LLM safety and jailbreak evaluation.
+            </p>
+
+        </div>
+
+
+        <div class="dataset-grid">
+
+
+            <article class="dataset">
+
+                <h3>
+                    Refusal Reference Set
+                </h3>
+
+                <p>
+
+                    Human-validated refusal responses used to construct
+                    the semantic refusal reference space for
+                    RefusalGuard-M.
+
+                </p>
+
+                <a href="https://huggingface.co/datasets/YOUR-REFUSAL-DATASET"
+                   target="_blank"
+                   class="btn btn-primary">
+                    View on Hugging Face →
+                </a>
+
+            </article>
+
+
+            <article class="dataset">
+
+                <h3>
+                    Experiments Results
+                </h3>
+
+                <p>
+
+                    Experimental evaluation results containing
+                    model outputs, automated judge results,
+                    human annotations and RefusalGuard-M evaluation data.
+
+                </p>
+
+                <a href="https://huggingface.co/datasets/YOUR-EXPERIMENT-DATASET"
+                   target="_blank"
+                   class="btn btn-primary">
+                    View on Hugging Face →
+                </a>
+
+            </article>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     OPEN SOURCE PROJECTS
+========================================================= -->
+
+<section id="projects">
+
+    <div class="container">
+
+        <div class="section-header">
+
+            <span class="section-number">
+                05 / PROJECTS
+            </span>
+
+            <h2>
+                Research & open-source projects
+            </h2>
+
+        </div>
+
+
+        <div class="project-grid">
+
+
+            <article class="project">
+
+                <span class="project-tag">
+                    AI SECURITY
+                </span>
+
+                <h3>
+                    RefusalGuard-M
+                </h3>
+
+                <p>
+
+                    Semantic evaluation framework for assessing
+                    multi-turn LLM jailbreak interactions.
+
+                </p>
+
+                <a href="https://github.com/YOUR-GITHUB-USERNAME/refusalguard-m"
+                   target="_blank"
+                   class="text-link">
+                    GitHub →
+                </a>
+
+            </article>
+
+
+            <article class="project">
+
+                <span class="project-tag">
+                    COMPUTER VISION
+                </span>
+
+                <h3>
+                    CutCAPTCHA Solver
+                </h3>
+
+                <p>
+
+                    Lightweight automated solver for CutCAPTCHA
+                    challenges using Canny edge detection and
+                    template matching without machine learning.
+
+                </p>
+
+                <a href="https://github.com/YOUR-GITHUB-USERNAME"
+                   target="_blank"
+                   class="text-link">
+                    GitHub →
+                </a>
+
+            </article>
+
+
+            <article class="project">
+
+                <span class="project-tag">
+                    RESEARCH
+                </span>
+
+                <h3>
+                    LLM Security Research
+                </h3>
+
+                <p>
+
+                    Research prototypes exploring multi-turn jailbreaks,
+                    adversarial prompting and defensive mechanisms
+                    for large language models.
+
+                </p>
+
+                <a href="https://github.com/YOUR-GITHUB-USERNAME"
+                   target="_blank"
+                   class="text-link">
+                    View projects →
+                </a>
+
+            </article>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     ACADEMIC PROFILES
+========================================================= -->
+
+<section>
+
+    <div class="container">
+
+        <div class="section-header">
+
+            <span class="section-number">
+                RESEARCH PROFILES
+            </span>
+
+            <h2>
+                Find my research online
+            </h2>
+
+        </div>
+
+
+        <div class="profile-links">
+
+
+            <a href="https://scholar.google.com/citations?user=YOUR-ID"
+               target="_blank"
+               class="profile-link">
+
+                <strong>
+                    Google Scholar
+                </strong>
+
+                <span>
+                    Publications & citations
+                </span>
+
+            </a>
+
+
+            <a href="https://orcid.org/YOUR-ORCID"
+               target="_blank"
+               class="profile-link">
+
+                <strong>
+                    ORCID
+                </strong>
+
+                <span>
+                    Research identity
+                </span>
+
+            </a>
+
+
+            <a href="https://github.com/YOUR-GITHUB-USERNAME"
+               target="_blank"
+               class="profile-link">
+
+                <strong>
+                    GitHub
+                </strong>
+
+                <span>
+                    Code & projects
+                </span>
+
+            </a>
+
+
+            <a href="https://huggingface.co/YOUR-HUGGINGFACE"
+               target="_blank"
+               class="profile-link">
+
+                <strong>
+                    Hugging Face
+                </strong>
+
+                <span>
+                    Datasets & models
+                </span>
+
+            </a>
+
+
+            <a href="https://www.linkedin.com/in/YOUR-LINKEDIN/"
+               target="_blank"
+               class="profile-link">
+
+                <strong>
+                    LinkedIn
+                </strong>
+
+                <span>
+                    Professional profile
+                </span>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     EXPERIENCE / TIMELINE
+========================================================= -->
+
+<section id="experience">
+
+    <div class="container">
+
+        <div class="section-header">
+
+            <span class="section-number">
+                06 / JOURNEY
+            </span>
+
+            <h2>
+                Academic & professional journey
+            </h2>
+
+        </div>
+
+
+        <div class="timeline">
+
+
+            <div class="timeline-item">
+
+                <span class="timeline-year">
+                    2026
+                </span>
+
+                <h3>
+                    Cybersecurity Research & Professional Service
+                </h3>
+
+                <p>
+
+                    Research publications, academic reviewing,
+                    cybersecurity professional assessment,
+                    expert knowledge sharing and conference activity.
+
+                </p>
+
+            </div>
+
+
+            <div class="timeline-item">
+
+                <span class="timeline-year">
+                    2025
+                </span>
+
+                <h3>
+                    AI Security Research
+                </h3>
+
+                <p>
+
+                    Development and evaluation of defensive approaches
+                    for multi-turn LLM jailbreaks and adversarial AI.
+
+                </p>
+
+            </div>
+
+
+            <div class="timeline-item">
+
+                <span class="timeline-year">
+                    2024 – Present
+                </span>
+
+                <h3>
+                    PhD Researcher
+                </h3>
+
+                <p>
+
+                    Researching LLM security, multi-turn jailbreak
+                    attacks and defensive mechanisms using representation
+                    engineering and semantic approaches.
+
+                </p>
+
+            </div>
+
+
+            <div class="timeline-item">
+
+                <span class="timeline-year">
+                    2021
+                </span>
+
+                <h3>
+                    MSc Cybersecurity
+                </h3>
+
+                <p>
+                    University of the West of England, Bristol.
+                </p>
+
+            </div>
+
+
+            <div class="timeline-item">
+
+                <span class="timeline-year">
+                    Earlier
+                </span>
+
+                <h3>
+                    Software Engineering & Cybersecurity
+                </h3>
+
+                <p>
+
+                    Software development, cybersecurity consulting,
+                    IT management and technology education.
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     AWARDS
+========================================================= -->
+
+<section id="achievements">
+
+    <div class="container">
+
+        <div class="section-header">
+
+            <span class="section-number">
+                07 / RECOGNITION
+            </span>
+
+            <h2>
+                Awards & recognition
+            </h2>
+
+        </div>
+
+
+        <div class="awards">
+
+
+            <div class="award">
+
+                <strong>
+                    Best Paper Award – UKCI 2025
+                </strong>
+
+                <span>
+                    Recognition for research contribution in
+                    cybersecurity and artificial intelligence.
+                </span>
+
+            </div>
+
+
+            <div class="award">
+
+                <strong>
+                    Thinkers360 – Top 50 Cybersecurity Thought Leaders
+                </strong>
+
+                <span>
+                    Recognition for contribution to cybersecurity
+                    thought leadership.
+                </span>
+
+            </div>
+
+
+            <div class="award">
+
+                <strong>
+                    UK Cyber Security Council
+                </strong>
+
+                <span>
+                    Contribution to cybersecurity professional
+                    assessment and expert knowledge sharing.
+                </span>
+
+            </div>
+
+
+            <div class="award">
+
+                <strong>
+                    Academic Research & Publications
+                </strong>
+
+                <span>
+                    Contributions through peer-reviewed publications,
+                    conferences and open research.
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     TEACHING & PROFESSIONAL SERVICE
+========================================================= -->
+
+<section id="service">
+
+    <div class="container">
+
+        <div class="section-header">
+
+            <span class="section-number">
+                08 / SERVICE
+            </span>
+
+            <h2>
+                Teaching, mentoring & professional service
+            </h2>
+
+        </div>
+
+
+        <div class="service-grid">
+
+
+            <article class="service">
+
+                <h3>
+                    Teaching
+                </h3>
+
+                <p>
+
+                    Teaching and academic support across cybersecurity,
+                    software engineering and emerging AI security topics.
+
+                </p>
+
+            </article>
+
+
+            <article class="service">
+
+                <h3>
+                    Mentoring
+                </h3>
+
+                <p>
+
+                    Mentoring students and professionals in cybersecurity,
+                    technology and career development.
+
+                </p>
+
+            </article>
+
+
+            <article class="service">
+
+                <h3>
+                    Academic Reviewing
+                </h3>
+
+                <p>
+
+                    Peer reviewing research contributions in cybersecurity,
+                    artificial intelligence and related areas.
+
+                </p>
+
+            </article>
+
+
+            <article class="service">
+
+                <h3>
+                    Cybersecurity Assessment
+                </h3>
+
+                <p>
+
+                    Supporting professional cybersecurity assessment
+                    activities and knowledge development.
+
+                </p>
+
+            </article>
+
+
+            <article class="service">
+
+                <h3>
+                    Expert Knowledge Sharing
+                </h3>
+
+                <p>
+
+                    Writing and communicating cybersecurity research,
+                    emerging threats and AI security topics.
+
+                </p>
+
+            </article>
+
+
+            <article class="service">
+
+                <h3>
+                    Public Engagement
+                </h3>
+
+                <p>
+
+                    Sharing accessible perspectives on cybersecurity,
+                    artificial intelligence and responsible technology.
+
+                </p>
+
+            </article>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     CV / CONTACT
+========================================================= -->
+
+<section id="contact">
+
+    <div class="container">
+
+        <div class="contact-box">
+
+            <span class="section-number">
+                09 / CONTACT
+            </span>
+
+            <h2>
+                Let's connect
+            </h2>
+
+            <p>
+
+                I am interested in research collaborations, academic
+                discussions, cybersecurity, AI security and opportunities
+                to contribute to the development of safer and more
+                reliable AI systems.
+
+            </p>
+
+
+            <div class="buttons"
+                 style="justify-content:center;">
+
+                <a href="mailto:YOUR-EMAIL@example.com"
+                   class="btn btn-primary">
+                    Email me
+                </a>
+
+                <a href="CV.pdf"
+                   class="btn btn-secondary">
+                    Download CV
+                </a>
+
+                <a href="https://www.linkedin.com/in/YOUR-LINKEDIN/"
+                   target="_blank"
+                   class="btn btn-secondary">
+                    LinkedIn
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer>
+
+    <div class="container footer-inner">
+
+        <span>
+            © <span id="year"></span> Michael Tchuindjang
+        </span>
+
+        <span>
+            AI Security · Cybersecurity · Research
+        </span>
+
+    </div>
+
+</footer>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script>
+
+    const toggle = document.getElementById("themeToggle");
+
+    toggle.addEventListener("click", function () {
+
+        document.body.classList.toggle("dark");
+
+        if (document.body.classList.contains("dark")) {
+
+            toggle.textContent = "☀";
+            localStorage.setItem("theme", "dark");
+
+        } else {
+
+            toggle.textContent = "☾";
+            localStorage.setItem("theme", "light");
+
+        }
+
+    });
+
+
+    const savedTheme = localStorage.getItem("theme");
+
+    if (savedTheme === "dark") {
+
+        document.body.classList.add("dark");
+        toggle.textContent = "☀";
+
+    }
+
+
+    document.getElementById("year").textContent =
+        new Date().getFullYear();
+
+</script>
+
+
+</body>
+</html>
