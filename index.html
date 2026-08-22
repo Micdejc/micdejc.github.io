@@ -609,6 +609,38 @@
         
         }
 
+        /* ================= NEWS LOAD MORE ================= */
+
+        .news-card.hidden-news {
+            display: none;
+        }
+        
+        .news-pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 35px;
+        }
+        
+        .load-more-btn {
+            padding: 11px 20px;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            background: var(--surface);
+            color: var(--text);
+            font-family: inherit;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .load-more-btn:hover {
+            color: var(--primary);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
         /* ================= DATASETS ================= */
 
         .dataset-grid {
@@ -1595,8 +1627,40 @@
 
         <div class="news-grid">
 
-
             <!-- NEWS ITEM 1 -->
+
+            <article class="news-card">
+
+                <img src="assets/news/refusalguard-m-publication.jpg"
+                     alt="Research publication">
+
+                <div class="news-content">
+
+                    <span class="news-date">
+                        August 2026 · Publication
+                    </span>
+
+                    <h3>
+                        RefusalGuard-M published in Cybersecurity
+                    </h3>
+
+                    <p>
+                        Excited to share the publication of our research
+                        introducing RefusalGuard-M, an open-source framework
+                        for semantic evaluation of LLM jailbreaks.
+                    </p>
+
+                    <a href="YOUR-PAPER-LINK"
+                       target="_blank"
+                       class="text-link">
+                        Read the paper →
+                    </a>
+
+                </div>
+
+            </article>
+
+            <!-- NEWS ITEM 2 -->
 
             <article class="news-card">
 
@@ -1629,41 +1693,6 @@
                 </div>
 
             </article>
-
-
-            <!-- NEWS ITEM 2 -->
-
-            <article class="news-card">
-
-                <img src="assets/news/refusalguard-m-publication.jpg"
-                     alt="Research publication">
-
-                <div class="news-content">
-
-                    <span class="news-date">
-                        July 2026 · Publication
-                    </span>
-
-                    <h3>
-                        RefusalGuard-M published in Cybersecurity
-                    </h3>
-
-                    <p>
-                        Excited to share the publication of our research
-                        introducing RefusalGuard-M, an open-source framework
-                        for semantic evaluation of LLM jailbreaks.
-                    </p>
-
-                    <a href="YOUR-PAPER-LINK"
-                       target="_blank"
-                       class="text-link">
-                        Read the paper →
-                    </a>
-
-                </div>
-
-            </article>
-
 
             <!-- NEWS ITEM 3 -->
 
@@ -1699,6 +1728,15 @@
             </article>
 
 
+        </div>
+
+        <div class="news-pagination">
+
+            <button id="loadMoreNews"
+                    class="load-more-btn">
+                Load more news →
+            </button>
+        
         </div>
 
     </div>
@@ -2459,6 +2497,44 @@
 
     document.getElementById("year").textContent =
         new Date().getFullYear();
+
+    /* ================= NEWS LOAD MORE ================= */
+
+    const newsCards = document.querySelectorAll(".news-card");
+    const loadMoreButton = document.getElementById("loadMoreNews");
+    
+    const initialNews = 3;
+    const newsPerClick = 3;
+    
+    let visibleNews = initialNews;
+    
+    function updateNews() {
+    
+        newsCards.forEach((card, index) => {
+    
+            if (index < visibleNews) {
+                card.classList.remove("hidden-news");
+            } else {
+                card.classList.add("hidden-news");
+            }
+    
+        });
+    
+        if (visibleNews >= newsCards.length) {
+            loadMoreButton.style.display = "none";
+        }
+    
+    }
+    
+    loadMoreButton.addEventListener("click", function () {
+    
+        visibleNews += newsPerClick;
+    
+        updateNews();
+    
+    });
+    
+    updateNews();
 
 </script>
 
