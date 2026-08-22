@@ -549,6 +549,65 @@
             font-weight: 600;
         }
 
+        /* ================= NEWS ================= */
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+        
+        .news-card {
+            overflow: hidden;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            transition: 0.25s ease;
+        }
+        
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+        
+        .news-card img {
+            width: 100%;
+            height: 210px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .news-content {
+            padding: 24px;
+        }
+        
+        .news-date {
+            color: var(--primary);
+            font-size: 0.74rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .news-content h3 {
+            margin: 9px 0 10px;
+            line-height: 1.4;
+        }
+        
+        .news-content p {
+            color: var(--muted);
+            font-size: 0.86rem;
+            margin-bottom: 16px;
+        }
+        
+        @media (max-width: 900px) {
+        
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+        
+        }
+
         /* ================= DATASETS ================= */
 
         .dataset-grid {
@@ -839,6 +898,7 @@
             <li><a href="#about">About</a></li>
             <li><a href="#research">Research</a></li>
             <li><a href="#publications">Publications</a></li>
+            <li><a href="#news">News</a></li>
             <li><a href="#datasets">Datasets</a></li>
             <li><a href="#projects">Projects</a></li>
             <li><a href="#experience">Experience</a></li>
@@ -1494,6 +1554,145 @@
                class="btn btn-secondary">
                 View all publications on Google Scholar →
             </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     NEWS
+========================================================= -->
+
+<section id="news">
+
+    <div class="container">
+
+        <div class="section-header">
+
+            <span class="section-number">
+                04 / NEWS
+            </span>
+
+            <h2>
+                Latest news & activities
+            </h2>
+
+            <p class="section-intro">
+                Conferences, research milestones, awards, talks and
+                other activities from my academic and professional journey.
+            </p>
+
+        </div>
+
+
+        <div class="news-grid">
+
+
+            <!-- NEWS ITEM 1 -->
+
+            <article class="news-card">
+
+                <img src="assets/news/ieee-csr-2026.jpg"
+                     alt="IEEE Cyber Security and Resilience Conference 2026">
+
+                <div class="news-content">
+
+                    <span class="news-date">
+                        August 2026 · Conference
+                    </span>
+
+                    <h3>
+                        Attending IEEE Cyber Security and Resilience 2026
+                    </h3>
+
+                    <p>
+                        Glad to have attended IEEE CSR 2026 in Lisbon,
+                        bringing together researchers and professionals
+                        working on cybersecurity, resilience and emerging
+                        technologies.
+                    </p>
+
+                    <a href="YOUR-LINK"
+                       target="_blank"
+                       class="text-link">
+                        Read more →
+                    </a>
+
+                </div>
+
+            </article>
+
+
+            <!-- NEWS ITEM 2 -->
+
+            <article class="news-card">
+
+                <img src="assets/news/paper-publication.jpg"
+                     alt="Research publication">
+
+                <div class="news-content">
+
+                    <span class="news-date">
+                        July 2026 · Publication
+                    </span>
+
+                    <h3>
+                        RefusalGuard-M published in Cybersecurity
+                    </h3>
+
+                    <p>
+                        Excited to share the publication of our research
+                        introducing RefusalGuard-M, an open-source framework
+                        for semantic evaluation of LLM jailbreaks.
+                    </p>
+
+                    <a href="YOUR-PAPER-LINK"
+                       target="_blank"
+                       class="text-link">
+                        Read the paper →
+                    </a>
+
+                </div>
+
+            </article>
+
+
+            <!-- NEWS ITEM 3 -->
+
+            <article class="news-card">
+
+                <img src="assets/news/award.jpg"
+                     alt="Research award">
+
+                <div class="news-content">
+
+                    <span class="news-date">
+                        2025 · Award
+                    </span>
+
+                    <h3>
+                        Best Paper Award at UKCI 2025
+                    </h3>
+
+                    <p>
+                        Honoured to receive the Best Paper Award at UKCI
+                        2025 for our contribution to cybersecurity and
+                        artificial intelligence research.
+                    </p>
+
+                    <a href="YOUR-LINK"
+                       target="_blank"
+                       class="text-link">
+                        Read more →
+                    </a>
+
+                </div>
+
+            </article>
+
 
         </div>
 
