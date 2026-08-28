@@ -894,6 +894,159 @@
 
         }
 
+
+        /* ================= LINUX TERMINAL MODE ================= */
+
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .terminal-toggle {
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            background: var(--surface);
+            color: var(--text);
+            cursor: pointer;
+            font-size: 0.78rem;
+            font-weight: 800;
+            font-family: monospace;
+            transition: all 0.2s ease;
+        }
+        
+        .terminal-toggle:hover {
+            color: #22c55e;
+            border-color: #22c55e;
+            transform: translateY(-2px);
+        }
+        
+        
+        /* Terminal appearance */
+        
+        body.terminal-mode {
+            background: #0a0e0a;
+            color: #d1ffd1;
+            font-family: "Courier New", Courier, monospace;
+        }
+        
+        body.terminal-mode nav {
+            background: rgba(10, 14, 10, 0.96);
+            border-bottom: 1px solid #1f6f1f;
+        }
+        
+        body.terminal-mode .logo,
+        body.terminal-mode h1,
+        body.terminal-mode h2,
+        body.terminal-mode h3,
+        body.terminal-mode strong {
+            color: #39ff14;
+        }
+        
+        body.terminal-mode .gradient {
+            background: none;
+            color: #39ff14;
+            -webkit-text-fill-color: #39ff14;
+        }
+        
+        body.terminal-mode .eyebrow,
+        body.terminal-mode .section-number,
+        body.terminal-mode .news-date,
+        body.terminal-mode .publication-year,
+        body.terminal-mode .timeline-year,
+        body.terminal-mode .text-link {
+            color: #39ff14;
+        }
+        
+        body.terminal-mode p,
+        body.terminal-mode span,
+        body.terminal-mode .section-intro,
+        body.terminal-mode .hero-description,
+        body.terminal-mode .about-text p,
+        body.terminal-mode .research-card p,
+        body.terminal-mode .publication p,
+        body.terminal-mode .news-content p,
+        body.terminal-mode .project p,
+        body.terminal-mode .timeline-item p,
+        body.terminal-mode .service p {
+            color: #b7d8b7;
+        }
+        
+        body.terminal-mode section:nth-child(even) {
+            background: #0d130d;
+        }
+        
+        body.terminal-mode .profile-card,
+        body.terminal-mode .research-card,
+        body.terminal-mode .flagship,
+        body.terminal-mode .publication,
+        body.terminal-mode .news-card,
+        body.terminal-mode .project,
+        body.terminal-mode .profile-link,
+        body.terminal-mode .award,
+        body.terminal-mode .service,
+        body.terminal-mode .stat,
+        body.terminal-mode .dataset,
+        body.terminal-mode .feature,
+        body.terminal-mode .contact-box {
+            background: #0b110b;
+            border-color: #1f6f1f;
+            box-shadow: 0 0 20px rgba(57, 255, 20, 0.05);
+        }
+        
+        body.terminal-mode .tag,
+        body.terminal-mode .project-tag {
+            background: #102010;
+            color: #39ff14;
+            border: 1px solid #1f6f1f;
+        }
+        
+        body.terminal-mode .btn-primary {
+            background: #1a7f1a;
+            color: #fff;
+        }
+        
+        body.terminal-mode .btn-secondary {
+            background: #0b110b;
+            color: #39ff14;
+            border-color: #1f6f1f;
+        }
+        
+        body.terminal-mode .timeline {
+            border-color: #1f6f1f;
+        }
+        
+        body.terminal-mode .timeline-item::before {
+            background: #39ff14;
+        }
+        
+        body.terminal-mode footer {
+            border-color: #1f6f1f;
+        }
+        
+        body.terminal-mode a:hover {
+            color: #39ff14;
+        }
+        
+        
+        /* Terminal prompt effect */
+        
+        body.terminal-mode .hero-description:first-of-type::before {
+            content: "$ ";
+            color: #39ff14;
+        }
+        
+        body.terminal-mode .section-header h2::before {
+            content: "root@Michael:~$ ";
+            color: #39ff14;
+            font-size: 0.42em;
+            letter-spacing: 0;
+            display: block;
+            margin-bottom: 8px;
+        }
+
     </style>
 </head>
 
@@ -930,6 +1083,13 @@
                 id="themeToggle"
                 aria-label="Toggle dark mode">
             ☾
+        </button>
+
+        <button class="terminal-toggle"
+            id="terminalToggle"
+            aria-label="Toggle Linux terminal mode"
+            title="Linux terminal mode">
+        >_
         </button>
 
     </div>
@@ -2823,6 +2983,43 @@
     });
     
     updateNews();
+
+
+    /* ================= LINUX TERMINAL MODE ================= */
+
+    const terminalToggle = document.getElementById("terminalToggle");
+    
+    terminalToggle.addEventListener("click", function () {
+    
+        document.body.classList.toggle("terminal-mode");
+    
+        if (document.body.classList.contains("terminal-mode")) {
+    
+            terminalToggle.textContent = "$_";
+            terminalToggle.title = "Exit Linux terminal mode";
+    
+            localStorage.setItem("terminalMode", "on");
+    
+        } else {
+    
+            terminalToggle.textContent = ">_";
+            terminalToggle.title = "Linux terminal mode";
+    
+            localStorage.setItem("terminalMode", "off");
+    
+        }
+    
+    });
+    
+    
+    const savedTerminalMode = localStorage.getItem("terminalMode");
+    
+    if (savedTerminalMode === "on") {
+    
+        document.body.classList.add("terminal-mode");
+        terminalToggle.textContent = "$_";
+    
+    }
 
 </script>
 
