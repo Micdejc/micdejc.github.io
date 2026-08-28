@@ -900,7 +900,7 @@
         .nav-controls {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 3px;
         }
         
         .terminal-toggle {
@@ -1047,6 +1047,38 @@
             margin-bottom: 8px;
         }
 
+
+        /* ================= CONSOLE TYPING ANIMATION ================= */
+
+        .console-intro {
+            min-height: 58px;
+        }
+        
+        body:not(.terminal-mode) .console-intro span::after {
+            display: none;
+        }
+        
+        body.terminal-mode .console-intro {
+            font-family: "Courier New", Courier, monospace;
+        }
+        
+        .typing-cursor::after {
+            content: "▋";
+            color: #39ff14;
+            animation: terminalBlink 0.8s infinite;
+            margin-left: 3px;
+        }
+        
+        @keyframes terminalBlink {
+            0%, 45% {
+                opacity: 1;
+            }
+        
+            46%, 100% {
+                opacity: 0;
+            }
+        }
+
     </style>
 </head>
 
@@ -1118,17 +1150,17 @@
 
             <p class="hero-description">
 
-                Cybersecurity thought leader & researcher working at the intersection of
+                <span id="consoleText1">Cybersecurity thought leader & researcher working at the intersection of
                 <strong>AI security, LLM security, adversarial AI and
-                cybersecurity</strong>.
+                cybersecurity</strong></span>.
 
             </p>
 
             <p class="hero-description">
 
-                My research explores how adversarial interactions can
+                <span id="consoleText2">My research explores how adversarial interactions can
                 manipulate AI systems and how we can build more reliable,
-                interpretable and scalable defences.
+                interpretable and scalable defences</span>.
 
             </p>
 
@@ -3018,6 +3050,118 @@
     
         document.body.classList.add("terminal-mode");
         terminalToggle.textContent = "$_";
+    
+    }
+
+    /* ================= CONSOLE INTRO TYPING ================= */
+
+    const consoleText1 =
+        "Cybersecurity thought leader & researcher working at the intersection of AI security, LLM security, adversarial AI and cybersecurity.";
+    
+    const consoleText2 =
+        "My research explores how adversarial interactions can manipulate AI systems and how we can build more reliable, interpretable and scalable defences.";
+    
+    const textElement1 = document.getElementById("consoleText1");
+    const textElement2 = document.getElementById("consoleText2");
+    
+    let typingTimer = null;
+    
+    function typeText(element, text, speed, callback) {
+    
+        element.textContent = "";
+        element.classList.add("typing-cursor");
+    
+        let index = 0;
+    
+        function typeCharacter() {
+    
+            if (index < text.length) {
+    
+                element.textContent += text.charAt(index);
+                index++;
+    
+                typingTimer = setTimeout(typeCharacter, speed);
+    
+            } else {
+    
+                element.classList.remove("typing-cursor");
+    
+                if (callback) {
+                    callback();
+                }
+    
+            }
+    
+        }
+    
+        typeCharacter();
+    }
+    
+    
+    function startConsoleAnimation() {
+    
+        clearTimeout(typingTimer);
+    
+        textElement1.textContent = "";
+        textElement2.textContent = "";
+    
+        typeElement1();
+    
+    }
+    
+    
+    function typeElement1() {
+    
+        typeText(
+            textElement1,
+            consoleText1,
+            28,
+            function () {
+    
+                setTimeout(function () {
+    
+                    typeText(
+                        textElement2,
+                        consoleText2,
+                        25
+                    );
+    
+                }, 500);
+    
+            }
+        );
+    
+    }
+    
+    
+    /* Start animation when terminal mode is activated */
+    
+    terminalToggle.addEventListener("click", function () {
+    
+        if (document.body.classList.contains("terminal-mode")) {
+    
+            setTimeout(startConsoleAnimation, 100);
+    
+        } else {
+    
+            clearTimeout(typingTimer);
+    
+            textElement1.textContent =
+                "Cybersecurity thought leader & researcher working at the intersection of AI security, LLM security, adversarial AI and cybersecurity.";
+    
+            textElement2.textContent =
+                "My research explores how adversarial interactions can manipulate AI systems and how we can build more reliable, interpretable and scalable defences.";
+    
+        }
+    
+    });
+    
+    
+    /* Start automatically if terminal mode was already saved */
+    
+    if (localStorage.getItem("terminalMode") === "on") {
+    
+        setTimeout(startConsoleAnimation, 300);
     
     }
 
