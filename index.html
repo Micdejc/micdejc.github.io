@@ -1084,6 +1084,50 @@
         flex-shrink: 0;
         }
 
+
+        /* ================= TERMINAL INTRO ================= */
+
+        .terminal-prompt {
+            display: none;
+        }
+        
+        body.terminal-mode .terminal-prompt {
+            display: inline;
+            color: #39ff14;
+            font-family: "Courier New", Courier, monospace;
+            font-weight: 700;
+            margin-right: 10px;
+        }
+        
+        body.terminal-mode .console-intro {
+            font-family: "Courier New", Courier, monospace;
+        }
+        
+        body.terminal-mode .console-intro span {
+            color: #b7d8b7;
+        }
+        
+        body.terminal-mode .console-intro .terminal-prompt {
+            color: #39ff14;
+        }
+        
+        .typing-cursor::after {
+            content: "▋";
+            color: #39ff14;
+            animation: terminalBlink 0.8s infinite;
+            margin-left: 3px;
+        }
+        
+        @keyframes terminalBlink {
+            0%, 45% {
+                opacity: 1;
+            }
+        
+            46%, 100% {
+                opacity: 0;
+            }
+        }
+
     </style>
 </head>
 
@@ -1153,19 +1197,19 @@
                 <span class="gradient">Tchuindjang</span>
             </h1>
 
-            <p class="hero-description">
-
+            <p class="hero-description console-intro">
+                <span class="terminal-prompt">root@Michael:~$</span>
                 <span id="consoleText1">Cybersecurity thought leader & researcher working at the intersection of
                 <strong>AI security, LLM security, adversarial AI and
-                cybersecurity</strong></span>.
+                cybersecurity</strong></span>
 
             </p>
 
-            <p class="hero-description">
-
+            <p class="hero-description console-intro">
+                <span class="terminal-prompt">root@Michael:~$</span>
                 <span id="consoleText2">My research explores how adversarial interactions can
                 manipulate AI systems and how we can build more reliable,
-                interpretable and scalable defences</span>.
+                interpretable and scalable defences</span>
 
             </p>
 
@@ -3071,6 +3115,7 @@
     
     let typingTimer = null;
     
+    
     function typeText(element, text, speed, callback) {
     
         element.textContent = "";
@@ -3110,17 +3155,10 @@
         textElement1.textContent = "";
         textElement2.textContent = "";
     
-        typeElement1();
-    
-    }
-    
-    
-    function typeElement1() {
-    
         typeText(
             textElement1,
             consoleText1,
-            28,
+            25,
             function () {
     
                 setTimeout(function () {
@@ -3131,38 +3169,34 @@
                         25
                     );
     
-                }, 500);
+                }, 600);
     
             }
         );
-    
     }
     
     
-    /* Start animation when terminal mode is activated */
+    /* Run when terminal mode is activated */
     
     terminalToggle.addEventListener("click", function () {
     
         if (document.body.classList.contains("terminal-mode")) {
     
-            setTimeout(startConsoleAnimation, 100);
+            setTimeout(startConsoleAnimation, 150);
     
         } else {
     
             clearTimeout(typingTimer);
     
-            textElement1.textContent =
-                "Cybersecurity thought leader & researcher working at the intersection of AI security, LLM security, adversarial AI and cybersecurity.";
-    
-            textElement2.textContent =
-                "My research explores how adversarial interactions can manipulate AI systems and how we can build more reliable, interpretable and scalable defences.";
+            textElement1.textContent = consoleText1;
+            textElement2.textContent = consoleText2;
     
         }
     
     });
     
     
-    /* Start automatically if terminal mode was already saved */
+    /* Run automatically if terminal mode was previously enabled */
     
     if (localStorage.getItem("terminalMode") === "on") {
     
