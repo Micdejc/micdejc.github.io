@@ -20,10 +20,11 @@
     <meta property="og:type" content="website">
 
     <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
         {
-          "@context": "https://schema.org",
           "@type": "Person",
-          "@type": "WebSite",
           "@id": "https://micdejc.github.io/#person",
           "name": "Michael Tchuindjang",
           "url": "https://micdejc.github.io/",
@@ -36,7 +37,18 @@
             "https://orcid.org/0009-0008-7703-9911",
             "https://huggingface.co/Micdejc"
           ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://micdejc.github.io/#website",
+          "url": "https://micdejc.github.io/",
+          "name": "Michael Tchuindjang",
+          "publisher": {
+            "@id": "https://micdejc.github.io/#person"
+          }
         }
+      ]
+    }
     </script>
 
 
