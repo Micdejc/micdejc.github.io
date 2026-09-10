@@ -139,9 +139,9 @@ async function loadPage() {
      * parent sections have been loaded.
      */
 
-    /* await loadPublications();
+    await loadPublications();
 
-    await loadNews(); */
+    await loadNews();
 
     await loadMentorship();
 
@@ -461,6 +461,112 @@ function startConsoleAnimation() {
         }
     );
 
+}
+
+
+/* =========================================================
+   PUBLICATIONS
+========================================================= */
+
+async function loadPublications() {
+
+    const container =
+        document.getElementById(
+            "publications-list"
+        );
+
+    if (!container) {
+        console.error("publications-list not found");
+        return;
+    }
+
+    try {
+
+        const response =
+            await fetch(
+                "content/publications/publications.html"
+            );
+
+        if (!response.ok) {
+            throw new Error(
+                `HTTP ${response.status}`
+            );
+        }
+
+        const html =
+            await response.text();
+
+        container.innerHTML = html;
+
+    } catch (error) {
+
+        console.error(
+            "Could not load publications",
+            error
+        );
+
+    }
+}
+
+
+/* =========================================================
+   NEWS
+========================================================= */
+
+async function loadNews() {
+
+    const container =
+        document.getElementById(
+            "newsGrid"
+        );
+
+    if (!container) {
+        console.error("newsGrid not found");
+        return;
+    }
+
+    const files = [
+
+        "refusalguard-m-publication.html",
+        "ieee-csr-2026.html",
+        "ukci-2025-award.html",
+        "uwe-engineering-showcase.html"
+
+    ];
+
+    for (const file of files) {
+
+        try {
+
+            const response =
+                await fetch(
+                    `content/news/${file}`
+                );
+
+            if (!response.ok) {
+                console.error(
+                    `Could not load news item: ${file}`
+                );
+                continue;
+            }
+
+            const html =
+                await response.text();
+
+            container.insertAdjacentHTML(
+                "beforeend",
+                html
+            );
+
+        } catch (error) {
+
+            console.error(
+                `Could not load news item ${file}`,
+                error
+            );
+
+        }
+    }
 }
 
 
