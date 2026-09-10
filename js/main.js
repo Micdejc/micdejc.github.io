@@ -1,6 +1,7 @@
 import { loadPublications } from "../content/publications/index.js";
 import { loadNews } from "../content/news/index.js";
 
+
 /* =========================================================
    HTML COMPONENT LOADER
 ========================================================= */
