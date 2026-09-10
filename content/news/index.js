@@ -11,7 +11,7 @@ const newsFiles = [
 ];
 
 
-async function loadNews() {
+export async function loadNews() {
 
     const container = document.getElementById("news-list");
 
