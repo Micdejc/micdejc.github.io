@@ -155,7 +155,7 @@ async function loadPage() {
 
     initialiseTerminalMode();
 
-    initialiseConsoleAnimation();
+    /* initialiseConsoleAnimation(); */
 
     initialiseYear();
 
