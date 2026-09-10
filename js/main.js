@@ -139,9 +139,9 @@ async function loadPage() {
      * parent sections have been loaded.
      */
 
-    await loadPublications();
+    /* await loadPublications();
 
-    await loadNews();
+    await loadNews(); */
 
     await loadMentorship();
 
