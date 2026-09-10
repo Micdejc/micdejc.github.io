@@ -5,7 +5,7 @@ const publicationFiles = [
     "grammatical-mirage.html"
 ];
 
-async function loadPublications() {
+export async function loadPublications() {
 
     const container = document.getElementById("publication-list");
 
