@@ -1,7 +1,3 @@
-/* =========================================================
-   NAV CONTROLS
-========================================================= */
-
 .nav-controls {
     display: flex;
     align-items: center;
@@ -40,20 +36,10 @@ body.terminal-mode {
     font-family: "Courier New", Courier, monospace;
 }
 
-
-/* ---------------------------------------------------------
-   NAVIGATION
---------------------------------------------------------- */
-
 body.terminal-mode nav {
     background: rgba(10, 14, 10, 0.96);
     border-bottom: 1px solid #1f6f1f;
 }
-
-
-/* ---------------------------------------------------------
-   HEADINGS
---------------------------------------------------------- */
 
 body.terminal-mode .logo,
 body.terminal-mode h1,
@@ -69,11 +55,6 @@ body.terminal-mode .gradient {
     -webkit-text-fill-color: #39ff14;
 }
 
-
-/* ---------------------------------------------------------
-   ACCENT TEXT
---------------------------------------------------------- */
-
 body.terminal-mode .eyebrow,
 body.terminal-mode .section-number,
 body.terminal-mode .news-date,
@@ -82,11 +63,6 @@ body.terminal-mode .timeline-year,
 body.terminal-mode .text-link {
     color: #39ff14;
 }
-
-
-/* ---------------------------------------------------------
-   BODY TEXT
---------------------------------------------------------- */
 
 body.terminal-mode p,
 body.terminal-mode span,
@@ -98,15 +74,9 @@ body.terminal-mode .publication p,
 body.terminal-mode .news-content p,
 body.terminal-mode .project p,
 body.terminal-mode .timeline-item p,
-body.terminal-mode .service p,
-body.terminal-mode .feature-content p {
+body.terminal-mode .service p {
     color: #b7d8b7;
 }
-
-
-/* ---------------------------------------------------------
-   ALTERNATING SECTIONS
---------------------------------------------------------- */
 
 body.terminal-mode section:nth-child(even) {
     background: #0d130d;
@@ -114,7 +84,8 @@ body.terminal-mode section:nth-child(even) {
 
 
 /* =========================================================
-   CARDS AND SURFACES
+   EXISTING TERMINAL CARDS
+   Preserved exactly, including .feature
 ========================================================= */
 
 body.terminal-mode .profile-card,
@@ -127,7 +98,7 @@ body.terminal-mode .profile-link,
 body.terminal-mode .award,
 body.terminal-mode .service,
 body.terminal-mode .stat,
-body.terminal-mode .feature-card,
+body.terminal-mode .feature,
 body.terminal-mode .contact-box {
     background: #0b110b;
     border-color: #1f6f1f;
@@ -135,19 +106,54 @@ body.terminal-mode .contact-box {
 }
 
 
-/* ---------------------------------------------------------
-   CARD HOVER
---------------------------------------------------------- */
+/* =========================================================
+   NEW FEATURES SECTION
+   Applies only to .feature-card
+========================================================= */
+
+body.terminal-mode .feature-card {
+    background: #0b110b;
+    border-color: #1f6f1f;
+    box-shadow: 0 0 20px rgba(57, 255, 20, 0.05);
+}
 
 body.terminal-mode .feature-card:hover {
     border-color: #39ff14;
-    box-shadow:
-        0 0 25px rgba(57, 255, 20, 0.12);
+    box-shadow: 0 0 25px rgba(57, 255, 20, 0.12);
+}
+
+body.terminal-mode .feature-logo {
+    background: #102010;
+    border-color: #1f6f1f;
+}
+
+body.terminal-mode .feature-logo img {
+    filter: grayscale(100%) brightness(1.4);
+}
+
+body.terminal-mode .feature-type {
+    color: #39ff14;
+}
+
+body.terminal-mode .feature-content h3 {
+    color: #39ff14;
+}
+
+body.terminal-mode .feature-content p {
+    color: #b7d8b7;
+}
+
+body.terminal-mode .feature-link {
+    color: #39ff14;
+}
+
+body.terminal-mode .feature-link:hover {
+    color: #b7ffb7;
 }
 
 
 /* =========================================================
-   TAGS
+   TERMINAL TAGS
 ========================================================= */
 
 body.terminal-mode .tag,
@@ -159,7 +165,7 @@ body.terminal-mode .project-tag {
 
 
 /* =========================================================
-   BUTTONS
+   TERMINAL BUTTONS
 ========================================================= */
 
 body.terminal-mode .btn-primary {
@@ -206,7 +212,7 @@ body.terminal-mode a:hover {
 
 
 /* =========================================================
-   HERO TERMINAL PROMPT
+   TERMINAL HERO
 ========================================================= */
 
 body.terminal-mode .hero-description:first-of-type::before {
@@ -216,7 +222,7 @@ body.terminal-mode .hero-description:first-of-type::before {
 
 
 /* =========================================================
-   SECTION TERMINAL PROMPT
+   TERMINAL SECTION HEADERS
 ========================================================= */
 
 body.terminal-mode .section-header h2::before {
@@ -230,41 +236,7 @@ body.terminal-mode .section-header h2::before {
 
 
 /* =========================================================
-   FEATURE CARDS
-========================================================= */
-
-body.terminal-mode .feature-logo {
-    background: #102010;
-    border-color: #1f6f1f;
-}
-
-body.terminal-mode .feature-logo a {
-    color: #39ff14;
-}
-
-body.terminal-mode .feature-logo img {
-    filter: grayscale(100%) brightness(1.4);
-}
-
-body.terminal-mode .feature-type {
-    color: #39ff14;
-}
-
-body.terminal-mode .feature-content h3 {
-    color: #39ff14;
-}
-
-body.terminal-mode .feature-link {
-    color: #39ff14;
-}
-
-body.terminal-mode .feature-link:hover {
-    color: #b7ffb7;
-}
-
-
-/* =========================================================
-   THEME AND TERMINAL TOGGLES
+   THEME / TERMINAL TOGGLES
 ========================================================= */
 
 .theme-toggle,
@@ -276,7 +248,7 @@ body.terminal-mode .feature-link:hover {
 
 
 /* =========================================================
-   CONSOLE INTRO
+   CONSOLE
 ========================================================= */
 
 .console-intro {
@@ -291,11 +263,6 @@ body.terminal-mode .console-intro {
     font-family: "Courier New", Courier, monospace;
 }
 
-
-/* =========================================================
-   TYPING CURSOR
-========================================================= */
-
 .typing-cursor::after {
     content: "▋";
     color: #39ff14;
@@ -305,7 +272,7 @@ body.terminal-mode .console-intro {
 
 
 /* =========================================================
-   TERMINAL BLINK ANIMATION
+   TERMINAL CURSOR ANIMATION
 ========================================================= */
 
 @keyframes terminalBlink {
