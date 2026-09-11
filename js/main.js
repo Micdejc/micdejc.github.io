@@ -127,7 +127,7 @@ async function loadPage() {
         ),
        
         loadComponent(
-            "news",
+            "features",
             "sections/features.html"
         ),
 
