@@ -360,10 +360,10 @@ function initialiseTerminalMode() {
 ========================================================= */
 
 const consoleText1 =
-    "Cybersecurity thought leader & researcher working at the intersection of AI security, LLM security, adversarial AI and cybersecurity.";
+    document.getElementById("consoleText1").innerHTML.trim();
 
 const consoleText2 =
-    "My research explores how adversarial interactions can manipulate AI systems and how we can build more reliable, interpretable and scalable defences.";
+    document.getElementById("consoleText2").innerHTML.trim();
 
 let typingTimer = null;
 
