@@ -590,6 +590,171 @@
             box-shadow: var(--shadow);
         }
 
+
+        /* =========================================================
+           FEATURES
+        ========================================================= */
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1.5rem;
+            margin-top: 2.5rem;
+        }
+        
+        .feature-card {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            padding: 2rem;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            background: var(--card-bg);
+            transition:
+                transform 0.25s ease,
+                border-color 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+        
+        
+        /* ---------------------------------------------------------
+           FEATURE LOGO
+        --------------------------------------------------------- */
+        
+        .feature-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        
+            width: 100%;
+            height: 110px;
+        
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+        
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+        
+            background: var(--background-secondary);
+        }
+        
+        .feature-logo img {
+            display: block;
+        
+            max-width: 180px;
+            max-height: 70px;
+        
+            width: auto;
+            height: auto;
+        
+            object-fit: contain;
+        }
+        
+        
+        /* ---------------------------------------------------------
+           FEATURE CONTENT
+        --------------------------------------------------------- */
+        
+        .feature-content {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+        
+        .feature-type {
+            display: inline-block;
+        
+            margin-bottom: 0.6rem;
+        
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        
+            color: var(--accent-color);
+        }
+        
+        .feature-content h3 {
+            margin: 0 0 0.8rem;
+        
+            font-size: 1.25rem;
+            line-height: 1.3;
+        }
+        
+        .feature-content p {
+            margin: 0 0 1.5rem;
+        
+            font-size: 0.95rem;
+            line-height: 1.7;
+        
+            color: var(--text-secondary);
+        }
+        
+        
+        /* ---------------------------------------------------------
+           FEATURE LINK
+        --------------------------------------------------------- */
+        
+        .feature-link {
+            display: inline-flex;
+            align-items: center;
+        
+            margin-top: auto;
+        
+            font-weight: 600;
+            text-decoration: none;
+        
+            color: var(--accent-color);
+        
+            transition:
+                gap 0.2s ease,
+                color 0.2s ease;
+        }
+        
+        .feature-link:hover {
+            gap: 0.35rem;
+            color: var(--text-primary);
+        }
+        
+        
+        /* ---------------------------------------------------------
+           RESPONSIVE
+        --------------------------------------------------------- */
+        
+        @media (max-width: 1000px) {
+        
+            .features-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        
+        }
+        
+        
+        @media (max-width: 650px) {
+        
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 1.25rem;
+            }
+        
+            .feature-card {
+                padding: 1.5rem;
+            }
+        
+            .feature-logo {
+                height: 100px;
+            }
+        
+        }
+
+
+
         /* ================= PROJECTS ================= */
 
         .project-grid {
