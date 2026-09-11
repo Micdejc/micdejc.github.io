@@ -359,11 +359,9 @@ function initialiseTerminalMode() {
    CONSOLE TYPING ANIMATION
 ========================================================= */
 
-const consoleText1 =
-    document.getElementById("consoleText1").innerHTML.trim();
+const consoleText1 = "Cybersecurity thought leader & AI security researcher, <strong> UK Cyber Security Council Expert, Heads Talk AI & Cybersecurity Analyst, Startupbootcamp Mentor & Associate Lecturer at University of West of England </strong>";
 
-const consoleText2 =
-    document.getElementById("consoleText2").innerHTML.trim();
+const consoleText2 = "Researcher, educator and industry contributor specialising in <strong>LLM security, adversarial AI, multi-turn jailbreaking, representation engineering and AI governance </strong>, turning cutting-edge research into practical cybersecurity insight.";
 
 let typingTimer = null;
 
