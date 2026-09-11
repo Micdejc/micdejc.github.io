@@ -97,6 +97,11 @@ async function loadPage() {
         ),
 
         loadComponent(
+            "news",
+            "sections/features.html"
+        ),
+
+        loadComponent(
             "projects",
             "sections/projects.html"
         ),
