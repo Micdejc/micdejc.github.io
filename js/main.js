@@ -97,11 +97,6 @@ async function loadPage() {
         ),
 
         loadComponent(
-            "news",
-            "sections/features.html"
-        ),
-
-        loadComponent(
             "projects",
             "sections/projects.html"
         ),
@@ -129,6 +124,11 @@ async function loadPage() {
         loadComponent(
             "mentorship",
             "sections/mentorship.html"
+        ),
+       
+        loadComponent(
+            "news",
+            "sections/features.html"
         ),
 
         loadComponent(
