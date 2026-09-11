@@ -621,11 +621,8 @@
         
         .feature-card:hover {
             transform: translateY(-5px);
-        
             border-color: var(--primary);
-        
-            box-shadow:
-                0 18px 40px rgba(15, 23, 42, 0.11);
+            box-shadow: 0 18px 40px rgba(15, 23, 42, 0.11);
         }
         
         
@@ -661,11 +658,10 @@
         .feature-logo img {
             display: block;
         
-            max-width: 180px;
-            max-height: 70px;
-        
             width: auto;
             height: auto;
+            max-width: 180px;
+            max-height: 70px;
         
             object-fit: contain;
         
@@ -692,12 +688,12 @@
         
             margin-bottom: 0.6rem;
         
+            color: var(--accent);
+        
             font-size: 0.75rem;
             font-weight: 700;
             letter-spacing: 0.08em;
             text-transform: uppercase;
-        
-            color: var(--accent);
         }
         
         .feature-content h3 {
@@ -741,8 +737,8 @@
         }
         
         .feature-link:hover {
-            color: var(--primary-dark);
             gap: 0.35rem;
+            color: var(--primary-dark);
         }
         
         
