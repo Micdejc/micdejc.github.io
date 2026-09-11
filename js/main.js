@@ -1,5 +1,6 @@
 import { loadPublications } from "../content/publications/index.js";
 import { loadNews } from "../content/news/index.js";
+import { loadFeatures } from "../content/features/index.js";
 
 
 /* =========================================================
@@ -149,6 +150,7 @@ async function loadPage() {
 
     await loadMentorship();
 
+    await loadFeatures();
 
     /*
      * Initialise interface controls only after
