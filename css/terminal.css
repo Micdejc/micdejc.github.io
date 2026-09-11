@@ -1,3 +1,7 @@
+/* =========================================================
+   NAV CONTROLS
+========================================================= */
+
 .nav-controls {
     display: flex;
     align-items: center;
@@ -26,7 +30,9 @@
 }
 
 
-/* Terminal appearance */
+/* =========================================================
+   TERMINAL APPEARANCE
+========================================================= */
 
 body.terminal-mode {
     background: #0a0e0a;
@@ -34,10 +40,20 @@ body.terminal-mode {
     font-family: "Courier New", Courier, monospace;
 }
 
+
+/* ---------------------------------------------------------
+   NAVIGATION
+--------------------------------------------------------- */
+
 body.terminal-mode nav {
     background: rgba(10, 14, 10, 0.96);
     border-bottom: 1px solid #1f6f1f;
 }
+
+
+/* ---------------------------------------------------------
+   HEADINGS
+--------------------------------------------------------- */
 
 body.terminal-mode .logo,
 body.terminal-mode h1,
@@ -53,6 +69,11 @@ body.terminal-mode .gradient {
     -webkit-text-fill-color: #39ff14;
 }
 
+
+/* ---------------------------------------------------------
+   ACCENT TEXT
+--------------------------------------------------------- */
+
 body.terminal-mode .eyebrow,
 body.terminal-mode .section-number,
 body.terminal-mode .news-date,
@@ -61,6 +82,11 @@ body.terminal-mode .timeline-year,
 body.terminal-mode .text-link {
     color: #39ff14;
 }
+
+
+/* ---------------------------------------------------------
+   BODY TEXT
+--------------------------------------------------------- */
 
 body.terminal-mode p,
 body.terminal-mode span,
@@ -72,13 +98,24 @@ body.terminal-mode .publication p,
 body.terminal-mode .news-content p,
 body.terminal-mode .project p,
 body.terminal-mode .timeline-item p,
-body.terminal-mode .service p {
+body.terminal-mode .service p,
+body.terminal-mode .feature-content p {
     color: #b7d8b7;
 }
+
+
+/* ---------------------------------------------------------
+   ALTERNATING SECTIONS
+--------------------------------------------------------- */
 
 body.terminal-mode section:nth-child(even) {
     background: #0d130d;
 }
+
+
+/* =========================================================
+   CARDS AND SURFACES
+========================================================= */
 
 body.terminal-mode .profile-card,
 body.terminal-mode .research-card,
@@ -90,12 +127,28 @@ body.terminal-mode .profile-link,
 body.terminal-mode .award,
 body.terminal-mode .service,
 body.terminal-mode .stat,
-body.terminal-mode .feature,
+body.terminal-mode .feature-card,
 body.terminal-mode .contact-box {
     background: #0b110b;
     border-color: #1f6f1f;
     box-shadow: 0 0 20px rgba(57, 255, 20, 0.05);
 }
+
+
+/* ---------------------------------------------------------
+   CARD HOVER
+--------------------------------------------------------- */
+
+body.terminal-mode .feature-card:hover {
+    border-color: #39ff14;
+    box-shadow:
+        0 0 25px rgba(57, 255, 20, 0.12);
+}
+
+
+/* =========================================================
+   TAGS
+========================================================= */
 
 body.terminal-mode .tag,
 body.terminal-mode .project-tag {
@@ -103,6 +156,11 @@ body.terminal-mode .project-tag {
     color: #39ff14;
     border: 1px solid #1f6f1f;
 }
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
 
 body.terminal-mode .btn-primary {
     background: #1a7f1a;
@@ -115,6 +173,11 @@ body.terminal-mode .btn-secondary {
     border-color: #1f6f1f;
 }
 
+
+/* =========================================================
+   TIMELINE
+========================================================= */
+
 body.terminal-mode .timeline {
     border-color: #1f6f1f;
 }
@@ -123,19 +186,38 @@ body.terminal-mode .timeline-item::before {
     background: #39ff14;
 }
 
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
 body.terminal-mode footer {
     border-color: #1f6f1f;
 }
+
+
+/* =========================================================
+   LINKS
+========================================================= */
 
 body.terminal-mode a:hover {
     color: #39ff14;
 }
 
 
+/* =========================================================
+   HERO TERMINAL PROMPT
+========================================================= */
+
 body.terminal-mode .hero-description:first-of-type::before {
     content: "root@Michael:~$ ";
     color: #39ff14;
 }
+
+
+/* =========================================================
+   SECTION TERMINAL PROMPT
+========================================================= */
 
 body.terminal-mode .section-header h2::before {
     content: "";
@@ -147,6 +229,44 @@ body.terminal-mode .section-header h2::before {
 }
 
 
+/* =========================================================
+   FEATURE CARDS
+========================================================= */
+
+body.terminal-mode .feature-logo {
+    background: #102010;
+    border-color: #1f6f1f;
+}
+
+body.terminal-mode .feature-logo a {
+    color: #39ff14;
+}
+
+body.terminal-mode .feature-logo img {
+    filter: grayscale(100%) brightness(1.4);
+}
+
+body.terminal-mode .feature-type {
+    color: #39ff14;
+}
+
+body.terminal-mode .feature-content h3 {
+    color: #39ff14;
+}
+
+body.terminal-mode .feature-link {
+    color: #39ff14;
+}
+
+body.terminal-mode .feature-link:hover {
+    color: #b7ffb7;
+}
+
+
+/* =========================================================
+   THEME AND TERMINAL TOGGLES
+========================================================= */
+
 .theme-toggle,
 .terminal-toggle {
     width: 38px;
@@ -154,6 +274,10 @@ body.terminal-mode .section-header h2::before {
     margin: 0;
 }
 
+
+/* =========================================================
+   CONSOLE INTRO
+========================================================= */
 
 .console-intro {
     min-height: 58px;
@@ -167,12 +291,22 @@ body.terminal-mode .console-intro {
     font-family: "Courier New", Courier, monospace;
 }
 
+
+/* =========================================================
+   TYPING CURSOR
+========================================================= */
+
 .typing-cursor::after {
     content: "▋";
     color: #39ff14;
     animation: terminalBlink 0.8s infinite;
     margin-left: 3px;
 }
+
+
+/* =========================================================
+   TERMINAL BLINK ANIMATION
+========================================================= */
 
 @keyframes terminalBlink {
 
