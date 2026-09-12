@@ -1,37 +1,12 @@
-# Michael Tchuindjang | Academic & Professional Website
+# Michael Tchuindjang | Personal Website
 
-Personal academic and professional website of **Michael Tchuindjang**, a cybersecurity researcher, educator, and AI security professional.
+Personal academic and professional website of **Michael Tchuindjang**, focused on cybersecurity, AI security research, academic publications, professional activities, and selected achievements.
 
-The website focuses on:
-
-- Cybersecurity and AI security research
-- Large Language Model (LLM) security
-- Multi-turn jailbreak research
-- Research publications
-- Open-source projects
-- Academic experience
-- Teaching and mentorship
-- Professional service
-- Awards and recognition
-- Conferences and research activities
-
-The website is intentionally built as a **lightweight modular static website** using HTML, CSS, and JavaScript. It is designed to run on **GitHub Pages** without a frontend framework or build system. GitHub Pages can publish a repository directly as a website, making this architecture suitable for a simple academic portfolio.
+The website is hosted as a static GitHub Pages site and follows a modular structure so that new content can be added without unnecessarily modifying the main page.
 
 ---
 
-## 🌐 Website
-
-**Live website:**
-
-`https://micdejc.github.io/`
-
-**Repository:**
-
-`https://github.com/Micdejc/micdejc.github.io`
-
----
-
-# 📁 Project Structure
+## Website Structure
 
 ```text
 micdejc.github.io/
@@ -60,23 +35,10 @@ micdejc.github.io/
 │   └── contact.html
 │
 ├── content/
-│   ├── news/
-│   │   ├── index.js
-│   │   ├── refusalguard-m.html
-│   │   ├── ieee-csr-2026.html
-│   │   ├── ukci-2025.html
-│   │   └── uwe-engineering-showcase.html
-│   │
 │   ├── publications/
-│   │   ├── index.js
-│   │   ├── refusalguard-m.html
-│   │   ├── human-machine-agreement.html
-│   │   ├── cutcaptcha.html
-│   │   └── grammatical-mirage.html
-│   │
-│   └── mentorship/
-│       ├── chris-mayo.html
-│       └── mohammed-almasabi.html
+│   ├── news/
+│   ├── mentorship/
+│   └── features/
 │
 ├── css/
 │   ├── style.css
@@ -87,205 +49,144 @@ micdejc.github.io/
 │
 ├── assets/
 │   ├── profile.png
-│   └── news/
-│       ├── refusalguard-m-publication.jpg
-│       ├── ieee-csr-2026.jpg
-│       ├── ukci2025award.jpg
-│       └── uwe-engineering-showcase.jpg
+│   ├── news/
+│   └── features/
 │
 └── CV.pdf
 ```
 
 ---
 
-# 🏗️ Architecture
+# How the Website Is Organized
 
-The website is divided into several layers:
+The website is divided into four main layers.
 
-```text
-index.html
-    │
-    ├── components/
-    │
-    ├── sections/
-    │
-    ├── content/
-    │
-    ├── css/
-    │
-    ├── js/
-    │
-    └── assets/
-```
+### `index.html`
 
-Each directory has a specific responsibility.
+The main entry point of the website.
 
-| Directory | Purpose |
-|---|---|
-| `index.html` | Main HTML shell and metadata |
-| `components/` | Reusable structural elements |
-| `sections/` | Main homepage sections |
-| `content/` | Individual publications, news items, mentorship entries |
-| `css/` | Global and terminal-mode styling |
-| `js/` | Main application logic |
-| `assets/` | Images and other static assets |
-| `CV.pdf` | Downloadable CV |
+It brings the overall page together and should generally only be modified when the site's overall structure or navigation needs to change.
 
----
+### `components/`
 
-# 🧩 Components
+Contains reusable site-wide elements such as:
 
-The `components/` directory contains reusable structural elements:
+- Navigation
+- Hero/profile area
+- Footer
 
-```text
-components/
-├── nav.html
-├── hero.html
-└── footer.html
-```
+### `sections/`
 
-## Navigation
+Contains the major sections displayed on the website.
 
-```text
-components/nav.html
-```
+Examples:
 
-Contains:
+- About
+- Research
+- Publications
+- News
+- Features
+- Mentorship
+- Achievements
+- Service
+- Contact
 
-- Main navigation
-- Section links
-- Theme toggle
-- Terminal-mode toggle
+### `content/`
 
-If the navigation needs to change, edit this file rather than `index.html`.
+Contains individual items that belong to dynamic sections.
+
+Examples:
+
+- Individual publications
+- Individual news items
+- Individual mentorship entries
+- Individual professional features
+
+This is normally where new content should be added.
 
 ---
 
-## Hero
+# Adding New Content
+
+The general rule is:
+
+> **Add a new content file to the appropriate category, then register it with that category's content list.**
+
+Do not create new content directly inside `index.html` unless the content is part of the permanent page structure.
+
+---
+
+# Publications
+
+Publications are stored in:
 
 ```text
-components/hero.html
+content/publications/
 ```
-
-Contains:
-
-- Name
-- Professional title
-- Introduction
-- Profile image
-- CV link
-- Social/profile links
 
 For example:
 
 ```text
-GitHub
-LinkedIn
-Google Scholar
-ORCID
-Email
+content/publications/
+├── refusalguard-m.html
+├── human-machine-agreement.html
+├── cutcaptcha.html
+└── grammatical-mirage.html
 ```
 
----
+## To add a new publication
 
-## Footer
+1. Create a new HTML file inside:
 
 ```text
-components/footer.html
+content/publications/
 ```
 
-Contains:
-
-- Footer information
-- Copyright
-- Current year
-- Footer links
-
-The year is populated dynamically by JavaScript.
-
----
-
-# 📑 Sections
-
-The `sections/` directory contains the main sections of the homepage.
-
-```text
-sections/
-├── about.html
-├── research-statement.html
-├── research.html
-├── flagship-refusalguard.html
-├── flagship-grammatical-mirage.html
-├── publications.html
-├── news.html
-├── projects.html
-├── profiles.html
-├── experience.html
-├── achievements.html
-├── service.html
-├── mentorship.html
-└── contact.html
-```
-
-A section defines the **layout and structure** of a part of the website.
+2. Give it a descriptive filename.
 
 For example:
 
 ```text
-sections/publications.html
+content/publications/new-paper-title.html
 ```
 
-defines the Publications section.
-
-Likewise:
+3. Add the publication to the publication list in:
 
 ```text
-sections/news.html
+content/publications/index.js
 ```
 
-defines the News section and contains the container into which individual news items are inserted.
+4. Add any associated image or asset under the appropriate `assets/` directory if required.
+
+5. Test the website locally.
+
+6. Commit and push the changes.
+
+### Recommended filename format
+
+Use lowercase and hyphens:
+
+```text
+new-paper-title.html
+```
+
+Avoid spaces and unnecessarily short names such as:
+
+```text
+paper1.html
+```
 
 ---
 
-# 📰 Content vs Sections
+# News & Updates
 
-This distinction is important.
+News items are stored in:
 
-## Sections define structure
+```text
+content/news/
+```
 
 For example:
-
-```text
-sections/news.html
-```
-
-defines:
-
-```text
-Latest News
-       │
-       └── News grid
-```
-
-## Content defines individual items
-
-For example:
-
-```text
-content/news/refusalguard-m.html
-```
-
-defines one news card.
-
-Therefore:
-
-```text
-sections/news.html
-```
-
-should **not** contain every news article.
-
-Instead:
 
 ```text
 content/news/
@@ -295,610 +196,409 @@ content/news/
 └── uwe-engineering-showcase.html
 ```
 
-contains the individual news items.
+## To add a new news item
 
-The same principle applies to publications.
-
----
-
-# 📰 Adding a New News Item
-
-Adding news is designed to be simple.
-
-Suppose you want to add:
-
-> Michael featured in a cybersecurity publication
-
-## Step 1: Create the HTML file
-
-Create:
+1. Create a new file in:
 
 ```text
-content/news/cybersecurity-feature.html
+content/news/
 ```
 
-A news item should contain **one article**.
+2. Use a descriptive filename.
 
 Example:
 
-```html
-<article class="news-card">
-
-    <a
-        href="YOUR_EXTERNAL_LINK"
-        target="_blank"
-        rel="noopener"
-        class="news-image-link"
-    >
-        <img
-            src="assets/news/cybersecurity-feature.jpg"
-            alt="Michael Tchuindjang featured in cybersecurity publication"
-        >
-    </a>
-
-    <div class="news-content">
-
-        <div class="news-date">
-            SEP 2026
-        </div>
-
-        <h3>
-            Featured in Cybersecurity Publication
-        </h3>
-
-        <p>
-            A short description of the announcement,
-            feature, award, publication, conference,
-            or professional activity.
-        </p>
-
-        <a
-            href="YOUR_EXTERNAL_LINK"
-            target="_blank"
-            rel="noopener"
-            class="news-link"
-        >
-            Read more →
-        </a>
-
-    </div>
-
-</article>
+```text
+content/news/new-award.html
 ```
 
-### Important
+3. Add the filename to the news content list.
 
-A content file is an **HTML fragment**.
-
-Do not add:
-
-```html
-<html>
-<head>
-<body>
-```
-
-The file is inserted into the existing homepage by JavaScript.
-
----
-
-# 🖼️ Adding the News Image
-
-Place the image in:
+4. If the item has an image, place it in:
 
 ```text
 assets/news/
 ```
 
-For example:
+5. Test locally.
 
-```text
-assets/news/cybersecurity-feature.jpg
-```
-
-Then reference it:
-
-```html
-<img
-    src="assets/news/cybersecurity-feature.jpg"
-    alt="Cybersecurity publication feature"
->
-```
-
-Recommended image filename conventions:
-
-```text
-refusalguard-m-publication.jpg
-ieee-csr-2026.jpg
-ukci2025award.jpg
-cybersecurity-feature.jpg
-```
-
-Avoid filenames containing spaces:
-
-```text
-My New Image FINAL.jpg
-```
-
-Prefer:
-
-```text
-my-new-image.jpg
-```
+6. Commit and push.
 
 ---
 
-# 🔌 Registering a New News Item
+# Professional Features
 
-Open:
+The **Features** section is used for external professional contributions and appearances, such as:
 
-```text
-content/news/index.js
-```
+- Expert contributions
+- Industry reports
+- Professional publications
+- Media analysis
+- Cybersecurity organizations
+- AI reports
+- External platforms
 
-The loader maintains the list of news files.
-
-Add your new file:
-
-```javascript
-const files = [
-    "refusalguard-m.html",
-    "ieee-csr-2026.html",
-    "ukci-2025.html",
-    "uwe-engineering-showcase.html",
-    "cybersecurity-feature.html"
-];
-```
-
-The loader then fetches the new HTML file and inserts it into the News grid.
-
----
-
-# 📚 Adding a New Publication
-
-Publications follow the same architecture.
-
-Create:
+Features are stored in:
 
 ```text
-content/publications/my-new-paper.html
+content/features/
+```
+
+Current examples include:
+
+```text
+content/features/
+├── uk-cyber-security-council.html
+├── heads-talk.html
+└── ai-and-partners.html
+```
+
+Associated logos are stored in:
+
+```text
+assets/features/
 ```
 
 For example:
 
-```html
-<article class="publication-card">
-
-    <div class="publication-year">
-        2026
-    </div>
-
-    <div class="publication-content">
-
-        <h3>
-            Title of the New Publication
-        </h3>
-
-        <p>
-            Short description of the publication,
-            its contribution, or research focus.
-        </p>
-
-        <p class="publication-meta">
-            <strong>Journal:</strong>
-            Journal Name
-        </p>
-
-        <div class="publication-links">
-
-            <a
-                href="YOUR_PAPER_URL"
-                target="_blank"
-                rel="noopener"
-            >
-                Paper ↗
-            </a>
-
-            <a
-                href="YOUR_CODE_URL"
-                target="_blank"
-                rel="noopener"
-            >
-                Code ↗
-            </a>
-
-        </div>
-
-    </div>
-
-</article>
+```text
+assets/features/
+├── uk-cyber-security-council.png
+├── heads-talk.png
+└── ai-and-partners.png
 ```
 
-Then register it in:
+## To add a new feature
+
+1. Create a new HTML file in:
 
 ```text
-content/publications/index.js
+content/features/
 ```
 
-For example:
+2. Use a descriptive filename.
 
-```javascript
-const files = [
-    "refusalguard-m.html",
-    "human-machine-agreement.html",
-    "cutcaptcha.html",
-    "grammatical-mirage.html",
-    "my-new-paper.html"
-];
+Example:
+
+```text
+content/features/new-organization.html
 ```
+
+3. Add the organization's or publication's official logo to:
+
+```text
+assets/features/
+```
+
+4. Add the new feature to the Features content list.
+
+5. Include the relevant external link.
+
+6. Ensure the logo has appropriate alternative text.
+
+7. Test the feature on desktop and mobile.
+
+8. Commit and push.
 
 ---
 
-# 🎓 Adding a Mentorship Item
+# Mentorship
 
-Mentorship content lives in:
+Mentorship entries are stored in:
 
 ```text
 content/mentorship/
 ```
 
-Create:
-
-```text
-content/mentorship/new-student.html
-```
-
-Use the same HTML structure as the existing mentorship entries.
-
-Then add the file to the list in the mentorship loader.
-
-For example:
-
-```javascript
-const files = [
-    "chris-mayo.html",
-    "mohammed-almasabi.html",
-    "new-student.html"
-];
-```
-
----
-
-# ⚙️ Content Loaders
-
-Each dynamic content type has its own loader.
-
-```text
-content/
-├── news/
-│   └── index.js
-│
-├── publications/
-│   └── index.js
-│
-└── mentorship/
-    └── index.js
-```
-
-The loaders are responsible for:
-
-1. Finding the relevant container.
-2. Fetching the individual HTML files.
-3. Inserting the HTML into the page.
-
----
-
-## Publications Loader
-
-The publication loader is located at:
-
-```text
-content/publications/index.js
-```
-
-It should export:
-
-```javascript
-export async function loadPublications() {
-    // publication loading logic
-}
-```
-
-It is imported by `main.js`:
-
-```javascript
-import {
-    loadPublications
-} from "../content/publications/index.js";
-```
-
-Then initialized:
-
-```javascript
-await loadPublications();
-```
-
----
-
-## News Loader
-
-The News loader is located at:
-
-```text
-content/news/index.js
-```
-
-It should export:
-
-```javascript
-export async function loadNews() {
-    // news loading logic
-}
-```
-
-It is imported by:
-
-```javascript
-import {
-    loadNews
-} from "../content/news/index.js";
-```
-
-Then initialized:
-
-```javascript
-await loadNews();
-```
-
----
-
-## Mentorship Loader
-
-Mentorship follows the same pattern:
-
-```javascript
-export async function loadMentorship() {
-    // mentorship loading logic
-}
-```
-
-and:
-
-```javascript
-import {
-    loadMentorship
-} from "../content/mentorship/index.js";
-```
-
----
-
-# 🧠 `main.js`
-
-The main JavaScript entry point is:
-
-```text
-js/main.js
-```
-
-It coordinates the website.
-
-A typical initialization sequence is:
-
-```javascript
-await loadPublications();
-await loadNews();
-await loadMentorship();
-```
-
-Other global functionality may include:
-
-```text
-Theme switching
-Terminal mode
-Console animation
-Current year
-Navigation behaviour
-```
-
----
-
-# 📌 Important JavaScript Rule
-
-Because the project uses ES modules, imports must be at the **top level** of `main.js`.
-
-Correct:
-
-```javascript
-import {
-    loadPublications
-} from "../content/publications/index.js";
-
-import {
-    loadNews
-} from "../content/news/index.js";
-
-
-async function loadPage() {
-
-    await loadPublications();
-    await loadNews();
-
-}
-```
-
-Incorrect:
-
-```javascript
-async function loadPage() {
-
-    import {
-        loadNews
-    } from "../content/news/index.js";
-
-}
-```
-
----
-
-# 🧱 HTML Module Rule
-
-Content files are fragments.
-
 For example:
 
 ```text
-content/news/refusalguard-m.html
+content/mentorship/
+├── chris-mayo.html
+└── mohammed-almasabi.html
 ```
 
-should contain:
+## To add a new mentorship entry
 
-```html
-<article class="news-card">
-    ...
-</article>
-```
-
-It should **not** contain:
-
-```html
-<!DOCTYPE html>
-<html>
-<head>
-</head>
-<body>
-```
-
-The same applies to publications and mentorship content.
-
----
-
-# 🎨 Styling
-
-Global styling is located in:
+1. Create a new HTML file in:
 
 ```text
-css/style.css
+content/mentorship/
 ```
 
-Terminal-specific styling is located in:
-
-```text
-css/terminal.css
-```
-
-Use `style.css` for:
-
-- Typography
-- Layout
-- Colors
-- Navigation
-- Cards
-- Buttons
-- Sections
-- Responsive design
-- Research/publication/news styling
-
-Use `terminal.css` for:
-
-- Terminal mode
-- Terminal colors
-- Terminal typography
-- Terminal-specific effects
-
----
-
-# 🖌️ Reusing Existing CSS Classes
-
-When adding content, reuse the existing classes.
-
-For News:
-
-```text
-news-card
-news-image-link
-news-content
-news-date
-news-link
-```
-
-For Publications:
-
-```text
-publication-card
-publication-year
-publication-content
-publication-meta
-publication-links
-```
-
-This ensures new content automatically receives the existing visual design.
-
-Avoid creating new CSS classes unless the new content actually requires a different presentation.
-
----
-
-# 🔗 Links
-
-External links should normally use:
-
-```html
-target="_blank"
-rel="noopener"
-```
+2. Use a descriptive filename.
 
 Example:
 
-```html
-<a
-    href="https://example.com"
-    target="_blank"
-    rel="noopener"
->
-    Read more ↗
-</a>
+```text
+content/mentorship/student-name.html
 ```
 
-Internal navigation can use section anchors:
+3. Add the file to the mentorship content list.
 
-```html
-<a href="#research">
-    Research
-</a>
-```
+4. Add any relevant external publication or project links.
+
+5. Test locally.
+
+6. Commit and push.
 
 ---
 
-# 🖼️ Assets
+# Adding Images and Other Assets
 
-Images and other static resources are stored in:
+Static assets are stored under:
 
 ```text
 assets/
 ```
 
-News images are stored in:
+Use the appropriate subdirectory whenever possible.
 
-```text
-assets/news/
-```
-
-The profile image is:
+### Profile images
 
 ```text
 assets/profile.png
 ```
 
-The CV is:
+### News images
 
 ```text
-CV.pdf
+assets/news/
 ```
+
+### Feature logos
+
+```text
+assets/features/
+```
+
+If a new content category requires many images, create a dedicated directory.
+
+For example:
+
+```text
+assets/projects/
+```
+
+Keep filenames descriptive and use lowercase with hyphens.
 
 ---
 
-# 🧪 Local Development
+# Adding a New Content Category
 
-Because the site dynamically loads HTML files using JavaScript `fetch()`, it should be tested through a local HTTP server rather than by opening `index.html` directly with `file://`.
+If a new type of content is needed in the future, follow the existing modular pattern.
+
+For example, a future **Talks & Presentations** category could use:
+
+```text
+content/talks/
+├── conference-presentation.html
+├── webinar.html
+└── guest-lecture.html
+```
+
+with a corresponding section under:
+
+```text
+sections/
+```
+
+and any required assets under:
+
+```text
+assets/
+```
+
+The new category should follow the same organizational principles as Publications, News, Mentorship, and Features.
+
+---
+
+# Adding a New Website Section
+
+A new section should normally be created when the website needs to introduce a **new type of information**, rather than simply adding another item to an existing category.
+
+Examples of appropriate future sections:
+
+- Talks & Presentations
+- Media
+- Teaching
+- Research Datasets
+- Software & Tools
+- Consulting
+- Press Coverage
+
+Before creating a new section, check whether the content already belongs naturally in an existing category.
+
+For example:
+
+- A new paper → **Publications**
+- A new award announcement → **News**
+- A new external report contribution → **Features**
+- A new student project → **Mentorship**
+- A new research tool → potentially **Projects**
+
+This keeps the website organized and prevents unnecessary duplication.
+
+---
+
+# Naming Conventions
+
+Use descriptive, lowercase filenames with hyphens.
+
+Recommended:
+
+```text
+refusalguard-m.html
+grammatical-mirage.html
+uk-cyber-security-council.html
+new-research-award.html
+```
+
+Avoid:
+
+```text
+Paper1.html
+New Paper.html
+feature_01.html
+test.html
+```
+
+The filename should make the purpose of the content immediately clear.
+
+---
+
+# External Links
+
+When adding external content, link directly to the relevant official publication, organization, report, paper, or profile whenever possible.
+
+Examples include:
+
+- Official organization websites
+- Publisher pages
+- Conference pages
+- Research repositories
+- Professional reports
+- Media articles
+- GitHub repositories
+- ORCID
+- Google Scholar
+- LinkedIn
+
+Avoid unnecessary intermediary links.
+
+---
+
+# Logos and Branding
+
+For professional Features, use the official logo of the relevant organization or publication whenever appropriate.
+
+Recommended location:
+
+```text
+assets/features/
+```
+
+Keep logos:
+
+- High quality
+- Appropriately sized
+- Proportionally displayed
+- Clearly identifiable
+
+Do not unnecessarily edit or distort organizational logos.
+
+---
+
+# Updating Existing Content
+
+If an existing item needs to be corrected or updated:
+
+1. Locate the relevant file under `content/`.
+2. Edit that file directly.
+3. Do not create a duplicate unless the update represents a genuinely new item.
+4. Check associated assets and links.
+5. Test locally.
+6. Commit and push.
+
+---
+
+# Changing the Website Structure
+
+Changes to the overall structure should generally be made in:
+
+```text
+index.html
+```
+
+or:
+
+```text
+sections/
+components/
+```
+
+Examples include:
+
+- Adding a new navigation item
+- Reordering major sections
+- Changing the hero area
+- Adding a new permanent section
+- Modifying the footer
+
+Routine content additions should **not** require restructuring the website.
+
+---
+
+# Styling
+
+General website styling is located in:
+
+```text
+css/style.css
+```
+
+Terminal-mode styling is located in:
+
+```text
+css/terminal.css
+```
+
+When introducing a new component, prefer adding new CSS selectors rather than modifying unrelated existing components.
+
+This reduces the risk of unintentionally changing other parts of the website.
+
+---
+
+# JavaScript
+
+The main JavaScript file is:
+
+```text
+js/main.js
+```
+
+The content categories have their own loaders inside:
+
+```text
+content/
+```
+
+For normal content updates, there should usually be no need to modify `main.js`.
+
+Only modify the JavaScript structure when:
+
+- Adding a new content category
+- Changing how content is loaded
+- Adding a new interactive feature
+- Changing the website's overall behavior
+
+---
+
+# Local Testing
+
+Before publishing changes, test the website locally.
+
+Because the site loads some content dynamically, it should be served through a local web server rather than opened directly as a `file://` document.
 
 For example:
 
@@ -912,538 +612,144 @@ Then open:
 http://localhost:8000
 ```
 
-You can also use a local development server such as VS Code Live Server.
+Check the website on:
+
+- Desktop
+- Tablet
+- Mobile
+
+Also check the browser console for errors.
 
 ---
 
-# 🚀 GitHub Pages Deployment
+# Content Addition Checklist
 
-The website is designed to run as a static GitHub Pages site.
+Before adding new content:
+
+- [ ] Identify the correct category.
+- [ ] Create a descriptive filename.
+- [ ] Add the content to the appropriate `content/` directory.
+- [ ] Register the new item with the category.
+- [ ] Add required images or logos.
+- [ ] Check all external links.
+- [ ] Check image alternative text.
+- [ ] Test desktop layout.
+- [ ] Test mobile layout.
+- [ ] Check terminal mode if relevant.
+- [ ] Check the browser console.
+- [ ] Commit the changes.
+- [ ] Push to GitHub.
+
+---
+
+# New Category Checklist
+
+When creating a completely new category:
+
+- [ ] Create the appropriate directory under `content/`.
+- [ ] Create the corresponding section under `sections/`.
+- [ ] Create the category's content list/loader.
+- [ ] Add the category to the main website structure.
+- [ ] Add navigation if appropriate.
+- [ ] Create any required CSS.
+- [ ] Create an assets directory if needed.
+- [ ] Test desktop and mobile layouts.
+- [ ] Test terminal mode if applicable.
+- [ ] Update this README.
+
+---
+
+# GitHub Pages Deployment
+
+The website is hosted through GitHub Pages.
 
 After making changes:
 
 ```bash
 git add .
-git commit -m "Update website content"
+git commit -m "Update website"
 git push
 ```
 
-GitHub Pages will publish the updated repository according to the repository's configured publishing source.
+GitHub Pages will deploy the updated repository according to the repository's configured Pages settings.
+
+Allow a short period for the changes to become visible online.
 
 ---
 
-# 🔄 Typical Workflows
+# Recommended Commit Messages
 
-## Add a publication
+Keep commit messages short and descriptive.
+
+Examples:
 
 ```text
-1. Create:
-   content/publications/my-paper.html
-
-2. Add the filename to:
-   content/publications/index.js
-
-3. Add any required image to:
-   assets/
-
-4. Test locally.
-
-5. Commit and push.
+Add new publication
+Add UKCSC feature
+Update research profile
+Add conference news
+Update mentorship section
+Add new professional achievement
+Update website navigation
 ```
 
----
-
-## Add a news item
+Avoid vague messages such as:
 
 ```text
-1. Create:
-   content/news/my-news.html
-
-2. Add the filename to:
-   content/news/index.js
-
-3. Add the image to:
-   assets/news/
-
-4. Test locally.
-
-5. Commit and push.
+update
+changes
+stuff
+website
 ```
 
 ---
 
-## Add a mentorship entry
+# Maintenance Principles
 
-```text
-1. Create:
-   content/mentorship/my-student.html
+The website should remain:
 
-2. Register the file in:
-   content/mentorship/index.js
-
-3. Test locally.
-
-4. Commit and push.
-```
-
----
-
-## Modify an existing section
-
-Edit the relevant file in:
-
-```text
-sections/
-```
-
-For example:
-
-```text
-sections/research.html
-```
-
-or:
-
-```text
-sections/experience.html
-```
-
-No change to `index.html` is normally required.
+- **Modular**: content is separated into manageable files.
+- **Simple**: avoid unnecessary frameworks or infrastructure.
+- **Maintainable**: future updates should be straightforward.
+- **Consistent**: new content should follow existing layouts.
+- **Accessible**: images, links, and navigation should remain usable.
+- **Responsive**: content should work across desktop, tablet, and mobile.
+- **Professional**: external links and organizational branding should be accurate.
+- **Lightweight**: avoid unnecessary dependencies.
 
 ---
 
-# 📋 Section Reference
+# Quick Reference
 
-| Website Area | File |
-|---|---|
-| Navigation | `components/nav.html` |
-| Hero | `components/hero.html` |
-| About | `sections/about.html` |
-| Research Statement | `sections/research-statement.html` |
-| Research | `sections/research.html` |
-| RefusalGuard-M | `sections/flagship-refusalguard.html` |
-| Grammatical Mirage | `sections/flagship-grammatical-mirage.html` |
-| Publications | `sections/publications.html` |
-| News | `sections/news.html` |
-| Projects | `sections/projects.html` |
-| Profiles | `sections/profiles.html` |
-| Experience | `sections/experience.html` |
-| Achievements | `sections/achievements.html` |
-| Service | `sections/service.html` |
-| Mentorship | `sections/mentorship.html` |
-| Contact | `sections/contact.html` |
-| Footer | `components/footer.html` |
-
----
-
-# 📚 Current Publications
-
-The current publication content is located in:
-
-```text
-content/publications/
-```
-
-Current entries include:
-
-```text
-refusalguard-m.html
-human-machine-agreement.html
-cutcaptcha.html
-grammatical-mirage.html
-```
+| Task                   | Location                 |
+| ---------------------- | ------------------------ |
+| Main website structure | `index.html`             |
+| Navigation             | `components/nav.html`    |
+| Hero/profile           | `components/hero.html`   |
+| Footer                 | `components/footer.html` |
+| Major page sections    | `sections/`              |
+| Publications           | `content/publications/`  |
+| News                   | `content/news/`          |
+| Mentorship             | `content/mentorship/`    |
+| Professional Features  | `content/features/`      |
+| General styling        | `css/style.css`          |
+| Terminal styling       | `css/terminal.css`       |
+| Main JavaScript        | `js/main.js`             |
+| Profile assets         | `assets/`                |
+| News images            | `assets/news/`           |
+| Feature logos          | `assets/features/`       |
+| CV                     | `CV.pdf`                 |
 
 ---
 
-# 📰 Current News
+# General Rule for Future Updates
 
-The current News content is located in:
+When adding something new, first ask:
 
-```text
-content/news/
-```
+> **Is this a new type of content, or is it another item within an existing category?**
 
-Current entries include:
+If it belongs to an existing category, add a new content item there.
 
-```text
-refusalguard-m.html
-ieee-csr-2026.html
-ukci-2025.html
-uwe-engineering-showcase.html
-```
+If it represents a genuinely new type of information, consider creating a new section and category.
 
----
-
-# 🎓 Current Mentorship
-
-The current mentorship content includes:
-
-```text
-content/mentorship/
-├── chris-mayo.html
-└── mohammed-almasabi.html
-```
-
----
-
-# ⚠️ Common Errors
-
-## `loadPublications is not defined`
-
-Make sure the function is exported:
-
-```javascript
-export async function loadPublications() {
-    ...
-}
-```
-
-and imported correctly:
-
-```javascript
-import {
-    loadPublications
-} from "../content/publications/index.js";
-```
-
----
-
-## `loadNews is not defined`
-
-Check:
-
-```javascript
-export async function loadNews() {
-    ...
-}
-```
-
-and:
-
-```javascript
-import {
-    loadNews
-} from "../content/news/index.js";
-```
-
----
-
-## `The requested module does not provide an export`
-
-This usually means the function is defined but not exported.
-
-Incorrect:
-
-```javascript
-async function loadPublications() {
-    ...
-}
-```
-
-Correct:
-
-```javascript
-export async function loadPublications() {
-    ...
-}
-```
-
----
-
-## `Failed to fetch`
-
-Check:
-
-1. The file exists.
-2. The path is correct.
-3. The filename matches exactly.
-4. Capitalization matches.
-5. The site is being served through HTTP rather than `file://`.
-
-For example:
-
-```text
-content/news/refusalguard-m.html
-```
-
-is different from:
-
-```text
-content/news/RefusalGuard-M.html
-```
-
-on case-sensitive hosting environments.
-
----
-
-# 🧭 Design Philosophy
-
-The architecture intentionally separates:
-
-```text
-STRUCTURE
-    ↓
-CONTENT
-    ↓
-PRESENTATION
-    ↓
-BEHAVIOUR
-```
-
-### Structure
-
-```text
-components/
-sections/
-```
-
-Defines what the website looks like structurally.
-
-### Content
-
-```text
-content/
-```
-
-Contains individual publications, news stories, and mentorship entries.
-
-### Presentation
-
-```text
-css/
-```
-
-Controls the visual design.
-
-### Behaviour
-
-```text
-js/
-```
-
-Controls dynamic functionality and content loading.
-
----
-
-# ➕ Adding Content Without Touching `index.html`
-
-One of the main goals of this architecture is to avoid turning `index.html` into a large monolithic file.
-
-For example, adding a new publication should normally involve only:
-
-```text
-content/publications/my-paper.html
-content/publications/index.js
-```
-
-Adding a new news story should normally involve:
-
-```text
-content/news/my-story.html
-content/news/index.js
-assets/news/my-story.jpg
-```
-
-The homepage structure remains unchanged.
-
----
-
-# 🔒 Content Integrity
-
-When adding academic publications, research projects, awards, or professional activities:
-
-- Use accurate publication titles.
-- Use official publication URLs where possible.
-- Use the correct publication year.
-- Use the correct venue.
-- Link to the DOI or publisher page when available.
-- Link to GitHub repositories where appropriate.
-- Use accurate descriptions of research contributions.
-- Avoid claiming awards, positions, or affiliations that have not been formally confirmed.
-
----
-
-# ♿ Accessibility
-
-When adding images, always provide meaningful `alt` text.
-
-Good:
-
-```html
-<img
-    src="assets/news/ukci2025award.jpg"
-    alt="Michael Tchuindjang receiving the UKCI 2025 Best Paper Award"
->
-```
-
-Avoid:
-
-```html
-<img
-    src="assets/news/ukci2025award.jpg"
-    alt="image"
->
-```
-
-Use semantic HTML such as:
-
-```html
-<article>
-<h2>
-<h3>
-<p>
-<a>
-<button>
-```
-
-where appropriate.
-
----
-
-# 🔧 Maintenance Principles
-
-When maintaining the website:
-
-### Prefer
-
-```text
-Small HTML files
-Reusable CSS classes
-Dedicated content loaders
-Descriptive filenames
-Semantic HTML
-Relative paths
-```
-
-### Avoid
-
-```text
-One huge index.html
-Duplicated HTML
-Inline CSS everywhere
-Duplicated JavaScript
-Hard-coded content in multiple locations
-Unnecessary frameworks
-```
-
----
-
-# 📌 Quick Reference
-
-### New news item
-
-```text
-content/news/new-item.html
-        ↓
-content/news/index.js
-        ↓
-News section
-```
-
-### New publication
-
-```text
-content/publications/new-paper.html
-        ↓
-content/publications/index.js
-        ↓
-Publications section
-```
-
-### New mentorship item
-
-```text
-content/mentorship/new-student.html
-        ↓
-content/mentorship/index.js
-        ↓
-Mentorship section
-```
-
-### New homepage section
-
-```text
-sections/new-section.html
-        ↓
-js/main.js
-        ↓
-Homepage
-```
-
-### New reusable component
-
-```text
-components/new-component.html
-        ↓
-js/main.js
-        ↓
-Homepage
-```
-
----
-
-# 👤 Author
-
-**Michael Tchuindjang**
-
-Cybersecurity Researcher | AI Security Researcher | Educator
-
-Research interests include:
-
-- LLM security
-- Multi-turn jailbreaking
-- Adversarial AI
-- AI security
-- Representation engineering
-- Cybersecurity
-- Human-AI interaction
-- AI governance
-
----
-
-# 📄 License
-
-This repository primarily represents a personal academic and professional website.
-
-Unless otherwise stated, website text, personal branding, photographs, CV material, and original content are the property of **Michael Tchuindjang**.
-
-Individual research papers, datasets, repositories, images, and third-party resources remain subject to their respective licenses and copyright terms.
-
----
-
-# ⭐ Maintenance Summary
-
-The most important rule to remember is:
-
-> **Sections define where content appears. Content files define what appears. Loaders connect the two.**
-
-Therefore:
-
-```text
-New publication
-→ create HTML
-→ register it in publications/index.js
-
-New news item
-→ create HTML
-→ add image
-→ register it in news/index.js
-
-New mentorship item
-→ create HTML
-→ register it in mentorship/index.js
-
-Change layout
-→ edit sections/
-
-Change design
-→ edit css/
-
-Change functionality
-→ edit js/
-
-Change navigation/hero/footer
-→ edit components/
-```
-
-This keeps the website modular, maintainable, and easy to extend as the research portfolio grows.
+The goal is to keep the website easy to maintain as the number of publications, achievements, professional contributions, research activities, and other content grows.
