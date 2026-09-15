@@ -1,12 +1,16 @@
 const newsFiles = [
 
+    "13th-isncc-conference-2026.html",
+    
     "refusalguard-m.html",
 
     "ieee-csr-2026.html",
 
+    "uwe-engineering-showcase.html",
+
     "ukci-2025.html",
 
-    "uwe-engineering-showcase.html"
+    "4th-cardiff-nlp-workshop.html"
 
 ];
 
