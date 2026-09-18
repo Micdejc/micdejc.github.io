@@ -717,49 +717,6 @@
 
 }
 
-@keyframes holidayNotificationEnter {
-
-    0% {
-        opacity: 0;
-        transform:
-            translateY(-20px)
-            scale(0.96);
-    }
-
-    60% {
-        opacity: 1;
-        transform:
-            translateY(0)
-            scale(1);
-    }
-
-    70% {
-        transform:
-            translateX(-5px)
-            scale(1);
-    }
-
-    80% {
-        transform:
-            translateX(5px)
-            scale(1);
-    }
-
-    90% {
-        transform:
-            translateX(-3px)
-            scale(1);
-    }
-
-    100% {
-        opacity: 1;
-        transform:
-            translateX(0)
-            scale(1);
-    }
-
-}
-
 .holiday-notification.show {
 
     opacity:
@@ -774,9 +731,6 @@
     transform:
         translateY(0)
         scale(1);
-
-   animation:
-        holidayNotificationEnter 0.9s ease-in-out;
 
 }
 
