@@ -33,6 +33,10 @@ async function loadCalendarEvents() {
         calendarDataLoaded =
             true;
 
+        displayNextEvent();
+
+        displayCalendarEvents();
+
         handleTodayHoliday();
 
         return calendarEvents;
@@ -45,6 +49,10 @@ async function loadCalendarEvents() {
         "undefined"
     ) {
 
+        console.error(
+            "GOOGLE_CALENDAR_CONFIG is not available."
+        );
+
         return [];
 
     }
@@ -56,7 +64,7 @@ async function loadCalendarEvents() {
         "YOUR_GOOGLE_CALENDAR_API_KEY"
     ) {
 
-        console.warn(
+        console.error(
             "Google Calendar API key has not been configured."
         );
 
@@ -166,7 +174,9 @@ async function loadCalendarEvents() {
                 .filter(
                     function (event) {
 
-                        return event.start !== null;
+                        return (
+                            event.start !== null
+                        );
 
                     }
                 )
@@ -191,6 +201,10 @@ async function loadCalendarEvents() {
         );
 
 
+        displayNextEvent();
+
+        displayCalendarEvents();
+
         handleTodayHoliday();
 
 
@@ -202,6 +216,25 @@ async function loadCalendarEvents() {
             "Unable to load UK holidays:",
             error
         );
+
+
+        const container =
+            document.getElementById(
+                "calendarEvents"
+            );
+
+
+        if (container) {
+
+            container.innerHTML =
+                `
+                    <p class="calendar-error">
+                        Unable to load UK holidays.
+                    </p>
+                `;
+
+        }
+
 
         return [];
 
@@ -633,7 +666,7 @@ function displayNextEvent() {
 
 
 /* =========================================================
-   DISPLAY UK HOLIDAYS
+   DISPLAY HOLIDAYS
 ========================================================= */
 
 function displayCalendarEvents() {
@@ -702,7 +735,7 @@ function displayCalendarEvents() {
 
 
 /* =========================================================
-   DISPLAY TODAY'S DATE
+   DISPLAY TODAY
 ========================================================= */
 
 function displayCalendarToday() {
@@ -743,7 +776,7 @@ function displayCalendarToday() {
 
 
 /* =========================================================
-   CACHE CALENDAR EVENTS
+   CACHE EVENTS
 ========================================================= */
 
 function cacheCalendarEvents(
@@ -799,16 +832,6 @@ function cacheCalendarEvents(
 
 function getCachedCalendarEvents() {
 
-    if (
-        typeof GOOGLE_CALENDAR_CONFIG ===
-        "undefined"
-    ) {
-
-        return null;
-
-    }
-
-
     const cached =
         sessionStorage.getItem(
             "ukCalendarEvents"
@@ -826,6 +849,16 @@ function getCachedCalendarEvents() {
 
         const data =
             JSON.parse(cached);
+
+
+        if (
+            typeof GOOGLE_CALENDAR_CONFIG ===
+            "undefined"
+        ) {
+
+            return null;
+
+        }
 
 
         if (
@@ -885,54 +918,6 @@ function getCachedCalendarEvents() {
 
 
 /* =========================================================
-   INITIALISE CALENDAR DATA
-========================================================= */
-
-async function initialiseCalendarData() {
-
-    displayCalendarToday();
-
-
-    const container =
-        document.getElementById(
-            "calendarEvents"
-        );
-
-
-    if (container) {
-
-        container.innerHTML =
-            `
-                <p class="calendar-loading">
-                    Loading UK holidays...
-                </p>
-            `;
-
-    }
-
-
-    await loadCalendarEvents();
-
-
-    displayNextEvent();
-
-    displayCalendarEvents();
-
-}
-
-
-/* =========================================================
-   PRELOAD CALENDAR
-========================================================= */
-
-function preloadCalendar() {
-
-    loadCalendarEvents();
-
-}
-
-
-/* =========================================================
    INITIALISE CALENDAR
 ========================================================= */
 
@@ -962,10 +947,22 @@ function initialiseCalendar() {
         );
 
 
-    if (
-        !toggle ||
-        !calendar
-    ) {
+    if (!toggle) {
+
+        console.error(
+            "calendarToggle was not found."
+        );
+
+        return;
+
+    }
+
+
+    if (!calendar) {
+
+        console.error(
+            "calendarModal was not found."
+        );
 
         return;
 
@@ -973,7 +970,14 @@ function initialiseCalendar() {
 
 
     /* -----------------------------------------------------
-       OPEN IMMEDIATELY
+       TODAY
+    ----------------------------------------------------- */
+
+    displayCalendarToday();
+
+
+    /* -----------------------------------------------------
+       OPEN
     ----------------------------------------------------- */
 
     toggle.addEventListener(
@@ -990,8 +994,8 @@ function initialiseCalendar() {
             );
 
 
-            /* Refresh display from
-               already available data */
+            /* Display whatever is
+               already available */
 
             displayNextEvent();
 
@@ -1059,9 +1063,9 @@ function initialiseCalendar() {
 
 
     /* -----------------------------------------------------
-       PRELOAD IN BACKGROUND
+       LOAD DATA IN BACKGROUND
     ----------------------------------------------------- */
 
-    preloadCalendar();
+    loadCalendarEvents();
 
 }
