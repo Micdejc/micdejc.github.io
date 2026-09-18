@@ -516,7 +516,8 @@ function showHolidayNotification(
             today.getDate()
         ).padStart(2, "0");
 
-
+/* Uncomment below if you want the notification to show only once per session */
+/*
     if (
         sessionStorage.getItem(
             notificationKey
@@ -532,7 +533,7 @@ function showHolidayNotification(
         notificationKey,
         "true"
     );
-
+*/
 
     let notification =
         document.getElementById(
