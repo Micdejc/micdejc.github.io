@@ -1,0 +1,60 @@
+<!--
+  Holiday Calendar module for micdejc.github.io
+  Paste this section wherever you want the calendar to appear.
+  Add the CSS/JS includes once in your page.
+-->
+<section id="holiday-calendar" class="holiday-calendar" aria-labelledby="holiday-calendar-title">
+  <div class="hc-shell">
+    <header class="hc-heading">
+      <p class="hc-eyebrow">Calendar</p>
+      <h2 id="holiday-calendar-title" class="hc-title">Holidays & Events</h2>
+      <p class="hc-intro">UK holidays, major religious festivals and selected international observances.</p>
+    </header>
+
+    <div class="hc-notices" aria-live="polite">
+      <article class="hc-notice">
+        <div class="hc-notice-label">Next event</div>
+        <div class="hc-next-title hc-notice-title">Loading…</div>
+        <p class="hc-next-meta hc-notice-meta">Checking Google Calendar</p>
+      </article>
+      <article class="hc-notice">
+        <div class="hc-notice-label">Today</div>
+        <div class="hc-notice-title">Holiday greetings</div>
+        <p class="hc-notice-meta">If today is a holiday, a greeting will appear automatically.</p>
+      </article>
+    </div>
+
+    <div class="hc-controls" aria-label="Calendar controls">
+      <button class="hc-prev" type="button" aria-label="Previous month">‹</button>
+      <div class="hc-month" aria-live="polite"></div>
+      <button class="hc-next-month" type="button" aria-label="Next month">›</button>
+      <button class="hc-today" type="button">Today</button>
+      <span class="hc-spacer"></span>
+    </div>
+
+    <div class="hc-grid-wrap">
+      <div class="hc-weekdays" aria-hidden="true">
+        <div class="hc-weekday">Mon</div><div class="hc-weekday">Tue</div><div class="hc-weekday">Wed</div>
+        <div class="hc-weekday">Thu</div><div class="hc-weekday">Fri</div><div class="hc-weekday">Sat</div><div class="hc-weekday">Sun</div>
+      </div>
+      <div class="hc-days"></div>
+      <div class="hc-legend">
+        <span><i class="hc-dot uk"></i> UK</span>
+        <span><i class="hc-dot christian"></i> Christian</span>
+        <span><i class="hc-dot islamic"></i> Islamic</span>
+        <span><i class="hc-dot hindu"></i> Hindu</span>
+        <span><i class="hc-dot jewish"></i> Jewish</span>
+      </div>
+    </div>
+    <div class="hc-status" role="status"></div>
+  </div>
+
+  <div class="hc-modal" role="dialog" aria-modal="true" aria-labelledby="hc-greeting-title">
+    <div class="hc-modal-card">
+      <button class="hc-close" type="button" aria-label="Close greeting">×</button>
+      <div class="hc-greeting-icon" aria-hidden="true">🎉</div>
+      <h3 id="hc-greeting-title" class="hc-greeting-title">Happy holiday!</h3>
+      <p class="hc-greeting-text">Wishing you a wonderful day.</p>
+    </div>
+  </div>
+</section>
