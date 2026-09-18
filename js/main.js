@@ -138,7 +138,7 @@ async function loadPage() {
 
        loadComponent(
             "calendarContainer",
-            "calendar.html"
+            "sections/calendar.html"
         ),
 
         loadComponent(
