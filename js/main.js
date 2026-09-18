@@ -171,7 +171,6 @@ async function loadPage() {
     initialiseYear();
 
     initialiseCalendar();
-
 }
 
 
