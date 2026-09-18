@@ -183,7 +183,7 @@
     padding: 2rem;
 
     border:
-        1px solid var(--border-color);
+        1px solid var(--border);
 
     border-radius: 18px;
 
@@ -193,10 +193,10 @@
     */
 
     background-color:
-        var(--background-color);
+        var(--surface);
 
     color:
-        var(--text-color);
+        var(--text);
 
     opacity: 1;
 
