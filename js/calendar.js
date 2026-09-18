@@ -516,6 +516,7 @@ function showHolidayNotification(
             today.getDate()
         ).padStart(2, "0");
 
+
 /* Uncomment below if you want the notification to show only once per session */
 /*
     if (
@@ -534,6 +535,7 @@ function showHolidayNotification(
         "true"
     );
 */
+
 
     let notification =
         document.getElementById(
@@ -593,10 +595,85 @@ function showHolidayNotification(
         `;
 
 
+    /*
+       Clear any previous ringing interval.
+       This prevents multiple intervals from running
+       if the notification is triggered again.
+    */
+
+    if (
+        notification._ringInterval
+    ) {
+
+        clearInterval(
+            notification._ringInterval
+        );
+
+    }
+
+
+    if (
+        notification._hideTimeout
+    ) {
+
+        clearTimeout(
+            notification._hideTimeout
+        );
+
+    }
+
+
+    /*
+       Show the notification.
+    */
+
     notification.classList.add(
         "show"
     );
 
+
+    /*
+       Ring immediately when the notification appears.
+    */
+
+    notification.classList.add(
+        "ringing"
+    );
+
+
+    /*
+       Ring again every 5 seconds.
+    */
+
+    notification._ringInterval =
+        setInterval(
+            function () {
+
+                notification.classList.remove(
+                    "ringing"
+                );
+
+
+                /*
+                   Force the browser to restart
+                   the CSS animation.
+                */
+
+                void notification.offsetWidth;
+
+
+                notification.classList.add(
+                    "ringing"
+                );
+
+            },
+            5000
+        );
+
+
+    /*
+       Close button.
+    */
 
     const close =
         notification.querySelector(
@@ -610,6 +687,28 @@ function showHolidayNotification(
             "click",
             function () {
 
+                /*
+                   Stop the ringing.
+                */
+
+                if (
+                    notification._ringInterval
+                ) {
+
+                    clearInterval(
+                        notification._ringInterval
+                    );
+
+                    notification._ringInterval =
+                        null;
+
+                }
+
+
+                /*
+                   Hide the notification.
+                */
+
                 notification.classList.remove(
                     "show"
                 );
@@ -620,16 +719,43 @@ function showHolidayNotification(
     }
 
 
-    setTimeout(
-        function () {
+    /*
+       Automatically hide after 30 seconds.
+    */
 
-            notification.classList.remove(
-                "show"
-            );
+    notification._hideTimeout =
+        setTimeout(
+            function () {
 
-        },
-        30000
-    );
+                /*
+                   Stop the ringing interval.
+                */
+
+                if (
+                    notification._ringInterval
+                ) {
+
+                    clearInterval(
+                        notification._ringInterval
+                    );
+
+                    notification._ringInterval =
+                        null;
+
+                }
+
+
+                /*
+                   Hide the notification.
+                */
+
+                notification.classList.remove(
+                    "show"
+                );
+
+            },
+            30000
+        );
 
 }
 
