@@ -1,0 +1,72 @@
+<!-- =========================================================
+     CALENDAR MODAL
+========================================================= -->
+
+<div
+    class="calendar-modal"
+    id="calendarModal"
+    aria-hidden="true"
+>
+
+    <div
+        class="calendar-overlay"
+        id="calendarOverlay"
+    ></div>
+
+    <div
+        class="calendar-panel"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="calendarTitle"
+    >
+
+        <button
+            class="calendar-close"
+            id="calendarClose"
+            aria-label="Close calendar"
+        >
+            ×
+        </button>
+
+        <div class="calendar-header">
+
+            <div>
+                <span class="calendar-eyebrow">
+                    EVENTS & HOLIDAYS
+                </span>
+
+                <h2 id="calendarTitle">
+                    Calendar
+                </h2>
+            </div>
+
+            <div
+                class="calendar-today"
+                id="calendarToday"
+            ></div>
+
+        </div>
+
+        <div
+            class="calendar-greeting"
+            id="calendarGreeting"
+            hidden
+        ></div>
+
+        <div
+            class="calendar-next-event"
+            id="calendarNextEvent"
+        ></div>
+
+        <div
+            class="calendar-events"
+            id="calendarEvents"
+        >
+            <p class="calendar-loading">
+                Loading events...
+            </p>
+        </div>
+
+    </div>
+
+</div>
