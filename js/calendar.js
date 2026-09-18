@@ -23,8 +23,8 @@ async function loadCalendarEvents() {
     calendarEvents = [
 
         {
-            id: "test-christmas",
-            title: "Christmas Day",
+            id: "test-event",
+            title: "My event Day",
             start: new Date(),
             end: new Date()
         }
