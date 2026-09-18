@@ -5,7 +5,7 @@
 const GOOGLE_CALENDAR_CONFIG = {
 
     apiKey:
-        "YOUR_GOOGLE_CALENDAR_API_KEY",
+        "AIzaSyCBO1W-jM_XGtZUuNFrQDKD_E0bDy1NtNQ",
 
     calendars: [
 
