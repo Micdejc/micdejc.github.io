@@ -2,12 +2,12 @@
    GOOGLE CALENDAR CONFIGURATION
 ========================================================= */
 
-/* API call example: https://www.googleapis.com/calendar/v3/calendars/en.uk%23holiday%40group.v.calendar.google.com/events?key=AIzaSyCBO1W-jM_XGtZUuNFrQDKD_E0bDy1NtNQ&singleEvents=true&orderBy=startTime&maxResults=10*/
+/* API call example: https://www.googleapis.com/calendar/v3/calendars/en.uk%23holiday%40group.v.calendar.google.com/events?key=AIzaSyAuN82N696F6Ljv2IRIhrd-E452FOV5kwo&singleEvents=true&orderBy=startTime&maxResults=10*/
 
 const GOOGLE_CALENDAR_CONFIG = {
 
     apiKey:
-        "AIzaSyCBO1W-jM_XGtZUuNFrQDKD_E0bDy1NtNQ",
+        "AIzaSyAuN82N696F6Ljv2IRIhrd-E452FOV5kwo",
 
     calendarId:
         "en.uk#holiday@group.v.calendar.google.com",
