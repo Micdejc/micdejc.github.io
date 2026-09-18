@@ -28,6 +28,25 @@ const UK_CALENDAR_CONFIG = {
 
 async function loadCalendarEvents() {
 
+   calendarEvents = [
+
+        {
+            id: "test-my-day",
+            title: "MY Day",
+            start: new Date(),
+            end: new Date()
+        }
+
+    ];
+
+    calendarDataLoaded = true;
+
+    displayNextEvent();
+    displayCalendarEvents();
+    handleTodayHoliday();
+
+    return calendarEvents;
+
     if (calendarDataLoaded) {
 
         return calendarEvents;
