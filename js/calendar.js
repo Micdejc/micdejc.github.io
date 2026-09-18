@@ -19,7 +19,7 @@ async function loadCalendarEvents() {
        TEMPORARY TEST
        Remove this block after testing
     ===================================================== */
-  /*
+  
     calendarEvents = [
 
         {
@@ -37,7 +37,7 @@ async function loadCalendarEvents() {
     displayCalendarEvents();
     handleTodayHoliday();
 
-    return calendarEvents; */
+    return calendarEvents;
 
     if (calendarDataLoaded) {
 
