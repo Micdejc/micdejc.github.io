@@ -421,19 +421,28 @@
         1.5rem;
 
     padding:
-        1rem;
+        1.25rem;
 
     border:
-        1px solid var(--border-color);
+        2px solid var(--border-color);
 
     border-radius:
-        12px;
+        14px;
 
     background:
         rgba(
             127,
             127,
             127,
+            0.12
+        );
+
+    box-shadow:
+        0 6px 20px
+        rgba(
+            0,
+            0,
+            0,
             0.08
         );
 
@@ -446,15 +455,32 @@
         block;
 
     margin-bottom:
-        0.25rem;
+        0.4rem;
+
+    color:
+        var(--text-color);
+
+    font-size:
+        1.1rem;
+
+    font-weight:
+        700;
 
 }
-
 
 .calendar-next-event span {
 
     display:
         block;
+
+    color:
+        var(--text-color);
+
+    font-size:
+        1rem;
+
+    font-weight:
+        600;
 
 }
 
@@ -465,10 +491,19 @@
         block;
 
     margin-top:
-        0.25rem;
+        0.35rem;
+
+    color:
+        var(--text-color);
+
+    font-size:
+        0.85rem;
+
+    font-weight:
+        500;
 
     opacity:
-        0.65;
+        0.7;
 
 }
 
