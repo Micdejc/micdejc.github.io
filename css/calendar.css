@@ -1,4 +1,87 @@
 /* =========================================================
+   CALENDAR TOGGLE BUTTONS IS THE SAME CSS WITH TERMINAL
+========================================================= */
+
+.calendar-toggle {
+
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    border: 1px solid var(--border-color);
+
+    border-radius: 50%;
+
+    background: var(--card-background);
+
+    color: var(--text-color);
+
+    cursor: pointer;
+
+    box-shadow:
+        0 4px 12px rgba(
+            0,
+            0,
+            0,
+            0.08
+        );
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+
+}
+
+
+/* =========================================================
+   HOVER
+========================================================= */
+
+.calendar-toggle:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 6px 18px rgba(
+            0,
+            0,
+            0,
+            0.14
+        );
+
+}
+
+
+/* =========================================================
+   ACTIVE
+========================================================= */
+
+.calendar-toggle:active {
+
+    transform: scale(0.95);
+
+}
+
+
+/* =========================================================
+   ICON
+========================================================= */
+
+.calendar-toggle-icon {
+
+    font-size: 20px;
+
+    line-height: 1;
+
+}
+
+/* =========================================================
    CALENDAR MODAL
 ========================================================= */
 
