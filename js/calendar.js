@@ -627,7 +627,7 @@ function showHolidayNotification(
             );
 
         },
-        10000
+        30000
     );
 
 }
