@@ -1,4 +1,38 @@
 /* Holiday calendar module for micdejc.github.io */
+
+.calendar-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 40px;
+    height: 40px;
+
+    padding: 0;
+    border: 0;
+    background: transparent;
+
+    color: inherit;
+    font-size: 1.05rem;
+
+    cursor: pointer;
+    border-radius: 8px;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.calendar-toggle:hover {
+    background: rgba(127, 127, 127, 0.12);
+    transform: translateY(-1px);
+}
+
+.calendar-toggle:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+}
+
 .holiday-calendar {
   --hc-bg: #ffffff;
   --hc-surface: #f7f8fb;
