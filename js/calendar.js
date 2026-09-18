@@ -1,12 +1,13 @@
 /* =========================================================
    CALENDAR
-   Source: Calendarific
-   No Calendarific API key
-   Scrapes the public holiday page
+   Source: Timeanddate
+   Country: United Kingdom
+   No API key required
 ========================================================= */
 
 let calendarEvents = [];
 let calendarDataLoaded = false;
+
 
 /* =========================================================
    CONFIGURATION
@@ -15,10 +16,10 @@ let calendarDataLoaded = false;
 const CALENDAR_CONFIG = {
 
     baseUrl:
-        "https://calendarific.com/holidays/",
+        "https://www.timeanddate.com/holidays/uk/",
 
     country:
-        "gb",
+        "uk",
 
     cacheDuration:
         6 * 60 * 60 * 1000 // 6 hours
@@ -74,21 +75,19 @@ async function loadCalendarEvents() {
 
     const url =
         CALENDAR_CONFIG.baseUrl +
-        year +
-        "/" +
-        CALENDAR_CONFIG.country;
+        year;
 
 
     try {
 
         console.log(
-            "Loading Calendarific:",
+            "Loading Timeanddate UK holidays:",
             url
         );
 
 
         /* -------------------------------------------------
-           FETCH PUBLIC CALENDARIFIC PAGE
+           FETCH TIMEANDDATE PAGE
         ------------------------------------------------- */
 
         const response =
@@ -109,7 +108,7 @@ async function loadCalendarEvents() {
         if (!response.ok) {
 
             throw new Error(
-                "Calendarific request failed: " +
+                "Timeanddate request failed: " +
                 response.status
             );
 
@@ -152,19 +151,20 @@ async function loadCalendarEvents() {
         ) {
 
             throw new Error(
-                "Calendarific holiday table was not found."
+                "Timeanddate holiday table was not found."
             );
 
         }
 
 
         /*
-           Calendarific's page contains a table with:
+           Timeanddate's holiday page contains a table
+           with columns similar to:
 
-           Holiday | Date
+           Date | Day | Name | Type | Details
 
-           We locate the table whose header contains
-           both "Holiday" and "Date".
+           We identify the correct table by looking
+           for a header containing "Name" and "Type".
         */
 
         const holidayTable =
@@ -174,7 +174,7 @@ async function loadCalendarEvents() {
                     const headers =
                         Array.from(
                             table.querySelectorAll(
-                                "th"
+                                "thead th"
                             )
                         )
                         .map(
@@ -182,6 +182,10 @@ async function loadCalendarEvents() {
 
                                 return header
                                     .textContent
+                                    .replace(
+                                        /\s+/g,
+                                        " "
+                                    )
                                     .trim()
                                     .toLowerCase();
 
@@ -190,12 +194,25 @@ async function loadCalendarEvents() {
 
 
                     return (
-                        headers.includes(
-                            "holiday"
+                        headers.some(
+                            function (header) {
+
+                                return (
+                                    header === "name"
+                                );
+
+                            }
                         ) &&
-                        headers.includes(
-                            "date"
+                        headers.some(
+                            function (header) {
+
+                                return (
+                                    header === "type"
+                                );
+
+                            }
                         )
+
                     );
 
                 }
@@ -205,7 +222,84 @@ async function loadCalendarEvents() {
         if (!holidayTable) {
 
             throw new Error(
-                "Calendarific holiday table could not be identified."
+                "Timeanddate holiday table could not be identified."
+            );
+
+        }
+
+
+        /* -------------------------------------------------
+           IDENTIFY COLUMN POSITIONS
+        ------------------------------------------------- */
+
+        const headerCells =
+            Array.from(
+                holidayTable.querySelectorAll(
+                    "thead th"
+                )
+            );
+
+
+        const headers =
+            headerCells.map(
+                function (header) {
+
+                    return header
+                        .textContent
+                        .replace(
+                            /\s+/g,
+                            " "
+                        )
+                        .trim()
+                        .toLowerCase();
+
+                }
+            );
+
+
+        const dateIndex =
+            headers.findIndex(
+                function (header) {
+
+                    return (
+                        header === "date"
+                    );
+
+                }
+            );
+
+
+        const nameIndex =
+            headers.findIndex(
+                function (header) {
+
+                    return (
+                        header === "name"
+                    );
+
+                }
+            );
+
+
+        const typeIndex =
+            headers.findIndex(
+                function (header) {
+
+                    return (
+                        header === "type"
+                    );
+
+                }
+            );
+
+
+        if (
+            dateIndex === -1 ||
+            nameIndex === -1
+        ) {
+
+            throw new Error(
+                "Required Timeanddate columns were not found."
             );
 
         }
@@ -228,13 +322,15 @@ async function loadCalendarEvents() {
             function (row) {
 
                 const cells =
-                    row.querySelectorAll(
-                        "td"
+                    Array.from(
+                        row.querySelectorAll(
+                            "th, td"
+                        )
                     );
 
 
                 if (
-                    cells.length < 2
+                    cells.length === 0
                 ) {
 
                     return;
@@ -242,8 +338,26 @@ async function loadCalendarEvents() {
                 }
 
 
-                const title =
-                    cells[0]
+                const dateCell =
+                    cells[dateIndex];
+
+
+                const nameCell =
+                    cells[nameIndex];
+
+
+                if (
+                    !dateCell ||
+                    !nameCell
+                ) {
+
+                    return;
+
+                }
+
+
+                const dateText =
+                    dateCell
                         .textContent
                         .replace(
                             /\s+/g,
@@ -252,8 +366,8 @@ async function loadCalendarEvents() {
                         .trim();
 
 
-                const dateText =
-                    cells[1]
+                const title =
+                    nameCell
                         .textContent
                         .replace(
                             /\s+/g,
@@ -263,8 +377,8 @@ async function loadCalendarEvents() {
 
 
                 if (
-                    !title ||
-                    !dateText
+                    !dateText ||
+                    !title
                 ) {
 
                     return;
@@ -273,16 +387,36 @@ async function loadCalendarEvents() {
 
 
                 /* -------------------------------------------------
+                   OPTIONAL TYPE
+                ------------------------------------------------- */
+
+                let eventType =
+                    "";
+
+
+                if (
+                    typeIndex !== -1 &&
+                    cells[typeIndex]
+                ) {
+
+                    eventType =
+                        cells[typeIndex]
+                            .textContent
+                            .replace(
+                                /\s+/g,
+                                " "
+                            )
+                            .trim();
+
+                }
+
+
+                /* -------------------------------------------------
                    PARSE DATE
-
-                   Example:
-
-                   Friday, January 1, 2027
-                   Sunday, February 14, 2027
                 ------------------------------------------------- */
 
                 const parsedDate =
-                    parseCalendarificDate(
+                    parseTimeanddateDate(
                         dateText,
                         year
                     );
@@ -291,7 +425,7 @@ async function loadCalendarEvents() {
                 if (!parsedDate) {
 
                     console.warn(
-                        "Could not parse Calendarific date:",
+                        "Could not parse Timeanddate date:",
                         dateText,
                         title
                     );
@@ -313,6 +447,9 @@ async function loadCalendarEvents() {
                         cleanEventTitle(
                             title
                         ),
+
+                    type:
+                        eventType,
 
                     start:
                         parsedDate,
@@ -361,7 +498,7 @@ async function loadCalendarEvents() {
         ) {
 
             throw new Error(
-                "No Calendarific events were found."
+                "No Timeanddate events were found."
             );
 
         }
@@ -392,7 +529,7 @@ async function loadCalendarEvents() {
 
 
         console.log(
-            "Calendarific events loaded:",
+            "Timeanddate events loaded:",
             calendarEvents.length
         );
 
@@ -402,7 +539,7 @@ async function loadCalendarEvents() {
     } catch (error) {
 
         console.error(
-            "Unable to load Calendarific events:",
+            "Unable to load Timeanddate events:",
             error
         );
 
@@ -427,7 +564,7 @@ async function loadCalendarEvents() {
                             target="_blank"
                             rel="noopener noreferrer"
                         >
-                            View Calendarific UK Calendar
+                            View Timeanddate UK Calendar
                         </a>
                     </p>
                 `;
@@ -443,125 +580,175 @@ async function loadCalendarEvents() {
 
 
 /* =========================================================
-   PARSE CALENDARIFIC DATE
+   PARSE TIMEANDDATE DATE
 ========================================================= */
 
-function parseCalendarificDate(
+function parseTimeanddateDate(
     dateText,
     year
 ) {
 
     /*
-       Calendarific normally provides dates such as:
+       Timeanddate commonly uses dates such as:
 
-       Friday, January 1, 2027
+       Jan 1
+       Feb 14
+       Mar 15
+       Dec 25
 
-       We deliberately remove the weekday because
-       Date parsing is more reliable with:
-
-       January 1, 2027
+       The year is supplied separately by the page URL.
     */
+
 
     const cleaned =
         dateText
             .replace(
-                /^(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday),\s*/i,
-                ""
+                /\s+/g,
+                " "
             )
             .trim();
 
 
-    /*
-       Try native Date parsing first.
-    */
+    /* -----------------------------------------------------
+       MONTH + DAY
+    ----------------------------------------------------- */
 
-    const parsed =
+    let match =
+        cleaned.match(
+            /^([A-Za-z]{3,9})\s+(\d{1,2})$/
+        );
+
+
+    if (match) {
+
+        const month =
+            getMonthNumber(
+                match[1]
+            );
+
+
+        if (
+            month !== null
+        ) {
+
+            const day =
+                parseInt(
+                    match[2],
+                    10
+                );
+
+
+            const date =
+                new Date(
+                    year,
+                    month,
+                    day
+                );
+
+
+            if (
+                !isNaN(
+                    date.getTime()
+                )
+            ) {
+
+                return date;
+
+            }
+
+        }
+
+    }
+
+
+    /* -----------------------------------------------------
+       MONTH + DAY + YEAR
+    ----------------------------------------------------- */
+
+    match =
+        cleaned.match(
+            /^([A-Za-z]{3,9})\s+(\d{1,2}),?\s+(\d{4})$/
+        );
+
+
+    if (match) {
+
+        const month =
+            getMonthNumber(
+                match[1]
+            );
+
+
+        if (
+            month === null
+        ) {
+
+            return null;
+
+        }
+
+
+        const day =
+            parseInt(
+                match[2],
+                10
+            );
+
+
+        const parsedYear =
+            parseInt(
+                match[3],
+                10
+            );
+
+
+        const date =
+            new Date(
+                parsedYear,
+                month,
+                day
+            );
+
+
+        if (
+            !isNaN(
+                date.getTime()
+            )
+        ) {
+
+            return date;
+
+        }
+
+    }
+
+
+    /* -----------------------------------------------------
+       NATIVE FALLBACK
+    ----------------------------------------------------- */
+
+    const fallback =
         new Date(
-            cleaned
+            cleaned + " " + year
         );
 
 
     if (
         !isNaN(
-            parsed.getTime()
+            fallback.getTime()
         )
     ) {
 
         return new Date(
-            parsed.getFullYear(),
-            parsed.getMonth(),
-            parsed.getDate()
+            fallback.getFullYear(),
+            fallback.getMonth(),
+            fallback.getDate()
         );
 
     }
 
 
-    /*
-       Fallback parser.
-    */
-
-    const match =
-        cleaned.match(
-            /^([A-Za-z]+)\s+(\d{1,2}),\s*(\d{4})$/
-        );
-
-
-    if (!match) {
-
-        return null;
-
-    }
-
-
-    const month =
-        getMonthNumber(
-            match[1]
-        );
-
-
-    if (
-        month === null
-    ) {
-
-        return null;
-
-    }
-
-
-    const day =
-        parseInt(
-            match[2],
-            10
-        );
-
-
-    const parsedYear =
-        parseInt(
-            match[3],
-            10
-        );
-
-
-    const date =
-        new Date(
-            parsedYear,
-            month,
-            day
-        );
-
-
-    if (
-        isNaN(
-            date.getTime()
-        )
-    ) {
-
-        return null;
-
-    }
-
-
-    return date;
+    return null;
 
 }
 
@@ -576,17 +763,40 @@ function getMonthNumber(
 
     const months = {
 
+        jan: 0,
         january: 0,
+
+        feb: 1,
         february: 1,
+
+        mar: 2,
         march: 2,
+
+        apr: 3,
         april: 3,
+
         may: 4,
+
+        jun: 5,
         june: 5,
+
+        jul: 6,
         july: 6,
+
+        aug: 7,
         august: 7,
+
+        sep: 8,
+        sept: 8,
         september: 8,
+
+        oct: 9,
         october: 9,
+
+        nov: 10,
         november: 10,
+
+        dec: 11,
         december: 11
 
     };
@@ -626,10 +836,6 @@ function cleanEventTitle(
         .replace(
             /\s+/g,
             " "
-        )
-        .replace(
-            /\s+\(Provisional\)$/i,
-            " (Provisional)"
         )
         .trim();
 
@@ -677,7 +883,6 @@ function createEventId(
             .replace(
                 /^-|-$/g,
                 ""
-
             )
 
     );
@@ -769,8 +974,8 @@ function handleTodayHoliday() {
         today.getDate();
 
 
-    const todayEvent =
-        calendarEvents.find(
+    const todayEvents =
+        calendarEvents.filter(
             function (event) {
 
                 if (
@@ -799,10 +1004,17 @@ function handleTodayHoliday() {
         );
 
 
-    if (todayEvent) {
+    /*
+       If several events fall on the same day,
+       show the first one.
+    */
+
+    if (
+        todayEvents.length > 0
+    ) {
 
         showHolidayNotification(
-            todayEvent
+            todayEvents[0]
         );
 
     }
@@ -1380,6 +1592,9 @@ function cacheCalendarEvents(
                         title:
                             event.title,
 
+                        type:
+                            event.type,
+
                         start:
                             event.start
                                 ? event.start.toISOString()
@@ -1634,5 +1849,25 @@ function initialiseCalendar() {
     ----------------------------------------------------- */
 
     loadCalendarEvents();
+
+}
+
+
+/* =========================================================
+   START CALENDAR
+========================================================= */
+
+if (
+    document.readyState === "loading"
+) {
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        initialiseCalendar
+    );
+
+} else {
+
+    initialiseCalendar();
 
 }
