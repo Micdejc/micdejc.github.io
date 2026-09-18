@@ -594,6 +594,18 @@ Only modify the JavaScript structure when:
 
 ---
 
+# Interactive Calendar
+
+The website includes an interactive **Google Calendar integration** that provides a convenient way to display upcoming events and important dates directly within the website.
+
+## Features
+
+- **Google Calendar integration** for retrieving and displaying calendar events.
+- **Upcoming event display** highlighting the next scheduled event.
+- **Today's date and event information** for quick reference.
+- **UK holiday notifications** with contextual greetings for relevant public holidays.
+
+---
 # Local Testing
 
 Before publishing changes, test the website locally.
