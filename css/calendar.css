@@ -132,12 +132,6 @@
 
     pointer-events: auto;
 
-    background: transparent;
-   
-    backdrop-filter: none;
-    
-    -webkit-backdrop-filter: none;
-
 }
 
 
@@ -152,10 +146,21 @@
     inset: 0;
 
     background:
-        rgba(0, 0, 0, 0.55);
+        rgba(
+            0,
+            0,
+            0,
+            0.45
+        );
 
-    backdrop-filter:
-        blur(5px);
+    /*
+       No blur.
+       Keeps the page behind the calendar sharp.
+    */
+
+    backdrop-filter: none;
+
+    -webkit-backdrop-filter: none;
 
 }
 
@@ -186,14 +191,26 @@
 
     border-radius: 18px;
 
-    background:
+    /*
+       Solid theme background.
+       Keeps all calendar content clearly visible.
+    */
+
+    background-color:
         var(--background-color);
 
     color:
         var(--text-color);
 
+    opacity: 1;
+
+    backdrop-filter: none;
+
+    -webkit-backdrop-filter: none;
+
     box-shadow:
-        0 25px 80px rgba(
+        0 25px 80px
+        rgba(
             0,
             0,
             0,
@@ -328,7 +345,8 @@
 
 .calendar-today {
 
-    margin-top: 0.35rem;
+    margin-top:
+        0.35rem;
 
     color:
         var(--text-color);
@@ -360,13 +378,8 @@
     border-radius:
         12px;
 
-    background:
-        rgba(
-            127,
-            127,
-            127,
-            0.08
-        );
+    background-color:
+        var(--background-color);
 
     color:
         var(--text-color);
@@ -376,6 +389,9 @@
 
     font-weight:
         600;
+
+    opacity:
+        1;
 
     animation:
         calendarGreetingIn
@@ -429,13 +445,19 @@
     border-radius:
         14px;
 
-    background:
-        rgba(
-            127,
-            127,
-            127,
-            0.12
-        );
+    /*
+       Solid background makes the main
+       holiday information stand out.
+    */
+
+    background-color:
+        var(--background-color);
+
+    color:
+        var(--text-color);
+
+    opacity:
+        1;
 
     box-shadow:
         0 6px 20px
@@ -467,6 +489,7 @@
         700;
 
 }
+
 
 .calendar-next-event span {
 
@@ -534,13 +557,14 @@
     border-radius:
         12px;
 
-    background:
-        rgba(
-            127,
-            127,
-            127,
-            0.06
-        );
+    background-color:
+        var(--background-color);
+
+    color:
+        var(--text-color);
+
+    opacity:
+        1;
 
     transition:
         background-color 0.2s ease,
@@ -614,7 +638,6 @@
 
 }
 
-
 /* =========================================================
    HOLIDAY NOTIFICATION
 ========================================================= */
@@ -648,7 +671,12 @@
     padding:
         18px 20px;
 
-    background:
+    /*
+       Solid theme background.
+       Keeps the notification fully visible.
+    */
+
+    background-color:
         var(--background-color);
 
     color:
@@ -661,15 +689,17 @@
         14px;
 
     box-shadow:
-        0 12px 35px rgba(
+        0 15px 40px
+        rgba(
             0,
             0,
             0,
-            0.15
+            0.22
         );
 
-    z-index:
-        10000;
+    /*
+       Prevent transparency or blur effects.
+    */
 
     opacity:
         0;
@@ -679,6 +709,15 @@
 
     pointer-events:
         none;
+
+    backdrop-filter:
+        none;
+
+    -webkit-backdrop-filter:
+        none;
+
+    z-index:
+        10000;
 
     transform:
         translateY(-20px)
@@ -737,19 +776,20 @@
     font-size:
         24px;
 
-    background:
-        rgba(
-            127,
-            127,
-            127,
-            0.10
-        );
+    background-color:
+        var(--background-color);
+
+    color:
+        var(--text-color);
 
     border:
         1px solid var(--border-color);
 
     border-radius:
         50%;
+
+    opacity:
+        1;
 
 }
 
@@ -772,6 +812,9 @@
     padding-right:
         20px;
 
+    opacity:
+        1;
+
 }
 
 
@@ -789,6 +832,9 @@
     font-weight:
         700;
 
+    opacity:
+        1;
+
 }
 
 
@@ -804,7 +850,7 @@
         1.4;
 
     opacity:
-        0.75;
+        0.85;
 
 }
 
@@ -824,7 +870,7 @@
         1.5;
 
     opacity:
-        0.60;
+        0.75;
 
 }
 
@@ -884,7 +930,7 @@
         pointer;
 
     opacity:
-        0.55;
+        0.65;
 
     transition:
         opacity 0.2s ease,
