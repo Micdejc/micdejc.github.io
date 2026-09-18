@@ -62,6 +62,11 @@ async function loadPage() {
         ),
 
         loadComponent(
+            "calendarContainer",
+            "components/calendar.html"
+        ),
+
+        loadComponent(
             "about",
             "sections/about.html"
         ),
@@ -134,11 +139,6 @@ async function loadPage() {
         loadComponent(
             "contact",
             "sections/contact.html"
-        ),
-
-       loadComponent(
-            "calendarContainer",
-            "sections/calendar.html"
         ),
 
         loadComponent(
