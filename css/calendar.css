@@ -1,4 +1,108 @@
 /* =========================================================
+   CALENDAR TOGGLE BUTTON
+========================================================= */
+
+.calendar-toggle {
+
+    position: fixed;
+
+    right: 24px;
+    bottom: 24px;
+
+    width: 54px;
+    height: 54px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    border: 1px solid rgba(
+        0,
+        0,
+        0,
+        0.08
+    );
+
+    border-radius: 50%;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 6px 20px rgba(
+            0,
+            0,
+            0,
+            0.15
+        );
+
+    cursor: pointer;
+
+    z-index: 9000;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+
+}
+
+
+.calendar-toggle:hover {
+
+    transform: scale(1.08);
+
+    box-shadow:
+        0 8px 25px rgba(
+            0,
+            0,
+            0,
+            0.20
+        );
+
+}
+
+
+.calendar-toggle:active {
+
+    transform: scale(0.96);
+
+}
+
+
+.calendar-toggle-icon {
+
+    font-size: 23px;
+
+    line-height: 1;
+
+}
+
+@media (
+    max-width: 600px
+) {
+
+    .calendar-toggle {
+
+        right: 16px;
+        bottom: 16px;
+
+        width: 50px;
+        height: 50px;
+
+    }
+
+
+    .calendar-toggle-icon {
+
+        font-size: 21px;
+
+    }
+
+}
+
+
+/* =========================================================
    CALENDAR MODAL
 ========================================================= */
 
