@@ -771,9 +771,9 @@
     pointer-events:
         auto;
 
-   /* transform:
+    transform:
         translateY(0)
-        scale(1);*/
+        scale(1);
 
    animation:
         holidayNotificationEnter 0.9s ease-in-out;
