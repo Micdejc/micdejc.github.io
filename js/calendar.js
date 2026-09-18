@@ -4,25 +4,40 @@
 
 let calendarEvents = [];
 
-let todayHolidayChecked =
+let calendarDataLoaded =
     false;
 
 
 /* =========================================================
-   CHECK TODAY'S UK HOLIDAY
+   LOAD UK HOLIDAYS
 ========================================================= */
 
-async function checkTodayHoliday() {
+async function loadCalendarEvents() {
 
-    if (todayHolidayChecked) {
+    if (calendarDataLoaded) {
 
-        return;
+        return calendarEvents;
 
     }
 
 
-    todayHolidayChecked =
-        true;
+    const cachedEvents =
+        getCachedCalendarEvents();
+
+
+    if (cachedEvents) {
+
+        calendarEvents =
+            cachedEvents;
+
+        calendarDataLoaded =
+            true;
+
+        handleTodayHoliday();
+
+        return calendarEvents;
+
+    }
 
 
     if (
@@ -30,7 +45,7 @@ async function checkTodayHoliday() {
         "undefined"
     ) {
 
-        return;
+        return [];
 
     }
 
@@ -44,151 +59,6 @@ async function checkTodayHoliday() {
         console.warn(
             "Google Calendar API key has not been configured."
         );
-
-        return;
-
-    }
-
-
-    const today =
-        new Date();
-
-
-    const tomorrow =
-        new Date(today);
-
-
-    tomorrow.setDate(
-        tomorrow.getDate() + 1
-    );
-
-
-    const params =
-        new URLSearchParams({
-
-            key:
-                GOOGLE_CALENDAR_CONFIG.apiKey,
-
-            timeMin:
-                today.toISOString(),
-
-            timeMax:
-                tomorrow.toISOString(),
-
-            singleEvents:
-                "true",
-
-            maxResults:
-                "5"
-
-        });
-
-
-    const url =
-        "https://www.googleapis.com/calendar/v3/calendars/" +
-        encodeURIComponent(
-            GOOGLE_CALENDAR_CONFIG.calendarId
-        ) +
-        "/events?" +
-        params.toString();
-
-
-    try {
-
-        const response =
-            await fetch(url);
-
-
-        if (!response.ok) {
-
-            throw new Error(
-                "Google Calendar API error: " +
-                response.status
-            );
-
-        }
-
-
-        const data =
-            await response.json();
-
-
-        const events =
-            (data.items || [])
-                .map(
-                    function (event) {
-
-                        return {
-
-                            id:
-                                event.id,
-
-                            title:
-                                event.summary ||
-                                "UK Holiday",
-
-                            start:
-                                getEventDate(
-                                    event.start
-                                ),
-
-                            end:
-                                getEventDate(
-                                    event.end
-                                )
-
-                        };
-
-                    }
-                );
-
-
-        if (
-            events.length > 0
-        ) {
-
-            showHolidayNotification(
-                events[0]
-            );
-
-        }
-
-    } catch (error) {
-
-        console.error(
-            "Today's holiday check failed:",
-            error
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   LOAD UPCOMING UK HOLIDAYS
-========================================================= */
-
-async function loadCalendarEvents() {
-
-    const cachedEvents =
-        getCachedCalendarEvents();
-
-
-    if (cachedEvents) {
-
-        calendarEvents =
-            cachedEvents;
-
-        return calendarEvents;
-
-    }
-
-
-    if (
-        typeof GOOGLE_CALENDAR_CONFIG ===
-        "undefined"
-    ) {
 
         return [];
 
@@ -228,7 +98,10 @@ async function loadCalendarEvents() {
                 "startTime",
 
             maxResults:
-                GOOGLE_CALENDAR_CONFIG.maxResults
+                GOOGLE_CALENDAR_CONFIG.maxResults,
+
+            fields:
+                "items(id,summary,start,end)"
 
         });
 
@@ -309,9 +182,16 @@ async function loadCalendarEvents() {
                 );
 
 
+        calendarDataLoaded =
+            true;
+
+
         cacheCalendarEvents(
             calendarEvents
         );
+
+
+        handleTodayHoliday();
 
 
         return calendarEvents;
@@ -370,7 +250,7 @@ function getEventDate(
 
 
 /* =========================================================
-   GET NEXT UK HOLIDAY
+   GET NEXT HOLIDAY
 ========================================================= */
 
 function getNextEvent() {
@@ -383,11 +263,70 @@ function getNextEvent() {
         function (event) {
 
             return (
-                event.start > now
+                event.start >= now
             );
 
         }
     );
+
+}
+
+
+/* =========================================================
+   CHECK TODAY'S HOLIDAY
+========================================================= */
+
+function handleTodayHoliday() {
+
+    const today =
+        new Date();
+
+
+    const todayYear =
+        today.getFullYear();
+
+
+    const todayMonth =
+        today.getMonth();
+
+
+    const todayDate =
+        today.getDate();
+
+
+    const todayEvent =
+        calendarEvents.find(
+            function (event) {
+
+                if (!event.start) {
+
+                    return false;
+
+                }
+
+
+                return (
+                    event.start.getFullYear() ===
+                        todayYear &&
+
+                    event.start.getMonth() ===
+                        todayMonth &&
+
+                    event.start.getDate() ===
+                        todayDate
+                );
+
+            }
+        );
+
+
+    if (todayEvent) {
+
+        showHolidayNotification(
+            todayEvent
+        );
+
+    }
 
 }
 
@@ -503,11 +442,21 @@ function showHolidayNotification(
     event
 ) {
 
+    const today =
+        new Date();
+
+
     const notificationKey =
         "ukHoliday_" +
-        new Date()
-            .toISOString()
-            .slice(0, 10);
+        today.getFullYear() +
+        "-" +
+        String(
+            today.getMonth() + 1
+        ).padStart(2, "0") +
+        "-" +
+        String(
+            today.getDate()
+        ).padStart(2, "0");
 
 
     if (
@@ -812,10 +761,16 @@ function cacheCalendarEvents(
 
                     return {
 
-                        ...event,
+                        id:
+                            event.id,
+
+                        title:
+                            event.title,
 
                         start:
-                            event.start.toISOString(),
+                            event.start
+                                ? event.start.toISOString()
+                                : null,
 
                         end:
                             event.end
@@ -843,6 +798,16 @@ function cacheCalendarEvents(
 ========================================================= */
 
 function getCachedCalendarEvents() {
+
+    if (
+        typeof GOOGLE_CALENDAR_CONFIG ===
+        "undefined"
+    ) {
+
+        return null;
+
+    }
+
 
     const cached =
         sessionStorage.getItem(
@@ -878,7 +843,9 @@ function getCachedCalendarEvents() {
         }
 
 
-        return data.events.map(
+        return (
+            data.events || []
+        ).map(
             function (event) {
 
                 return {
@@ -886,9 +853,11 @@ function getCachedCalendarEvents() {
                     ...event,
 
                     start:
-                        new Date(
-                            event.start
-                        ),
+                        event.start
+                            ? new Date(
+                                event.start
+                            )
+                            : null,
 
                     end:
                         event.end
@@ -921,28 +890,25 @@ function getCachedCalendarEvents() {
 
 async function initialiseCalendarData() {
 
+    displayCalendarToday();
+
+
     const container =
         document.getElementById(
             "calendarEvents"
         );
 
 
-    if (!container) {
+    if (container) {
 
-        return;
+        container.innerHTML =
+            `
+                <p class="calendar-loading">
+                    Loading UK holidays...
+                </p>
+            `;
 
     }
-
-
-    displayCalendarToday();
-
-
-    container.innerHTML =
-        `
-            <p class="calendar-loading">
-                Loading UK holidays...
-            </p>
-        `;
 
 
     await loadCalendarEvents();
@@ -956,11 +922,146 @@ async function initialiseCalendarData() {
 
 
 /* =========================================================
-   INITIALISE DAILY HOLIDAY CHECK
+   PRELOAD CALENDAR
 ========================================================= */
 
-function initialiseDailyHolidayCheck() {
+function preloadCalendar() {
 
-    checkTodayHoliday();
+    loadCalendarEvents();
+
+}
+
+
+/* =========================================================
+   INITIALISE CALENDAR
+========================================================= */
+
+function initialiseCalendar() {
+
+    const toggle =
+        document.getElementById(
+            "calendarToggle"
+        );
+
+
+    const calendar =
+        document.getElementById(
+            "calendarModal"
+        );
+
+
+    const close =
+        document.getElementById(
+            "calendarClose"
+        );
+
+
+    const overlay =
+        document.getElementById(
+            "calendarOverlay"
+        );
+
+
+    if (
+        !toggle ||
+        !calendar
+    ) {
+
+        return;
+
+    }
+
+
+    /* -----------------------------------------------------
+       OPEN IMMEDIATELY
+    ----------------------------------------------------- */
+
+    toggle.addEventListener(
+        "click",
+        function () {
+
+            calendar.classList.add(
+                "open"
+            );
+
+            calendar.setAttribute(
+                "aria-hidden",
+                "false"
+            );
+
+
+            /* Refresh display from
+               already available data */
+
+            displayNextEvent();
+
+            displayCalendarEvents();
+
+        }
+    );
+
+
+    /* -----------------------------------------------------
+       CLOSE
+    ----------------------------------------------------- */
+
+    function closeCalendar() {
+
+        calendar.classList.remove(
+            "open"
+        );
+
+        calendar.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+    }
+
+
+    if (close) {
+
+        close.addEventListener(
+            "click",
+            closeCalendar
+        );
+
+    }
+
+
+    if (overlay) {
+
+        overlay.addEventListener(
+            "click",
+            closeCalendar
+        );
+
+    }
+
+
+    document.addEventListener(
+        "keydown",
+        function (event) {
+
+            if (
+                event.key === "Escape" &&
+                calendar.classList.contains(
+                    "open"
+                )
+            ) {
+
+                closeCalendar();
+
+            }
+
+        }
+    );
+
+
+    /* -----------------------------------------------------
+       PRELOAD IN BACKGROUND
+    ----------------------------------------------------- */
+
+    preloadCalendar();
 
 }
