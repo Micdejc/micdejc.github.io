@@ -605,6 +605,10 @@ The website includes an interactive **Google Calendar integration** that provide
 - **Today's date and event information** for quick reference.
 - **UK holiday notifications** with contextual greetings for relevant public holidays.
 
+## Security
+
+The calendar uses a **Google Cloud API key** to access the Google Calendar API. The API key is configured as a browser-accessible credential and is restricted to the current website.
+
 ---
 # Local Testing
 
