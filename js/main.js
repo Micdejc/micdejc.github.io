@@ -246,25 +246,77 @@ function initialiseCalendar() {
     const toggle =
         document.getElementById("calendarToggle");
 
-    if (!toggle) {
+    const calendar =
+        document.getElementById("calendarModal");
+
+    const close =
+        document.getElementById("calendarClose");
+
+    const overlay =
+        document.getElementById("calendarOverlay");
+
+    if (
+        !toggle ||
+        !calendar
+    ) {
         return;
     }
-
 
     toggle.addEventListener(
         "click",
         function () {
 
-            const calendar =
-                document.getElementById("calendarModal");
+            calendar.classList.add("open");
 
+            calendar.setAttribute(
+                "aria-hidden",
+                "false"
+            );
 
-            if (!calendar) {
-                return;
+        }
+    );
+
+    function closeCalendar() {
+
+        calendar.classList.remove("open");
+
+        calendar.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+    }
+
+    if (close) {
+
+        close.addEventListener(
+            "click",
+            closeCalendar
+        );
+
+    }
+
+    if (overlay) {
+
+        overlay.addEventListener(
+            "click",
+            closeCalendar
+        );
+
+    }
+
+    document.addEventListener(
+        "keydown",
+        function (event) {
+
+            if (
+                event.key === "Escape" &&
+                calendar.classList.contains("open")
+            ) {
+
+                closeCalendar();
+
             }
-
-
-            calendar.classList.toggle("open");
 
         }
     );
