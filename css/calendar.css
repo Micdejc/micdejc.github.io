@@ -153,14 +153,10 @@
             0.45
         );
 
-    /*
-       No blur.
-       Keeps the page behind the calendar sharp.
-    */
+    
+    backdrop-filter: blur(10px);
 
-    backdrop-filter: none;
-
-    -webkit-backdrop-filter: none;
+    -webkit-backdrop-filter: blur(10px);
 
 }
 
