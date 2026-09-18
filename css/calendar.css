@@ -132,7 +132,7 @@
 
     pointer-events: auto;
 
-    background: var(--background-color);
+    background: transparent;
    
     backdrop-filter: none;
     
