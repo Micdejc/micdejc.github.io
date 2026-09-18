@@ -24,7 +24,7 @@ async function loadCalendarEvents() {
 
         {
             id: "test-event",
-            title: "My event Day",
+            title: "MY Day",
             start: new Date(),
             end: new Date()
         }
