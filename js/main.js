@@ -176,6 +176,8 @@ async function loadPage() {
     initialiseYear();
    
     initialiseCalendar();
+
+    initialiseDailyHolidayCheck();
 }
 
 
