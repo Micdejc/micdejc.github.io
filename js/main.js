@@ -249,41 +249,118 @@ function initialiseTheme() {
 function initialiseCalendar() {
 
     const toggle =
-        document.getElementById("calendarToggle");
+        document.getElementById(
+            "calendarToggle"
+        );
+
 
     const calendar =
-        document.getElementById("calendarModal");
+        document.getElementById(
+            "calendarModal"
+        );
+
 
     const close =
-        document.getElementById("calendarClose");
+        document.getElementById(
+            "calendarClose"
+        );
+
 
     const overlay =
-        document.getElementById("calendarOverlay");
+        document.getElementById(
+            "calendarOverlay"
+        );
 
-    if (
-        !toggle ||
-        !calendar
-    ) {
+
+    const events =
+        document.getElementById(
+            "calendarEvents"
+        );
+
+
+    if (!toggle) {
+
+        console.error(
+            "calendarToggle was not found."
+        );
+
         return;
+
     }
+
+
+    if (!calendar) {
+
+        console.error(
+            "calendarModal was not found."
+        );
+
+        return;
+
+    }
+
+
+    /* =====================================================
+       INITIAL DATE
+    ===================================================== */
+
+    displayCalendarToday();
+
+
+    /* =====================================================
+       INITIAL LOADING MESSAGE
+    ===================================================== */
+
+    if (events) {
+
+        events.innerHTML =
+            `
+                <p class="calendar-loading">
+                    Loading UK holidays...
+                </p>
+            `;
+
+    }
+
+
+    /* =====================================================
+       OPEN CALENDAR
+    ===================================================== */
 
     toggle.addEventListener(
         "click",
         function () {
 
-            calendar.classList.add("open");
+            calendar.classList.add(
+                "open"
+            );
 
             calendar.setAttribute(
                 "aria-hidden",
                 "false"
             );
 
+
+            /* Display cached/already loaded
+               data immediately */
+
+            displayNextEvent();
+
+            displayCalendarEvents();
+
         }
     );
 
+
+    /* =====================================================
+       CLOSE CALENDAR
+    ===================================================== */
+
     function closeCalendar() {
 
-        calendar.classList.remove("open");
+        calendar.classList.remove(
+            "open"
+        );
 
         calendar.setAttribute(
             "aria-hidden",
@@ -291,6 +368,7 @@ function initialiseCalendar() {
         );
 
     }
+
 
     if (close) {
 
@@ -301,6 +379,7 @@ function initialiseCalendar() {
 
     }
 
+
     if (overlay) {
 
         overlay.addEventListener(
@@ -310,13 +389,20 @@ function initialiseCalendar() {
 
     }
 
+
+    /* =====================================================
+       ESCAPE KEY
+    ===================================================== */
+
     document.addEventListener(
         "keydown",
         function (event) {
 
             if (
                 event.key === "Escape" &&
-                calendar.classList.contains("open")
+                calendar.classList.contains(
+                    "open"
+                )
             ) {
 
                 closeCalendar();
@@ -326,7 +412,51 @@ function initialiseCalendar() {
         }
     );
 
+
+    /* =====================================================
+       PRELOAD CALENDAR DATA
+    ===================================================== */
+
+    if (
+        typeof loadCalendarEvents ===
+        "function"
+    ) {
+
+        loadCalendarEvents()
+            .then(
+                function () {
+
+                    /* Render the data after
+                       Google Calendar responds */
+
+                    displayNextEvent();
+
+                    displayCalendarEvents();
+
+                }
+            )
+            .catch(
+                function (error) {
+
+                    console.error(
+                        "Calendar loading failed:",
+                        error
+                    );
+
+                }
+            );
+
+    } else {
+
+        console.error(
+            "loadCalendarEvents() is not available. " +
+            "Check that calendar.js is loaded."
+        );
+
+    }
+
 }
+
 
 
 /* =========================================================
