@@ -28,11 +28,11 @@ const UK_CALENDAR_CONFIG = {
 
 async function loadCalendarEvents() {
 
-  calendarEvents = [
+/*  calendarEvents = [
 
         {
             id: "test-my-day",
-            title: "valentine",
+            title: "My day",
             start: new Date(),
             end: new Date()
         }
@@ -45,7 +45,7 @@ async function loadCalendarEvents() {
     displayCalendarEvents();
     handleTodayHoliday();
 
-    return calendarEvents;
+    return calendarEvents;  */
 
     if (calendarDataLoaded) {
 
