@@ -1,128 +1,319 @@
-/* Holiday calendar module for micdejc.github.io */
+/* =========================================================
+   CALENDAR MODAL
+========================================================= */
 
-.calendar-toggle {
-    display: inline-flex;
+.calendar-modal {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 9999;
+
+    display: flex;
+
     align-items: center;
     justify-content: center;
 
-    width: 40px;
-    height: 40px;
+    visibility: hidden;
 
-    padding: 0;
+    opacity: 0;
+
+    transition:
+        opacity 0.25s ease,
+        visibility 0.25s ease;
+
+}
+
+.calendar-modal.open {
+
+    visibility: visible;
+
+    opacity: 1;
+
+}
+
+
+/* =========================================================
+   CALENDAR OVERLAY
+========================================================= */
+
+.calendar-overlay {
+
+    position: absolute;
+
+    inset: 0;
+
+    background: rgba(0, 0, 0, 0.55);
+
+    backdrop-filter: blur(5px);
+
+}
+
+
+/* =========================================================
+   CALENDAR PANEL
+========================================================= */
+
+.calendar-panel {
+
+    position: relative;
+
+    z-index: 1;
+
+    width: min(
+        92vw,
+        720px
+    );
+
+    max-height: 85vh;
+
+    overflow-y: auto;
+
+    padding: 2rem;
+
+    border-radius: 18px;
+
+    background: var(--background-color, #ffffff);
+
+    color: var(--text-color, #111111);
+
+    box-shadow:
+        0 25px 80px rgba(0, 0, 0, 0.25);
+
+    transform:
+        translateY(20px)
+        scale(0.97);
+
+    transition:
+        transform 0.25s ease;
+
+}
+
+.calendar-modal.open
+.calendar-panel {
+
+    transform:
+        translateY(0)
+        scale(1);
+
+}
+
+
+/* =========================================================
+   CALENDAR CLOSE
+========================================================= */
+
+.calendar-close {
+
+    position: absolute;
+
+    top: 1rem;
+    right: 1rem;
+
+    width: 36px;
+    height: 36px;
+
     border: 0;
+
     background: transparent;
 
     color: inherit;
-    font-size: 1.05rem;
+
+    font-size: 1.6rem;
 
     cursor: pointer;
-    border-radius: 8px;
 
-    transition:
-        background-color 0.2s ease,
-        transform 0.2s ease;
+    border-radius: 50%;
+
 }
 
-.calendar-toggle:hover {
-    background: rgba(127, 127, 127, 0.12);
-    transform: translateY(-1px);
+.calendar-close:hover {
+
+    background:
+        rgba(127, 127, 127, 0.12);
+
 }
 
-.calendar-toggle:focus-visible {
-    outline: 2px solid currentColor;
-    outline-offset: 2px;
+
+/* =========================================================
+   CALENDAR HEADER
+========================================================= */
+
+.calendar-header {
+
+    display: flex;
+
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 1rem;
+
+    margin-bottom: 1.5rem;
+
 }
 
-.holiday-calendar {
-  --hc-bg: #ffffff;
-  --hc-surface: #f7f8fb;
-  --hc-text: #172033;
-  --hc-muted: #687386;
-  --hc-border: #e6e9ef;
-  --hc-accent: #2563eb;
-  --hc-accent-soft: #eff6ff;
-  --hc-shadow: 0 18px 55px rgba(15, 23, 42, .09);
-  color: var(--hc-text);
-  font-family: inherit;
+.calendar-eyebrow {
+
+    font-size: 0.7rem;
+
+    font-weight: 700;
+
+    letter-spacing: 0.12em;
+
+    opacity: 0.6;
+
 }
 
-.hc-shell { max-width: 1180px; margin: 0 auto; }
-.hc-heading { margin-bottom: 1.25rem; }
-.hc-eyebrow { margin: 0 0 .35rem; color: var(--hc-accent); font-size: .78rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
-.hc-title { margin: 0; font-size: clamp(2rem, 4vw, 3rem); letter-spacing: -.04em; }
-.hc-intro { margin: .5rem 0 0; color: var(--hc-muted); }
+.calendar-header h2 {
 
-.hc-controls {
-  display: flex; flex-wrap: wrap; align-items: center; gap: .55rem;
-  padding: .75rem; background: var(--hc-bg); border: 1px solid var(--hc-border);
-  border-radius: 16px; box-shadow: var(--hc-shadow); margin-bottom: 1rem;
-}
-.hc-controls button, .hc-controls select {
-  min-height: 40px; border: 1px solid var(--hc-border); border-radius: 10px;
-  background: #fff; color: var(--hc-text); padding: 0 .8rem; font: inherit; cursor: pointer;
-}
-.hc-controls button:hover, .hc-controls select:hover { border-color: #b9c0cc; }
-.hc-month { min-width: 170px; text-align: center; font-weight: 800; }
-.hc-spacer { flex: 1; }
+    margin:
+        0.25rem 0 0;
 
-.hc-grid-wrap { overflow: hidden; background: var(--hc-bg); border: 1px solid var(--hc-border); border-radius: 18px; box-shadow: var(--hc-shadow); }
-.hc-weekdays, .hc-days { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); }
-.hc-weekday { padding: .8rem .35rem; text-align: center; color: var(--hc-muted); font-size: .72rem; font-weight: 800; text-transform: uppercase; border-bottom: 1px solid var(--hc-border); }
-.hc-day { min-height: 128px; padding: .55rem; border-right: 1px solid var(--hc-border); border-bottom: 1px solid var(--hc-border); overflow: hidden; }
-.hc-day:nth-child(7n) { border-right: 0; }
-.hc-day.hc-other { background: #fafbfc; color: #a4aab5; }
-.hc-day.hc-today { background: #f0f6ff; }
-.hc-day-number { display: inline-flex; width: 29px; height: 29px; align-items: center; justify-content: center; border-radius: 50%; font-weight: 800; margin-bottom: .25rem; }
-.hc-today .hc-day-number { background: var(--hc-accent); color: white; }
+    font-size: 1.8rem;
 
-.hc-event {
-  width: 100%; display: block; border: 0; border-radius: 7px; margin: 3px 0; padding: 5px 6px;
-  text-align: left; font: inherit; font-size: .69rem; line-height: 1.25; cursor: pointer;
-  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-  background: var(--hc-accent-soft); color: #1d4ed8;
-}
-.hc-event.uk { background: #fff4d6; color: #8a4b00; }
-.hc-event.christian, .hc-event.orthodox { background: #f1e8ff; color: #6b21a8; }
-.hc-event.islamic { background: #e5f8ec; color: #166534; }
-.hc-event.hindu { background: #fff0e5; color: #9a3412; }
-.hc-event.jewish { background: #e8f1ff; color: #1e40af; }
-.hc-event.more { background: #f1f3f5; color: #525a67; font-weight: 700; }
-
-.hc-legend { display: flex; flex-wrap: wrap; gap: .85rem; padding: .8rem 1rem; color: var(--hc-muted); font-size: .78rem; }
-.hc-legend span { display: inline-flex; align-items: center; gap: .35rem; }
-.hc-dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
-.hc-dot.uk { background: #f59e0b; } .hc-dot.christian { background: #a855f7; }
-.hc-dot.islamic { background: #22c55e; } .hc-dot.hindu { background: #f97316; } .hc-dot.jewish { background: #3b82f6; }
-
-.hc-notices { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin: 1rem 0; }
-.hc-notice { position: relative; padding: 1rem 1.1rem; border: 1px solid var(--hc-border); border-radius: 16px; background: var(--hc-bg); box-shadow: var(--hc-shadow); }
-.hc-notice-label { color: var(--hc-muted); font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
-.hc-notice-title { margin: .25rem 0; font-size: 1.05rem; font-weight: 800; }
-.hc-notice-meta { margin: 0; color: var(--hc-muted); font-size: .84rem; }
-.hc-notice.hidden { display: none; }
-
-.hc-modal { position: fixed; inset: 0; z-index: 9999; display: none; align-items: center; justify-content: center; padding: 1.2rem; background: rgba(15,23,42,.5); }
-.hc-modal.open { display: flex; }
-.hc-modal-card { width: min(520px, 100%); position: relative; padding: 2rem; border-radius: 24px; background: white; box-shadow: 0 30px 90px rgba(0,0,0,.24); text-align: center; overflow: hidden; }
-.hc-close { position: absolute; right: .8rem; top: .8rem; width: 38px; height: 38px; border: 1px solid var(--hc-border); border-radius: 50%; background: white; cursor: pointer; font-size: 1.2rem; }
-.hc-greeting-icon { font-size: 3.5rem; animation: hc-bounce 1.5s ease-in-out infinite; }
-.hc-greeting-title { margin: .5rem 0 .25rem; font-size: clamp(1.8rem, 6vw, 2.8rem); letter-spacing: -.04em; }
-.hc-greeting-text { margin: 0; color: var(--hc-muted); }
-.hc-particle { position: absolute; top: -20px; font-size: 1.3rem; animation: hc-fall 4s linear forwards; pointer-events: none; }
-@keyframes hc-fall { from { transform: translateY(-20px) rotate(0deg); opacity: 0; } 10% { opacity: 1; } to { transform: translateY(520px) rotate(360deg); opacity: 0; } }
-@keyframes hc-bounce { 0%,100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-7px) scale(1.04); } }
-
-.hc-status { margin-top: .75rem; color: var(--hc-muted); font-size: .75rem; }
-.hc-error { color: #b42318; }
-
-@media (max-width: 760px) {
-  .hc-notices { grid-template-columns: 1fr; }
-  .hc-day { min-height: 92px; padding: .35rem; }
-  .hc-event { font-size: .62rem; padding: 4px; }
-  .hc-weekday { font-size: .62rem; }
-  .hc-month { min-width: 135px; }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .hc-greeting-icon, .hc-particle { animation: none !important; }
+.calendar-today {
+
+    font-size: 0.85rem;
+
+    opacity: 0.65;
+
+}
+
+
+/* =========================================================
+   CALENDAR GREETING
+========================================================= */
+
+.calendar-greeting {
+
+    margin-bottom: 1.25rem;
+
+    padding: 1rem;
+
+    border-radius: 12px;
+
+    text-align: center;
+
+    font-weight: 600;
+
+    animation:
+        calendarGreetingIn
+        0.5s ease;
+
+}
+
+@keyframes calendarGreetingIn {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(10px)
+            scale(0.96);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+
+    }
+
+}
+
+
+/* =========================================================
+   NEXT EVENT
+========================================================= */
+
+.calendar-next-event {
+
+    margin-bottom: 1.5rem;
+
+    padding: 1rem;
+
+    border-radius: 12px;
+
+    background:
+        rgba(127, 127, 127, 0.08);
+
+}
+
+.calendar-next-event strong {
+
+    display: block;
+
+    margin-bottom: 0.25rem;
+
+}
+
+
+/* =========================================================
+   CALENDAR EVENTS
+========================================================= */
+
+.calendar-events {
+
+    display: grid;
+
+    gap: 0.75rem;
+
+}
+
+.calendar-event {
+
+    padding: 1rem;
+
+    border-radius: 12px;
+
+    background:
+        rgba(127, 127, 127, 0.06);
+
+}
+
+.calendar-event-date {
+
+    font-size: 0.75rem;
+
+    font-weight: 700;
+
+    opacity: 0.6;
+
+    margin-bottom: 0.25rem;
+
+}
+
+.calendar-event-name {
+
+    font-weight: 600;
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (
+    prefers-reduced-motion: reduce
+) {
+
+    .calendar-modal,
+    .calendar-panel,
+    .calendar-greeting {
+
+        transition: none;
+
+        animation: none;
+
+    }
+
 }
