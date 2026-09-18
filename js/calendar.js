@@ -799,7 +799,7 @@ function displayNextEvent() {
     container.innerHTML =
         `
             <strong>
-                Next UK holiday
+                Next UK Holiday
             </strong>
 
             <span>
