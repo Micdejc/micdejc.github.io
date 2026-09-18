@@ -2,10 +2,6 @@
    GOOGLE CALENDAR CONFIGURATION
 ========================================================= */
 
-/* =========================================================
-   GOOGLE CALENDAR CONFIGURATION
-========================================================= */
-
 const GOOGLE_CALENDAR_CONFIG = {
 
     apiKey:
@@ -21,9 +17,10 @@ const GOOGLE_CALENDAR_CONFIG = {
         90,
 
     maxResults:
-        20,
+        10,
 
     cacheDuration:
-        60 * 60 * 1000
+        15 * 60 * 1000
 
 };
+
