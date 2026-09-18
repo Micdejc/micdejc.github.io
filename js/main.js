@@ -170,6 +170,8 @@ async function loadPage() {
 
     initialiseYear();
 
+    initialiseCalendar();
+
 }
 
 
@@ -228,6 +230,41 @@ function initialiseTheme() {
                 );
 
             }
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   CALENDAR
+========================================================= */
+
+function initialiseCalendar() {
+
+    const toggle =
+        document.getElementById("calendarToggle");
+
+    if (!toggle) {
+        return;
+    }
+
+
+    toggle.addEventListener(
+        "click",
+        function () {
+
+            const calendar =
+                document.getElementById("calendarModal");
+
+
+            if (!calendar) {
+                return;
+            }
+
+
+            calendar.classList.toggle("open");
 
         }
     );
