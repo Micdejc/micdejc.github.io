@@ -7,7 +7,7 @@
 const GOOGLE_CALENDAR_CONFIG = {
 
     apiKey:
-        "AIzaSyCBO1W-jM_XGtZUuNFrQDKD_E0bDy1NtNQ",
+        "AIzaSyAuN82N696F6Ljv2IRIhrd-E452FOV5kwo",
 
     calendarId:
         "en.uk#holiday@group.v.calendar.google.com",
