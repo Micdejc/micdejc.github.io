@@ -28,7 +28,9 @@ const UK_CALENDAR_CONFIG = {
 
 async function loadCalendarEvents() {
 
-/*  calendarEvents = [
+/*  uncomment this for quick test
+
+calendarEvents = [
 
         {
             id: "test-my-day",
