@@ -136,6 +136,11 @@ async function loadPage() {
             "sections/contact.html"
         ),
 
+       loadComponent(
+            "calendarContainer",
+            "calendar.html"
+        ),
+
         loadComponent(
             "footer",
             "components/footer.html"
