@@ -1,8 +1,6 @@
 /* =========================================================
    CALENDAR
-   Source: Timeanddate
-   Country: United Kingdom
-   No API key required
+   Source: UKCalendar.uk
 ========================================================= */
 
 let calendarEvents = [];
@@ -13,16 +11,13 @@ let calendarDataLoaded = false;
    CONFIGURATION
 ========================================================= */
 
-const CALENDAR_CONFIG = {
+const UK_CALENDAR_CONFIG = {
 
     baseUrl:
-        "https://www.timeanddate.com/holidays/uk/",
-
-    country:
-        "uk",
+        "https://ukcalendar.uk/",
 
     cacheDuration:
-        6 * 60 * 60 * 1000 // 6 hours
+        6 * 60 * 60 * 1000
 
 };
 
@@ -33,6 +28,25 @@ const CALENDAR_CONFIG = {
 
 async function loadCalendarEvents() {
 
+   calendarEvents = [
+
+        {
+            id: "test-my-day",
+            title: "MY Day",
+            start: new Date(),
+            end: new Date()
+        }
+
+    ];
+
+    calendarDataLoaded = true;
+
+    displayNextEvent();
+    displayCalendarEvents();
+    handleTodayHoliday();
+
+    return calendarEvents;
+
     if (calendarDataLoaded) {
 
         return calendarEvents;
@@ -41,7 +55,7 @@ async function loadCalendarEvents() {
 
 
     /* -----------------------------------------------------
-       CHECK CACHE
+       CACHE
     ----------------------------------------------------- */
 
     const cachedEvents =
@@ -65,50 +79,26 @@ async function loadCalendarEvents() {
     }
 
 
-    /* -----------------------------------------------------
-       CURRENT YEAR
-    ----------------------------------------------------- */
-
     const year =
         new Date().getFullYear();
 
 
     const url =
-        CALENDAR_CONFIG.baseUrl +
-        year;
+        UK_CALENDAR_CONFIG.baseUrl +
+        year +
+        "/";
 
 
     try {
 
-        console.log(
-            "Loading Timeanddate UK holidays:",
-            url
-        );
-
-
-        /* -------------------------------------------------
-           FETCH TIMEANDDATE PAGE
-        ------------------------------------------------- */
-
         const response =
-            await fetch(
-                url,
-                {
-                    method:
-                        "GET",
-
-                    headers: {
-                        "Accept":
-                            "text/html"
-                    }
-                }
-            );
+            await fetch(url);
 
 
         if (!response.ok) {
 
             throw new Error(
-                "Timeanddate request failed: " +
+                "UKCalendar request failed: " +
                 response.status
             );
 
@@ -118,10 +108,6 @@ async function loadCalendarEvents() {
         const html =
             await response.text();
 
-
-        /* -------------------------------------------------
-           PARSE HTML
-        ------------------------------------------------- */
 
         const parser =
             new DOMParser();
@@ -135,240 +121,105 @@ async function loadCalendarEvents() {
 
 
         /* -------------------------------------------------
-           FIND HOLIDAY TABLE
+           FIND THE OBSERVANCES SECTION
         ------------------------------------------------- */
 
-        const tables =
+        const heading =
             Array.from(
                 doc.querySelectorAll(
-                    "table"
+                    "h2"
                 )
-            );
+            ).find(
+                function (element) {
 
-
-        if (
-            tables.length === 0
-        ) {
-
-            throw new Error(
-                "Timeanddate holiday table was not found."
-            );
-
-        }
-
-
-        /*
-           Timeanddate's holiday page contains a table
-           with columns similar to:
-
-           Date | Day | Name | Type | Details
-
-           We identify the correct table by looking
-           for a header containing "Name" and "Type".
-        */
-
-        const holidayTable =
-            tables.find(
-                function (table) {
-
-                    const headers =
-                        Array.from(
-                            table.querySelectorAll(
-                                "thead th"
-                            )
-                        )
-                        .map(
-                            function (header) {
-
-                                return header
-                                    .textContent
-                                    .replace(
-                                        /\s+/g,
-                                        " "
-                                    )
-                                    .trim()
-                                    .toLowerCase();
-
-                            }
+                    return element.textContent
+                        .toLowerCase()
+                        .includes(
+                            "bank holidays and observances"
                         );
 
-
-                    return (
-                        headers.some(
-                            function (header) {
-
-                                return (
-                                    header === "name"
-                                );
-
-                            }
-                        ) &&
-                        headers.some(
-                            function (header) {
-
-                                return (
-                                    header === "type"
-                                );
-
-                            }
-                        )
-
-                    );
-
                 }
             );
 
 
-        if (!holidayTable) {
+        if (!heading) {
 
             throw new Error(
-                "Timeanddate holiday table could not be identified."
+                "UKCalendar observances section not found."
             );
 
         }
 
 
         /* -------------------------------------------------
-           IDENTIFY COLUMN POSITIONS
+           COLLECT TEXT AFTER THE HEADING
         ------------------------------------------------- */
-
-        const headerCells =
-            Array.from(
-                holidayTable.querySelectorAll(
-                    "thead th"
-                )
-            );
-
-
-        const headers =
-            headerCells.map(
-                function (header) {
-
-                    return header
-                        .textContent
-                        .replace(
-                            /\s+/g,
-                            " "
-                        )
-                        .trim()
-                        .toLowerCase();
-
-                }
-            );
-
-
-        const dateIndex =
-            headers.findIndex(
-                function (header) {
-
-                    return (
-                        header === "date"
-                    );
-
-                }
-            );
-
-
-        const nameIndex =
-            headers.findIndex(
-                function (header) {
-
-                    return (
-                        header === "name"
-                    );
-
-                }
-            );
-
-
-        const typeIndex =
-            headers.findIndex(
-                function (header) {
-
-                    return (
-                        header === "type"
-                    );
-
-                }
-            );
-
-
-        if (
-            dateIndex === -1 ||
-            nameIndex === -1
-        ) {
-
-            throw new Error(
-                "Required Timeanddate columns were not found."
-            );
-
-        }
-
-
-        /* -------------------------------------------------
-           READ HOLIDAY ROWS
-        ------------------------------------------------- */
-
-        const rows =
-            holidayTable.querySelectorAll(
-                "tbody tr"
-            );
-
 
         const events = [];
 
 
-        rows.forEach(
-            function (row) {
+        let element =
+            heading.nextElementSibling;
 
-                const cells =
-                    Array.from(
-                        row.querySelectorAll(
-                            "th, td"
-                        )
+
+        while (element) {
+
+            const text =
+                element.textContent
+                    .replace(
+                        /\s+/g,
+                        " "
+                    )
+                    .trim();
+
+
+            /*
+               Stop when we reach another major section.
+            */
+
+            if (
+                element.tagName === "H2" ||
+                element.tagName === "H3"
+            ) {
+
+                break;
+
+            }
+
+
+            /*
+               Search for date patterns such as:
+
+               14 Feb Saturday
+               15 Mar Sunday
+               17 Mar Tuesday
+            */
+
+            const matches =
+                text.matchAll(
+                    /(\d{1,2})\s+(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\s*[-—]?\s*(.*?)(?=\d{1,2}\s+(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+|$)/gi
+                );
+
+
+            for (
+                const match of matches
+            ) {
+
+                const day =
+                    parseInt(
+                        match[1],
+                        10
                     );
 
 
-                if (
-                    cells.length === 0
-                ) {
-
-                    return;
-
-                }
-
-
-                const dateCell =
-                    cells[dateIndex];
-
-
-                const nameCell =
-                    cells[nameIndex];
-
-
-                if (
-                    !dateCell ||
-                    !nameCell
-                ) {
-
-                    return;
-
-                }
-
-
-                const dateText =
-                    dateCell
-                        .textContent
-                        .replace(
-                            /\s+/g,
-                            " "
-                        )
-                        .trim();
+                const month =
+                    getMonthNumber(
+                        match[2]
+                    );
 
 
                 const title =
-                    nameCell
-                        .textContent
+                    match[4]
                         .replace(
                             /\s+/g,
                             " "
@@ -377,60 +228,30 @@ async function loadCalendarEvents() {
 
 
                 if (
-                    !dateText ||
+                    month === null ||
                     !title
                 ) {
 
-                    return;
+                    continue;
 
                 }
 
 
-                /* -------------------------------------------------
-                   OPTIONAL TYPE
-                ------------------------------------------------- */
-
-                let eventType =
-                    "";
+                const start =
+                    new Date(
+                        year,
+                        month,
+                        day
+                    );
 
 
                 if (
-                    typeIndex !== -1 &&
-                    cells[typeIndex]
+                    isNaN(
+                        start.getTime()
+                    )
                 ) {
 
-                    eventType =
-                        cells[typeIndex]
-                            .textContent
-                            .replace(
-                                /\s+/g,
-                                " "
-                            )
-                            .trim();
-
-                }
-
-
-                /* -------------------------------------------------
-                   PARSE DATE
-                ------------------------------------------------- */
-
-                const parsedDate =
-                    parseTimeanddateDate(
-                        dateText,
-                        year
-                    );
-
-
-                if (!parsedDate) {
-
-                    console.warn(
-                        "Could not parse Timeanddate date:",
-                        dateText,
-                        title
-                    );
-
-                    return;
+                    continue;
 
                 }
 
@@ -439,7 +260,9 @@ async function loadCalendarEvents() {
 
                     id:
                         createEventId(
-                            parsedDate,
+                            year,
+                            month,
+                            day,
                             title
                         ),
 
@@ -448,28 +271,30 @@ async function loadCalendarEvents() {
                             title
                         ),
 
-                    type:
-                        eventType,
-
                     start:
-                        parsedDate,
+                        start,
 
                     end:
                         new Date(
-                            parsedDate.getFullYear(),
-                            parsedDate.getMonth(),
-                            parsedDate.getDate() + 1
+                            year,
+                            month,
+                            day + 1
                         )
 
                 });
 
             }
-        );
 
 
-        /* -----------------------------------------------------
+            element =
+                element.nextElementSibling;
+
+        }
+
+
+        /* -------------------------------------------------
            REMOVE DUPLICATES
-        ----------------------------------------------------- */
+        ------------------------------------------------- */
 
         calendarEvents =
             removeDuplicateEvents(
@@ -477,9 +302,9 @@ async function loadCalendarEvents() {
             );
 
 
-        /* -----------------------------------------------------
-           SORT CHRONOLOGICALLY
-        ----------------------------------------------------- */
+        /* -------------------------------------------------
+           SORT EVENTS
+        ------------------------------------------------- */
 
         calendarEvents.sort(
             function (a, b) {
@@ -498,15 +323,11 @@ async function loadCalendarEvents() {
         ) {
 
             throw new Error(
-                "No Timeanddate events were found."
+                "No UKCalendar events were found."
             );
 
         }
 
-
-        /* -----------------------------------------------------
-           SAVE
-        ----------------------------------------------------- */
 
         calendarDataLoaded =
             true;
@@ -517,21 +338,9 @@ async function loadCalendarEvents() {
         );
 
 
-        /* -----------------------------------------------------
-           UPDATE UI
-        ----------------------------------------------------- */
-
         displayNextEvent();
-
         displayCalendarEvents();
-
         handleTodayHoliday();
-
-
-        console.log(
-            "Timeanddate events loaded:",
-            calendarEvents.length
-        );
 
 
         return calendarEvents;
@@ -539,7 +348,7 @@ async function loadCalendarEvents() {
     } catch (error) {
 
         console.error(
-            "Unable to load Timeanddate events:",
+            "Unable to load UKCalendar events:",
             error
         );
 
@@ -564,7 +373,7 @@ async function loadCalendarEvents() {
                             target="_blank"
                             rel="noopener noreferrer"
                         >
-                            View Timeanddate UK Calendar
+                            View UKCalendar
                         </a>
                     </p>
                 `;
@@ -580,181 +389,7 @@ async function loadCalendarEvents() {
 
 
 /* =========================================================
-   PARSE TIMEANDDATE DATE
-========================================================= */
-
-function parseTimeanddateDate(
-    dateText,
-    year
-) {
-
-    /*
-       Timeanddate commonly uses dates such as:
-
-       Jan 1
-       Feb 14
-       Mar 15
-       Dec 25
-
-       The year is supplied separately by the page URL.
-    */
-
-
-    const cleaned =
-        dateText
-            .replace(
-                /\s+/g,
-                " "
-            )
-            .trim();
-
-
-    /* -----------------------------------------------------
-       MONTH + DAY
-    ----------------------------------------------------- */
-
-    let match =
-        cleaned.match(
-            /^([A-Za-z]{3,9})\s+(\d{1,2})$/
-        );
-
-
-    if (match) {
-
-        const month =
-            getMonthNumber(
-                match[1]
-            );
-
-
-        if (
-            month !== null
-        ) {
-
-            const day =
-                parseInt(
-                    match[2],
-                    10
-                );
-
-
-            const date =
-                new Date(
-                    year,
-                    month,
-                    day
-                );
-
-
-            if (
-                !isNaN(
-                    date.getTime()
-                )
-            ) {
-
-                return date;
-
-            }
-
-        }
-
-    }
-
-
-    /* -----------------------------------------------------
-       MONTH + DAY + YEAR
-    ----------------------------------------------------- */
-
-    match =
-        cleaned.match(
-            /^([A-Za-z]{3,9})\s+(\d{1,2}),?\s+(\d{4})$/
-        );
-
-
-    if (match) {
-
-        const month =
-            getMonthNumber(
-                match[1]
-            );
-
-
-        if (
-            month === null
-        ) {
-
-            return null;
-
-        }
-
-
-        const day =
-            parseInt(
-                match[2],
-                10
-            );
-
-
-        const parsedYear =
-            parseInt(
-                match[3],
-                10
-            );
-
-
-        const date =
-            new Date(
-                parsedYear,
-                month,
-                day
-            );
-
-
-        if (
-            !isNaN(
-                date.getTime()
-            )
-        ) {
-
-            return date;
-
-        }
-
-    }
-
-
-    /* -----------------------------------------------------
-       NATIVE FALLBACK
-    ----------------------------------------------------- */
-
-    const fallback =
-        new Date(
-            cleaned + " " + year
-        );
-
-
-    if (
-        !isNaN(
-            fallback.getTime()
-        )
-    ) {
-
-        return new Date(
-            fallback.getFullYear(),
-            fallback.getMonth(),
-            fallback.getDate()
-        );
-
-    }
-
-
-    return null;
-
-}
-
-
-/* =========================================================
-   GET MONTH NUMBER
+   MONTH NUMBER
 ========================================================= */
 
 function getMonthNumber(
@@ -764,68 +399,42 @@ function getMonthNumber(
     const months = {
 
         jan: 0,
-        january: 0,
-
         feb: 1,
-        february: 1,
-
         mar: 2,
-        march: 2,
-
         apr: 3,
-        april: 3,
-
         may: 4,
-
         jun: 5,
-        june: 5,
-
         jul: 6,
-        july: 6,
-
         aug: 7,
-        august: 7,
-
         sep: 8,
-        sept: 8,
-        september: 8,
-
         oct: 9,
-        october: 9,
-
         nov: 10,
-        november: 10,
-
-        dec: 11,
-        december: 11
+        dec: 11
 
     };
 
 
-    const key =
+    const month =
         monthName
-            .toLowerCase();
+            .toLowerCase()
+            .substring(
+                0,
+                3
+            );
 
 
-    if (
-        Object.prototype.hasOwnProperty.call(
-            months,
-            key
-        )
-    ) {
-
-        return months[key];
-
-    }
-
-
-    return null;
+    return Object.prototype.hasOwnProperty.call(
+        months,
+        month
+    )
+        ? months[month]
+        : null;
 
 }
 
 
 /* =========================================================
-   CLEAN EVENT TITLE
+   CLEAN TITLE
 ========================================================= */
 
 function cleanEventTitle(
@@ -847,44 +456,35 @@ function cleanEventTitle(
 ========================================================= */
 
 function createEventId(
-    date,
+    year,
+    month,
+    day,
     title
 ) {
 
     return (
-
-        date.getFullYear() +
+        year +
         "-" +
-
         String(
-            date.getMonth() + 1
+            month + 1
         ).padStart(
             2,
             "0"
         ) +
-
         "-" +
-
         String(
-            date.getDate()
+            day
         ).padStart(
             2,
             "0"
         ) +
-
         "-" +
-
         title
             .toLowerCase()
             .replace(
                 /[^a-z0-9]+/g,
                 "-"
             )
-            .replace(
-                /^-|-$/g,
-                ""
-            )
-
     );
 
 }
@@ -962,20 +562,8 @@ function handleTodayHoliday() {
         new Date();
 
 
-    const todayYear =
-        today.getFullYear();
-
-
-    const todayMonth =
-        today.getMonth();
-
-
-    const todayDate =
-        today.getDate();
-
-
-    const todayEvents =
-        calendarEvents.filter(
+    const todayEvent =
+        calendarEvents.find(
             function (event) {
 
                 if (
@@ -990,13 +578,13 @@ function handleTodayHoliday() {
                 return (
 
                     event.start.getFullYear() ===
-                        todayYear &&
+                        today.getFullYear() &&
 
                     event.start.getMonth() ===
-                        todayMonth &&
+                        today.getMonth() &&
 
                     event.start.getDate() ===
-                        todayDate
+                        today.getDate()
 
                 );
 
@@ -1004,17 +592,10 @@ function handleTodayHoliday() {
         );
 
 
-    /*
-       If several events fall on the same day,
-       show the first one.
-    */
-
-    if (
-        todayEvents.length > 0
-    ) {
+    if (todayEvent) {
 
         showHolidayNotification(
-            todayEvents[0]
+            todayEvent
         );
 
     }
@@ -1060,7 +641,7 @@ function formatEventDate(
 
 
 /* =========================================================
-   HOLIDAY GREETING
+   GREETING
 ========================================================= */
 
 function getHolidayGreeting(
@@ -1072,9 +653,7 @@ function getHolidayGreeting(
 
 
     if (
-        title.includes(
-            "valentine"
-        )
+        title.includes("valentine")
     ) {
 
         return "❤️ Happy Valentine's Day!";
@@ -1083,9 +662,7 @@ function getHolidayGreeting(
 
 
     if (
-        title.includes(
-            "mother"
-        )
+        title.includes("mother")
     ) {
 
         return "🌷 Happy Mother's Day!";
@@ -1094,9 +671,7 @@ function getHolidayGreeting(
 
 
     if (
-        title.includes(
-            "father"
-        )
+        title.includes("father")
     ) {
 
         return "👔 Happy Father's Day!";
@@ -1105,12 +680,7 @@ function getHolidayGreeting(
 
 
     if (
-        title.includes(
-            "st. patrick"
-        ) ||
-        title.includes(
-            "st patrick"
-        )
+        title.includes("st patrick")
     ) {
 
         return "☘️ Happy St. Patrick's Day!";
@@ -1119,9 +689,7 @@ function getHolidayGreeting(
 
 
     if (
-        title.includes(
-            "halloween"
-        )
+        title.includes("halloween")
     ) {
 
         return "🎃 Happy Halloween!";
@@ -1130,9 +698,7 @@ function getHolidayGreeting(
 
 
     if (
-        title.includes(
-            "guy fawkes"
-        )
+        title.includes("guy fawkes")
     ) {
 
         return "🔥 Happy Bonfire Night!";
@@ -1141,9 +707,7 @@ function getHolidayGreeting(
 
 
     if (
-        title.includes(
-            "christmas eve"
-        )
+        title.includes("christmas eve")
     ) {
 
         return "🎄 Happy Christmas Eve!";
@@ -1152,9 +716,7 @@ function getHolidayGreeting(
 
 
     if (
-        title.includes(
-            "christmas"
-        )
+        title.includes("christmas")
     ) {
 
         return "🎄 Merry Christmas!";
@@ -1163,9 +725,7 @@ function getHolidayGreeting(
 
 
     if (
-        title.includes(
-            "new year"
-        )
+        title.includes("new year")
     ) {
 
         return "🎆 Happy New Year!";
@@ -1174,9 +734,7 @@ function getHolidayGreeting(
 
 
     if (
-        title.includes(
-            "easter"
-        )
+        title.includes("easter")
     ) {
 
         return "🐣 Happy Easter!";
@@ -1185,9 +743,7 @@ function getHolidayGreeting(
 
 
     if (
-        title.includes(
-            "boxing"
-        )
+        title.includes("boxing")
     ) {
 
         return "🎁 Happy Boxing Day!";
@@ -1196,9 +752,7 @@ function getHolidayGreeting(
 
 
     if (
-        title.includes(
-            "bank holiday"
-        )
+        title.includes("bank holiday")
     ) {
 
         return "🇬🇧 Happy Bank Holiday!";
@@ -1207,15 +761,16 @@ function getHolidayGreeting(
 
 
     return (
-        "🎉 " +
-        event.title
+        "🎉 Happy " +
+        event.title +
+        "!"
     );
 
 }
 
 
 /* =========================================================
-   HOLIDAY NOTIFICATION
+   NOTIFICATION
 ========================================================= */
 
 function showHolidayNotification(
@@ -1347,18 +902,13 @@ function showHolidayNotification(
             "click",
             function () {
 
-                if (
+                clearInterval(
                     notification._ringInterval
-                ) {
+                );
 
-                    clearInterval(
-                        notification._ringInterval
-                    );
 
-                    notification._ringInterval =
-                        null;
-
-                }
+                notification._ringInterval =
+                    null;
 
 
                 notification.classList.remove(
@@ -1375,18 +925,13 @@ function showHolidayNotification(
         setTimeout(
             function () {
 
-                if (
+                clearInterval(
                     notification._ringInterval
-                ) {
+                );
 
-                    clearInterval(
-                        notification._ringInterval
-                    );
 
-                    notification._ringInterval =
-                        null;
-
-                }
+                notification._ringInterval =
+                    null;
 
 
                 notification.classList.remove(
@@ -1568,61 +1113,55 @@ function displayCalendarToday() {
 
 
 /* =========================================================
-   CACHE EVENTS
+   CACHE
 ========================================================= */
 
 function cacheCalendarEvents(
     events
 ) {
 
-    const cache = {
-
-        timestamp:
-            Date.now(),
-
-        events:
-            events.map(
-                function (event) {
-
-                    return {
-
-                        id:
-                            event.id,
-
-                        title:
-                            event.title,
-
-                        type:
-                            event.type,
-
-                        start:
-                            event.start
-                                ? event.start.toISOString()
-                                : null,
-
-                        end:
-                            event.end
-                                ? event.end.toISOString()
-                                : null
-
-                    };
-
-                }
-            )
-
-    };
-
-
     sessionStorage.setItem(
         "ukCalendarEvents",
-        JSON.stringify(cache)
+        JSON.stringify({
+
+            timestamp:
+                Date.now(),
+
+            events:
+                events.map(
+                    function (event) {
+
+                        return {
+
+                            id:
+                                event.id,
+
+                            title:
+                                event.title,
+
+                            start:
+                                event.start
+                                    ? event.start.toISOString()
+                                    : null,
+
+                            end:
+                                event.end
+                                    ? event.end.toISOString()
+                                    : null
+
+                        };
+
+                    }
+                )
+
+        })
     );
 
 }
 
 
 /* =========================================================
-   GET CACHED EVENTS
+   GET CACHE
 ========================================================= */
 
 function getCachedCalendarEvents() {
@@ -1661,7 +1200,7 @@ function getCachedCalendarEvents() {
         if (
             Date.now() -
             data.timestamp >
-            CALENDAR_CONFIG.cacheDuration
+            UK_CALENDAR_CONFIG.cacheDuration
         ) {
 
             sessionStorage.removeItem(
@@ -1715,7 +1254,7 @@ function getCachedCalendarEvents() {
 
 
 /* =========================================================
-   INITIALISE CALENDAR
+   INITIALISE
 ========================================================= */
 
 function initialiseCalendar() {
@@ -1784,7 +1323,6 @@ function initialiseCalendar() {
 
 
             displayNextEvent();
-
             displayCalendarEvents();
 
         }
@@ -1844,30 +1382,6 @@ function initialiseCalendar() {
     );
 
 
-    /* -----------------------------------------------------
-       LOAD IN BACKGROUND
-    ----------------------------------------------------- */
-
     loadCalendarEvents();
-
-}
-
-
-/* =========================================================
-   START CALENDAR
-========================================================= */
-
-if (
-    document.readyState === "loading"
-) {
-
-    document.addEventListener(
-        "DOMContentLoaded",
-        initialiseCalendar
-    );
-
-} else {
-
-    initialiseCalendar();
 
 }
