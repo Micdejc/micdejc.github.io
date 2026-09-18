@@ -174,7 +174,7 @@ async function loadPage() {
     /* initialiseConsoleAnimation(); */
 
     initialiseYear();
-
+   
     initialiseCalendar();
 }
 
