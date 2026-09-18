@@ -14,6 +14,31 @@ let calendarDataLoaded =
 
 async function loadCalendarEvents() {
 
+
+   /* =====================================================
+       TEMPORARY TEST
+       Remove this block after testing
+    ===================================================== */
+
+    calendarEvents = [
+
+        {
+            id: "test-christmas",
+            title: "Christmas Day",
+            start: new Date(),
+            end: new Date()
+        }
+
+    ];
+
+    calendarDataLoaded = true;
+
+    displayNextEvent();
+    displayCalendarEvents();
+    handleTodayHoliday();
+
+    return calendarEvents;
+
     if (calendarDataLoaded) {
 
         return calendarEvents;
