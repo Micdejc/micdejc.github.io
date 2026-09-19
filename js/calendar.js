@@ -17,7 +17,7 @@ const UK_CALENDAR_CONFIG = {
         "https://ukcalendar.uk/",
 
     cacheDuration:
-        6 * 60 * 60 * 1000  /* 6 hours */
+        12 * 60 * 60 * 1000  /* 12 hours */
 
 };
 
