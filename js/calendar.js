@@ -1732,9 +1732,9 @@ function displayNextEvent() {
 
         <small>
             ${formatEventDate(nextEvent.start)}
-            <strong>
+            <b>
             - ${getRemainingDays(nextEvent.start)}
-            </strong>
+            </b>
         </small>
     `;
 }
