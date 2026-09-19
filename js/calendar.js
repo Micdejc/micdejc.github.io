@@ -1753,16 +1753,24 @@ function displayCalendarEvents() {
 
     const today = dateOnly(new Date());
 
+    /*  We get next event from the holidays list to avoid duplicate from upcoming events  */
+    const nextEvent = getNextEvent();
+
     /*  Instead of showing all the events in calendars (calendarEvents) we show only the upcoming events (upcomingEvents) from current date  */
+    
     const upcomingEvents =
         calendarEvents.filter(function(event) {
-            return dateOnly(event.start) >= today;
+            return (
+                dateOnly(event.start) >= today &&
+                (!nextEvent ||
+                    event.id !== nextEvent.id)
+            );
         });
 
     if (upcomingEvents.length === 0) {
         container.innerHTML = `
             <p>
-                No upcoming events found.
+                No more upcoming events.
             </p>
         `;
 
