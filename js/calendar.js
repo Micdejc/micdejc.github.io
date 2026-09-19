@@ -1507,10 +1507,40 @@ function getHolidayDescription(event) {
 
         "father's day":
             "Father's Day is a modern celebration honouring fathers and father figures. It is commonly marked with family gatherings, cards, and gifts."
+    
+        "early may bank holiday":
+            "The Early May Bank Holiday is a UK public holiday held on the first Monday in May, providing a traditional spring break.",
+        
+        "spring bank holiday":
+            "The Spring Bank Holiday is a UK public holiday held on the final Monday of May in most years.",
+        
+        "summer bank holiday":
+            "The Summer Bank Holiday is observed on the final Monday of August in England and Wales.",
+        
+        "international women's day":
+            "International Women's Day is observed on 8 March to recognise women's achievements and highlight issues relating to equality and women's rights.",
+        
+        "international workers' day":
+            "International Workers' Day, also known as May Day, recognises workers and the labour movement and is observed on 1 May in many countries.",
+        
+        "april fools' day":
+            "April Fools' Day is a cultural tradition observed on 1 April, known for practical jokes, hoaxes, and playful deception.",
+        
+        "new year's day":
+            "New Year's Day marks the beginning of a new calendar year and is celebrated around the world with gatherings, traditions, and new-year customs.",
+        
+        "christmas eve":
+            "Christmas Eve is the day before Christmas Day and is traditionally associated with family gatherings, religious services, and preparations for Christmas.",
+        
+        "boxing day":
+            "Boxing Day is observed on 26 December in the UK and several other countries. Its name is traditionally associated with charitable giving and 'Christmas boxes'.",
+        
+        "new year's eve":
+            "New Year's Eve marks the final day of the calendar year and is traditionally celebrated with gatherings, countdowns, and festivities."
     };
 
     return descriptions[title] ||
-        "This observance has cultural, religious, or historical significance and is marked in different ways by communities around the world.";
+        "This observance reflects a cultural, religious, historical, or social tradition. How it is observed can vary between communities, countries, and traditions.";
 }
 
 
