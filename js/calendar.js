@@ -689,12 +689,20 @@ function getRemainingDays(
         );
 
 
+    /* -----------------------------------------------------
+       EVENT HAS ALREADY PASSED
+    ----------------------------------------------------- */
+
     if (days < 0) {
 
-        return "";
+        return "✓ Passed";
 
     }
 
+
+    /* -----------------------------------------------------
+       EVENT IS TODAY
+    ----------------------------------------------------- */
 
     if (days === 0) {
 
@@ -703,12 +711,20 @@ function getRemainingDays(
     }
 
 
+    /* -----------------------------------------------------
+       EVENT IS TOMORROW
+    ----------------------------------------------------- */
+
     if (days === 1) {
 
         return "in 1 day";
 
     }
 
+
+    /* -----------------------------------------------------
+       FUTURE EVENT
+    ----------------------------------------------------- */
 
     return (
         "in " +
@@ -1135,6 +1151,7 @@ function displayCalendarEvents() {
                                 ${formatEventDate(
                                     event.start
                                 )}
+
                                 <strong>
                                     - ${getRemainingDays(
                                         event.start
