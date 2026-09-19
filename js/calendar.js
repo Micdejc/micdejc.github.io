@@ -1544,6 +1544,25 @@ function getHolidayDescription(event) {
 }
 
 
+function getRandomHolidayIcon() {
+    const icons = [
+        "🎉",
+        "🎊",
+        "🌟",
+        "🎈",
+        "🔔",
+        "🥳",
+        "✨"
+    ];
+
+    return icons[
+        Math.floor(
+            Math.random() * icons.length
+        )
+    ];
+}
+
+
 function showHolidayNotification(event) {
     let notification =
         document.getElementById(
@@ -1576,7 +1595,7 @@ function showHolidayNotification(event) {
         </button>
     
         <div class="holiday-notification-icon">
-            ✨
+            ${getRandomHolidayIcon()}
         </div>
     
         <div class="holiday-notification-content">
