@@ -1040,7 +1040,7 @@ function removeDuplicateEvents(events) {
 
 async function loadCalendarEvents() {
 
-/*
+
     // TEMPORARY TEST
     calendarEvents = [
         {
@@ -1058,7 +1058,7 @@ async function loadCalendarEvents() {
     displayCalendarEvents();
     handleTodayHoliday();
     
-    return calendarEvents; */
+    return calendarEvents; 
     
     if (calendarDataLoaded) {
         return calendarEvents;
@@ -1426,6 +1426,94 @@ function getHolidayGreeting(event) {
    NOTIFICATION
    ========================================================= */
 
+function getHolidayDescription(event) {
+    const title = event.title.toLowerCase();
+
+    const descriptions = {
+        "eid al-fitr":
+            "Eid al-Fitr marks the end of Ramadan, the Islamic month of fasting. It is traditionally celebrated with prayer, charity, family gatherings, and festive meals.",
+
+        "eid al-adha":
+            "Eid al-Adha commemorates the willingness of Prophet Ibrahim to sacrifice in obedience to God. It is also associated with charity, prayer, family gatherings, and the sacrifice of livestock.",
+
+        "ramadan":
+            "Ramadan is the ninth month of the Islamic calendar and is observed as a month of fasting, prayer, reflection, and charity.",
+
+        "ashura":
+            "Ashura is observed on the 10th day of Muharram. Its significance varies across Muslim communities, with traditions including fasting, prayer, remembrance, and reflection.",
+
+        "mawlid al-nabi":
+            "Mawlid al-Nabi commemorates the birth of the Prophet Muhammad. Muslims who observe it may mark the occasion through prayer, religious gatherings, charity, and remembrance.",
+
+        "diwali":
+            "Diwali is the Hindu festival of lights, symbolising themes of light overcoming darkness and good overcoming evil. It is celebrated with lamps, prayers, family gatherings, and festivities.",
+
+        "holi":
+            "Holi is the Hindu festival of colours, traditionally celebrating the arrival of spring. It is known for colourful celebrations, music, gatherings, and the renewal of relationships.",
+
+        "krishna janmashtami":
+            "Krishna Janmashtami commemorates the birth of Krishna, an important Hindu deity. Devotees may observe the occasion through fasting, prayer, devotional music, and religious ceremonies.",
+
+        "maha shivaratri":
+            "Maha Shivaratri is a major Hindu festival dedicated to Shiva. Devotees traditionally observe it through prayer, fasting, meditation, and visits to temples.",
+
+        "navratri":
+            "Navratri is a Hindu festival observed over nine nights, traditionally honouring different forms of the divine feminine. Celebrations include prayer, fasting, music, dance, and community gatherings.",
+
+        "hanukkah":
+            "Hanukkah is an eight-day Jewish festival commemorating the rededication of the Second Temple in Jerusalem. It is traditionally observed by lighting the menorah, along with prayer and family celebrations.",
+
+        "passover":
+            "Passover is a major Jewish festival commemorating the Exodus of the Israelites from slavery in ancient Egypt. It is traditionally observed with the Seder meal and the retelling of the Exodus story.",
+
+        "rosh hashana":
+            "Rosh Hashanah is the Jewish New Year and marks the beginning of the Jewish High Holy Days. It is traditionally a time of prayer, reflection, and renewal.",
+
+        "yom kippur":
+            "Yom Kippur, the Day of Atonement, is the holiest day in the Jewish calendar. It is traditionally observed through fasting, prayer, repentance, and reflection.",
+
+        "sukkot":
+            "Sukkot is a Jewish festival commemorating the Israelites' journey through the wilderness. It is traditionally observed by spending time in a temporary structure called a sukkah.",
+
+        "good friday":
+            "Good Friday commemorates the crucifixion of Jesus Christ and is observed by Christians as a solemn day of prayer and reflection.",
+
+        "easter sunday":
+            "Easter Sunday celebrates the resurrection of Jesus Christ and is one of the central observances of Christianity.",
+
+        "ascension day":
+            "Ascension Day commemorates the Christian belief that Jesus Christ ascended into heaven following his resurrection.",
+
+        "pentecost":
+            "Pentecost commemorates the descent of the Holy Spirit upon the apostles and is traditionally regarded as the beginning of the Christian Church's mission.",
+
+        "christmas day":
+            "Christmas commemorates the birth of Jesus Christ and is celebrated by Christians around the world, often with worship, family gatherings, and gift-giving.",
+
+        "valentine's day":
+            "Valentine's Day is a cultural celebration associated with love and affection. Its origins are connected to Christian saints and medieval traditions surrounding Saint Valentine.",
+
+        "st patrick's day":
+            "St Patrick's Day commemorates Saint Patrick, the patron saint of Ireland. It has evolved into a widely celebrated cultural occasion featuring Irish heritage, music, and parades.",
+
+        "halloween":
+            "Halloween has roots in ancient Celtic traditions, particularly Samhain, and later Christian observances. Today it is widely associated with costumes, decorations, and trick-or-treating.",
+
+        "bonfire night":
+            "Bonfire Night, or Guy Fawkes Night, commemorates the failure of the Gunpowder Plot of 1605. In the UK it is traditionally marked with bonfires and fireworks.",
+
+        "mother's day":
+            "Mother's Day in the UK, also known as Mothering Sunday, has historical links to Mothering Sunday and evolved into a modern celebration honouring mothers and caregivers.",
+
+        "father's day":
+            "Father's Day is a modern celebration honouring fathers and father figures. It is commonly marked with family gatherings, cards, and gifts."
+    };
+
+    return descriptions[title] ||
+        "This observance has cultural, religious, or historical significance and is marked in different ways by communities around the world.";
+}
+
+
 function showHolidayNotification(event) {
     let notification =
         document.getElementById(
@@ -1456,19 +1544,23 @@ function showHolidayNotification(event) {
         >
             ×
         </button>
-
+    
         <div class="holiday-notification-icon">
             ✨
         </div>
-
+    
         <div class="holiday-notification-content">
             <strong>
                 ${getHolidayGreeting(event)}
             </strong>
-
+    
             <span>
                 ${event.title}
             </span>
+    
+            <p class="holiday-notification-description">
+                ${getHolidayDescription(event)}
+            </p>
         </div>
     `;
 
