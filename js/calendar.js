@@ -2,9 +2,10 @@ let calendarEvents = [];
 let calendarDataLoaded = false;
 
 const CALENDAR_CONFIG = {
-   /* 6 hours update basis */
-    cacheDuration: 6 * 60 * 60 * 1000,  
-    dateHolidaysVersion: "3.36.1"
+   /* 12 hours update basis for cache */
+    cacheDuration: 12 * 60 * 60 * 1000,
+    hebcalVersion: "6.9.2",
+    hinduFestivalVersion: "1.0.1"
 };
 
 
@@ -37,29 +38,29 @@ async function loadCalendarEvents() {
             ukEvents,
             internationalEvents,
             christianEvents,
-            muslimEvents
+            muslimEvents,
+            jewishEvents,
+            hinduEvents
         ] = await Promise.all([
             loadUKHolidays(year),
             loadInternationalHolidays(year),
             loadChristianHolidays(year),
-            loadMuslimHolidays(year)
+            loadMuslimHolidays(year),
+            loadJewishHolidays(year),
+            loadHinduHolidays(year)
         ]);
 
         let events = [
             ...ukEvents,
             ...internationalEvents,
             ...christianEvents,
-            ...muslimEvents
+            ...muslimEvents,
+            ...jewishEvents,
+            ...hinduEvents
         ];
 
         /*
-         * Normalize names first so that:
-         *
-         * Christmas
-         * Christmas Day
-         * christmas day
-         *
-         * are treated as the same event.
+         * Canonicalize event names.
          */
         events = events.map(function (event) {
             return {
@@ -86,7 +87,10 @@ async function loadCalendarEvents() {
 
         calendarDataLoaded = true;
 
-        cacheCalendarEvents(calendarEvents, year);
+        cacheCalendarEvents(
+            calendarEvents,
+            year
+        );
 
         displayNextEvent();
         displayCalendarEvents();
@@ -95,9 +99,13 @@ async function loadCalendarEvents() {
         return calendarEvents;
 
     } catch (error) {
-        console.error("Unable to load calendar events:", error);
+        console.error(
+            "Unable to load calendar events:",
+            error
+        );
 
-        const container = document.getElementById("calendarEvents");
+        const container =
+            document.getElementById("calendarEvents");
 
         if (container) {
             container.innerHTML = `
@@ -113,123 +121,313 @@ async function loadCalendarEvents() {
 
 
 /* =========================================================
-   UK HOLIDAYS
+   UK BANK HOLIDAYS
+   ENGLAND & WALES
    ========================================================= */
 
-async function loadUKHolidays(year) {
-    try {
-        const module = await import(
-            "https://cdn.jsdelivr.net/npm/date-holidays@" +
-            CALENDAR_CONFIG.dateHolidaysVersion +
-            "/+esm"
-        );
+function loadUKHolidays(year) {
+    const events = [];
 
-        const Holidays =
-            module.default ||
-            module.Holidays ||
-            module;
+    /*
+     * Easter Sunday.
+     */
+    const easter =
+        calculateEasterSunday(year);
 
-        const holidays = new Holidays("GB");
+    /*
+     * Collect official England & Wales
+     * bank holidays.
+     */
+    const bankHolidays = [];
 
-        const results = [];
+    /*
+     * New Year's Day.
+     */
+    bankHolidays.push({
+        date: new Date(year, 0, 1),
+        title: "New Year's Day"
+    });
 
-        const holidaysForYear = holidays.getHolidays(year);
+    /*
+     * Good Friday.
+     */
+    const goodFriday =
+        new Date(easter);
 
-        holidaysForYear.forEach(function (holiday) {
-            if (!holiday.date || !holiday.name) return;
+    goodFriday.setDate(
+        goodFriday.getDate() - 2
+    );
 
-            const date = parseHolidayDate(holiday.date, year);
+    bankHolidays.push({
+        date: goodFriday,
+        title: "Good Friday"
+    });
 
-            if (!date) return;
+    /*
+     * Easter Monday.
+     */
+    const easterMonday =
+        new Date(easter);
 
-            results.push({
-                id: createEventId(
-                    date,
-                    holiday.name
-                ),
-                title: holiday.name,
-                start: date,
-                end: new Date(
-                    date.getFullYear(),
-                    date.getMonth(),
-                    date.getDate() + 1
-                ),
-                type: "UK",
-                category: "UK Holiday"
-            });
+    easterMonday.setDate(
+        easterMonday.getDate() + 1
+    );
+
+    bankHolidays.push({
+        date: easterMonday,
+        title: "Easter Monday"
+    });
+
+    /*
+     * Early May Bank Holiday.
+     * First Monday in May.
+     */
+    bankHolidays.push({
+        date: getNthWeekdayOfMonth(
+            year,
+            4,
+            1,
+            1
+        ),
+        title: "Early May Bank Holiday"
+    });
+
+    /*
+     * Spring Bank Holiday.
+     * Last Monday in May.
+     */
+    bankHolidays.push({
+        date: getLastWeekdayOfMonth(
+            year,
+            4,
+            1
+        ),
+        title: "Spring Bank Holiday"
+    });
+
+    /*
+     * Summer Bank Holiday.
+     * Last Monday in August.
+     */
+    bankHolidays.push({
+        date: getLastWeekdayOfMonth(
+            year,
+            7,
+            1
+        ),
+        title: "Summer Bank Holiday"
+    });
+
+    /*
+     * Christmas Day.
+     */
+    bankHolidays.push({
+        date: new Date(year, 11, 25),
+        title: "Christmas Day"
+    });
+
+    /*
+     * Boxing Day.
+     */
+    bankHolidays.push({
+        date: new Date(year, 11, 26),
+        title: "Boxing Day"
+    });
+
+    /*
+     * Allocate substitute days without collisions.
+     *
+     * This is important for years where Christmas
+     * and Boxing Day fall on a weekend.
+     */
+    const occupiedDates = new Set();
+
+    bankHolidays.forEach(function (holiday) {
+        const originalDate =
+            new Date(holiday.date);
+
+        let actualDate =
+            new Date(originalDate);
+
+        /*
+         * If the holiday falls on Saturday/Sunday,
+         * move it to the next available weekday.
+         */
+        if (
+            originalDate.getDay() === 6 ||
+            originalDate.getDay() === 0
+        ) {
+            actualDate =
+                getNextAvailableWeekday(
+                    actualDate,
+                    occupiedDates
+                );
+        }
+
+        const key =
+            getDateKey(actualDate);
+
+        occupiedDates.add(key);
+
+        const isSubstitute =
+            getDateKey(originalDate) !== key;
+
+        events.push({
+            id: createEventId(
+                actualDate,
+                holiday.title
+            ),
+            title:
+                isSubstitute
+                    ? holiday.title +
+                      " (substitute day)"
+                    : holiday.title,
+            start: actualDate,
+            end: new Date(
+                actualDate.getFullYear(),
+                actualDate.getMonth(),
+                actualDate.getDate() + 1
+            ),
+            type: "UK",
+            category: "UK Bank Holiday"
         });
+    });
 
-        return results;
-
-    } catch (error) {
-        console.error("Unable to load UK holidays:", error);
-        return [];
-    }
+    return events;
 }
 
 
 /* =========================================================
-   POPULAR INTERNATIONAL / CULTURAL HOLIDAYS
+   POPULAR INTERNATIONAL / CULTURAL EVENTS
    ========================================================= */
 
 function loadInternationalHolidays(year) {
     const events = [];
 
-    function addEvent(month, day, title) {
-        const date = new Date(year, month, day);
+    function addFixedEvent(
+        month,
+        day,
+        title
+    ) {
+        const date =
+            new Date(
+                year,
+                month,
+                day
+            );
 
         events.push({
-            id: createEventId(date, title),
+            id: createEventId(
+                date,
+                title
+            ),
             title: title,
             start: date,
-            end: new Date(year, month, day + 1),
+            end: new Date(
+                year,
+                month,
+                day + 1
+            ),
             type: "International",
             category: "Cultural / International"
         });
     }
 
     /*
-     * Fixed-date holidays
+     * Fixed-date events.
      */
+    addFixedEvent(
+        0,
+        1,
+        "New Year's Day"
+    );
 
-    addEvent(0, 1, "New Year's Day");
+    addFixedEvent(
+        1,
+        14,
+        "Valentine's Day"
+    );
 
-    addEvent(1, 14, "Valentine's Day");
+    addFixedEvent(
+        2,
+        8,
+        "International Women's Day"
+    );
 
-    addEvent(2, 8, "International Women's Day");
+    addFixedEvent(
+        2,
+        17,
+        "St Patrick's Day"
+    );
 
-    addEvent(2, 17, "St Patrick's Day");
+    addFixedEvent(
+        3,
+        1,
+        "April Fools' Day"
+    );
 
-    addEvent(3, 1, "April Fools' Day");
+    addFixedEvent(
+        4,
+        1,
+        "International Workers' Day"
+    );
 
-    addEvent(4, 1, "International Workers' Day");
+    addFixedEvent(
+        9,
+        31,
+        "Halloween"
+    );
 
-    addEvent(9, 31, "Halloween");
+    addFixedEvent(
+        10,
+        5,
+        "Bonfire Night"
+    );
 
-    addEvent(10, 5, "Bonfire Night");
+    addFixedEvent(
+        11,
+        24,
+        "Christmas Eve"
+    );
 
-    addEvent(11, 24, "Christmas Eve");
+    addFixedEvent(
+        11,
+        25,
+        "Christmas Day"
+    );
 
-    addEvent(11, 25, "Christmas Day");
+    addFixedEvent(
+        11,
+        26,
+        "Boxing Day"
+    );
 
-    addEvent(11, 26, "Boxing Day");
-
-    addEvent(11, 31, "New Year's Eve");
+    addFixedEvent(
+        11,
+        31,
+        "New Year's Eve"
+    );
 
 
     /*
-     * UK Mother's Day
-     *
-     * Mothering Sunday is three weeks before Easter Sunday.
+     * UK Mother's Day / Mothering Sunday.
+     * Three weeks before Easter.
      */
+    const easter =
+        calculateEasterSunday(year);
 
-    const easter = calculateEasterSunday(year);
+    const mothersDay =
+        new Date(easter);
 
-    const mothersDay = new Date(easter);
-    mothersDay.setDate(mothersDay.getDate() - 21);
+    mothersDay.setDate(
+        mothersDay.getDate() - 21
+    );
 
     events.push({
-        id: createEventId(mothersDay, "Mother's Day"),
+        id: createEventId(
+            mothersDay,
+            "Mother's Day"
+        ),
         title: "Mother's Day",
         start: mothersDay,
         end: new Date(
@@ -243,20 +441,22 @@ function loadInternationalHolidays(year) {
 
 
     /*
-     * Father's Day
-     *
+     * Father's Day.
      * Third Sunday of June.
      */
-
-    const fathersDay = getNthWeekdayOfMonth(
-        year,
-        5,
-        0,
-        3
-    );
+    const fathersDay =
+        getNthWeekdayOfMonth(
+            year,
+            5,
+            0,
+            3
+        );
 
     events.push({
-        id: createEventId(fathersDay, "Father's Day"),
+        id: createEventId(
+            fathersDay,
+            "Father's Day"
+        ),
         title: "Father's Day",
         start: fathersDay,
         end: new Date(
@@ -268,25 +468,36 @@ function loadInternationalHolidays(year) {
         category: "Cultural"
     });
 
-    return Promise.resolve(events);
+    return events;
 }
 
 
 /* =========================================================
-   MAJOR CHRISTIAN OBSERVANCES
+   TOP 5 CHRISTIAN OBSERVANCES
    ========================================================= */
 
 function loadChristianHolidays(year) {
     const events = [];
 
-    const easter = calculateEasterSunday(year);
+    const easter =
+        calculateEasterSunday(year);
 
-    function addRelativeEvent(days, title) {
-        const date = new Date(easter);
-        date.setDate(date.getDate() + days);
+    function addRelativeEvent(
+        days,
+        title
+    ) {
+        const date =
+            new Date(easter);
+
+        date.setDate(
+            date.getDate() + days
+        );
 
         events.push({
-            id: createEventId(date, title),
+            id: createEventId(
+                date,
+                title
+            ),
             title: title,
             start: date,
             end: new Date(
@@ -300,119 +511,156 @@ function loadChristianHolidays(year) {
     }
 
     /*
-     * Ash Wednesday
-     * 46 days before Easter.
+     * 1. Good Friday
      */
-    addRelativeEvent(-46, "Ash Wednesday");
+    addRelativeEvent(
+        -2,
+        "Good Friday"
+    );
 
     /*
-     * Palm Sunday
-     * 7 days before Easter.
+     * 2. Easter Sunday
      */
-    addRelativeEvent(-7, "Palm Sunday");
+    addRelativeEvent(
+        0,
+        "Easter Sunday"
+    );
 
     /*
-     * Good Friday
-     * 2 days before Easter.
+     * 3. Ascension Day
      */
-    addRelativeEvent(-2, "Good Friday");
+    addRelativeEvent(
+        39,
+        "Ascension Day"
+    );
 
     /*
-     * Easter Sunday
+     * 4. Pentecost
      */
-    addRelativeEvent(0, "Easter Sunday");
+    addRelativeEvent(
+        49,
+        "Pentecost"
+    );
 
     /*
-     * Ascension Day
-     * 39 days after Easter.
+     * 5. Christmas Day
      */
-    addRelativeEvent(39, "Ascension Day");
-
-    /*
-     * Pentecost / Whit Sunday
-     * 49 days after Easter.
-     */
-    addRelativeEvent(49, "Pentecost");
-
-    /*
-     * Christmas Day
-     *
-     * It is intentionally included here because it is a major
-     * Christian observance. The duplicate-removal system will
-     * ensure it appears only once in the final calendar.
-     */
-    const christmas = new Date(year, 11, 25);
+    const christmas =
+        new Date(
+            year,
+            11,
+            25
+        );
 
     events.push({
-        id: createEventId(christmas, "Christmas Day"),
+        id: createEventId(
+            christmas,
+            "Christmas Day"
+        ),
         title: "Christmas Day",
         start: christmas,
-        end: new Date(year, 11, 26),
+        end: new Date(
+            year,
+            11,
+            26
+        ),
         type: "Christian",
         category: "Christian Observance"
     });
 
-    return Promise.resolve(events);
+    return events;
 }
 
 
 /* =========================================================
-   MAJOR MUSLIM OBSERVANCES
+   TOP 5 MUSLIM OBSERVANCES
    ========================================================= */
 
 async function loadMuslimHolidays(year) {
     const events = [];
 
     try {
-        const module = await import(
-            "https://cdn.jsdelivr.net/npm/islamic-date/+esm"
-        );
+        const module =
+            await import(
+                "https://cdn.jsdelivr.net/npm/islamic-date/+esm"
+            );
 
         const gregorianToHijri =
-            module.gregorianToHijri ||
-            (module.default && module.default.gregorianToHijri);
+            module.gregorianToHijri;
 
-        if (typeof gregorianToHijri !== "function") {
+        if (
+            typeof gregorianToHijri !==
+            "function"
+        ) {
             throw new Error(
-                "gregorianToHijri() was not found in islamic-date."
+                "gregorianToHijri() was not found."
             );
         }
 
-        /*
-         * Scan every day of the Gregorian year.
-         *
-         * This allows us to dynamically identify the Gregorian
-         * date corresponding to the major Islamic dates.
-         */
-        const startDate = new Date(year, 0, 1);
-        const endDate = new Date(year + 1, 0, 1);
+        const startDate =
+            new Date(year, 0, 1);
+
+        const endDate =
+            new Date(year + 1, 0, 1);
 
         for (
-            let date = new Date(startDate);
-            date < endDate;
-            date.setDate(date.getDate() + 1)
-        ) {
-            const current = new Date(date);
+            let date =
+                new Date(startDate);
 
-            let hijri;
+            date < endDate;
+
+            date.setDate(
+                date.getDate() + 1
+            )
+        ) {
+            const current =
+                new Date(date);
+
+            let result;
 
             try {
-                hijri = gregorianToHijri(
-                    current.getFullYear(),
-                    current.getMonth() + 1,
-                    current.getDate(),
-                    "en"
-                );
+                result =
+                    gregorianToHijri(
+                        current.getFullYear(),
+                        current.getMonth() + 1,
+                        current.getDate(),
+                        "en"
+                    );
             } catch (error) {
                 continue;
             }
 
-            const hijriMonth = extractHijriMonth(hijri);
-            const hijriDay = extractHijriDay(hijri);
+            /*
+             * islamic-date returns:
+             * {
+             *   success,
+             *   day,
+             *   month,
+             *   year,
+             *   monthName,
+             *   weekIndex
+             * }
+             */
+            if (
+                !result ||
+                result.success === false
+            ) {
+                continue;
+            }
+
+            const hijriMonth =
+                Number(result.month);
+
+            const hijriDay =
+                Number(result.day);
 
             if (
-                hijriMonth === null ||
-                hijriDay === null
+                !Number.isFinite(
+                    hijriMonth
+                ) ||
+                !Number.isFinite(
+                    hijriDay
+                )
             ) {
                 continue;
             }
@@ -420,29 +668,9 @@ async function loadMuslimHolidays(year) {
             let title = null;
 
             /*
-             * 1 Muharram
+             * 1. Ramadan
              */
             if (
-                hijriMonth === 1 &&
-                hijriDay === 1
-            ) {
-                title = "Islamic New Year";
-            }
-
-            /*
-             * 12 Rabi al-Awwal
-             */
-            else if (
-                hijriMonth === 3 &&
-                hijriDay === 12
-            ) {
-                title = "Mawlid al-Nabi";
-            }
-
-            /*
-             * 1 Ramadan
-             */
-            else if (
                 hijriMonth === 9 &&
                 hijriDay === 1
             ) {
@@ -450,19 +678,7 @@ async function loadMuslimHolidays(year) {
             }
 
             /*
-             * 27 Ramadan
-             *
-             * Commonly observed as Laylat al-Qadr.
-             */
-            else if (
-                hijriMonth === 9 &&
-                hijriDay === 27
-            ) {
-                title = "Laylat al-Qadr";
-            }
-
-            /*
-             * 1 Shawwal
+             * 2. Eid al-Fitr
              */
             else if (
                 hijriMonth === 10 &&
@@ -472,17 +688,7 @@ async function loadMuslimHolidays(year) {
             }
 
             /*
-             * 9 Dhu al-Hijjah
-             */
-            else if (
-                hijriMonth === 12 &&
-                hijriDay === 9
-            ) {
-                title = "Day of Arafah";
-            }
-
-            /*
-             * 10 Dhu al-Hijjah
+             * 3. Eid al-Adha
              */
             else if (
                 hijriMonth === 12 &&
@@ -491,10 +697,35 @@ async function loadMuslimHolidays(year) {
                 title = "Eid al-Adha";
             }
 
-            if (!title) continue;
+            /*
+             * 4. Ashura
+             */
+            else if (
+                hijriMonth === 1 &&
+                hijriDay === 10
+            ) {
+                title = "Ashura";
+            }
+
+            /*
+             * 5. Mawlid al-Nabi
+             */
+            else if (
+                hijriMonth === 3 &&
+                hijriDay === 12
+            ) {
+                title = "Mawlid al-Nabi";
+            }
+
+            if (!title) {
+                continue;
+            }
 
             events.push({
-                id: createEventId(current, title),
+                id: createEventId(
+                    current,
+                    title
+                ),
                 title: title,
                 start: new Date(current),
                 end: new Date(
@@ -521,208 +752,394 @@ async function loadMuslimHolidays(year) {
 
 
 /* =========================================================
-   HIJRI VALUE EXTRACTION
+   TOP 5 JEWISH OBSERVANCES
    ========================================================= */
 
-function extractHijriMonth(hijri) {
-    if (!hijri) return null;
+async function loadJewishHolidays(year) {
+    const events = [];
 
-    if (typeof hijri.month === "number") {
-        return hijri.month;
-    }
+    try {
+        const module =
+            await import(
+                "https://cdn.jsdelivr.net/npm/@hebcal/core@" +
+                CALENDAR_CONFIG.hebcalVersion +
+                "/+esm"
+            );
 
-    if (
-        hijri.month &&
-        typeof hijri.month.number === "number"
-    ) {
-        return hijri.month.number;
-    }
+        const calendar =
+            module.calendar;
 
-    if (
-        hijri.month &&
-        typeof hijri.month.index === "number"
-    ) {
-        return hijri.month.index;
-    }
-
-    if (
-        hijri.hijri &&
-        typeof hijri.hijri.month === "number"
-    ) {
-        return hijri.hijri.month;
-    }
-
-    return null;
-}
-
-function extractHijriDay(hijri) {
-    if (!hijri) return null;
-
-    if (typeof hijri.day === "number") {
-        return hijri.day;
-    }
-
-    if (
-        hijri.day &&
-        typeof hijri.day.number === "number"
-    ) {
-        return hijri.day.number;
-    }
-
-    if (
-        hijri.hijri &&
-        typeof hijri.hijri.day === "number"
-    ) {
-        return hijri.hijri.day;
-    }
-
-    return null;
-}
-
-
-/* =========================================================
-   CANONICAL EVENT NAMES
-   ========================================================= */
-
-function normalizeEventTitle(title) {
-    return title
-        .toLowerCase()
-        .replace(/[’']/g, "")
-        .replace(/\s+/g, " ")
-        .trim();
-}
-
-function getCanonicalEventTitle(title) {
-    const normalized = normalizeEventTitle(title);
-
-    const aliases = {
-        /*
-         * Christmas
-         */
-        "christmas": "Christmas Day",
-        "christmas day": "Christmas Day",
-
-        /*
-         * New Year
-         */
-        "new years day": "New Year's Day",
-        "new years eve": "New Year's Eve",
-
-        /*
-         * Easter
-         */
-        "easter": "Easter Sunday",
-        "easter sunday": "Easter Sunday",
-
-        /*
-         * Mother's Day
-         */
-        "mothers day": "Mother's Day",
-        "mothering sunday": "Mother's Day",
-
-        /*
-         * Father's Day
-         */
-        "fathers day": "Father's Day",
-
-        /*
-         * St Patrick's Day
-         */
-        "st patricks day": "St Patrick's Day",
-
-        /*
-         * Workers' Day
-         */
-        "may day": "International Workers' Day",
-        "international workers day":
-            "International Workers' Day",
-        "labour day":
-            "International Workers' Day",
-        "labor day":
-            "International Workers' Day",
-
-        /*
-         * Boxing Day
-         */
-        "boxing day": "Boxing Day",
-
-        /*
-         * Halloween
-         */
-        "halloween": "Halloween",
-
-        /*
-         * April Fools
-         */
-        "april fools day": "April Fools' Day",
-
-        /*
-         * International Women's Day
-         */
-        "international womens day":
-            "International Women's Day"
-    };
-
-    return aliases[normalized] || title.trim();
-}
-
-
-/* =========================================================
-   DUPLICATE REMOVAL
-   ========================================================= */
-
-function removeDuplicateEvents(events) {
-    const seen = new Set();
-
-    return events.filter(function (event) {
-        if (!event || !event.start || !event.title) {
-            return false;
+        if (
+            typeof calendar !==
+            "function"
+        ) {
+            throw new Error(
+                "Hebcal calendar() was not found."
+            );
         }
 
-        const date = event.start;
+        const hebrewEvents =
+            calendar({
+                year: year,
+                isHebrewYear: false,
+                noMinorFast: true,
+                noModern: true,
+                noRoshChodesh: true
+            });
 
-        const dateKey =
-            date.getFullYear() + "-" +
-            String(date.getMonth() + 1).padStart(2, "0") + "-" +
-            String(date.getDate()).padStart(2, "0");
+        /*
+         * Exactly five major Jewish observances.
+         */
+        const wanted = [
+            {
+                pattern: /^Rosh Hashana/i,
+                title: "Rosh Hashanah"
+            },
+            {
+                pattern: /^Yom Kippur/i,
+                title: "Yom Kippur"
+            },
+            {
+                pattern: /^Pesach/i,
+                title: "Passover (Pesach)"
+            },
+            {
+                pattern: /^Sukkot/i,
+                title: "Sukkot"
+            },
+            {
+                pattern: /^Chanukah/i,
+                title: "Hanukkah"
+            }
+        ];
 
-        const titleKey =
-            normalizeEventTitle(
-                getCanonicalEventTitle(event.title)
+        const added =
+            new Set();
+
+        hebrewEvents.forEach(
+            function (event) {
+                const description =
+                    event.getDesc();
+
+                if (!description) {
+                    return;
+                }
+
+                const match =
+                    wanted.find(
+                        function (item) {
+                            return item.pattern.test(
+                                description
+                            );
+                        }
+                    );
+
+                if (!match) {
+                    return;
+                }
+
+                const date =
+                    event.getDate().greg();
+
+                /*
+                 * Hebcal can return multiple days
+                 * for the same festival.
+                 *
+                 * Keep only the first Gregorian
+                 * date for each observance.
+                 */
+                const key =
+                    match.title;
+
+                if (
+                    added.has(key)
+                ) {
+                    return;
+                }
+
+                added.add(key);
+
+                events.push({
+                    id: createEventId(
+                        date,
+                        match.title
+                    ),
+                    title: match.title,
+                    start: new Date(date),
+                    end: new Date(
+                        date.getFullYear(),
+                        date.getMonth(),
+                        date.getDate() + 1
+                    ),
+                    type: "Jewish",
+                    category: "Jewish Observance"
+                });
+            }
+        );
+
+        return events;
+
+    } catch (error) {
+        console.error(
+            "Unable to load Jewish observances:",
+            error
+        );
+
+        return [];
+    }
+}
+
+
+/* =========================================================
+   TOP 5 HINDU OBSERVANCES
+   ========================================================= */
+
+async function loadHinduHolidays(year) {
+    const events = [];
+
+    try {
+        const module =
+            await import(
+                "https://cdn.jsdelivr.net/npm/@aryanjsx/indian-festivals@" +
+                CALENDAR_CONFIG.hinduFestivalVersion +
+                "/+esm"
             );
 
         /*
-         * Same date + same normalized event =
-         * duplicate.
+         * The package officially exports
+         * hinduFestivals.
          */
-        const key = dateKey + "|" + titleKey;
+        const hinduFestivals =
+            module.hinduFestivals;
 
-        if (seen.has(key)) {
-            return false;
+        if (
+            !Array.isArray(
+                hinduFestivals
+            )
+        ) {
+            throw new Error(
+                "hinduFestivals was not found."
+            );
         }
 
-        seen.add(key);
+        /*
+         * Exactly five major Hindu observances.
+         */
+        const wanted = [
+            {
+                patterns: [
+                    "diwali",
+                    "deepavali"
+                ],
+                title: "Diwali"
+            },
 
-        return true;
-    });
+            {
+                patterns: [
+                    "holi"
+                ],
+                title: "Holi"
+            },
+
+            {
+                patterns: [
+                    "navratri",
+                    "navaratri"
+                ],
+                title: "Navratri"
+            },
+
+            {
+                patterns: [
+                    "krishna janmashtami",
+                    "janmashtami"
+                ],
+                title:
+                    "Krishna Janmashtami"
+            },
+
+            {
+                patterns: [
+                    "maha shivaratri",
+                    "maha shivratri",
+                    "shivaratri"
+                ],
+                title:
+                    "Maha Shivaratri"
+            }
+        ];
+
+        hinduFestivals.forEach(
+            function (festival) {
+                const festivalName =
+                    String(
+                        festival.name || ""
+                    ).trim();
+
+                if (!festivalName) {
+                    return;
+                }
+
+                const normalizedName =
+                    festivalName.toLowerCase();
+
+                const match =
+                    wanted.find(
+                        function (item) {
+                            return item.patterns.some(
+                                function (pattern) {
+                                    return normalizedName.includes(
+                                        pattern
+                                    );
+                                }
+                            );
+                        }
+                    );
+
+                if (!match) {
+                    return;
+                }
+
+                /*
+                 * The package documents dates as:
+                 *
+                 * dates: {
+                 *     2026: "2026-MM-DD",
+                 *     2027: "2027-MM-DD"
+                 * }
+                 */
+                const rawDate =
+                    festival.dates &&
+                    festival.dates[year];
+
+                if (!rawDate) {
+                    return;
+                }
+
+                const date =
+                    parseFestivalDate(
+                        rawDate
+                    );
+
+                if (!date) {
+                    return;
+                }
+
+                const key =
+                    getDateKey(date) +
+                    "|" +
+                    match.title;
+
+                if (
+                    events.some(
+                        function (event) {
+                            return (
+                                getDateKey(
+                                    event.start
+                                ) +
+                                "|" +
+                                event.title ===
+                                key
+                            );
+                        }
+                    )
+                ) {
+                    return;
+                }
+
+                events.push({
+                    id: createEventId(
+                        date,
+                        match.title
+                    ),
+                    title: match.title,
+                    start: date,
+                    end: new Date(
+                        date.getFullYear(),
+                        date.getMonth(),
+                        date.getDate() + 1
+                    ),
+                    type: "Hindu",
+                    category: "Hindu Observance"
+                });
+            }
+        );
+
+        return events;
+
+    } catch (error) {
+        console.error(
+            "Unable to load Hindu observances:",
+            error
+        );
+
+        return [];
+    }
 }
 
 
 /* =========================================================
-   EVENT ID
+   DATE PARSING
    ========================================================= */
 
-function createEventId(date, title) {
-    return (
-        date.getFullYear() +
-        "-" +
-        String(date.getMonth() + 1).padStart(2, "0") +
-        "-" +
-        String(date.getDate()).padStart(2, "0") +
-        "-" +
-        normalizeEventTitle(title)
-            .replace(/[^a-z0-9]+/g, "-")
-    );
+function parseFestivalDate(value) {
+    if (
+        value instanceof Date
+    ) {
+        return new Date(
+            value.getFullYear(),
+            value.getMonth(),
+            value.getDate()
+        );
+    }
+
+    if (
+        typeof value !== "string"
+    ) {
+        return null;
+    }
+
+    /*
+     * Expected format:
+     * YYYY-MM-DD
+     */
+    const match =
+        value.match(
+            /^(\d{4})-(\d{1,2})-(\d{1,2})$/
+        );
+
+    if (!match) {
+        return null;
+    }
+
+    const year =
+        Number(match[1]);
+
+    const month =
+        Number(match[2]) - 1;
+
+    const day =
+        Number(match[3]);
+
+    const date =
+        new Date(
+            year,
+            month,
+            day
+        );
+
+    /*
+     * Validate the date.
+     */
+    if (
+        date.getFullYear() !== year ||
+        date.getMonth() !== month ||
+        date.getDate() !== day
+    ) {
+        return null;
+    }
+
+    return date;
 }
 
 
@@ -731,41 +1148,94 @@ function createEventId(date, title) {
    ========================================================= */
 
 function calculateEasterSunday(year) {
-    /*
-     * Anonymous Gregorian algorithm.
-     */
-    const a = year % 19;
-    const b = Math.floor(year / 100);
-    const c = year % 100;
-    const d = Math.floor(b / 4);
-    const e = b % 4;
-    const f = Math.floor((b + 8) / 25);
-    const g = Math.floor((b - f + 1) / 3);
+    const a =
+        year % 19;
+
+    const b =
+        Math.floor(year / 100);
+
+    const c =
+        year % 100;
+
+    const d =
+        Math.floor(b / 4);
+
+    const e =
+        b % 4;
+
+    const f =
+        Math.floor(
+            (b + 8) / 25
+        );
+
+    const g =
+        Math.floor(
+            (b - f + 1) / 3
+        );
+
     const h =
-        (19 * a + b - d - g + 15) % 30;
-    const i = Math.floor(c / 4);
-    const k = c % 4;
+        (
+            19 * a +
+            b -
+            d -
+            g +
+            15
+        ) % 30;
+
+    const i =
+        Math.floor(c / 4);
+
+    const k =
+        c % 4;
+
     const l =
-        (32 + 2 * e + 2 * i - h - k) % 7;
+        (
+            32 +
+            2 * e +
+            2 * i -
+            h -
+            k
+        ) % 7;
+
     const m =
         Math.floor(
-            (a + 11 * h + 22 * l) / 451
+            (
+                a +
+                11 * h +
+                22 * l
+            ) / 451
         );
 
     const month =
         Math.floor(
-            (h + l - 7 * m + 114) / 31
+            (
+                h +
+                l -
+                7 * m +
+                114
+            ) / 31
         );
 
     const day =
-        ((h + l - 7 * m + 114) % 31) + 1;
+        (
+            (
+                h +
+                l -
+                7 * m +
+                114
+            ) % 31
+        ) + 1;
 
-    return new Date(year, month - 1, day);
+    return new Date(
+        year,
+        month - 1,
+        day
+    );
 }
 
 
 /* =========================================================
-   NTH WEEKDAY OF MONTH
+   WEEKDAY HELPERS
    ========================================================= */
 
 function getNthWeekdayOfMonth(
@@ -774,22 +1244,29 @@ function getNthWeekdayOfMonth(
     weekday,
     occurrence
 ) {
-    const firstDay = new Date(
-        year,
-        month,
-        1
-    );
+    const firstDay =
+        new Date(
+            year,
+            month,
+            1
+        );
 
     const firstWeekday =
         firstDay.getDay();
 
     const offset =
-        (weekday - firstWeekday + 7) % 7;
+        (
+            weekday -
+            firstWeekday +
+            7
+        ) % 7;
 
     const day =
         1 +
         offset +
-        (occurrence - 1) * 7;
+        (
+            occurrence - 1
+        ) * 7;
 
     return new Date(
         year,
@@ -799,48 +1276,236 @@ function getNthWeekdayOfMonth(
 }
 
 
+function getLastWeekdayOfMonth(
+    year,
+    month,
+    weekday
+) {
+    const lastDay =
+        new Date(
+            year,
+            month + 1,
+            0
+        );
+
+    const difference =
+        (
+            lastDay.getDay() -
+            weekday +
+            7
+        ) % 7;
+
+    return new Date(
+        year,
+        month,
+        lastDay.getDate() -
+        difference
+    );
+}
+
+
 /* =========================================================
-   HOLIDAY DATE PARSER
+   SUBSTITUTE BANK HOLIDAY
    ========================================================= */
 
-function parseHolidayDate(value, year) {
-    if (value instanceof Date) {
-        return new Date(value);
-    }
+function getNextAvailableWeekday(
+    date,
+    occupiedDates
+) {
+    const result =
+        new Date(date);
 
-    if (typeof value !== "string") {
-        return null;
-    }
-
-    /*
-     * date-holidays may return ISO-style dates.
-     */
-    const direct = new Date(value);
-
-    if (!isNaN(direct.getTime())) {
-        return new Date(
-            direct.getFullYear(),
-            direct.getMonth(),
-            direct.getDate()
+    while (
+        result.getDay() === 0 ||
+        result.getDay() === 6 ||
+        occupiedDates.has(
+            getDateKey(result)
+        )
+    ) {
+        result.setDate(
+            result.getDate() + 1
         );
     }
 
-    /*
-     * Fallback for DD/MM/YYYY.
-     */
-    const match = value.match(
-        /^(\d{1,2})[\/.-](\d{1,2})[\/.-](\d{4})$/
+    return result;
+}
+
+
+/* =========================================================
+   DATE KEY
+   ========================================================= */
+
+function getDateKey(date) {
+    return (
+        date.getFullYear() +
+        "-" +
+        String(
+            date.getMonth() + 1
+        ).padStart(2, "0") +
+        "-" +
+        String(
+            date.getDate()
+        ).padStart(2, "0")
     );
+}
 
-    if (match) {
-        return new Date(
-            Number(match[3]),
-            Number(match[2]) - 1,
-            Number(match[1])
-        );
-    }
 
-    return null;
+/* =========================================================
+   EVENT ID
+   ========================================================= */
+
+function createEventId(
+    date,
+    title
+) {
+    return (
+        getDateKey(date) +
+        "-" +
+        normalizeEventTitle(title)
+            .replace(
+                /[^a-z0-9]+/g,
+                "-"
+            )
+    );
+}
+
+
+/* =========================================================
+   EVENT TITLE NORMALIZATION
+   ========================================================= */
+
+function normalizeEventTitle(title) {
+    return String(title)
+        .toLowerCase()
+        .replace(/[’']/g, "")
+        .replace(/\s+/g, " ")
+        .trim();
+}
+
+
+function getCanonicalEventTitle(title) {
+    const normalized =
+        normalizeEventTitle(title);
+
+    const aliases = {
+        "christmas":
+            "Christmas Day",
+
+        "christmas day":
+            "Christmas Day",
+
+        "new years day":
+            "New Year's Day",
+
+        "new years eve":
+            "New Year's Eve",
+
+        "easter":
+            "Easter Sunday",
+
+        "easter sunday":
+            "Easter Sunday",
+
+        "mothers day":
+            "Mother's Day",
+
+        "mothering sunday":
+            "Mother's Day",
+
+        "fathers day":
+            "Father's Day",
+
+        "st patricks day":
+            "St Patrick's Day",
+
+        "may day":
+            "International Workers' Day",
+
+        "international workers day":
+            "International Workers' Day",
+
+        "labour day":
+            "International Workers' Day",
+
+        "labor day":
+            "International Workers' Day",
+
+        "boxing day":
+            "Boxing Day",
+
+        "deepavali":
+            "Diwali",
+
+        "janmashtami":
+            "Krishna Janmashtami",
+
+        "maha shivratri":
+            "Maha Shivaratri"
+    };
+
+    return (
+        aliases[normalized] ||
+        String(title).trim()
+    );
+}
+
+
+/* =========================================================
+   DUPLICATE REMOVAL
+   ========================================================= */
+
+function removeDuplicateEvents(events) {
+    const seen =
+        new Set();
+
+    return events.filter(
+        function (event) {
+            if (
+                !event ||
+                !event.start ||
+                !event.title
+            ) {
+                return false;
+            }
+
+            const dateKey =
+                getDateKey(
+                    event.start
+                );
+
+            const title =
+                getCanonicalEventTitle(
+                    event.title
+                );
+
+            const titleKey =
+                normalizeEventTitle(
+                    title
+                );
+
+            /*
+             * Same date + same event name
+             * = duplicate.
+             */
+            const key =
+                dateKey +
+                "|" +
+                titleKey;
+
+            if (
+                seen.has(key)
+            ) {
+                return false;
+            }
+
+            seen.add(key);
+
+            event.title =
+                title;
+
+            return true;
+        }
+    );
 }
 
 
@@ -849,11 +1514,16 @@ function parseHolidayDate(value, year) {
    ========================================================= */
 
 function getNextEvent() {
-    const now = new Date();
+    const now =
+        new Date();
 
-    return calendarEvents.find(function (event) {
-        return event.start >= now;
-    });
+    return calendarEvents.find(
+        function (event) {
+            return (
+                event.start >= now
+            );
+        }
+    );
 }
 
 
@@ -862,26 +1532,30 @@ function getNextEvent() {
    ========================================================= */
 
 function handleTodayHoliday() {
-    const today = new Date();
+    const today =
+        new Date();
 
-    const todayEvents = calendarEvents.filter(
-        function (event) {
-            if (!event.start) return false;
+    const todayEvent =
+        calendarEvents.find(
+            function (event) {
+                if (!event.start) {
+                    return false;
+                }
 
-            return (
-                event.start.getFullYear() ===
-                    today.getFullYear() &&
-                event.start.getMonth() ===
-                    today.getMonth() &&
-                event.start.getDate() ===
-                    today.getDate()
-            );
-        }
-    );
+                return (
+                    event.start.getFullYear() ===
+                        today.getFullYear() &&
+                    event.start.getMonth() ===
+                        today.getMonth() &&
+                    event.start.getDate() ===
+                        today.getDate()
+                );
+            }
+        );
 
-    if (todayEvents.length > 0) {
+    if (todayEvent) {
         showHolidayNotification(
-            todayEvents[0]
+            todayEvent
         );
     }
 }
@@ -892,7 +1566,9 @@ function handleTodayHoliday() {
    ========================================================= */
 
 function formatEventDate(date) {
-    if (!date) return "";
+    if (!date) {
+        return "";
+    }
 
     return new Intl.DateTimeFormat(
         "en-GB",
@@ -911,30 +1587,41 @@ function formatEventDate(date) {
    ========================================================= */
 
 function getRemainingDays(date) {
-    if (!date) return "";
+    if (!date) {
+        return "";
+    }
 
-    const today = new Date();
+    const today =
+        new Date();
 
-    const todayDate = new Date(
-        today.getFullYear(),
-        today.getMonth(),
-        today.getDate()
-    );
+    const todayDate =
+        new Date(
+            today.getFullYear(),
+            today.getMonth(),
+            today.getDate()
+        );
 
-    const eventDate = new Date(
-        date.getFullYear(),
-        date.getMonth(),
-        date.getDate()
-    );
+    const eventDate =
+        new Date(
+            date.getFullYear(),
+            date.getMonth(),
+            date.getDate()
+        );
 
     const difference =
         eventDate.getTime() -
         todayDate.getTime();
 
-    const days = Math.ceil(
-        difference /
-            (1000 * 60 * 60 * 24)
-    );
+    const days =
+        Math.ceil(
+            difference /
+            (
+                1000 *
+                60 *
+                60 *
+                24
+            )
+        );
 
     if (days < 0) {
         return "✓ Passed";
@@ -948,7 +1635,11 @@ function getRemainingDays(date) {
         return "in 1 day";
     }
 
-    return "in " + days + " days";
+    return (
+        "in " +
+        days +
+        " days"
+    );
 }
 
 
@@ -960,75 +1651,173 @@ function getHolidayGreeting(event) {
     const title =
         event.title.toLowerCase();
 
-    if (title.includes("valentine")) {
+    if (
+        title.includes("valentine")
+    ) {
         return "❤️ Happy Valentine's Day!";
     }
 
-    if (title.includes("mother")) {
+    if (
+        title.includes("mother")
+    ) {
         return "🌷 Happy Mother's Day!";
     }
 
-    if (title.includes("father")) {
+    if (
+        title.includes("father")
+    ) {
         return "👔 Happy Father's Day!";
     }
 
-    if (title.includes("st patrick")) {
+    if (
+        title.includes("st patrick")
+    ) {
         return "☘️ Happy St. Patrick's Day!";
     }
 
-    if (title.includes("halloween")) {
+    if (
+        title.includes("halloween")
+    ) {
         return "🎃 Happy Halloween!";
     }
 
-    if (title.includes("bonfire")) {
+    if (
+        title.includes("bonfire")
+    ) {
         return "🔥 Happy Bonfire Night!";
     }
 
-    if (title.includes("christmas eve")) {
+    if (
+        title.includes("christmas eve")
+    ) {
         return "🎄 Happy Christmas Eve!";
     }
 
-    if (title === "christmas day") {
+    if (
+        title === "christmas day"
+    ) {
         return "🎄 Merry Christmas!";
     }
 
-    if (title.includes("new year's eve")) {
+    if (
+        title.includes("new year's eve")
+    ) {
         return "🎆 Happy New Year's Eve!";
     }
 
-    if (title === "new year's day") {
+    if (
+        title === "new year's day"
+    ) {
         return "🎆 Happy New Year!";
     }
 
-    if (title.includes("easter")) {
+    if (
+        title.includes("easter")
+    ) {
         return "🐣 Happy Easter!";
     }
 
-    if (title.includes("boxing")) {
+    if (
+        title.includes("boxing")
+    ) {
         return "🎁 Happy Boxing Day!";
     }
 
-    if (title.includes("ramadan")) {
+    if (
+        title.includes("ramadan")
+    ) {
         return "🌙 Ramadan Mubarak!";
     }
 
-    if (title.includes("eid al-fitr")) {
+    if (
+        title.includes("eid al-fitr")
+    ) {
         return "🌙 Eid Mubarak!";
     }
 
-    if (title.includes("eid al-adha")) {
+    if (
+        title.includes("eid al-adha")
+    ) {
         return "🐑 Eid Mubarak!";
     }
 
-    if (title.includes("mawlid")) {
+    if (
+        title.includes("mawlid")
+    ) {
         return "🌙 Mawlid Mubarak!";
     }
 
-    if (title.includes("islamic new year")) {
-        return "🌙 Happy Islamic New Year!";
+    if (
+        title === "ashura"
+    ) {
+        return "🌙 Ashura";
     }
 
-    return "🎉 Happy " + event.title + "!";
+    if (
+        title.includes("diwali")
+    ) {
+        return "🪔 Happy Diwali!";
+    }
+
+    if (
+        title === "holi"
+    ) {
+        return "🌈 Happy Holi!";
+    }
+
+    if (
+        title.includes("hanukkah")
+    ) {
+        return "🕎 Happy Hanukkah!";
+    }
+
+    if (
+        title.includes("rosh hashana")
+    ) {
+        return "🍎 Happy Rosh Hashanah!";
+    }
+
+    if (
+        title.includes("yom kippur")
+    ) {
+        return "✡️ Yom Kippur";
+    }
+
+    if (
+        title.includes("passover")
+    ) {
+        return "✡️ Happy Passover!";
+    }
+
+    if (
+        title.includes("sukkot")
+    ) {
+        return "✡️ Happy Sukkot!";
+    }
+
+    if (
+        title.includes("navratri")
+    ) {
+        return "🕉️ Happy Navratri!";
+    }
+
+    if (
+        title.includes("janmashtami")
+    ) {
+        return "🕉️ Happy Krishna Janmashtami!";
+    }
+
+    if (
+        title.includes("shivaratri")
+    ) {
+        return "🕉️ Maha Shivaratri";
+    }
+
+    return (
+        "🎉 Happy " +
+        event.title +
+        "!"
+    );
 }
 
 
@@ -1044,7 +1833,9 @@ function showHolidayNotification(event) {
 
     if (!notification) {
         notification =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
 
         notification.id =
             "holidayNotification";
@@ -1080,33 +1871,45 @@ function showHolidayNotification(event) {
         </div>
     `;
 
-    if (notification._ringInterval) {
+    if (
+        notification._ringInterval
+    ) {
         clearInterval(
             notification._ringInterval
         );
     }
 
-    if (notification._hideTimeout) {
+    if (
+        notification._hideTimeout
+    ) {
         clearTimeout(
             notification._hideTimeout
         );
     }
 
-    notification.classList.add("show");
-    notification.classList.add("ringing");
+    notification.classList.add(
+        "show"
+    );
+
+    notification.classList.add(
+        "ringing"
+    );
 
     notification._ringInterval =
-        setInterval(function () {
-            notification.classList.remove(
-                "ringing"
-            );
+        setInterval(
+            function () {
+                notification.classList.remove(
+                    "ringing"
+                );
 
-            void notification.offsetWidth;
+                void notification.offsetWidth;
 
-            notification.classList.add(
-                "ringing"
-            );
-        }, 5000);
+                notification.classList.add(
+                    "ringing"
+                );
+            },
+            5000
+        );
 
     const close =
         notification.querySelector(
@@ -1132,18 +1935,21 @@ function showHolidayNotification(event) {
     }
 
     notification._hideTimeout =
-        setTimeout(function () {
-            clearInterval(
-                notification._ringInterval
-            );
+        setTimeout(
+            function () {
+                clearInterval(
+                    notification._ringInterval
+                );
 
-            notification._ringInterval =
-                null;
+                notification._ringInterval =
+                    null;
 
-            notification.classList.remove(
-                "show"
-            );
-        }, 30000);
+                notification.classList.remove(
+                    "show"
+                );
+            },
+            30000
+        );
 }
 
 
@@ -1157,7 +1963,9 @@ function displayNextEvent() {
             "calendarNextEvent"
         );
 
-    if (!container) return;
+    if (!container) {
+        return;
+    }
 
     const nextEvent =
         getNextEvent();
@@ -1190,7 +1998,7 @@ function displayNextEvent() {
 
 
 /* =========================================================
-   CALENDAR EVENT DISPLAY
+   CALENDAR EVENTS DISPLAY
    ========================================================= */
 
 function displayCalendarEvents() {
@@ -1199,9 +2007,13 @@ function displayCalendarEvents() {
             "calendarEvents"
         );
 
-    if (!container) return;
+    if (!container) {
+        return;
+    }
 
-    if (calendarEvents.length === 0) {
+    if (
+        calendarEvents.length === 0
+    ) {
         container.innerHTML = `
             <p>
                 No upcoming events found.
@@ -1212,23 +2024,28 @@ function displayCalendarEvents() {
     }
 
     container.innerHTML =
-        calendarEvents.map(function (event) {
-            return `
-                <article class="calendar-event">
-                    <div class="calendar-event-date">
-                        ${formatEventDate(event.start)}
+        calendarEvents
+            .map(
+                function (event) {
+                    return `
+                        <article class="calendar-event">
 
-                        <strong>
-                            - ${getRemainingDays(event.start)}
-                        </strong>
-                    </div>
+                            <div class="calendar-event-date">
+                                ${formatEventDate(event.start)}
+                                <strong>
+                                    - ${getRemainingDays(event.start)}
+                                </strong>
+                            </div>
 
-                    <div class="calendar-event-name">
-                        ${event.title}
-                    </div>
-                </article>
-            `;
-        }).join("");
+                            <div class="calendar-event-name">
+                                ${event.title}
+                            </div>
+
+                        </article>
+                    `;
+                }
+            )
+            .join("");
 }
 
 
@@ -1242,7 +2059,9 @@ function displayCalendarToday() {
             "calendarToday"
         );
 
-    if (!container) return;
+    if (!container) {
+        return;
+    }
 
     container.textContent =
         new Intl.DateTimeFormat(
@@ -1252,7 +2071,9 @@ function displayCalendarToday() {
                 month: "long",
                 year: "numeric"
             }
-        ).format(new Date());
+        ).format(
+            new Date()
+        );
 }
 
 
@@ -1270,48 +2091,67 @@ function cacheCalendarEvents(
             timestamp: Date.now(),
             year: year,
 
-            events: events.map(
-                function (event) {
-                    return {
-                        id: event.id,
-                        title: event.title,
-                        start: event.start
-                            ? event.start.toISOString()
-                            : null,
-                        end: event.end
-                            ? event.end.toISOString()
-                            : null,
-                        type: event.type || null,
-                        category:
-                            event.category || null
-                    };
-                }
-            )
+            events:
+                events.map(
+                    function (event) {
+                        return {
+                            id: event.id,
+                            title: event.title,
+
+                            start:
+                                event.start
+                                    ? event.start.toISOString()
+                                    : null,
+
+                            end:
+                                event.end
+                                    ? event.end.toISOString()
+                                    : null,
+
+                            type:
+                                event.type ||
+                                null,
+
+                            category:
+                                event.category ||
+                                null
+                        };
+                    }
+                )
         })
     );
 }
 
 
-function getCachedCalendarEvents(year) {
+function getCachedCalendarEvents(
+    year
+) {
     const cached =
         sessionStorage.getItem(
             "calendarEvents"
         );
 
-    if (!cached) return null;
+    if (!cached) {
+        return null;
+    }
 
     try {
         const data =
             JSON.parse(cached);
 
-        if (!data || !data.timestamp) {
+        if (
+            !data ||
+            !data.timestamp
+        ) {
             return null;
         }
 
         /*
-         * Never use a previous year's cache.
+         * Never use a cache from another year.
          */
-        if (data.year !== year) {
+        if (
+            data.year !== year
+        ) {
             sessionStorage.removeItem(
                 "calendarEvents"
             );
@@ -1324,7 +2164,7 @@ function getCachedCalendarEvents(year) {
          */
         if (
             Date.now() -
-                data.timestamp >
+            data.timestamp >
             CALENDAR_CONFIG.cacheDuration
         ) {
             sessionStorage.removeItem(
@@ -1334,21 +2174,35 @@ function getCachedCalendarEvents(year) {
             return null;
         }
 
-        return (data.events || [])
-            .map(function (event) {
-                return {
-                    ...event,
-                    start: event.start
-                        ? new Date(event.start)
-                        : null,
-                    end: event.end
-                        ? new Date(event.end)
-                        : null
-                };
-            })
-            .filter(function (event) {
-                return event.start;
-            });
+        return (
+            data.events || []
+        )
+            .map(
+                function (event) {
+                    return {
+                        ...event,
+
+                        start:
+                            event.start
+                                ? new Date(
+                                    event.start
+                                )
+                                : null,
+
+                        end:
+                            event.end
+                                ? new Date(
+                                    event.end
+                                )
+                                : null
+                    };
+                }
+            )
+            .filter(
+                function (event) {
+                    return event.start;
+                }
+            );
 
     } catch (error) {
         sessionStorage.removeItem(
@@ -1464,7 +2318,7 @@ function initialiseCalendar() {
 
 
 /* =========================================================
-   START
+   START CALENDAR
    ========================================================= */
 
 if (
