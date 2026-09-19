@@ -732,10 +732,11 @@ async function loadMuslimHolidays(year) {
         /*
          * Diagnostic output.
          */
-        console.log(
+        
+        /* console.log(
             "Muslim observances loaded:",
             events
-        );
+        );*/
 
         /*
          * Warn if any of the five could not
@@ -1360,13 +1361,13 @@ function getHolidayGreeting(event) {
     if (
         title.includes("eid al-fitr")
     ) {
-        return "🌙 Eid Mubarak!";
+        return "🕋 Eid Mubarak!";
     }
 
     if (
         title.includes("eid al-adha")
     ) {
-        return "🌙 Eid Mubarak!";
+        return "🐑 Eid Mubarak!";
     }
 
     if (
@@ -1378,7 +1379,7 @@ function getHolidayGreeting(event) {
     if (
         title.includes("ashura")
     ) {
-        return "🌙 Ashura Mubarak!";
+        return "☪️ Ashura Mubarak!";
     }
 
     if (
