@@ -1,13 +1,22 @@
+/* =========================================
+   SEARCH TOGGLE
+   ========================================= */
+
 .search-toggle {
     width: 40px;
     height: 40px;
+
     border: 1px solid var(--border);
     border-radius: 50%;
+
     background: var(--surface);
     color: var(--text);
+
     cursor: pointer;
+
     font-size: 0.9rem;
     font-weight: 800;
+
     transition: all 0.2s ease;
 }
 
@@ -17,6 +26,7 @@
     transform: translateY(-2px);
 }
 
+
 /* =========================================
    SEARCH OVERLAY
    ========================================= */
@@ -24,6 +34,7 @@
 .site-search-overlay {
     position: fixed;
     inset: 0;
+
     z-index: 9999;
 
     display: flex;
@@ -40,7 +51,6 @@
         visibility 0.2s ease;
 }
 
-
 .site-search-overlay.active {
     visibility: visible;
     opacity: 1;
@@ -55,9 +65,17 @@
     position: absolute;
     inset: 0;
 
-    background: rgba(0, 0, 0, 0.65);
+    /*
+     * Uses the selected theme surface instead
+     * of forcing a black overlay.
+     */
+    background: color-mix(
+        in srgb,
+        var(--background) 82%,
+        transparent
+    );
 
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(6px);
 }
 
 
@@ -69,17 +87,24 @@
     position: relative;
 
     width: min(680px, 100%);
-
     max-height: 80vh;
 
     overflow: hidden;
 
+    border: 1px solid var(--border);
     border-radius: 16px;
 
-    background: var(--background-color, #ffffff);
+    background: var(--surface);
+    color: var(--text);
 
     box-shadow:
         0 25px 80px rgba(0, 0, 0, 0.25);
+
+    /*
+     * Ensures the modal remains readable
+     * when the theme changes.
+     */
+    color-scheme: light dark;
 }
 
 
@@ -94,23 +119,30 @@
     justify-content: space-between;
 
     padding: 20px 22px 12px;
-}
 
+    border-bottom: 1px solid var(--border);
+}
 
 .site-search-header h2 {
     margin: 0;
+
+    color: var(--text);
 
     font-size: 1.3rem;
 }
 
 
+/* =========================================
+   CLOSE BUTTON
+   ========================================= */
+
 .site-search-close {
     border: 0;
 
     background: transparent;
+    color: var(--text);
 
     font-size: 1.8rem;
-
     line-height: 1;
 
     cursor: pointer;
@@ -118,11 +150,17 @@
     padding: 4px 8px;
 
     opacity: 0.65;
+
+    transition:
+        color 0.2s ease,
+        opacity 0.2s ease,
+        transform 0.2s ease;
 }
 
-
 .site-search-close:hover {
+    color: #22c55e;
     opacity: 1;
+    transform: scale(1.05);
 }
 
 
@@ -137,20 +175,36 @@
 
     gap: 10px;
 
-    margin: 8px 20px 12px;
+    margin: 16px 20px 12px;
 
     padding: 12px 14px;
 
-    border: 1px solid rgba(128, 128, 128, 0.3);
-
+    border: 1px solid var(--border);
     border-radius: 10px;
 
-    background: rgba(128, 128, 128, 0.06);
+    background: var(--background);
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.site-search-input-wrapper:focus-within {
+    border-color: #22c55e;
+
+    box-shadow:
+        0 0 0 2px rgba(34, 197, 94, 0.12);
 }
 
 
 .site-search-icon {
+    flex-shrink: 0;
+
+    color: var(--text);
+
     font-size: 1.1rem;
+
+    opacity: 0.7;
 }
 
 
@@ -160,31 +214,46 @@
     width: 100%;
 
     border: 0;
-
-    outline: none;
+    outline: 0;
 
     background: transparent;
+    color: var(--text);
 
     font: inherit;
-
     font-size: 1rem;
 }
 
+.site-search-input::placeholder {
+    color: var(--text);
+    opacity: 0.5;
+}
+
+
+/* =========================================
+   CLEAR BUTTON
+   ========================================= */
 
 .site-search-clear {
+    flex-shrink: 0;
+
     border: 0;
 
     background: transparent;
+    color: var(--text);
 
     cursor: pointer;
 
     font-size: 1.2rem;
 
     opacity: 0.6;
+
+    transition:
+        color 0.2s ease,
+        opacity 0.2s ease;
 }
 
-
 .site-search-clear:hover {
+    color: #22c55e;
     opacity: 1;
 }
 
@@ -195,6 +264,8 @@
 
 .site-search-status {
     padding: 0 22px 12px;
+
+    color: var(--text);
 
     font-size: 0.85rem;
 
@@ -215,7 +286,13 @@
 }
 
 
+/* =========================================
+   RESULT
+   ========================================= */
+
 .site-search-result {
+    position: relative;
+
     display: flex;
 
     flex-direction: column;
@@ -224,30 +301,40 @@
 
     text-align: left;
 
-    border: 0;
-
+    border: 1px solid transparent;
     border-radius: 10px;
 
-    padding: 14px 12px;
+    padding: 14px 38px 14px 12px;
 
     background: transparent;
+    color: var(--text);
 
     cursor: pointer;
 
     font: inherit;
-}
 
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
 
 .site-search-result:hover {
-    background: rgba(128, 128, 128, 0.1);
+    background: var(--background);
+
+    border-color: var(--border);
 }
 
+
+/* =========================================
+   RESULT SECTION NAME
+   ========================================= */
 
 .site-search-result-section {
     margin-bottom: 5px;
 
-    font-size: 0.75rem;
+    color: var(--text);
 
+    font-size: 0.75rem;
     font-weight: 700;
 
     text-transform: uppercase;
@@ -258,19 +345,68 @@
 }
 
 
+/* =========================================
+   RESULT SNIPPET
+   ========================================= */
+
 .site-search-result-snippet {
+    color: var(--text);
+
     font-size: 0.95rem;
 
     line-height: 1.5;
 }
 
 
+/* =========================================
+   RESULT ARROW
+   ========================================= */
+
+.site-search-result-arrow {
+    position: absolute;
+
+    top: 50%;
+    right: 14px;
+
+    transform: translateY(-50%);
+
+    color: var(--text);
+
+    font-size: 1.1rem;
+
+    opacity: 0.45;
+
+    transition:
+        color 0.2s ease,
+        opacity 0.2s ease,
+        transform 0.2s ease;
+}
+
+.site-search-result:hover
+.site-search-result-arrow {
+    color: #22c55e;
+
+    opacity: 1;
+
+    transform:
+        translate(3px, -50%);
+}
+
+
+/* =========================================
+   SEARCH HIGHLIGHT
+   ========================================= */
+
 .site-search-result-snippet mark {
     padding: 0 2px;
 
     border-radius: 3px;
 
-    background: rgba(255, 215, 0, 0.45);
+    background: rgba(34, 197, 94, 0.18);
+
+    color: var(--text);
+
+    font-weight: 700;
 }
 
 
@@ -282,23 +418,29 @@
     padding: 40px 20px;
 
     text-align: center;
+
+    color: var(--text);
 }
 
 
 .site-search-no-results-icon {
-    font-size: 2rem;
-
     margin-bottom: 10px;
+
+    font-size: 2rem;
 }
 
 
 .site-search-no-results h3 {
     margin: 0 0 6px;
+
+    color: var(--text);
 }
 
 
 .site-search-no-results p {
     margin: 0;
+
+    color: var(--text);
 
     opacity: 0.65;
 }
@@ -309,7 +451,8 @@
    ========================================= */
 
 .search-highlight-section {
-    animation: searchSectionHighlight 1.8s ease;
+    animation:
+        searchSectionHighlight 1.8s ease;
 }
 
 
@@ -321,7 +464,7 @@
     }
 
     25% {
-        outline: 3px solid rgba(255, 193, 7, 0.7);
+        outline: 3px solid rgba(34, 197, 94, 0.7);
         outline-offset: 8px;
     }
 
@@ -361,4 +504,17 @@ body.search-open {
         max-height: 65vh;
     }
 
+    .site-search-header {
+        padding: 16px 18px 10px;
+    }
+
+    .site-search-input-wrapper {
+        margin-left: 14px;
+        margin-right: 14px;
+    }
+
+    .site-search-status {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
 }
