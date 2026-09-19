@@ -1039,6 +1039,27 @@ function removeDuplicateEvents(events) {
    ========================================================= */
 
 async function loadCalendarEvents() {
+
+
+    // TEMPORARY TEST
+    calendarEvents = [
+        {
+            id: "test-eid-al-fitr",
+            title: "Eid al-Fitr",
+            category: "Muslim",
+            start: new Date(),
+            end: new Date()
+        }
+    ];
+    
+    calendarDataLoaded = true;
+    
+    displayNextEvent();
+    displayCalendarEvents();
+    handleTodayHoliday();
+    
+    return calendarEvents;
+    
     if (calendarDataLoaded) {
         return calendarEvents;
     }
