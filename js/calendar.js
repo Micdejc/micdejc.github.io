@@ -1751,9 +1751,15 @@ function displayCalendarEvents() {
         return;
     }
 
-    if (
-        calendarEvents.length === 0
-    ) {
+    const today = dateOnly(new Date());
+
+    /*  Instead of showing all the events in calendars (calendarEvents) we show only the upcoming events (upcomingEvents) from current date  */
+    const upcomingEvents =
+        calendarEvents.filter(function(event) {
+            return dateOnly(event.start) >= today;
+        });
+
+    if (upcomingEvents.length === 0) {
         container.innerHTML = `
             <p>
                 No upcoming events found.
@@ -1764,7 +1770,7 @@ function displayCalendarEvents() {
     }
 
     container.innerHTML =
-        calendarEvents
+        upcomingEvents
             .map(function(event) {
                 return `
                     <article class="calendar-event">
