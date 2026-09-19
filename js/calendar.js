@@ -643,6 +643,83 @@ function formatEventDate(
 
 
 /* =========================================================
+   REMAINING DAYS
+========================================================= */
+
+function getRemainingDays(
+    date
+) {
+
+    if (!date) {
+
+        return "";
+
+    }
+
+
+    const today =
+        new Date();
+
+
+    const todayDate =
+        new Date(
+            today.getFullYear(),
+            today.getMonth(),
+            today.getDate()
+        );
+
+
+    const eventDate =
+        new Date(
+            date.getFullYear(),
+            date.getMonth(),
+            date.getDate()
+        );
+
+
+    const difference =
+        eventDate.getTime() -
+        todayDate.getTime();
+
+
+    const days =
+        Math.ceil(
+            difference /
+            (1000 * 60 * 60 * 24)
+        );
+
+
+    if (days < 0) {
+
+        return "";
+
+    }
+
+
+    if (days === 0) {
+
+        return "today";
+
+    }
+
+
+    if (days === 1) {
+
+        return "in 1 day";
+
+    }
+
+
+    return (
+        "in " +
+        days +
+        " days"
+    );
+
+}
+
+
+/* =========================================================
    GREETING
 ========================================================= */
 
@@ -998,6 +1075,9 @@ function displayNextEvent() {
                 ${formatEventDate(
                     nextEvent.start
                 )}
+                - ${getRemainingDays(
+                    nextEvent.start
+                )}
             </small>
         `;
 
@@ -1055,6 +1135,11 @@ function displayCalendarEvents() {
                                 ${formatEventDate(
                                     event.start
                                 )}
+                                <strong>
+                                    - ${getRemainingDays(
+                                        event.start
+                                    )}
+                                </strong>
                             </div>
 
                             <div
