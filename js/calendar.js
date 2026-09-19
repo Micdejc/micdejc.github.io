@@ -1040,7 +1040,7 @@ function removeDuplicateEvents(events) {
 
 async function loadCalendarEvents() {
 
-
+/*
     // TEMPORARY TEST
     calendarEvents = [
         {
@@ -1058,7 +1058,7 @@ async function loadCalendarEvents() {
     displayCalendarEvents();
     handleTodayHoliday();
     
-    return calendarEvents;
+    return calendarEvents; */
     
     if (calendarDataLoaded) {
         return calendarEvents;
@@ -1674,26 +1674,26 @@ function displayCalendarToday() {
 
 function cacheCalendarEvents(events) {
     try {
+        const year = new Date().getFullYear();
+
         sessionStorage.setItem(
             "calendarEvents",
             JSON.stringify({
                 timestamp: Date.now(),
+                year: year,
 
                 events: events.map(
                     function(event) {
                         return {
                             id: event.id,
                             title: event.title,
-                            category:
-                                event.category,
-                            start:
-                                event.start
-                                    ? event.start.toISOString()
-                                    : null,
-                            end:
-                                event.end
-                                    ? event.end.toISOString()
-                                    : null
+                            category: event.category,
+                            start: event.start
+                                ? event.start.toISOString()
+                                : null,
+                            end: event.end
+                                ? event.end.toISOString()
+                                : null
                         };
                     }
                 )
@@ -1724,13 +1724,42 @@ function getCachedCalendarEvents() {
         if (
             !data ||
             !data.timestamp ||
-            !Array.isArray(
-                data.events
-            )
+            !data.year ||
+            !Array.isArray(data.events)
         ) {
+            sessionStorage.removeItem(
+                "calendarEvents"
+            );
+
             return null;
         }
 
+        /*
+         * IMPORTANT:
+         * Do not use cached events from a different year.
+         */
+        const currentYear =
+            new Date().getFullYear();
+
+        if (data.year !== currentYear) {
+            sessionStorage.removeItem(
+                "calendarEvents"
+            );
+
+            console.log(
+                "Calendar cache belongs to " +
+                data.year +
+                ". Loading fresh events for " +
+                currentYear +
+                "."
+            );
+
+            return null;
+        }
+
+        /*
+         * Cache expiration
+         */
         if (
             Date.now() -
                 data.timestamp >
@@ -1748,14 +1777,10 @@ function getCachedCalendarEvents() {
                 return {
                     ...event,
                     start: event.start
-                        ? new Date(
-                              event.start
-                          )
+                        ? new Date(event.start)
                         : null,
                     end: event.end
-                        ? new Date(
-                              event.end
-                          )
+                        ? new Date(event.end)
                         : null
                 };
             })
@@ -1767,6 +1792,7 @@ function getCachedCalendarEvents() {
                     )
                 );
             });
+
     } catch (error) {
         sessionStorage.removeItem(
             "calendarEvents"
