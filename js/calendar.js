@@ -1506,7 +1506,7 @@ function getHolidayDescription(event) {
             "Mother's Day in the UK, also known as Mothering Sunday, has historical links to Mothering Sunday and evolved into a modern celebration honouring mothers and caregivers.",
 
         "father's day":
-            "Father's Day is a modern celebration honouring fathers and father figures. It is commonly marked with family gatherings, cards, and gifts."
+            "Father's Day is a modern celebration honouring fathers and father figures. It is commonly marked with family gatherings, cards, and gifts.",
     
         "early may bank holiday":
             "The Early May Bank Holiday is a UK public holiday held on the first Monday in May, providing a traditional spring break.",
