@@ -854,6 +854,43 @@ function getHolidayGreeting(
 
     }
 
+   
+    if (
+       title.includes("eid")
+    ) {
+       
+        return "🌙 Eid Mubarak!";
+       
+    }
+
+   
+    if (
+       title.includes("ramadan")
+    ) {
+       
+        return "🌙 Ramadan Mubarak!";
+       
+    }
+
+   
+    if (
+       title.includes("diwali")
+    ) {
+       
+        return "🪔 Happy Diwali!";
+       
+    }
+
+   
+    if (
+        title.includes("hanukkah") ||
+        title.includes("chanukah")
+    ) {
+       
+        return "🕎 Happy Hanukkah!";
+       
+    }
+
 
     return (
         "🎉 Happy " +
