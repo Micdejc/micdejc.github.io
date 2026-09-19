@@ -594,16 +594,30 @@ Only modify the JavaScript structure when:
 
 ---
 
-# Interactive Calendar
+# Calendar
 
-The website includes an interactive **Calendar integration** that provides a convenient way to display upcoming events and important dates directly within the website.
+The website includes an integrated calendar designed to provide a broad view of important dates, holidays, and observances throughout the year.
 
 ## Features
 
-- **Calendar integration** for retrieving and displaying calendar events.
-- **Upcoming event display** highlighting the next scheduled event.
-- **Today's date and event information** for quick reference.
-- **UK holiday notifications** with contextual greetings for relevant public holidays.
+- **UK public holidays** and bank holidays
+- **Religious observances** from multiple traditions
+- **Cultural and international observances**
+- **Awareness days and commemorative events**
+- **Upcoming-event notifications** with dynamically generated reminders
+- **Responsive calendar interface** for desktop and mobile devices
+
+## Data Sources
+
+The calendar combines data from established calendar and holiday datasets to provide broader coverage than a standard UK public-holiday calendar.
+
+The implementation currently uses:
+
+- **Hebcal** for Jewish holidays and observances
+- **Hindu festival data** for Hindu religious observances
+- Additional calendar data sources for UK holidays and broader international observances
+
+Where possible, events are represented using their official or commonly recognized names, dates, and relevant descriptions.
 
 ---
 # Local Testing
