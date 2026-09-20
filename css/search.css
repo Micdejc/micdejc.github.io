@@ -321,7 +321,7 @@
 .site-search-result:hover {
     background: var(--background);
 
-    border-color: var(--border);
+    border-color: var(--primary);
 }
 
 
