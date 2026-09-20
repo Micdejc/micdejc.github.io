@@ -1080,13 +1080,13 @@ function removeDuplicateEvents(events) {
 
 async function loadCalendarEvents() {
 
-/*
+
     // TEMPORARY TEST
     calendarEvents = [
         {
-            id: "test-eid-al-fitr",
-            title: "Eid al-Fitr",
-            category: "Muslim",
+            id: "test-cybersecurity-awareness-month",
+            title: "cybersecurity awareness month",
+            category: "Cybersecurity",
             start: new Date(),
             end: new Date()
         }
@@ -1098,7 +1098,7 @@ async function loadCalendarEvents() {
     displayCalendarEvents();
     handleTodayHoliday();
     
-    return calendarEvents; */
+    return calendarEvents; 
     
     if (calendarDataLoaded) {
         return calendarEvents;
