@@ -73,7 +73,7 @@
 
                     type:
                         "Report"
-                }
+                },
 
 
                 {
@@ -88,7 +88,7 @@
 
                     type:
                         "Report"
-                }
+                },
 
                 {
                     title:
