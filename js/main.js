@@ -173,6 +173,8 @@ async function loadPage() {
 
     initialiseMobileMenu();
 
+    initialiseBackToTop();
+
     /* initialiseConsoleAnimation(); */
 
     initialiseYear();
@@ -902,6 +904,69 @@ function initialiseMobileMenu() {
                 );
 
             }
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   BACK TO TOP
+========================================================= */
+
+function initialiseBackToTop() {
+
+    const button =
+        document.getElementById("backToTop");
+
+
+    if (!button) {
+        return;
+    }
+
+
+    /*
+     * Show button after scrolling down.
+     */
+
+    window.addEventListener(
+        "scroll",
+        function () {
+
+            if (window.scrollY > 500) {
+
+                button.classList.add(
+                    "visible"
+                );
+
+            } else {
+
+                button.classList.remove(
+                    "visible"
+                );
+
+            }
+
+        },
+        {
+            passive: true
+        }
+    );
+
+
+    /*
+     * Smoothly return to the top.
+     */
+
+    button.addEventListener(
+        "click",
+        function () {
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
 
         }
     );
