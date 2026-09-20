@@ -1470,7 +1470,7 @@ function getHolidayGreeting(event) {
     if (
     title.includes("stem day")
     ) {
-        return "💻 STEM Day!";
+        return "💻 Happy STEM Day!";
     }
 
     if (
@@ -1495,124 +1495,124 @@ function getHolidayDescription(event) {
 
     const descriptions = {
         "eid al-fitr":
-            "Eid al-Fitr marks the end of Ramadan, the Islamic month of fasting. It is traditionally celebrated with prayer, charity, family gatherings, and festive meals.",
-
+            "Eid al-Fitr marks the end of Ramadan and is traditionally celebrated through prayer, charity, family gatherings, and festive meals.",
+    
         "eid al-adha":
-            "Eid al-Adha commemorates the willingness of Prophet Ibrahim to sacrifice in obedience to God. It is also associated with charity, prayer, family gatherings, and the sacrifice of livestock.",
-
+            "Eid al-Adha commemorates Prophet Ibrahim's willingness to sacrifice in obedience to God and is traditionally marked by prayer, charity, and family gatherings.",
+    
         "ramadan":
-            "Ramadan is the ninth month of the Islamic calendar and is observed as a month of fasting, prayer, reflection, and charity.",
-
+            "Ramadan is the ninth month of the Islamic calendar and is observed through fasting, prayer, reflection, and charity.",
+    
         "ashura":
-            "Ashura is observed on the 10th day of Muharram. Its significance varies across Muslim communities, with traditions including fasting, prayer, remembrance, and reflection.",
-
+            "Ashura is observed on the 10th day of Muharram, with traditions including fasting, prayer, remembrance, and reflection across Muslim communities.",
+    
         "mawlid al-nabi":
-            "Mawlid al-Nabi commemorates the birth of the Prophet Muhammad. Muslims who observe it may mark the occasion through prayer, religious gatherings, charity, and remembrance.",
-
+            "Mawlid al-Nabi commemorates the birth of Prophet Muhammad and may be observed through prayer, religious gatherings, charity, and remembrance.",
+    
         "diwali":
-            "Diwali is the Hindu festival of lights, symbolising themes of light overcoming darkness and good overcoming evil. It is celebrated with lamps, prayers, family gatherings, and festivities.",
-
+            "Diwali is the Hindu festival of lights, symbolising light overcoming darkness and good overcoming evil through lamps, prayers, and celebrations.",
+    
         "holi":
-            "Holi is the Hindu festival of colours, traditionally celebrating the arrival of spring. It is known for colourful celebrations, music, gatherings, and the renewal of relationships.",
-
+            "Holi is the Hindu festival of colours, traditionally celebrating spring through colourful festivities, music, gatherings, and the renewal of relationships.",
+    
         "krishna janmashtami":
-            "Krishna Janmashtami commemorates the birth of Krishna, an important Hindu deity. Devotees may observe the occasion through fasting, prayer, devotional music, and religious ceremonies.",
-
+            "Krishna Janmashtami commemorates the birth of Krishna and is traditionally observed through fasting, prayer, devotional music, and religious ceremonies.",
+    
         "maha shivaratri":
-            "Maha Shivaratri is a major Hindu festival dedicated to Shiva. Devotees traditionally observe it through prayer, fasting, meditation, and visits to temples.",
-
+            "Maha Shivaratri is a major Hindu festival dedicated to Shiva, traditionally observed through prayer, fasting, meditation, and temple visits.",
+    
         "navratri":
-            "Navratri is a Hindu festival observed over nine nights, traditionally honouring different forms of the divine feminine. Celebrations include prayer, fasting, music, dance, and community gatherings.",
-
+            "Navratri is a Hindu festival observed over nine nights through prayer, fasting, music, dance, and community gatherings.",
+    
         "hanukkah":
-            "Hanukkah is an eight-day Jewish festival commemorating the rededication of the Second Temple in Jerusalem. It is traditionally observed by lighting the menorah, along with prayer and family celebrations.",
-
+            "Hanukkah is an eight-day Jewish festival commemorating the rededication of the Second Temple, traditionally observed by lighting the menorah and celebrating with family.",
+    
         "passover":
-            "Passover is a major Jewish festival commemorating the Exodus of the Israelites from slavery in ancient Egypt. It is traditionally observed with the Seder meal and the retelling of the Exodus story.",
-
+            "Passover is a major Jewish festival commemorating the Exodus from Egypt and is traditionally observed with the Seder meal and retelling of the story.",
+    
         "rosh hashana":
-            "Rosh Hashanah is the Jewish New Year and marks the beginning of the Jewish High Holy Days. It is traditionally a time of prayer, reflection, and renewal.",
-
+            "Rosh Hashanah is the Jewish New Year and marks the beginning of the High Holy Days, traditionally associated with prayer, reflection, and renewal.",
+    
         "yom kippur":
-            "Yom Kippur, the Day of Atonement, is the holiest day in the Jewish calendar. It is traditionally observed through fasting, prayer, repentance, and reflection.",
-
+            "Yom Kippur, the Day of Atonement, is the holiest day in the Jewish calendar and is observed through fasting, prayer, and reflection.",
+    
         "sukkot":
-            "Sukkot is a Jewish festival commemorating the Israelites' journey through the wilderness. It is traditionally observed by spending time in a temporary structure called a sukkah.",
-
+            "Sukkot is a Jewish festival commemorating the Israelites' journey through the wilderness and is traditionally observed by spending time in a sukkah.",
+    
         "good friday":
             "Good Friday commemorates the crucifixion of Jesus Christ and is observed by Christians as a solemn day of prayer and reflection.",
-
+    
         "easter sunday":
             "Easter Sunday celebrates the resurrection of Jesus Christ and is one of the central observances of Christianity.",
-
+    
         "ascension day":
             "Ascension Day commemorates the Christian belief that Jesus Christ ascended into heaven following his resurrection.",
-
+    
         "pentecost":
-            "Pentecost commemorates the descent of the Holy Spirit upon the apostles and is traditionally regarded as the beginning of the Christian Church's mission.",
-
+            "Pentecost commemorates the descent of the Holy Spirit upon the apostles and marks an important event in the Christian tradition.",
+    
         "christmas day":
-            "Christmas commemorates the birth of Jesus Christ and is celebrated by Christians around the world, often with worship, family gatherings, and gift-giving.",
-
+            "Christmas commemorates the birth of Jesus Christ and is celebrated by Christians through worship, family gatherings, gift-giving, and festive traditions.",
+    
         "valentine's day":
-            "Valentine's Day is a cultural celebration associated with love and affection. Its origins are connected to Christian saints and medieval traditions surrounding Saint Valentine.",
-
+            "Valentine's Day is a cultural celebration associated with love and affection, influenced by traditions surrounding Saint Valentine and romantic relationships.",
+    
         "st patrick's day":
-            "St Patrick's Day commemorates Saint Patrick, the patron saint of Ireland. It has evolved into a widely celebrated cultural occasion featuring Irish heritage, music, and parades.",
-
+            "St Patrick's Day commemorates Saint Patrick, the patron saint of Ireland, and is widely celebrated through Irish heritage, music, and parades.",
+    
         "halloween":
-            "Halloween has roots in ancient Celtic traditions, particularly Samhain, and later Christian observances. Today it is widely associated with costumes, decorations, and trick-or-treating.",
-
+            "Halloween has roots in Celtic and Christian traditions and is now widely associated with costumes, decorations, trick-or-treating, and festive gatherings.",
+    
         "bonfire night":
-            "Bonfire Night, or Guy Fawkes Night, commemorates the failure of the Gunpowder Plot of 1605. In the UK it is traditionally marked with bonfires and fireworks.",
-
+            "Bonfire Night, or Guy Fawkes Night, commemorates the failed Gunpowder Plot of 1605 and is traditionally marked with bonfires and fireworks.",
+    
         "mother's day":
-            "Mother's Day in the UK, also known as Mothering Sunday, has historical links to Mothering Sunday and evolved into a modern celebration honouring mothers and caregivers.",
-
+            "Mother's Day in the UK, also known as Mothering Sunday, is a modern celebration honouring mothers, caregivers, and maternal figures.",
+    
         "father's day":
-            "Father's Day is a modern celebration honouring fathers and father figures. It is commonly marked with family gatherings, cards, and gifts.",
+            "Father's Day is a modern celebration honouring fathers and father figures and is commonly marked with family gatherings, cards, and gifts.",
     
         "early may bank holiday":
-            "The Early May Bank Holiday is a UK public holiday held on the first Monday in May, providing a traditional spring break.",
-        
+            "The Early May Bank Holiday is a UK public holiday held on the first Monday of May, providing a traditional spring break.",
+    
         "spring bank holiday":
-            "The Spring Bank Holiday is a UK public holiday held on the final Monday of May in most years.",
-        
+            "The Spring Bank Holiday is a UK public holiday held on the final Monday of May, providing a traditional late-spring break.",
+    
         "summer bank holiday":
-            "The Summer Bank Holiday is observed on the final Monday of August in England and Wales.",
-        
+            "The Summer Bank Holiday is observed on the final Monday of August in England and Wales and provides a traditional summer break.",
+    
         "international women's day":
             "International Women's Day is observed on 8 March to recognise women's achievements and highlight issues relating to equality and women's rights.",
-        
+    
         "international workers' day":
-            "International Workers' Day, also known as May Day, recognises workers and the labour movement and is observed on 1 May in many countries.",
-        
+            "International Workers' Day, also known as May Day, recognises workers and the labour movement and is observed in many countries.",
+    
         "april fools' day":
-            "April Fools' Day is a cultural tradition observed on 1 April, known for practical jokes, hoaxes, and playful deception.",
-        
+            "April Fools' Day is a cultural tradition observed on 1 April and is known for practical jokes, hoaxes, and playful deception.",
+    
         "new year's day":
-            "New Year's Day marks the beginning of a new calendar year and is celebrated around the world with gatherings, traditions, and new-year customs.",
-        
+            "New Year's Day marks the beginning of a new calendar year and is celebrated worldwide through gatherings, traditions, and festivities.",
+    
         "christmas eve":
-            "Christmas Eve is the day before Christmas Day and is traditionally associated with family gatherings, religious services, and preparations for Christmas.",
-        
+            "Christmas Eve is the day before Christmas Day and is traditionally associated with family gatherings, religious services, and Christmas preparations.",
+    
         "boxing day":
-            "Boxing Day is observed on 26 December in the UK and several other countries. Its name is traditionally associated with charitable giving and 'Christmas boxes'.",
-        
+            "Boxing Day is observed on 26 December in the UK and several other countries and is traditionally associated with giving and family gatherings.",
+    
         "new year's eve":
             "New Year's Eve marks the final day of the calendar year and is traditionally celebrated with gatherings, countdowns, and festivities.",
-        
+    
         "international day of women and girls in science":
-        "The International Day of Women and Girls in Science is a UN observance held on 11 February to recognise the contributions of women and girls to science and promote their full and equal participation in scientific fields.",
+            "The International Day of Women and Girls in Science recognises women's contributions to science and promotes their participation in scientific fields.",
     
         "international women in tech day":
-            "International Women in Tech Day is a global observance celebrating women's contributions to technology and promoting greater inclusion, visibility, and opportunities for women across the technology sector.",
-        
+            "International Women in Tech Day celebrates women's contributions to technology and promotes greater inclusion and opportunities across the tech sector.",
+    
         "cybersecurity awareness month":
-            "Cybersecurity Awareness Month is a global month-long initiative held throughout October to promote cybersecurity awareness, safer digital practices, and collective action to protect people, organisations, and digital systems.",
-        
+            "Cybersecurity Awareness Month promotes cybersecurity awareness, safer digital practices, and collective action to protect people, organisations, and digital systems.",
+    
         "stem day":
-            "STEM Day celebrates science, technology, engineering, and mathematics and highlights the importance of STEM education, innovation, and opportunities for people to engage with these fields."
+            "STEM Day celebrates science, technology, engineering, and mathematics and promotes education, innovation, and engagement in these fields."
     };
 
     return descriptions[title] ||
