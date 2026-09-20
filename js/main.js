@@ -508,6 +508,16 @@ function initialiseTerminalMode() {
         toggle.title =
             "Exit Linux terminal mode";
 
+           /*
+           * hero.html has already been loaded by loadPage(),
+           * so the console text elements now exist.
+           */
+      
+          setTimeout(
+              startConsoleAnimation,
+              150
+          );
+
     }
 
 
@@ -614,11 +624,6 @@ function initialiseTerminalMode() {
 /* =========================================================
    CONSOLE TYPING ANIMATION
 ========================================================= */
-/*
-const consoleText1 = "Cybersecurity thought leader & AI security researcher, UK Cyber Security Council Expert, Heads Talk AI & Cybersecurity Analyst, Startupbootcamp Mentor & Associate Lecturer at University of West of England";
-
-const consoleText2 = "Researcher, educator and industry contributor specialising in LLM security, adversarial AI, multi-turn jailbreaking, representation engineering and AI governance, turning cutting-edge research into practical cybersecurity insight.";
-*/
 
 const consoleText1 =
     document.getElementById("consoleText1")?.textContent.trim() || "";
@@ -705,6 +710,9 @@ function startConsoleAnimation() {
         return;
     }
 
+    /* * Read the original text from the DOM only * after hero.html has been loaded. */ 
+    const text1 = textElement1.textContent.trim(); 
+    const text2 = textElement2.textContent.trim();
 
     textElement1.textContent = "";
 
@@ -713,7 +721,7 @@ function startConsoleAnimation() {
 
     typeText(
         textElement1,
-        consoleText1,
+        text1,
         25,
         function () {
 
@@ -722,7 +730,7 @@ function startConsoleAnimation() {
 
                     typeText(
                         textElement2,
-                        consoleText2,
+                        text2,
                         25
                     );
 
