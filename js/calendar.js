@@ -548,6 +548,16 @@ function loadInternationalHolidays(year) {
         "Cybersecurity Awareness Month",
         "Cybersecurity"
     );
+    
+    // November 8 
+    addEvent(
+        events,
+        year,
+        10,
+        8,
+        "STEM Day",
+        "Technology"
+    );
 
     return events;
 }
@@ -1454,7 +1464,13 @@ function getHolidayGreeting(event) {
     if (
         title.includes("cybersecurity awareness month")
     ) {
-        return "💻 Happy Cybersecurity Awareness Month!";
+        return "🔐 Happy Cybersecurity Awareness Month!";
+    }
+
+    if (
+    title.includes("stem day")
+    ) {
+        return "💻 STEM Day!";
     }
 
     if (
@@ -1593,7 +1609,10 @@ function getHolidayDescription(event) {
             "International Women in Tech Day is a global observance celebrating women's contributions to technology and promoting greater inclusion, visibility, and opportunities for women across the technology sector.",
         
         "cybersecurity awareness month":
-            "Cybersecurity Awareness Month is a global month-long initiative held throughout October to promote cybersecurity awareness, safer digital practices, and collective action to protect people, organisations, and digital systems."            
+            "Cybersecurity Awareness Month is a global month-long initiative held throughout October to promote cybersecurity awareness, safer digital practices, and collective action to protect people, organisations, and digital systems.",
+        
+        "stem day":
+            "STEM Day celebrates science, technology, engineering, and mathematics and highlights the importance of STEM education, innovation, and opportunities for people to engage with these fields."
     };
 
     return descriptions[title] ||
