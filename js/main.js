@@ -881,7 +881,7 @@ function initialiseMobileMenu() {
         "resize",
         function () {
 
-            if (window.innerWidth > 768) {
+            if (window.innerWidth > 900) {
 
                 menuButton.classList.remove(
                     "active"
