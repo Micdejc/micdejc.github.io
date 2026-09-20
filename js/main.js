@@ -473,7 +473,6 @@ function initialiseCalendar() {
 }
 
 
-
 /* =========================================================
    TERMINAL MODE
 ========================================================= */
@@ -497,6 +496,11 @@ function initialiseTerminalMode() {
         );
 
 
+    /*
+     * Restore Terminal Mode if it was enabled
+     * during the previous visit.
+     */
+
     if (savedMode === "on") {
 
         document.body.classList.add(
@@ -508,15 +512,19 @@ function initialiseTerminalMode() {
         toggle.title =
             "Exit Linux terminal mode";
 
-           /*
-           * hero.html has already been loaded by loadPage(),
-           * so the console text elements now exist.
-           */
-      
-          setTimeout(
-              startConsoleAnimation,
-              150
-          );
+
+        /*
+         * hero.html has already been loaded by
+         * loadPage() before this function runs.
+         *
+         * Therefore consoleText1 and consoleText2
+         * now exist in the DOM.
+         */
+
+        setTimeout(
+            startConsoleAnimation,
+            150
+        );
 
     }
 
@@ -529,6 +537,10 @@ function initialiseTerminalMode() {
                 "terminal-mode"
             );
 
+
+            /*
+             * TERMINAL MODE ON
+             */
 
             if (
                 document.body.classList.contains(
@@ -546,21 +558,52 @@ function initialiseTerminalMode() {
                     "on"
                 );
 
-                /* We automatically switch to dark mode when enabling terminal mode */
-                document.body.classList.add("dark");
-                localStorage.setItem("theme", "dark");
-               
-                const themeToggle = document.getElementById("themeToggle");
+
+                /*
+                 * Automatically switch to dark mode.
+                 */
+
+                document.body.classList.add(
+                    "dark"
+                );
+
+                localStorage.setItem(
+                    "theme",
+                    "dark"
+                );
+
+
+                const themeToggle =
+                    document.getElementById(
+                        "themeToggle"
+                    );
+
+
                 if (themeToggle) {
-                   themeToggle.textContent = "☀";
+
+                    themeToggle.textContent =
+                        "☀";
+
                 }
-               
+
+
+                /*
+                 * Start console animation.
+                 */
+
                 setTimeout(
                     startConsoleAnimation,
                     150
                 );
 
-            } else {
+            }
+
+
+            /*
+             * TERMINAL MODE OFF
+             */
+
+            else {
 
                 toggle.textContent = ">_";
 
@@ -572,46 +615,41 @@ function initialiseTerminalMode() {
                     "off"
                 );
 
-               /* We automatically switch to light mode when disabling terminal mode */
-               document.body.classList.remove("dark");
-               localStorage.setItem("theme", "light");
-               
-               const themeToggle = document.getElementById("themeToggle");
-               if (themeToggle) {
-                   themeToggle.textContent = "☾";
-               }
 
+                /*
+                 * Automatically switch to light mode.
+                 */
 
-                clearTimeout(
-                    typingTimer
+                document.body.classList.remove(
+                    "dark"
+                );
+
+                localStorage.setItem(
+                    "theme",
+                    "light"
                 );
 
 
-                const textElement1 =
+                const themeToggle =
                     document.getElementById(
-                        "consoleText1"
-                    );
-
-                const textElement2 =
-                    document.getElementById(
-                        "consoleText2"
+                        "themeToggle"
                     );
 
 
-                if (textElement1) {
+                if (themeToggle) {
 
-                    textElement1.textContent =
-                        consoleText1;
+                    themeToggle.textContent =
+                        "☾";
 
                 }
 
 
-                if (textElement2) {
+                /*
+                 * Completely stop the animation
+                 * and restore the original text.
+                 */
 
-                    textElement2.textContent =
-                        consoleText2;
-
-                }
+                stopConsoleAnimation();
 
             }
 
@@ -621,18 +659,19 @@ function initialiseTerminalMode() {
 }
 
 
+
 /* =========================================================
    CONSOLE TYPING ANIMATION
 ========================================================= */
 
-const consoleText1 =
-    document.getElementById("consoleText1")?.textContent.trim() || "";
-
-const consoleText2 =
-    document.getElementById("consoleText2")?.textContent.trim() || "";
-
 let typingTimer = null;
 
+let animationDelayTimer = null;
+
+
+/*
+ * Type text character by character.
+ */
 
 function typeText(
     element,
@@ -640,6 +679,11 @@ function typeText(
     speed,
     callback
 ) {
+
+    if (!element) {
+        return;
+    }
+
 
     element.textContent = "";
 
@@ -652,6 +696,26 @@ function typeText(
 
 
     function typeCharacter() {
+
+        /*
+         * Stop immediately if Terminal Mode
+         * has been disabled.
+         */
+
+        if (
+            !document.body.classList.contains(
+                "terminal-mode"
+            )
+        ) {
+
+            element.classList.remove(
+                "typing-cursor"
+            );
+
+            return;
+
+        }
+
 
         if (index < text.length) {
 
@@ -675,7 +739,9 @@ function typeText(
 
 
             if (callback) {
+
                 callback();
+
             }
 
         }
@@ -688,10 +754,22 @@ function typeText(
 }
 
 
+/*
+ * Start the console animation.
+ */
+
 function startConsoleAnimation() {
+
+    /*
+     * Cancel any existing animation.
+     */
 
     clearTimeout(
         typingTimer
+    );
+
+    clearTimeout(
+        animationDelayTimer
     );
 
 
@@ -706,18 +784,67 @@ function startConsoleAnimation() {
         );
 
 
+    /*
+     * Make sure both elements exist.
+     */
+
     if (!textElement1 || !textElement2) {
+
         return;
+
     }
 
-    /* * Read the original text from the DOM only * after hero.html has been loaded. */ 
-    const text1 = textElement1.textContent.trim(); 
-    const text2 = textElement2.textContent.trim();
+
+    /*
+     * Save the original text once.
+     *
+     * This is important because the animation
+     * clears the text from the elements.
+     */
+
+    if (
+        !textElement1.dataset.originalText
+    ) {
+
+        textElement1.dataset.originalText =
+            textElement1.textContent.trim();
+
+    }
+
+
+    if (
+        !textElement2.dataset.originalText
+    ) {
+
+        textElement2.dataset.originalText =
+            textElement2.textContent.trim();
+
+    }
+
+
+    /*
+     * Get the original text.
+     */
+
+    const text1 =
+        textElement1.dataset.originalText;
+
+    const text2 =
+        textElement2.dataset.originalText;
+
+
+    /*
+     * Clear the existing text.
+     */
 
     textElement1.textContent = "";
 
     textElement2.textContent = "";
 
+
+    /*
+     * Animate the first text.
+     */
 
     typeText(
         textElement1,
@@ -725,23 +852,138 @@ function startConsoleAnimation() {
         25,
         function () {
 
-            setTimeout(
-                function () {
+            /*
+             * Do not continue if Terminal Mode
+             * has already been disabled.
+             */
 
-                    typeText(
-                        textElement2,
-                        text2,
-                        25
-                    );
+            if (
+                !document.body.classList.contains(
+                    "terminal-mode"
+                )
+            ) {
 
-                },
-                600
-            );
+                return;
+
+            }
+
+
+            /*
+             * Wait 600 ms before starting
+             * the second text.
+             */
+
+            animationDelayTimer =
+                setTimeout(
+                    function () {
+
+                        /*
+                         * Check Terminal Mode again
+                         * after the delay.
+                         */
+
+                        if (
+                            !document.body.classList.contains(
+                                "terminal-mode"
+                            )
+                        ) {
+
+                            return;
+
+                        }
+
+
+                        typeText(
+                            textElement2,
+                            text2,
+                            25
+                        );
+
+                    },
+                    600
+                );
 
         }
     );
 
 }
+
+
+/*
+ * Stop the console animation completely.
+ */
+
+function stopConsoleAnimation() {
+
+    /*
+     * Cancel the character typing timer.
+     */
+
+    clearTimeout(
+        typingTimer
+    );
+
+
+    /*
+     * Cancel the 600 ms delay timer.
+     */
+
+    clearTimeout(
+        animationDelayTimer
+    );
+
+
+    typingTimer = null;
+
+    animationDelayTimer = null;
+
+
+    const textElement1 =
+        document.getElementById(
+            "consoleText1"
+        );
+
+    const textElement2 =
+        document.getElementById(
+            "consoleText2"
+        );
+
+
+    /*
+     * Restore the original first text.
+     */
+
+    if (textElement1) {
+
+        textElement1.textContent =
+            textElement1.dataset.originalText ||
+            "";
+
+        textElement1.classList.remove(
+            "typing-cursor"
+        );
+
+    }
+
+
+    /*
+     * Restore the original second text.
+     */
+
+    if (textElement2) {
+
+        textElement2.textContent =
+            textElement2.dataset.originalText ||
+            "";
+
+        textElement2.classList.remove(
+            "typing-cursor"
+        );
+
+    }
+
+}
+
 
 /* =========================================================
    MENTORSHIP
