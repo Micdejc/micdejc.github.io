@@ -2,20 +2,7 @@
    MENTORSHIP
 ========================================================= */
 
-async function loadMentorship() {
-
-    const container =
-        document.getElementById(
-            "mentorship-list"
-        );
-
-
-    if (!container) {
-        return;
-    }
-
-
-    const files = [
+const mentorshipFiles = [
 
         "chris-mayo.html",
 
@@ -29,8 +16,19 @@ async function loadMentorship() {
 
     ];
 
+export async function loadMentorship() {
 
-    for (const file of files) {
+    const container =
+        document.getElementById(
+            "mentorship-list"
+        );
+
+
+    if (!container) {
+        return;
+    }
+
+    for (const file of mentorshipFiles) {
 
         try {
 
@@ -41,6 +39,7 @@ async function loadMentorship() {
 
 
             if (!response.ok) {
+                console.error(`Could not load ${file}`);
                 continue;
             }
 
@@ -67,3 +66,5 @@ async function loadMentorship() {
     }
 
 }
+
+window.loadMentorship = loadMentorship;
