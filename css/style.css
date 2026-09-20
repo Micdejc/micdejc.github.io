@@ -718,7 +718,7 @@
         /* ---------------------------------------------------------
            FEATURE LINK
         --------------------------------------------------------- */
-        
+        /*
         .feature-link {
             display: inline-flex;
             align-items: center;
@@ -739,6 +739,45 @@
         .feature-link:hover {
             gap: 0.35rem;
             color: var(--primary-dark);
+        }
+        */
+
+        .feature-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+        
+            padding: 0.45rem 0.8rem;
+        
+            border: 1px solid var(--border);
+            border-radius: 999px;
+        
+            background: var(--surface);
+            color: var(--text);
+        
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+        
+            cursor: pointer;
+        
+            transition:
+                color 0.2s ease,
+                border-color 0.2s ease,
+                background 0.2s ease,
+                transform 0.2s ease;
+        }
+        
+        .feature-link:hover {
+            color: #22c55e;
+            border-color: #22c55e;
+            background: var(--surface);
+            transform: translateY(-2px);
+        }
+        
+        .feature-link:focus-visible {
+            outline: 2px solid #22c55e;
+            outline-offset: 3px;
         }
         
         
