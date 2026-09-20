@@ -488,11 +488,11 @@
 
 
         if (
-            normalizedQuery.length < 2
+            normalizedQuery.length < 3
         ) {
 
             showSearchMessage(
-                "Please enter at least 2 characters."
+                "Please enter at least 3 characters."
             );
 
             return;
