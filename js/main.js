@@ -525,7 +525,15 @@ function initialiseTerminalMode() {
                     "on"
                 );
 
-
+                /* We automatically switch to dark mode when enabling terminal mode */
+                document.body.classList.add("dark");
+                localStorage.setItem("theme", "dark");
+               
+                const themeToggle = document.getElementById("themeToggle");
+                if (themeToggle) {
+                   themeToggle.textContent = "☀";
+                }
+               
                 setTimeout(
                     startConsoleAnimation,
                     150
@@ -542,6 +550,15 @@ function initialiseTerminalMode() {
                     "terminalMode",
                     "off"
                 );
+
+               /* We automatically switch to light mode when disabling terminal mode */
+               document.body.classList.remove("dark");
+               localStorage.setItem("theme", "light");
+               
+               const themeToggle = document.getElementById("themeToggle");
+               if (themeToggle) {
+                   themeToggle.textContent = "☾";
+               }
 
 
                 clearTimeout(
