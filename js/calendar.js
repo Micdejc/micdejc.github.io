@@ -1080,7 +1080,7 @@ function removeDuplicateEvents(events) {
 
 async function loadCalendarEvents() {
 
-
+/*
     // TEMPORARY TEST
     calendarEvents = [
         {
@@ -1099,6 +1099,8 @@ async function loadCalendarEvents() {
     handleTodayHoliday();
     
     return calendarEvents; 
+    
+*/
     
     if (calendarDataLoaded) {
         return calendarEvents;
