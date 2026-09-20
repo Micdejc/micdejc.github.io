@@ -718,7 +718,7 @@
         /* ---------------------------------------------------------
            FEATURE LINK
         --------------------------------------------------------- */
-        /*
+        
         .feature-link {
             display: inline-flex;
             align-items: center;
@@ -740,8 +740,9 @@
             gap: 0.35rem;
             color: var(--primary-dark);
         }
-        */
+        
 
+        /*
         .feature-link {
             display: inline-flex;
             align-items: center;
@@ -779,7 +780,7 @@
             outline: 2px solid #22c55e;
             outline-offset: 3px;
         }
-        
+        */
         
         /* ---------------------------------------------------------
            RESPONSIVE
