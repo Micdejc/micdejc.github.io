@@ -1012,3 +1012,170 @@
             }
 
         }
+
+
+
+
+        /* =========================================
+           MOBILE MENU BUTTON
+           ========================================= */
+        
+        .mobile-menu-toggle {
+            display: none;
+        
+            width: 40px;
+            height: 40px;
+        
+            padding: 0;
+        
+            border: 1px solid var(--border);
+            border-radius: 50%;
+        
+            background: var(--surface);
+            color: var(--text);
+        
+            cursor: pointer;
+        
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        
+            gap: 4px;
+        
+            transition: all 0.2s ease;
+        }
+        
+        .mobile-menu-toggle:hover {
+            color: #22c55e;
+            border-color: #22c55e;
+            transform: translateY(-2px);
+        }
+        
+        
+        .mobile-menu-toggle span {
+            display: block;
+        
+            width: 16px;
+            height: 2px;
+        
+            border-radius: 2px;
+        
+            background: currentColor;
+        
+            transition:
+                transform 0.25s ease,
+                opacity 0.25s ease;
+        }
+        
+        
+        /* =========================================
+           HAMBURGER → X
+           ========================================= */
+        
+        .mobile-menu-toggle.active span:nth-child(1) {
+            transform: translateY(6px) rotate(45deg);
+        }
+        
+        .mobile-menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .mobile-menu-toggle.active span:nth-child(3) {
+            transform: translateY(-6px) rotate(-45deg);
+        }
+        
+        
+        /* =========================================
+           MOBILE NAVIGATION
+           ========================================= */
+        
+        @media (max-width: 900px) {
+        
+            /*
+             * Keep the logo, hamburger and controls
+             * on the same navigation row.
+             */
+        
+            .nav-inner {
+                position: relative;
+            }
+        
+        
+            /*
+             * Show hamburger.
+             */
+        
+            .mobile-menu-toggle {
+                display: flex;
+            }
+        
+        
+            /*
+             * Hide only the navigation links.
+             */
+        
+            .nav-links {
+                display: none;
+            }
+        
+        
+            /*
+             * Open mobile navigation.
+             */
+        
+            .nav-links.mobile-open {
+                display: flex;
+        
+                position: absolute;
+        
+                top: 100%;
+                left: 0;
+                right: 0;
+        
+                flex-direction: column;
+        
+                margin: 0;
+        
+                padding: 10px 20px;
+        
+                background: var(--surface);
+        
+                border-top: 1px solid var(--border);
+                border-bottom: 1px solid var(--border);
+        
+                box-shadow:
+                    0 10px 30px rgba(0, 0, 0, 0.12);
+        
+                z-index: 1000;
+            }
+        
+        
+            .nav-links.mobile-open li {
+                width: 100%;
+            }
+        
+        
+            .nav-links.mobile-open a {
+                display: block;
+        
+                width: 100%;
+        
+                padding: 12px 5px;
+        
+                border-bottom: 1px solid var(--border);
+            }
+        
+        
+            .nav-links.mobile-open li:last-child a {
+                border-bottom: none;
+            }
+        
+        
+            /*
+             * Keep all utility controls visible.
+             */
+        
+            .nav-controls {
+                display: flex;
+            }
+        }
