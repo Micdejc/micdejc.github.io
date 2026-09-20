@@ -1056,8 +1056,8 @@
         /* Hover */
         
         .back-to-top:hover {
-            color: #22c55e;
-            border-color: #22c55e;
+            color: var(--primary);
+            border-color: var(--primary);
             transform: translateY(-3px);
         }
         
@@ -1167,8 +1167,8 @@
         }
         
         .mobile-menu-toggle:hover {
-            color: #22c55e;
-            border-color: #22c55e;
+            color: var(--primary);
+            border-color: var(--primary);
             transform: translateY(-2px);
         }
         
