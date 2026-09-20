@@ -214,7 +214,18 @@ function initialiseTheme() {
     toggle.addEventListener(
         "click",
         function () {
+           
+            /* The theme toggle to work only when Terminal Mode is OFF */
+            if (
+               document.body.classList.contains(
+                   "terminal-mode"
+               )
+               ) {
+               return;
+                 }
 
+
+           
             document.body.classList.toggle("dark");
 
 
