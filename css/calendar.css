@@ -281,12 +281,7 @@
 .calendar-close:hover {
 
     background:
-        rgba(
-            127,
-            127,
-            127,
-            0.12
-        );
+        rgba(59, 130, 246, 0.05);
 
     transform:
         scale(1.05);
