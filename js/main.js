@@ -784,6 +784,130 @@ function initialiseYear() {
 
 
 /* =========================================================
+   MOBILE NAVIGATION
+========================================================= */
+
+function initialiseMobileMenu() {
+
+    const menuButton =
+        document.getElementById("mobileMenuToggle");
+
+    const navLinks =
+        document.querySelector(".nav-links");
+
+
+    if (!menuButton || !navLinks) {
+        return;
+    }
+
+
+    /*
+     * Open / close mobile navigation
+     */
+
+    menuButton.addEventListener(
+        "click",
+        function () {
+
+            const isOpen =
+                menuButton.classList.toggle("active");
+
+            navLinks.classList.toggle(
+                "mobile-open",
+                isOpen
+            );
+
+            menuButton.setAttribute(
+                "aria-expanded",
+                String(isOpen)
+            );
+
+            menuButton.setAttribute(
+                "aria-label",
+                isOpen
+                    ? "Close navigation menu"
+                    : "Open navigation menu"
+            );
+
+        }
+    );
+
+
+    /*
+     * Close the menu when a navigation
+     * link is selected.
+     */
+
+    navLinks
+        .querySelectorAll("a")
+        .forEach(function (link) {
+
+            link.addEventListener(
+                "click",
+                function () {
+
+                    menuButton.classList.remove(
+                        "active"
+                    );
+
+                    navLinks.classList.remove(
+                        "mobile-open"
+                    );
+
+                    menuButton.setAttribute(
+                        "aria-expanded",
+                        "false"
+                    );
+
+                    menuButton.setAttribute(
+                        "aria-label",
+                        "Open navigation menu"
+                    );
+
+                }
+            );
+
+        });
+
+
+    /*
+     * Reset mobile menu when returning
+     * to desktop width.
+     */
+
+    window.addEventListener(
+        "resize",
+        function () {
+
+            if (window.innerWidth > 768) {
+
+                menuButton.classList.remove(
+                    "active"
+                );
+
+                navLinks.classList.remove(
+                    "mobile-open"
+                );
+
+                menuButton.setAttribute(
+                    "aria-expanded",
+                    "false"
+                );
+
+                menuButton.setAttribute(
+                    "aria-label",
+                    "Open navigation menu"
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================================
    START APPLICATION
 ========================================================= */
 
