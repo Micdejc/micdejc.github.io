@@ -1265,7 +1265,7 @@ function getRemainingDays(date) {
     }
 
     if (days === 0) {
-        return "today";
+        return "Today";
     }
 
     if (days === 1) {
