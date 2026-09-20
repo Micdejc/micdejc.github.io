@@ -934,7 +934,7 @@ function initialiseBackToTop() {
         "scroll",
         function () {
 
-            if (window.scrollY > 500) {
+            if (window.scrollY > 900) {
 
                 button.classList.add(
                     "visible"
