@@ -442,12 +442,7 @@
         14px;
 
     background:
-        rgba(
-            127,
-            127,
-            127,
-            0.12
-        );
+       rgba(59, 130, 246, 0.05)
 
     box-shadow:
         0 6px 20px
@@ -563,12 +558,7 @@
 .calendar-event:hover {
 
     background:
-        rgba(
-            127,
-            127,
-            127,
-            0.10
-        );
+        rgba(59, 130, 246, 0.05)
 
     transform:
         translateY(-1px);
