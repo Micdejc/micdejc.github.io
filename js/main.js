@@ -171,6 +171,8 @@ async function loadPage() {
 
     initialiseTerminalMode();
 
+    initialiseMobileMenu();
+
     /* initialiseConsoleAnimation(); */
 
     initialiseYear();
