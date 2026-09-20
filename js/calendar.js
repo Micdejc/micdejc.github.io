@@ -519,6 +519,36 @@ function loadInternationalHolidays(year) {
         "International"
     );
 
+    // February 11
+    addEvent(
+        events,
+        year,
+        1,
+        11,
+        "International Day of Women and Girls in Science",
+        "International"
+    );
+    
+    // April 4
+    addEvent(
+        events,
+        year,
+        3,
+        4,
+        "International Women in Tech Day",
+        "Technology"
+    );
+    
+    // October 1
+    addEvent(
+        events,
+        year,
+        9,
+        1,
+        "Cybersecurity Awareness Month",
+        "Cybersecurity"
+    );
+
     return events;
 }
 
@@ -1410,6 +1440,24 @@ function getHolidayGreeting(event) {
     }
 
     if (
+        title.includes("international day of women and girls in science")
+    ) {
+        return "👩‍🔬 Happy Women & Girls in Science Day!";
+    }
+
+    if (
+        title.includes("international women in tech day")
+    ) {
+        return "👩‍💻 Happy Women in Tech Day!";
+    }
+
+    if (
+        title.includes("cybersecurity awareness month")
+    ) {
+        return "💻 Happy Cybersecurity Awareness Month!";
+    }
+
+    if (
         title.includes("bank holiday")
     ) {
         return "🇬🇧 Happy Bank Holiday!";
@@ -1536,7 +1584,16 @@ function getHolidayDescription(event) {
             "Boxing Day is observed on 26 December in the UK and several other countries. Its name is traditionally associated with charitable giving and 'Christmas boxes'.",
         
         "new year's eve":
-            "New Year's Eve marks the final day of the calendar year and is traditionally celebrated with gatherings, countdowns, and festivities."
+            "New Year's Eve marks the final day of the calendar year and is traditionally celebrated with gatherings, countdowns, and festivities.",
+        
+        "international day of women and girls in science":
+        "The International Day of Women and Girls in Science is a UN observance held on 11 February to recognise the contributions of women and girls to science and promote their full and equal participation in scientific fields.",
+    
+        "international women in tech day":
+            "International Women in Tech Day is a global observance celebrating women's contributions to technology and promoting greater inclusion, visibility, and opportunities for women across the technology sector.",
+        
+        "cybersecurity awareness month":
+            "Cybersecurity Awareness Month is a global month-long initiative held throughout October to promote cybersecurity awareness, safer digital practices, and collective action to protect people, organisations, and digital systems."            
     };
 
     return descriptions[title] ||
