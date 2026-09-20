@@ -1006,7 +1006,9 @@ async function loadMentorship() {
 
         "chris-mayo.html",
 
-        "mohammed-almasabi.html"
+        "mohammed-almasabi.html",
+       
+        "anas-ashfaq.html"
 
     ];
 
