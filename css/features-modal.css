@@ -150,9 +150,9 @@
 
 
 .feature-modal-close:hover {
-    color: #22c55e;
+    color: var(--primary);
 
-    border-color: #22c55e;
+    border-color: var(--primary);
 
     transform: translateY(-2px);
 }
