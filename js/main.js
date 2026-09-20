@@ -614,10 +614,17 @@ function initialiseTerminalMode() {
 /* =========================================================
    CONSOLE TYPING ANIMATION
 ========================================================= */
-
+/*
 const consoleText1 = "Cybersecurity thought leader & AI security researcher, UK Cyber Security Council Expert, Heads Talk AI & Cybersecurity Analyst, Startupbootcamp Mentor & Associate Lecturer at University of West of England";
 
 const consoleText2 = "Researcher, educator and industry contributor specialising in LLM security, adversarial AI, multi-turn jailbreaking, representation engineering and AI governance, turning cutting-edge research into practical cybersecurity insight.";
+*/
+
+const consoleText1 =
+    document.getElementById("consoleText1")?.textContent.trim() || "";
+
+const consoleText2 =
+    document.getElementById("consoleText2")?.textContent.trim() || "";
 
 let typingTimer = null;
 
