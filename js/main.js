@@ -1,7 +1,7 @@
 import { loadPublications } from "../content/publications/index.js";
 import { loadNews } from "../content/news/index.js";
 import { loadFeatures } from "../content/features/index.js";
-
+import { loadMentorship } from "../content/mentorship/index.js";
 
 /* =========================================================
    HTML COMPONENT LOADER
@@ -983,100 +983,6 @@ function stopConsoleAnimation() {
     }
 
 }
-
-
-/* =========================================================
-   MENTORSHIP
-========================================================= */
-
-async function loadMentorship() {
-
-    const container =
-        document.getElementById(
-            "mentorship-list"
-        );
-
-
-    if (!container) {
-        return;
-    }
-
-
-    const files = [
-
-        "chris-mayo.html",
-
-        "mohammed-almasabi.html",
-       
-        "anas-ashfaq.html",
-
-        "yusuf-adebayo.html",
-
-        "donovan-isom.html"
-
-    ];
-
-
-    for (const file of files) {
-
-        try {
-
-            const response =
-                await fetch(
-                    `content/mentorship/${file}`
-                );
-
-
-            if (!response.ok) {
-                continue;
-            }
-
-
-            const html =
-                await response.text();
-
-
-            container.insertAdjacentHTML(
-                "beforeend",
-                html
-            );
-
-
-        } catch (error) {
-
-            console.error(
-                `Could not load mentorship item ${file}`,
-                error
-            );
-
-        }
-
-    }
-
-}
-
-
-/* =========================================================
-   FOOTER YEAR
-========================================================= */
-
-function initialiseYear() {
-
-    const year =
-        document.getElementById(
-            "year"
-        );
-
-
-    if (year) {
-
-        year.textContent =
-            new Date().getFullYear();
-
-    }
-
-}
-
 
 /* =========================================================
    MOBILE NAVIGATION
