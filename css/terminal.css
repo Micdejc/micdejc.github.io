@@ -31,14 +31,14 @@
 ========================================================= */
 
 body.terminal-mode {
-    background: #0a0e0a;
-    color: #d1ffd1;
+    background: #080d18;
+    color: #dbeafe;
     font-family: "Courier New", Courier, monospace;
 }
 
 body.terminal-mode nav {
-    background: rgba(10, 14, 10, 0.96);
-    border-bottom: 1px solid #1f6f1f;
+    background: rgba(8, 13, 24, 0.96);
+    border-bottom: 1px solid #2563eb;
 }
 
 body.terminal-mode .logo,
@@ -46,13 +46,13 @@ body.terminal-mode h1,
 body.terminal-mode h2,
 body.terminal-mode h3,
 body.terminal-mode strong {
-    color: #39ff14;
+    color: #3b82f6;
 }
 
 body.terminal-mode .gradient {
     background: none;
-    color: #39ff14;
-    -webkit-text-fill-color: #39ff14;
+    color: #3b82f6;
+    -webkit-text-fill-color: #3b82f6;
 }
 
 body.terminal-mode .eyebrow,
@@ -61,7 +61,7 @@ body.terminal-mode .news-date,
 body.terminal-mode .publication-year,
 body.terminal-mode .timeline-year,
 body.terminal-mode .text-link {
-    color: #39ff14;
+    color: #3b82f6;
 }
 
 body.terminal-mode p,
@@ -75,11 +75,11 @@ body.terminal-mode .news-content p,
 body.terminal-mode .project p,
 body.terminal-mode .timeline-item p,
 body.terminal-mode .service p {
-    color: #b7d8b7;
+    color: #b6c9e8;
 }
 
 body.terminal-mode section:nth-child(even) {
-    background: #0d130d;
+    background: #0b1220;
 }
 
 
@@ -100,9 +100,9 @@ body.terminal-mode .service,
 body.terminal-mode .stat,
 body.terminal-mode .feature,
 body.terminal-mode .contact-box {
-    background: #0b110b;
-    border-color: #1f6f1f;
-    box-shadow: 0 0 20px rgba(57, 255, 20, 0.05);
+    background: #0a1020;
+    border-color: #2563eb;
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.05);
 }
 
 
@@ -112,19 +112,19 @@ body.terminal-mode .contact-box {
 ========================================================= */
 
 body.terminal-mode .feature-card {
-    background: #0b110b;
-    border-color: #1f6f1f;
-    box-shadow: 0 0 20px rgba(57, 255, 20, 0.05);
+    background: #0a1020;
+    border-color: #2563eb;
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.05);
 }
 
 body.terminal-mode .feature-card:hover {
-    border-color: #39ff14;
-    box-shadow: 0 0 25px rgba(57, 255, 20, 0.12);
+    border-color: #3b82f6;
+    box-shadow: 0 0 25px rgba(59, 130, 246, 0.12);
 }
 
 body.terminal-mode .feature-logo {
-    background: #102010;
-    border-color: #1f6f1f;
+    background: #0f1b33;
+    border-color: #2563eb;
 }
 
 body.terminal-mode .feature-logo img {
@@ -132,23 +132,23 @@ body.terminal-mode .feature-logo img {
 }
 
 body.terminal-mode .feature-type {
-    color: #39ff14;
+    color: #3b82f6;
 }
 
 body.terminal-mode .feature-content h3 {
-    color: #39ff14;
+    color: #3b82f6;
 }
 
 body.terminal-mode .feature-content p {
-    color: #b7d8b7;
+    color: #b6c9e8;
 }
 
 body.terminal-mode .feature-link {
-    color: #39ff14;
+    color: #3b82f6;
 }
 
 body.terminal-mode .feature-link:hover {
-    color: #b7ffb7;
+    color: #bfdbfe;
 }
 
 
@@ -158,9 +158,9 @@ body.terminal-mode .feature-link:hover {
 
 body.terminal-mode .tag,
 body.terminal-mode .project-tag {
-    background: #102010;
-    color: #39ff14;
-    border: 1px solid #1f6f1f;
+    background: #0f1b33;
+    color: #3b82f6;
+    border: 1px solid #2563eb;
 }
 
 
@@ -169,14 +169,14 @@ body.terminal-mode .project-tag {
 ========================================================= */
 
 body.terminal-mode .btn-primary {
-    background: #1a7f1a;
+    background: #1d4ed8;
     color: #fff;
 }
 
 body.terminal-mode .btn-secondary {
-    background: #0b110b;
-    color: #39ff14;
-    border-color: #1f6f1f;
+    background: #0a1020;
+    color: #3b82f6;
+    border-color: #2563eb;
 }
 
 
@@ -185,11 +185,11 @@ body.terminal-mode .btn-secondary {
 ========================================================= */
 
 body.terminal-mode .timeline {
-    border-color: #1f6f1f;
+    border-color: #2563eb;
 }
 
 body.terminal-mode .timeline-item::before {
-    background: #39ff14;
+    background: #3b82f6;
 }
 
 
@@ -198,7 +198,7 @@ body.terminal-mode .timeline-item::before {
 ========================================================= */
 
 body.terminal-mode footer {
-    border-color: #1f6f1f;
+    border-color: #2563eb;
 }
 
 
@@ -207,7 +207,7 @@ body.terminal-mode footer {
 ========================================================= */
 
 body.terminal-mode a:hover {
-    color: #39ff14;
+    color: #3b82f6;
 }
 
 
@@ -217,7 +217,7 @@ body.terminal-mode a:hover {
 
 body.terminal-mode .hero-description:first-of-type::before {
     content: "root@Michael:~$ ";
-    color: #39ff14;
+    color: #3b82f6;
 }
 
 
@@ -227,7 +227,7 @@ body.terminal-mode .hero-description:first-of-type::before {
 
 body.terminal-mode .section-header h2::before {
     content: "";
-    color: #39ff14;
+    color: #3b82f6;
     font-size: 0.42em;
     letter-spacing: 0;
     display: block;
@@ -265,7 +265,7 @@ body.terminal-mode .console-intro {
 
 .typing-cursor::after {
     content: "▋";
-    color: #39ff14;
+    color: #3b82f6;
     animation: terminalBlink 0.8s infinite;
     margin-left: 3px;
 }
