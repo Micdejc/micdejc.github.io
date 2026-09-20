@@ -1107,6 +1107,26 @@ function initialiseMobileMenu() {
 
 }
 
+/* =========================================================
+   FOOTER YEAR
+========================================================= */
+
+function initialiseYear() {
+
+    const year =
+        document.getElementById(
+            "year"
+        );
+
+
+    if (year) {
+
+        year.textContent =
+            new Date().getFullYear();
+
+    }
+
+}
 
 /* =========================================================
    BACK TO TOP
