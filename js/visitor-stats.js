@@ -5,74 +5,201 @@
  * 1. Total Visitors
  * 2. Visitors This Month
  *
- * Uses GoatCounter public SVG counters.
- * No API calls or fetch() required.
+ * Uses GoatCounter visit_count()
+ * No API key required.
+ * No fetch() required.
+ * No CORS issues.
  */
 export async function loadVisitorStats() {
 
-    const totalCounter =
+    const totalElement =
         document.getElementById("total-visitors");
 
-    const monthlyCounter =
+    const monthlyElement =
         document.getElementById("monthly-visitors");
 
-    if (!totalCounter || !monthlyCounter) {
+
+    /*
+     * The visitor-stats.html component must
+     * already be loaded before this function runs.
+     */
+
+    if (!totalElement || !monthlyElement) {
+
         console.warn(
             "Visitor statistics elements were not found."
         );
+
         return;
     }
 
-    const goatCounterBase =
-        "https://micdejc.goatcounter.com/counter/";
 
-    // Total visitors
-    totalCounter.src =
-        `${goatCounterBase}TOTAL.svg`;
+    /*
+     * Wait for GoatCounter count.js.
+     *
+     * count.js is loaded asynchronously, so
+     * window.goatcounter may not exist yet.
+     */
 
-    // Current month
-    const now = new Date();
+    const waitForGoatCounter = () => {
 
-    const year =
-        now.getFullYear();
+        if (
+            window.goatcounter &&
+            typeof window.goatcounter.visit_count === "function"
+        ) {
 
-    const month =
-        String(now.getMonth() + 1)
-            .padStart(2, "0");
+            initializeVisitorStats();
 
-    const day =
-        String(now.getDate())
-            .padStart(2, "0");
+            return;
+        }
 
-    const startDate =
-        `${year}-${month}-01`;
 
-    const endDate =
-        `${year}-${month}-${day}`;
+        /*
+         * Try again after 100 ms.
+         */
 
-    monthlyCounter.src =
-        `${goatCounterBase}//.svg` +
-        `?start=${startDate}` +
-        `&end=${endDate}`;
+        setTimeout(
+            waitForGoatCounter,
+            100
+        );
+    };
 
-    console.group(
-        "📊 Website Visitor Statistics"
-    );
 
-    console.log(
-        "Total Visitors:",
-        totalCounter.src
-    );
+    /*
+     * Initialize the counters.
+     */
 
-    console.log(
-        "This Month:",
-        monthlyCounter.src
-    );
+    const initializeVisitorStats = () => {
 
-    console.log(
-        "Period:",
-        `${startDate} → ${endDate}`
-    );
+        /*
+         * ----------------------------------------
+         * TOTAL VISITORS
+         * ----------------------------------------
+         *
+         * TOTAL is GoatCounter's special path
+         * for the entire site.
+         */
 
-    console.groupEnd();
+        window.goatcounter.visit_count({
+
+            append: "#total-visitors",
+
+            path: "TOTAL",
+
+            type: "html",
+
+            no_branding: true,
+
+            attr: {
+                class: "goatcounter-value"
+            }
+
+        });
+
+
+        /*
+         * ----------------------------------------
+         * THIS MONTH
+         * ----------------------------------------
+         */
+
+        const now =
+            new Date();
+
+
+        const year =
+            now.getFullYear();
+
+
+        const month =
+            String(
+                now.getMonth() + 1
+            ).padStart(
+                2,
+                "0"
+            );
+
+
+        const day =
+            String(
+                now.getDate()
+            ).padStart(
+                2,
+                "0"
+            );
+
+
+        /*
+         * First day of current month.
+         */
+
+        const startDate =
+            `${year}-${month}-01`;
+
+
+        /*
+         * Today's date.
+         */
+
+        const endDate =
+            `${year}-${month}-${day}`;
+
+
+        /*
+         * GoatCounter date-range counter.
+         */
+
+        window.goatcounter.visit_count({
+
+            append: "#monthly-visitors",
+
+            path: "TOTAL",
+
+            type: "html",
+
+            start: startDate,
+
+            end: endDate,
+
+            no_branding: true,
+
+            attr: {
+                class: "goatcounter-value"
+            }
+
+        });
+
+
+        /*
+         * Debug information.
+         */
+
+        console.group(
+            "📊 Website Visitor Statistics"
+        );
+
+        console.log(
+            "GoatCounter:",
+            "Ready"
+        );
+
+        console.log(
+            "Total Visitors:",
+            "TOTAL"
+        );
+
+        console.log(
+            "This Month:",
+            `${startDate} → ${endDate}`
+        );
+
+        console.groupEnd();
+    };
+
+
+    /*
+     * Start waiting for GoatCounter.
+     */
+
+    waitForGoatCounter();
 }
