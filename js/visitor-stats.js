@@ -1,8 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
-    loadVisitorStats();
-});
-
-async function loadVisitorStats() {
+export async function loadVisitorStats() {
 
     const totalElement =
         document.getElementById("total-visitors");
