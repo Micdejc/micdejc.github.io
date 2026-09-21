@@ -16,45 +16,21 @@ export async function loadVisitorStats() {
     const monthlyCounter =
         document.getElementById("monthly-visitors");
 
-    /*
-     * Make sure the visitor statistics
-     * component has been loaded first.
-     */
     if (!totalCounter || !monthlyCounter) {
-
         console.warn(
             "Visitor statistics elements were not found."
         );
-
         return;
     }
 
-    /*
-     * GoatCounter public counter.
-     */
     const goatCounterBase =
         "https://micdejc.goatcounter.com/counter/";
 
-    /*
-     * --------------------------------------------------
-     * TOTAL VISITORS
-     * --------------------------------------------------
-     *
-     * TOTAL.svg provides the overall site counter.
-     */
-
+    // Total visitors
     totalCounter.src =
         `${goatCounterBase}TOTAL.svg`;
 
-    /*
-     * --------------------------------------------------
-     * THIS MONTH
-     * --------------------------------------------------
-     *
-     * Calculate the first day of the current month
-     * and today's date using the visitor's local time.
-     */
-
+    // Current month
     const now = new Date();
 
     const year =
@@ -74,20 +50,10 @@ export async function loadVisitorStats() {
     const endDate =
         `${year}-${month}-${day}`;
 
-    /*
-     * GoatCounter date-range counter.
-     */
-
     monthlyCounter.src =
         `${goatCounterBase}//.svg` +
         `?start=${startDate}` +
         `&end=${endDate}`;
-
-    /*
-     * --------------------------------------------------
-     * DEBUG INFORMATION
-     * --------------------------------------------------
-     */
 
     console.group(
         "📊 Website Visitor Statistics"
@@ -95,12 +61,12 @@ export async function loadVisitorStats() {
 
     console.log(
         "Total Visitors:",
-        `${goatCounterBase}TOTAL.svg`
+        totalCounter.src
     );
 
     console.log(
         "This Month:",
-        `${goatCounterBase}//.svg?start=${startDate}&end=${endDate}`
+        monthlyCounter.src
     );
 
     console.log(
