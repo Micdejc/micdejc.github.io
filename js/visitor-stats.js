@@ -19,11 +19,6 @@ export async function loadVisitorStats() {
         document.getElementById("monthly-visitors");
 
 
-    /*
-     * The visitor-stats.html component must
-     * already be loaded before this function runs.
-     */
-
     if (!totalElement || !monthlyElement) {
 
         console.warn(
@@ -34,50 +29,12 @@ export async function loadVisitorStats() {
     }
 
 
-    /*
-     * Wait for GoatCounter count.js.
-     *
-     * count.js is loaded asynchronously, so
-     * window.goatcounter may not exist yet.
-     */
-
-    const waitForGoatCounter = () => {
-
-        if (
-            window.goatcounter &&
-            typeof window.goatcounter.visit_count === "function"
-        ) {
-
-            initializeVisitorStats();
-
-            return;
-        }
-
-
-        /*
-         * Try again after 100 ms.
-         */
-
-        setTimeout(
-            waitForGoatCounter,
-            100
-        );
-    };
-
-
-    /*
-     * Initialize the counters.
-     */
-
-    const initializeVisitorStats = () => {
+    function initializeVisitorStats() {
 
         /*
          * ----------------------------------------
          * TOTAL VISITORS
          * ----------------------------------------
-         *
-         * TOTAL is GoatCounter's special path
-         * for the entire site.
          */
 
         window.goatcounter.visit_count({
@@ -86,13 +43,9 @@ export async function loadVisitorStats() {
 
             path: "TOTAL",
 
-            type: "html",
+            type: "svg",
 
-            no_branding: true,
-
-            attr: {
-                class: "goatcounter-value"
-            }
+            no_branding: true
 
         });
 
@@ -129,25 +82,13 @@ export async function loadVisitorStats() {
             );
 
 
-        /*
-         * First day of current month.
-         */
-
         const startDate =
             `${year}-${month}-01`;
 
 
-        /*
-         * Today's date.
-         */
-
         const endDate =
             `${year}-${month}-${day}`;
 
-
-        /*
-         * GoatCounter date-range counter.
-         */
 
         window.goatcounter.visit_count({
 
@@ -155,23 +96,19 @@ export async function loadVisitorStats() {
 
             path: "TOTAL",
 
-            type: "html",
+            type: "svg",
 
             start: startDate,
 
             end: endDate,
 
-            no_branding: true,
-
-            attr: {
-                class: "goatcounter-value"
-            }
+            no_branding: true
 
         });
 
 
         /*
-         * Debug information.
+         * Debug
          */
 
         console.group(
@@ -184,7 +121,7 @@ export async function loadVisitorStats() {
         );
 
         console.log(
-            "Total Visitors:",
+            "Total:",
             "TOTAL"
         );
 
@@ -194,12 +131,34 @@ export async function loadVisitorStats() {
         );
 
         console.groupEnd();
-    };
+    }
 
 
     /*
-     * Start waiting for GoatCounter.
+     * GoatCounter is loaded asynchronously.
+     * Wait until visit_count() is available.
      */
+
+    function waitForGoatCounter() {
+
+        if (
+            window.goatcounter &&
+            typeof window.goatcounter.visit_count ===
+                "function"
+        ) {
+
+            initializeVisitorStats();
+
+            return;
+        }
+
+
+        setTimeout(
+            waitForGoatCounter,
+            100
+        );
+    }
+
 
     waitForGoatCounter();
 }
