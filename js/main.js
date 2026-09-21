@@ -2,7 +2,6 @@ import { loadPublications } from "../content/publications/index.js";
 import { loadNews } from "../content/news/index.js";
 import { loadFeatures } from "../content/features/index.js";
 import { loadMentorship } from "../content/mentorship/index.js";
-import { loadVisitorStats } from "./visitor-stats.js";
 
 /* =========================================================
    HTML COMPONENT LOADER
@@ -143,11 +142,6 @@ async function loadPage() {
         ),
 
         loadComponent(
-             "visitors",
-             "sections/visitor-stats.html"
-         ),
-
-        loadComponent(
             "footer",
             "components/footer.html"
         )
@@ -167,8 +161,6 @@ async function loadPage() {
     await loadMentorship();
 
     await loadFeatures();
-
-    await loadVisitorStats();
 
     /*
      * Initialise interface controls only after
