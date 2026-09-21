@@ -3,10 +3,10 @@ export async function loadVisitorStats() {
     const totalElement =
         document.getElementById("total-visitors");
 
-    const monthlyElement =
-        document.getElementById("monthly-visitors");
+    const pageViewsElement =
+        document.getElementById("page-views");
 
-    if (!totalElement || !monthlyElement) {
+    if (!totalElement || !pageViewsElement) {
         console.warn(
             "Visitor statistics elements were not found."
         );
@@ -28,7 +28,7 @@ export async function loadVisitorStats() {
 
         if (!response.ok) {
             throw new Error(
-                `Total stats request failed: ${response.status}`
+                `Total visitor request failed: ${response.status}`
             );
         }
 
@@ -36,13 +36,12 @@ export async function loadVisitorStats() {
             await response.json();
 
         console.log(
-            "GoatCounter - Total:",
+            "GoatCounter - Total Visitors:",
             data
         );
 
         totalElement.textContent =
-            Number(data.count || 0)
-                .toLocaleString("en-GB");
+            data.count || "0";
 
     } catch (error) {
 
@@ -56,45 +55,29 @@ export async function loadVisitorStats() {
 
 
     /*
-     * CURRENT MONTH
+     * PAGE VIEWS
      */
 
     try {
 
-        const now =
-            new Date();
+        const pagePath =
+            window.location.pathname || "/";
 
-        const year =
-            now.getFullYear();
-
-        const month =
-            String(now.getMonth() + 1)
-                .padStart(2, "0");
-
-        const day =
-            String(now.getDate())
-                .padStart(2, "0");
-
-        const start =
-            `${year}-${month}-01`;
-
-        const end =
-            `${year}-${month}-${day}`;
-
-        const monthlyURL =
-            `${baseURL}?start=${start}&end=${end}`;
+        const pageViewsURL =
+            `https://micdejc.goatcounter.com/counter/` +
+            `${encodeURIComponent(pagePath)}.json`;
 
         console.log(
-            "GoatCounter - Monthly URL:",
-            monthlyURL
+            "GoatCounter - Page Views URL:",
+            pageViewsURL
         );
 
         const response =
-            await fetch(monthlyURL);
+            await fetch(pageViewsURL);
 
         if (!response.ok) {
             throw new Error(
-                `Monthly stats request failed: ${response.status}`
+                `Page views request failed: ${response.status}`
             );
         }
 
@@ -102,22 +85,21 @@ export async function loadVisitorStats() {
             await response.json();
 
         console.log(
-            "GoatCounter - This Month:",
+            "GoatCounter - Page Views:",
             data
         );
 
-        monthlyElement.textContent =
-            Number(data.count || 0)
-                .toLocaleString("en-GB");
+        pageViewsElement.textContent =
+            data.count || "0";
 
     } catch (error) {
 
         console.error(
-            "Unable to load monthly visitor statistics:",
+            "Unable to load page view statistics:",
             error
         );
 
-        monthlyElement.textContent = "—";
+        pageViewsElement.textContent = "—";
     }
 
 
@@ -135,8 +117,8 @@ export async function loadVisitorStats() {
     );
 
     console.log(
-        "This month:",
-        monthlyElement.textContent
+        "Page views:",
+        pageViewsElement.textContent
     );
 
     console.groupEnd();
