@@ -1,110 +1,92 @@
+/**
+ * Visitor Statistics
+ * -------------------
+ * Displays:
+ * 1. Total Visitors
+ * 2. Visitors This Month
+ *
+ * Uses GoatCounter public SVG counters.
+ * No API calls or fetch() required.
+ */
 export async function loadVisitorStats() {
 
-    const totalElement =
+    const totalCounter =
         document.getElementById("total-visitors");
 
-    const pageViewsElement =
-        document.getElementById("page-views");
+    const monthlyCounter =
+        document.getElementById("monthly-visitors");
 
-    if (!totalElement || !pageViewsElement) {
+    /*
+     * Make sure the visitor statistics
+     * component has been loaded first.
+     */
+    if (!totalCounter || !monthlyCounter) {
+
         console.warn(
             "Visitor statistics elements were not found."
         );
+
         return;
     }
 
-    const baseURL =
-        "https://micdejc.goatcounter.com/counter//.json";
-
+    /*
+     * GoatCounter public counter.
+     */
+    const goatCounterBase =
+        "https://micdejc.goatcounter.com/counter/";
 
     /*
+     * --------------------------------------------------
      * TOTAL VISITORS
+     * --------------------------------------------------
+     *
+     * TOTAL.svg provides the overall site counter.
      */
 
-    try {
-
-        const response =
-            await fetch(baseURL);
-
-        if (!response.ok) {
-            throw new Error(
-                `Total visitor request failed: ${response.status}`
-            );
-        }
-
-        const data =
-            await response.json();
-
-        console.log(
-            "GoatCounter - Total Visitors:",
-            data
-        );
-
-        totalElement.textContent =
-            data.count || "0";
-
-    } catch (error) {
-
-        console.error(
-            "Unable to load total visitor statistics:",
-            error
-        );
-
-        totalElement.textContent = "—";
-    }
-
+    totalCounter.src =
+        `${goatCounterBase}TOTAL.svg`;
 
     /*
-     * PAGE VIEWS
+     * --------------------------------------------------
+     * THIS MONTH
+     * --------------------------------------------------
+     *
+     * Calculate the first day of the current month
+     * and today's date using the visitor's local time.
      */
 
-    try {
+    const now = new Date();
 
-        const pagePath =
-            window.location.pathname || "/";
+    const year =
+        now.getFullYear();
 
-        const pageViewsURL =
-            `https://micdejc.goatcounter.com/counter/` +
-            `${encodeURIComponent(pagePath)}.json`;
+    const month =
+        String(now.getMonth() + 1)
+            .padStart(2, "0");
 
-        console.log(
-            "GoatCounter - Page Views URL:",
-            pageViewsURL
-        );
+    const day =
+        String(now.getDate())
+            .padStart(2, "0");
 
-        const response =
-            await fetch(pageViewsURL);
+    const startDate =
+        `${year}-${month}-01`;
 
-        if (!response.ok) {
-            throw new Error(
-                `Page views request failed: ${response.status}`
-            );
-        }
-
-        const data =
-            await response.json();
-
-        console.log(
-            "GoatCounter - Page Views:",
-            data
-        );
-
-        pageViewsElement.textContent =
-            data.count || "0";
-
-    } catch (error) {
-
-        console.error(
-            "Unable to load page view statistics:",
-            error
-        );
-
-        pageViewsElement.textContent = "—";
-    }
-
+    const endDate =
+        `${year}-${month}-${day}`;
 
     /*
-     * SUMMARY
+     * GoatCounter date-range counter.
+     */
+
+    monthlyCounter.src =
+        `${goatCounterBase}//.svg` +
+        `?start=${startDate}` +
+        `&end=${endDate}`;
+
+    /*
+     * --------------------------------------------------
+     * DEBUG INFORMATION
+     * --------------------------------------------------
      */
 
     console.group(
@@ -112,13 +94,18 @@ export async function loadVisitorStats() {
     );
 
     console.log(
-        "Total visitors:",
-        totalElement.textContent
+        "Total Visitors:",
+        `${goatCounterBase}TOTAL.svg`
     );
 
     console.log(
-        "Page views:",
-        pageViewsElement.textContent
+        "This Month:",
+        `${goatCounterBase}//.svg?start=${startDate}&end=${endDate}`
+    );
+
+    console.log(
+        "Period:",
+        `${startDate} → ${endDate}`
     );
 
     console.groupEnd();
