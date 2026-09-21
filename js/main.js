@@ -66,11 +66,6 @@ async function loadPage() {
             "components/calendar.html"
         ),
 
-       loadComponent(
-             "components/visitor-stats.html",
-             "visitorStatsContainer"
-         ),
-
         loadComponent(
             "about",
             "sections/about.html"
@@ -145,6 +140,11 @@ async function loadPage() {
             "contact",
             "sections/contact.html"
         ),
+
+        loadComponent(
+             "visitors",
+             "sections/visitor-stats.html"
+         ),
 
         loadComponent(
             "footer",
