@@ -1,1 +1,44 @@
+.visitor-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    width: 100%;
+    max-width: 1100px;
+    margin: 2rem auto;
+}
 
+.visitor-stat {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 1rem 1.2rem;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    background: var(--card-bg);
+}
+
+.visitor-stat-icon {
+    font-size: 1.4rem;
+}
+
+.visitor-stat div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.visitor-stat strong {
+    font-size: 1.3rem;
+    color: var(--text-color);
+}
+
+.visitor-stat span:last-child {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+@media (max-width: 900px) {
+    .visitor-stats {
+        grid-template-columns: 1fr;
+    }
+}
