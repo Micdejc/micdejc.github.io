@@ -16,6 +16,7 @@ micdejc.github.io/
 ├── components/
 │   ├── nav.html
 │   ├── hero.html
+│   ├── calendar.html
 │   └── footer.html
 │
 ├── sections/
@@ -42,17 +43,25 @@ micdejc.github.io/
 │
 ├── css/
 │   ├── style.css
-│   └── terminal.css
+│   ├── terminal.css
+│   ├── calendar.css
+│   ├── feature-modal.css
+│   └── search.css
 │
 ├── js/
-│   └── main.js
+│   ├── main.js
+│   ├── calendar.js
+│   ├── feature.js
+│   └── search.js
 │
 ├── assets/
+│   ├── favicon.png
 │   ├── profile.png
 │   ├── news/
 │   └── features/
 │
-└── CV.pdf
+├── CV.pdf
+└── README.md
 ```
 
 ---
@@ -761,6 +770,7 @@ The website should remain:
 | General styling        | `css/style.css`          |
 | Terminal styling       | `css/terminal.css`       |
 | Main JavaScript        | `js/main.js`             |
+| Calendar JavaScript    | `js/calendar.js`         |
 | Profile assets         | `assets/`                |
 | News images            | `assets/news/`           |
 | Feature logos          | `assets/features/`       |
