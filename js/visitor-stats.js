@@ -6,9 +6,6 @@ export async function loadVisitorStats() {
     const monthlyElement =
         document.getElementById("monthly-visitors");
 
-    const locationsElement =
-        document.getElementById("top-locations");
-
     if (!totalElement || !monthlyElement) {
         console.warn(
             "Visitor statistics elements were not found."
@@ -16,45 +13,56 @@ export async function loadVisitorStats() {
         return;
     }
 
+    const baseURL =
+        "https://micdejc.goatcounter.com/counter//.json";
+
+
+    /*
+     * TOTAL VISITORS
+     */
+
     try {
 
-        /*
-         * =====================================================
-         * 1. TOTAL VISITS
-         * =====================================================
-         */
+        const response =
+            await fetch(baseURL);
 
-        const totalURL =
-            "https://micdejc.goatcounter.com/counter//.json";
-
-        const totalResponse =
-            await fetch(totalURL);
-
-        if (!totalResponse.ok) {
+        if (!response.ok) {
             throw new Error(
-                `Total stats request failed: ${totalResponse.status}`
+                `Total stats request failed: ${response.status}`
             );
         }
 
-        const totalData =
-            await totalResponse.json();
+        const data =
+            await response.json();
 
         console.log(
-            "GoatCounter - Total stats:",
-            totalData
+            "GoatCounter - Total:",
+            data
         );
 
         totalElement.textContent =
-            totalData.count || "0";
+            Number(data.count || 0)
+                .toLocaleString("en-GB");
+
+    } catch (error) {
+
+        console.error(
+            "Unable to load total visitor statistics:",
+            error
+        );
+
+        totalElement.textContent = "—";
+    }
 
 
-        /*
-         * =====================================================
-         * 2. CURRENT MONTH
-         * =====================================================
-         */
+    /*
+     * CURRENT MONTH
+     */
 
-        const now = new Date();
+    try {
+
+        const now =
+            new Date();
 
         const year =
             now.getFullYear();
@@ -63,220 +71,73 @@ export async function loadVisitorStats() {
             String(now.getMonth() + 1)
                 .padStart(2, "0");
 
+        const day =
+            String(now.getDate())
+                .padStart(2, "0");
+
         const start =
             `${year}-${month}-01`;
 
         const end =
-            `${year}-${month}-${String(
-                now.getDate()
-            ).padStart(2, "0")}`;
+            `${year}-${month}-${day}`;
 
         const monthlyURL =
-            `https://micdejc.goatcounter.com/counter//.json` +
-            `?start=${encodeURIComponent(start)}` +
-            `&end=${encodeURIComponent(end)}`;
+            `${baseURL}?start=${start}&end=${end}`;
 
-        const monthlyResponse =
+        console.log(
+            "GoatCounter - Monthly URL:",
+            monthlyURL
+        );
+
+        const response =
             await fetch(monthlyURL);
 
-        if (!monthlyResponse.ok) {
+        if (!response.ok) {
             throw new Error(
-                `Monthly stats request failed: ${monthlyResponse.status}`
+                `Monthly stats request failed: ${response.status}`
             );
         }
 
-        const monthlyData =
-            await monthlyResponse.json();
+        const data =
+            await response.json();
 
         console.log(
-            "GoatCounter - Monthly stats:",
-            {
-                start,
-                end,
-                data: monthlyData
-            }
+            "GoatCounter - This Month:",
+            data
         );
 
         monthlyElement.textContent =
-            monthlyData.count || "0";
-
-
-        /*
-         * =====================================================
-         * 3. TOP LOCATIONS
-         * =====================================================
-         *
-         * GoatCounter's location statistics are available
-         * through the authenticated API, not the public
-         * /counter/*.json endpoint.
-         *
-         * We therefore test the endpoint separately so that
-         * the console shows the exact response.
-         * =====================================================
-         */
-
-        const locationsURL =
-            "https://micdejc.goatcounter.com/api/v0/stats/locations" +
-            `?start=${encodeURIComponent(start + "T00:00:00Z")}` +
-            `&end=${encodeURIComponent(end + "T23:59:59Z")}` +
-            "&limit=3";
-
-        console.log(
-            "GoatCounter - Locations URL:",
-            locationsURL
-        );
-
-        const locationsResponse =
-            await fetch(locationsURL);
-
-        console.log(
-            "GoatCounter - Locations status:",
-            locationsResponse.status
-        );
-
-        const locationsText =
-            await locationsResponse.text();
-
-        console.log(
-            "GoatCounter - Locations response:",
-            locationsText
-        );
-
-        /*
-         * Try to parse the response if it is JSON.
-         */
-
-        if (locationsResponse.ok) {
-
-            try {
-
-                const locationsData =
-                    JSON.parse(locationsText);
-
-                console.log(
-                    "GoatCounter - Locations data:",
-                    locationsData
-                );
-
-                if (locationsElement) {
-                    renderLocations(
-                        locationsElement,
-                        locationsData
-                    );
-                }
-
-            } catch (error) {
-
-                console.warn(
-                    "Locations response was not valid JSON:",
-                    error
-                );
-            }
-
-        } else {
-
-            console.warn(
-                "Location statistics are not publicly accessible. " +
-                "GoatCounter returned:",
-                locationsResponse.status
-            );
-
-            if (locationsElement) {
-                locationsElement.innerHTML =
-                    `<span>Location data unavailable</span>`;
-            }
-        }
-
-
-        /*
-         * =====================================================
-         * 4. SUMMARY
-         * =====================================================
-         */
-
-        console.group(
-            "📊 Website Visitor Statistics"
-        );
-
-        console.log(
-            "Total visits:",
-            totalData.count
-        );
-
-        console.log(
-            "This month:",
-            monthlyData.count
-        );
-
-        console.log(
-            "Period:",
-            `${start} → ${end}`
-        );
-
-        console.groupEnd();
-
+            Number(data.count || 0)
+                .toLocaleString("en-GB");
 
     } catch (error) {
 
         console.error(
-            "Unable to load visitor statistics:",
+            "Unable to load monthly visitor statistics:",
             error
         );
 
-        totalElement.textContent = "—";
         monthlyElement.textContent = "—";
-
-        if (locationsElement) {
-            locationsElement.innerHTML =
-                `<span>Statistics unavailable</span>`;
-        }
-    }
-}
-
-
-/*
- * =========================================================
- * Render Locations
- * =========================================================
- */
-
-function renderLocations(
-    container,
-    data
-) {
-
-    if (
-        !data ||
-        !Array.isArray(data.stats) ||
-        data.stats.length === 0
-    ) {
-        container.innerHTML =
-            `<span>No location data available</span>`;
-
-        return;
     }
 
-    const locations =
-        data.stats.slice(0, 3);
 
-    container.innerHTML =
-        locations
-            .map(location => {
+    /*
+     * SUMMARY
+     */
 
-                const country =
-                    location.name ||
-                    location.id ||
-                    "Unknown";
+    console.group(
+        "📊 Website Visitor Statistics"
+    );
 
-                const count =
-                    location.count || 0;
+    console.log(
+        "Total visitors:",
+        totalElement.textContent
+    );
 
-                return `
-                    <div class="visitor-location">
-                        <span>${country}</span>
-                        <strong>${count}</strong>
-                    </div>
-                `;
-            })
-            .join("");
+    console.log(
+        "This month:",
+        monthlyElement.textContent
+    );
+
+    console.groupEnd();
 }
