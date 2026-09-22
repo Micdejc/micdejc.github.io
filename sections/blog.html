@@ -87,51 +87,95 @@
                 </div>
 
 
-                <!-- BLOG FILTERS -->
-
+                <!-- BLOG SEARCH & FILTERS -->
+                
                 <div class="blog-controls">
-
+                
+                    <!-- BLOG SEARCH -->
+                
+                    <div class="blog-filter blog-search">
+                
+                        <label for="blog-search">
+                            Search
+                        </label>
+                
+                        <div class="blog-search-input">
+                
+                            <span
+                                class="blog-search-icon"
+                                aria-hidden="true"
+                            >
+                                ⌕
+                            </span>
+                
+                            <input
+                                type="search"
+                                id="blog-search"
+                                placeholder="Search insights..."
+                                autocomplete="off"
+                                aria-label="Search blog posts"
+                            >
+                
+                            <button
+                                type="button"
+                                id="blog-search-clear"
+                                class="blog-search-clear"
+                                aria-label="Clear blog search"
+                                hidden
+                            >
+                                ×
+                            </button>
+                
+                        </div>
+                
+                    </div>
+                
+                
+                    <!-- CATEGORY FILTER -->
+                
                     <div class="blog-filter">
-
+                
                         <label for="blog-category-filter">
                             Category
                         </label>
-
+                
                         <select id="blog-category-filter">
-
+                
                             <option value="all">
                                 All categories
                             </option>
-
+                
                         </select>
-
+                
                     </div>
-
-
+                
+                
+                    <!-- SOURCE FILTER -->
+                
                     <div class="blog-filter">
-
+                
                         <label for="blog-type-filter">
                             Source
                         </label>
-
+                
                         <select id="blog-type-filter">
-
+                
                             <option value="all">
                                 All posts
                             </option>
-
+                
                             <option value="internal">
                                 My website
                             </option>
-
+                
                             <option value="external">
                                 External
                             </option>
-
+                
                         </select>
-
+                
                     </div>
-
+                
                 </div>
 
 
