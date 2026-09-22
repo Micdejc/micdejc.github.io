@@ -1,97 +1,95 @@
-(function () {
-
-    "use strict";
+"use strict";
 
 
-    /**
-     * Parse comma-separated values.
-     */
-    function parseList(value) {
+/**
+ * Parse comma-separated values.
+ */
+function parseList(value) {
 
-        if (!value) {
-            return [];
-        }
+    if (!value) {
+        return [];
+    }
 
-        return value
-            .split(",")
-            .map(item => item.trim())
-            .filter(Boolean);
+    return value
+        .split(",")
+        .map(item => item.trim())
+        .filter(Boolean);
+
+}
+
+
+/**
+ * Clean a metadata string.
+ */
+function clean(value) {
+
+    return value
+        ? value.trim()
+        : "";
+
+}
+
+
+/**
+ * Extract all blog posts from the source container.
+ */
+function getBlogPosts() {
+
+    const source =
+        document.getElementById("blog-source");
+
+
+    if (!source) {
+
+        console.warn(
+            "Blog source container was not found."
+        );
+
+        return [];
 
     }
 
 
-    /**
-     * Clean a metadata string.
-     */
-    function clean(value) {
-
-        return value
-            ? value.trim()
-            : "";
-
-    }
-
-
-    /**
-     * Extract all blog posts from the source container.
-     */
-    function getBlogPosts() {
-
-        const source = document.getElementById("blog-source");
-
-        if (!source) {
-
-            console.warn(
-                "Blog source container was not found."
-            );
-
-            return [];
-
-        }
-
-
-        const entries = Array.from(
-            source.querySelectorAll(".blog-entry")
+    const entries =
+        Array.from(
+            source.querySelectorAll(
+                ".blog-entry"
+            )
         );
 
 
-        const posts = [];
+    const posts = [];
 
 
-        entries.forEach((entry, index) => {
+    entries.forEach(
+        (entry, index) => {
 
-            const title = clean(
-                entry.dataset.title
-            );
+            const title =
+                clean(entry.dataset.title);
 
-            const date = clean(
-                entry.dataset.date
-            );
+            const date =
+                clean(entry.dataset.date);
 
-            const category = clean(
-                entry.dataset.category
-            );
+            const category =
+                clean(entry.dataset.category);
 
-            const type = clean(
-                entry.dataset.type
-            ).toLowerCase();
+            const type =
+                clean(entry.dataset.type)
+                    .toLowerCase();
 
-            const url = clean(
-                entry.dataset.url
-            );
+            const url =
+                clean(entry.dataset.url);
 
-            const description = clean(
-                entry.dataset.description
-            );
+            const description =
+                clean(
+                    entry.dataset.description
+                );
 
-            const tags = parseList(
-                entry.dataset.tags
-            );
+            const tags =
+                parseList(
+                    entry.dataset.tags
+                );
 
-
-            /*
-             * Validate required metadata.
-             */
 
             if (
                 !title ||
@@ -111,10 +109,6 @@
             }
 
 
-            /*
-             * Validate post type.
-             */
-
             if (
                 type !== "internal" &&
                 type !== "external"
@@ -129,11 +123,9 @@
             }
 
 
-            /*
-             * Validate date.
-             */
+            const parsedDate =
+                new Date(date);
 
-            const parsedDate = new Date(date);
 
             if (
                 Number.isNaN(
@@ -153,34 +145,27 @@
             posts.push({
 
                 title,
-
                 date,
-
                 category,
-
                 type,
-
                 url,
-
                 description,
-
                 tags
 
             });
 
-        });
+        }
+    );
 
 
-        return posts;
+    return posts;
 
-    }
-
-
-    /*
-     * Expose the function globally so blog.js can use it.
-     */
-
-    window.getBlogPosts = getBlogPosts;
+}
 
 
-})();
+/*
+ * Export for blog.js
+ */
+export {
+    getBlogPosts
+};
