@@ -42,9 +42,9 @@ export async function loadMentorship() {
     }
 
 
-    /* ---------------------------------------------------------
+    /* =========================================================
        LOAD ALL MENTORSHIP CARDS
-    --------------------------------------------------------- */
+    ========================================================= */
 
     for (const file of mentorshipFiles) {
 
@@ -88,13 +88,15 @@ export async function loadMentorship() {
     }
 
 
-    /* ---------------------------------------------------------
+    /* =========================================================
        LOAD MORE
-    --------------------------------------------------------- */
+    ========================================================= */
 
     const mentorshipCards =
         Array.from(
-            container.children
+            container.querySelectorAll(
+                ".research-card"
+            )
         );
 
 
@@ -118,14 +120,17 @@ export async function loadMentorship() {
         );
 
 
-        /*
-         * Hide Load More when all mentorship
-         * cards are already visible.
-         */
+        /* ---------------------------------------------
+           UPDATE LOAD MORE BUTTON
+        --------------------------------------------- */
+
+        const remaining =
+            mentorshipCards.length -
+            visibleMentorship;
+
 
         if (
-            visibleMentorship >=
-            mentorshipCards.length
+            remaining <= 0
         ) {
 
             if (loadMoreContainer) {
@@ -143,9 +148,9 @@ export async function loadMentorship() {
     }
 
 
-    /* ---------------------------------------------------------
+    /* =========================================================
        LOAD MORE BUTTON
-    --------------------------------------------------------- */
+    ========================================================= */
 
     if (loadMoreButton) {
 
@@ -156,6 +161,19 @@ export async function loadMentorship() {
                 visibleMentorship +=
                     mentorshipPerClick;
 
+
+                /*
+                 * Never allow the visible count
+                 * to exceed the actual number of cards.
+                 */
+
+                visibleMentorship =
+                    Math.min(
+                        visibleMentorship,
+                        mentorshipCards.length
+                    );
+
+
                 updateMentorship();
 
             }
@@ -164,9 +182,9 @@ export async function loadMentorship() {
     }
 
 
-    /* ---------------------------------------------------------
+    /* =========================================================
        INITIAL DISPLAY
-    --------------------------------------------------------- */
+    ========================================================= */
 
     updateMentorship();
 
