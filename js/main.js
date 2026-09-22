@@ -178,6 +178,8 @@ async function loadPage() {
     /* initialiseConsoleAnimation(); */
 
     initialiseYear();
+
+    initialiseVisitorCount();
    
     initialiseCalendar();
 
@@ -1123,6 +1125,64 @@ function initialiseYear() {
 
         year.textContent =
             new Date().getFullYear();
+
+    }
+
+}
+
+/* =========================================================
+   TOTAL VISITORS
+========================================================= */
+
+async function initialiseVisitorCount() {
+
+    const totalVisitors =
+        document.getElementById(
+            "total-visitors"
+        );
+
+
+    if (!totalVisitors) {
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                "https://micdejc.goatcounter.com/counter/TOTAL.json"
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Failed to load visitor count"
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            typeof data.count === "number"
+        ) {
+
+            totalVisitors.textContent =
+                `Total visitors: ${data.count}`;
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "GoatCounter visitor count error:",
+            error
+        );
 
     }
 
