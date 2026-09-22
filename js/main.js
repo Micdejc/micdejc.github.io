@@ -83,7 +83,7 @@ async function loadPage() {
             "sections/research.html"
         ),
 
-        loadComponent(
+ /*       loadComponent(
             "refusalguard",
             "sections/flagship-refusalguard.html"
         ),
@@ -92,7 +92,7 @@ async function loadPage() {
             "grammatical-mirage",
             "sections/flagship-grammatical-mirage.html"
         ),
-
+*/
         loadComponent(
             "flagships",
             "sections/flagship.html"
