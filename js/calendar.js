@@ -1080,7 +1080,7 @@ function removeDuplicateEvents(events) {
 
 async function loadCalendarEvents() {
 
-
+/*
     // TEMPORARY TEST
     calendarEvents = [
         {
@@ -1100,6 +1100,7 @@ async function loadCalendarEvents() {
     
     return calendarEvents; 
     
+*/
 
     
     if (calendarDataLoaded) {
