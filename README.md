@@ -23,8 +23,7 @@ micdejc.github.io/
 │   ├── about.html
 │   ├── research-statement.html
 │   ├── research.html
-│   ├── flagship-refusalguard.html
-│   ├── flagship-grammatical-mirage.html
+│   ├── flagship.html
 │   ├── publications.html
 │   ├── news.html
 │   ├── projects.html
@@ -40,6 +39,7 @@ micdejc.github.io/
 ├── content/
 │   ├── publications/
 │   ├── news/
+│   ├── flagship/
 │   ├── mentorship/
 │   └── features/
 │
@@ -119,6 +119,7 @@ Examples:
 
 - Individual publications
 - Individual news items
+- Individual flagship research
 - Individual mentorship entries
 - Individual professional features
 
@@ -852,6 +853,7 @@ The website should remain:
 | Hero/profile           | `components/hero.html`   |
 | Footer                 | `components/footer.html` |
 | Major page sections    | `sections/`              |
+| Blogs                  | `blog/posts/`          |
 | Publications           | `content/publications/`  |
 | News                   | `content/news/`          |
 | Mentorship             | `content/mentorship/`    |
