@@ -68,6 +68,10 @@
             name: "Features & Media"
         },
         {
+            id: "blogs",
+            name: "Blogs"
+        },
+        {
             id: "contact",
             name: "Contact"
         }
