@@ -2,6 +2,7 @@ import { loadPublications } from "../content/publications/index.js";
 import { loadNews } from "../content/news/index.js";
 import { loadFeatures } from "../content/features/index.js";
 import { loadMentorship } from "../content/mentorship/index.js";
+import { loadFlagship } from "../content/flagship/index.js";
 import { initialiseBlog } from "./blog.js";
 
 /* =========================================================
@@ -93,6 +94,11 @@ async function loadPage() {
         ),
 
         loadComponent(
+            "flagships",
+            "sections/flagship.html"
+        ),
+
+        loadComponent(
             "publications",
             "sections/publications.html"
         ),
@@ -167,6 +173,8 @@ async function loadPage() {
     await loadMentorship();
 
     await loadFeatures();
+
+    await loadFlagship();
 
     /*
      * Initialise interface controls only after
