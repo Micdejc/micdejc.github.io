@@ -33,6 +33,8 @@ micdejc.github.io/
 │   ├── achievements.html
 │   ├── service.html
 │   ├── mentorship.html
+│   ├── features.html
+│   ├── blog.html
 │   └── contact.html
 │
 ├── content/
@@ -41,17 +43,25 @@ micdejc.github.io/
 │   ├── mentorship/
 │   └── features/
 │
+├── blog/
+│   └── posts/
+│       ├── cybersecurity-experience-paradox.html
+│       └── ...
+│
 ├── css/
 │   ├── style.css
 │   ├── terminal.css
 │   ├── calendar.css
 │   ├── feature-modal.css
+│   ├── blog.css
 │   └── search.css
 │
 ├── js/
 │   ├── main.js
 │   ├── calendar.js
 │   ├── feature.js
+│   ├── blog.js
+│   ├── blog-posts.js
 │   └── search.js
 │
 ├── assets/
