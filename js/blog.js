@@ -1,3 +1,7 @@
+import {
+    getBlogPosts
+} from "./blog-posts.js";
+
 (function () {
 
     "use strict";
@@ -625,25 +629,8 @@
         }
 
 
-        /*
-         * Make sure blog-posts.js has loaded.
-         */
-        if (
-            typeof window.getBlogPosts !==
-            "function"
-        ) {
-
-            console.error(
-                "getBlogPosts() is not available. Make sure blog-posts.js loads before blog.js."
-            );
-
-            return;
-
-        }
-
-
         const posts =
-            window.getBlogPosts();
+            getBlogPosts();
 
 
         const categoryFilter =
@@ -727,35 +714,9 @@
     }
 
 
-    /*
-     * Expose the initialisation function.
-     *
-     * This allows your main loadPage() function
-     * to initialise the blog after dynamically
-     * loading section/blog.html.
-     */
-    window.initialiseBlog =
-        initialiseBlog;
-
-
-    /*
-     * Normal page load.
-     */
-    if (
-        document.readyState ===
-        "loading"
-    ) {
-
-        document.addEventListener(
-            "DOMContentLoaded",
-            initialiseBlog
-        );
-
-    } else {
-
-        initialiseBlog();
-
-    }
+    export {
+    initialiseBlog
+    };
 
 
 })();
