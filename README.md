@@ -45,7 +45,7 @@ micdejc.github.io/
 │
 ├── blog/
 │   └── posts/
-│       ├── cybersecurity-experience-paradox.html
+│       ├── my-new-cybersecurity-article.html
 │       └── ...
 │
 ├── css/
