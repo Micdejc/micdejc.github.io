@@ -23,13 +23,17 @@
             id: "research",
             name: "Research"
         },
-        {
+/*        {
             id: "refusalguard",
             name: "RefusalGuard-M"
         },
         {
             id: "grammatical-mirage",
             name: "Grammatical Mirage"
+        },*/
+        {
+            id: "flagship",
+            name: "Flagship"
         },
         {
             id: "publications",
