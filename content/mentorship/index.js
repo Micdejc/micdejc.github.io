@@ -4,17 +4,18 @@
 
 const mentorshipFiles = [
 
-        "chris-mayo.html",
+    "chris-mayo.html",
 
-        "mohammed-almasabi.html",
-       
-        "anas-ashfaq.html",
+    "mohammed-almasabi.html",
 
-        "yusuf-adebayo.html",
+    "anas-ashfaq.html",
 
-        "donovan-isom.html"
+    "yusuf-adebayo.html",
 
-    ];
+    "donovan-isom.html"
+
+];
+
 
 export async function loadMentorship() {
 
@@ -24,9 +25,26 @@ export async function loadMentorship() {
         );
 
 
+    const loadMoreButton =
+        document.getElementById(
+            "mentorship-load-more"
+        );
+
+
+    const loadMoreContainer =
+        document.getElementById(
+            "mentorship-load-more-container"
+        );
+
+
     if (!container) {
         return;
     }
+
+
+    /* ---------------------------------------------------------
+       LOAD ALL MENTORSHIP CARDS
+    --------------------------------------------------------- */
 
     for (const file of mentorshipFiles) {
 
@@ -39,7 +57,11 @@ export async function loadMentorship() {
 
 
             if (!response.ok) {
-                console.error(`Could not load ${file}`);
+
+                console.error(
+                    `Could not load ${file}`
+                );
+
                 continue;
             }
 
@@ -65,6 +87,86 @@ export async function loadMentorship() {
 
     }
 
+
+    /* ---------------------------------------------------------
+       LOAD MORE
+    --------------------------------------------------------- */
+
+    const cards =
+        Array.from(
+            container.children
+        );
+
+
+    const cardsPerLoad = 2;
+
+    let visibleCards = cardsPerLoad;
+
+
+    function updateMentorshipCards() {
+
+        cards.forEach(
+            (card, index) => {
+
+                card.hidden =
+                    index >= visibleCards;
+
+            }
+        );
+
+
+        /*
+         * Hide the button when all cards
+         * are already visible.
+         */
+
+        if (
+            visibleCards >= cards.length
+        ) {
+
+            if (loadMoreContainer) {
+                loadMoreContainer.hidden = true;
+            }
+
+        } else {
+
+            if (loadMoreContainer) {
+                loadMoreContainer.hidden = false;
+            }
+
+        }
+
+    }
+
+
+    /*
+     * Load two more mentorship cards
+     * each time the button is clicked.
+     */
+
+    if (loadMoreButton) {
+
+        loadMoreButton.addEventListener(
+            "click",
+            () => {
+
+                visibleCards += cardsPerLoad;
+
+                updateMentorshipCards();
+
+            }
+        );
+
+    }
+
+
+    /*
+     * Initially show only the first two cards.
+     */
+
+    updateMentorshipCards();
+
 }
+
 
 window.loadMentorship = loadMentorship;
