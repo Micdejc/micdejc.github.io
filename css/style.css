@@ -567,12 +567,12 @@
         /* ================= NEWS LOAD MORE ================= */
 
         .news-card.hidden-news,
-        .features-card.hidden-feature {
+        .feature-card.hidden-feature {
             display: none;
         }
         
         .news-pagination,
-        .features-pagination {
+        .feature-pagination {
             display: flex;
             justify-content: center;
             margin-top: 35px;
