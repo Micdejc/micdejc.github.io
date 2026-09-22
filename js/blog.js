@@ -1,22 +1,22 @@
-import {
-    getBlogPosts
-} from "./blog-posts.js";
-
-
 "use strict";
 
+import { getBlogPosts } from "./blog-posts.js";
 
-/*
- * Average reading speed.
- *
- * 225 words per minute is used as the default.
- */
+
+/* ================= CONFIGURATION ================= */
+
+const POSTS_PER_PAGE = 5;
 const WORDS_PER_MINUTE = 225;
 
 
-/**
- * Escape HTML.
- */
+/* ================= STATE ================= */
+
+let allPosts = [];
+let currentPage = 1;
+
+
+/* ================= HELPERS ================= */
+
 function escapeHTML(value) {
 
     return String(value)
@@ -29,9 +29,6 @@ function escapeHTML(value) {
 }
 
 
-/**
- * Escape an HTML attribute.
- */
 function escapeAttribute(value) {
 
     return escapeHTML(value);
@@ -39,73 +36,35 @@ function escapeAttribute(value) {
 }
 
 
-/**
- * Format a blog date.
- */
 function formatDate(dateString) {
 
-    const date = new Date(dateString);
+    const date = new Date(dateString + "T00:00:00");
 
-    if (
-        Number.isNaN(
-            date.getTime()
-        )
-    ) {
-
-        return dateString;
-
-    }
-
-
-    return new Intl.DateTimeFormat(
-        "en-GB",
+    return date.toLocaleDateString(
+        "en-US",
         {
-            day: "numeric",
+            year: "numeric",
             month: "long",
-            year: "numeric"
+            day: "numeric"
         }
-    ).format(date);
+    );
 
 }
 
 
-/**
- * Calculate reading time from an internal HTML article.
- *
- * The article is fetched and parsed locally.
- *
- * Only the actual article content is counted.
- */
-async function calculateInternalReadingTime(
-    url,
-    card
-) {
+/* ================= READING TIME ================= */
 
-    const readingElement =
-        card.querySelector(
-            "[data-reading-time]"
-        );
-
-
-    if (!readingElement) {
-        return;
-    }
-
+async function calculateInternalReadingTime(url, card) {
 
     try {
 
         const response =
-            await fetch(url, {
-                cache: "no-cache"
-            });
-
+            await fetch(url);
 
         if (!response.ok) {
-
             throw new Error(
                 `HTTP ${response.status}`
             );
-
         }
 
 
@@ -124,12 +83,7 @@ async function calculateInternalReadingTime(
             );
 
 
-        /*
-         * Find the main article content.
-         *
-         * .blog-content is preferred.
-         */
-        const article =
+        const content =
             document.querySelector(
                 ".blog-content"
             ) ||
@@ -141,99 +95,60 @@ async function calculateInternalReadingTime(
             );
 
 
-        if (!article) {
-
-            throw new Error(
-                "Article content could not be found."
-            );
-
+        if (!content) {
+            return;
         }
 
 
-        /*
-         * Clone the content so the original parsed
-         * document remains untouched.
-         */
-        const content =
-            article.cloneNode(true);
+        const clone =
+            content.cloneNode(true);
 
 
-        /*
-         * Remove elements that should not count
-         * toward reading time.
-         */
-        content
+        clone
             .querySelectorAll(
-                [
-                    "script",
-                    "style",
-                    "noscript",
-                    "nav",
-                    "footer",
-                    "header",
-                    "img",
-                    "svg",
-                    "canvas",
-                    "video",
-                    "audio",
-                    "iframe",
-                    "pre",
-                    "code"
-                ].join(",")
+                "script, style, noscript, nav, footer, header, img, svg, canvas, video, audio, iframe, pre, code"
             )
             .forEach(
                 element => element.remove()
             );
 
 
-        /*
-         * Extract visible text.
-         */
         const text =
-            content.textContent
+            clone.textContent
                 .replace(/\s+/g, " ")
                 .trim();
 
 
         if (!text) {
-
-            throw new Error(
-                "Article contains no readable text."
-            );
-
+            return;
         }
 
 
-        /*
-         * Count words.
-         */
         const words =
-            text
-                .split(/\s+/)
-                .filter(Boolean)
-                .length;
+            text.split(/\s+/).length;
 
 
-        /*
-         * Calculate reading time.
-         *
-         * Minimum = 1 minute.
-         */
         const minutes =
             Math.max(
                 1,
                 Math.ceil(
-                    words /
-                    WORDS_PER_MINUTE
+                    words / WORDS_PER_MINUTE
                 )
             );
 
 
-        readingElement.textContent =
-            `${minutes} min read`;
+        const readingTime =
+            card.querySelector(
+                ".blog-reading-time"
+            );
 
-        readingElement.hidden = false;
 
+        if (readingTime) {
+
+            readingTime.textContent =
+                `${minutes} min read`;
+
+        }
 
     } catch (error) {
 
@@ -243,104 +158,53 @@ async function calculateInternalReadingTime(
         );
 
 
-        /*
-         * Hide reading time if the article cannot
-         * be fetched or parsed.
-         */
-        readingElement.remove();
+        const readingTime =
+            card.querySelector(
+                ".blog-reading-time"
+            );
+
+
+        if (readingTime) {
+            readingTime.remove();
+        }
 
     }
 
 }
 
 
-/**
- * External articles do not have their reading time
- * calculated because cross-origin requests may be
- * blocked by CORS.
- */
-function calculateExternalReadingTime(card) {
+/* ================= CREATE CARD ================= */
 
-    const readingElement =
-        card.querySelector(
-            "[data-reading-time]"
-        );
-
-
-    if (readingElement) {
-
-        readingElement.remove();
-
-    }
-
-}
-
-
-/**
- * Create a blog post card.
- *
- * The entire card is clickable.
- */
 function createPostCard(post) {
 
-    const article =
+    const card =
         document.createElement("article");
 
 
-    article.className =
+    card.className =
         "blog-card";
 
 
-    article.dataset.type =
-        post.type;
-
-
-    article.dataset.category =
-        post.category;
-
-
-    /*
-     * External links:
-     *
-     * Open in a new tab.
-     */
     const externalAttributes =
         post.type === "external"
             ? ' target="_blank" rel="noopener noreferrer"'
             : "";
 
 
-    /*
-     * Source label.
-     */
     const sourceLabel =
         post.type === "internal"
-            ? "Website"
+            ? "My website"
             : "External";
 
 
-    /*
-     * Arrow.
-     */
-    const arrow =
-        post.type === "external"
-            ? "↗"
-            : "→";
-
-
-    /*
-     * Tags.
-     */
     const tagsHTML =
-        post.tags.length
+        post.tags.length > 0
             ? `
                 <div class="blog-tags">
                     ${post.tags
                         .map(
                             tag =>
-                                `<span class="blog-tag">
-                                    ${escapeHTML(tag)}
-                                </span>`
+                                `<span class="blog-tag">${escapeHTML(tag)}</span>`
                         )
                         .join("")}
                 </div>
@@ -348,30 +212,18 @@ function createPostCard(post) {
             : "";
 
 
-    /*
-     * Complete clickable card.
-     *
-     * Using a genuine <a> element means:
-     *
-     * - mouse users can click anywhere
-     * - keyboard users can focus it
-     * - Ctrl/Cmd + click works
-     * - middle-click works
-     * - browser link menus work
-     */
-    article.innerHTML = `
+    card.innerHTML = `
 
         <a
             class="blog-card-link"
             href="${escapeAttribute(post.url)}"
             ${externalAttributes}
-            aria-label="Read ${escapeAttribute(post.title)}"
         >
 
             <div class="blog-card-meta">
 
                 <span class="blog-source">
-                    ${escapeHTML(sourceLabel)}
+                    ${sourceLabel}
                 </span>
 
                 <span class="blog-category">
@@ -379,18 +231,13 @@ function createPostCard(post) {
                 </span>
 
                 <span class="blog-date">
-                    ${escapeHTML(
-                        formatDate(post.date)
-                    )}
+                    ${formatDate(post.date)}
                 </span>
 
                 ${
                     post.type === "internal"
                         ? `
-                            <span
-                                class="blog-reading-time"
-                                data-reading-time
-                            >
+                            <span class="blog-reading-time">
                                 Calculating...
                             </span>
                         `
@@ -411,9 +258,7 @@ function createPostCard(post) {
                     post.description
                         ? `
                             <p class="blog-description">
-                                ${escapeHTML(
-                                    post.description
-                                )}
+                                ${escapeHTML(post.description)}
                             </p>
                         `
                         : ""
@@ -422,17 +267,18 @@ function createPostCard(post) {
 
                 ${tagsHTML}
 
-            </div>
 
+                <div class="blog-card-footer">
 
-            <div class="blog-card-footer">
-
-                <span class="blog-read-more">
-                    Read article
-                    <span class="blog-read-more-arrow">
-                        ${arrow}
+                    <span class="blog-read-more">
+                        ${
+                            post.type === "external"
+                                ? "Read article ↗"
+                                : "Read article →"
+                        }
                     </span>
-                </span>
+
+                </div>
 
             </div>
 
@@ -441,42 +287,32 @@ function createPostCard(post) {
     `;
 
 
-    /*
-     * Calculate reading time only for internal
-     * HTML articles.
-     */
-    if (post.type === "internal") {
-
-        calculateInternalReadingTime(
-            post.url,
-            article
-        );
-
-    }
-
-
-    return article;
+    return card;
 
 }
 
 
-/**
- * Populate category filter.
- */
-function populateCategories(
-    posts,
-    categoryFilter
-) {
+/* ================= CATEGORIES ================= */
+
+function populateCategories(posts) {
+
+    const select =
+        document.getElementById(
+            "blog-category-filter"
+        );
+
+
+    if (!select) {
+        return;
+    }
+
 
     const categories =
         [
             ...new Set(
-                posts
-                    .map(
-                        post =>
-                            post.category
-                    )
-                    .filter(Boolean)
+                posts.map(
+                    post => post.category
+                )
             )
         ]
         .sort(
@@ -485,13 +321,11 @@ function populateCategories(
         );
 
 
-    /*
-     * Keep the All categories option.
-     */
-    categoryFilter.innerHTML =
-        `<option value="all">
+    select.innerHTML = `
+        <option value="all">
             All categories
-        </option>`;
+        </option>
+    `;
 
 
     categories.forEach(
@@ -511,7 +345,7 @@ function populateCategories(
                 category;
 
 
-            categoryFilter.appendChild(
+            select.appendChild(
                 option
             );
 
@@ -521,92 +355,243 @@ function populateCategories(
 }
 
 
-/**
- * Render filtered posts.
- */
-function renderPosts(
-    posts,
-    category,
-    type,
-    container,
-    emptyState
+/* ================= PAGINATION ================= */
+
+function renderPagination(
+    totalPosts,
+    totalPages
 ) {
 
-    /*
-     * Filter.
-     */
-    let filtered =
-        posts.filter(post => {
-
-            const matchesCategory =
-                category === "all" ||
-                post.category === category;
+    const pagination =
+        document.getElementById(
+            "blog-pagination"
+        );
 
 
-            const matchesType =
-                type === "all" ||
-                post.type === type;
+    if (!pagination) {
+        return;
+    }
 
 
-            return (
-                matchesCategory &&
-                matchesType
-            );
-
-        });
+    pagination.innerHTML = "";
 
 
     /*
-     * Newest first.
+     * No pagination needed when
+     * all posts fit on one page.
      */
-    filtered.sort(
-        (a, b) =>
-            new Date(b.date) -
-            new Date(a.date)
+
+    if (totalPages <= 1) {
+        return;
+    }
+
+
+    /* Previous button */
+
+    const previousButton =
+        document.createElement(
+            "button"
+        );
+
+
+    previousButton.type =
+        "button";
+
+
+    previousButton.className =
+        "blog-pagination-button";
+
+
+    previousButton.textContent =
+        "← Previous";
+
+
+    previousButton.disabled =
+        currentPage === 1;
+
+
+    previousButton.setAttribute(
+        "aria-label",
+        "Previous page"
     );
 
 
-    /*
-     * Clear existing content.
-     */
-    container.innerHTML = "";
+    previousButton.addEventListener(
+        "click",
+        () => {
+
+            if (currentPage > 1) {
+
+                currentPage--;
+
+                renderPosts();
+
+                scrollToBlogPosts();
+
+            }
+
+        }
+    );
 
 
-    /*
-     * Empty state.
-     */
-    if (!filtered.length) {
+    pagination.appendChild(
+        previousButton
+    );
 
-        emptyState.hidden = false;
 
-        return;
+    /* Page numbers */
+
+    for (
+        let page = 1;
+        page <= totalPages;
+        page++
+    ) {
+
+        const pageButton =
+            document.createElement(
+                "button"
+            );
+
+
+        pageButton.type =
+            "button";
+
+
+        pageButton.className =
+            "blog-pagination-button";
+
+
+        pageButton.textContent =
+            page;
+
+
+        pageButton.setAttribute(
+            "aria-label",
+            `Page ${page}`
+        );
+
+
+        if (
+            page === currentPage
+        ) {
+
+            pageButton.classList.add(
+                "active"
+            );
+
+            pageButton.setAttribute(
+                "aria-current",
+                "page"
+            );
+
+        }
+
+
+        pageButton.addEventListener(
+            "click",
+            () => {
+
+                currentPage =
+                    page;
+
+                renderPosts();
+
+                scrollToBlogPosts();
+
+            }
+        );
+
+
+        pagination.appendChild(
+            pageButton
+        );
 
     }
 
 
-    emptyState.hidden = true;
+    /* Next button */
+
+    const nextButton =
+        document.createElement(
+            "button"
+        );
 
 
-    /*
-     * Render cards.
-     */
-    filtered.forEach(post => {
-
-        const card =
-            createPostCard(post);
+    nextButton.type =
+        "button";
 
 
-        container.appendChild(card);
+    nextButton.className =
+        "blog-pagination-button";
 
+
+    nextButton.textContent =
+        "Next →";
+
+
+    nextButton.disabled =
+        currentPage === totalPages;
+
+
+    nextButton.setAttribute(
+        "aria-label",
+        "Next page"
+    );
+
+
+    nextButton.addEventListener(
+        "click",
+        () => {
+
+            if (
+                currentPage < totalPages
+            ) {
+
+                currentPage++;
+
+                renderPosts();
+
+                scrollToBlogPosts();
+
+            }
+
+        }
+    );
+
+
+    pagination.appendChild(
+        nextButton
+    );
+
+}
+
+
+/* ================= SCROLL ================= */
+
+function scrollToBlogPosts() {
+
+    const postsContainer =
+        document.getElementById(
+            "blog-posts"
+        );
+
+
+    if (!postsContainer) {
+        return;
+    }
+
+
+    postsContainer.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
     });
 
 }
 
 
-/**
- * Initialise the blog.
- */
-function initialiseBlog() {
+/* ================= RENDER POSTS ================= */
+
+function renderPosts() {
 
     const container =
         document.getElementById(
@@ -614,22 +599,15 @@ function initialiseBlog() {
         );
 
 
-    /*
-     * This is important for your modular
-     * website architecture.
-     *
-     * blog.js may load before section/blog.html
-     * has been inserted into the page.
-     */
+    const emptyState =
+        document.getElementById(
+            "blog-empty"
+        );
+
+
     if (!container) {
-
         return;
-
     }
-
-
-    const posts =
-        getBlogPosts();
 
 
     const categoryFilter =
@@ -644,20 +622,104 @@ function initialiseBlog() {
         );
 
 
-    const emptyState =
-        document.getElementById(
-            "blog-empty"
+    const selectedCategory =
+        categoryFilter
+            ? categoryFilter.value
+            : "all";
+
+
+    const selectedType =
+        typeFilter
+            ? typeFilter.value
+            : "all";
+
+
+    /* Filter posts */
+
+    const filteredPosts =
+        allPosts.filter(
+            post => {
+
+                const categoryMatch =
+                    selectedCategory === "all" ||
+                    post.category === selectedCategory;
+
+
+                const typeMatch =
+                    selectedType === "all" ||
+                    post.type === selectedType;
+
+
+                return (
+                    categoryMatch &&
+                    typeMatch
+                );
+
+            }
         );
 
 
+    /* Sort newest first */
+
+    filteredPosts.sort(
+        (a, b) =>
+            new Date(b.date) -
+            new Date(a.date)
+    );
+
+
+    /* Calculate pages */
+
+    const totalPosts =
+        filteredPosts.length;
+
+
+    const totalPages =
+        Math.ceil(
+            totalPosts /
+            POSTS_PER_PAGE
+        );
+
+
+    /*
+     * Make sure the current page
+     * remains valid after filtering.
+     */
+
     if (
-        !categoryFilter ||
-        !typeFilter ||
-        !emptyState
+        totalPages === 0
     ) {
 
-        console.error(
-            "Blog controls are missing."
+        currentPage = 1;
+
+    } else if (
+        currentPage > totalPages
+    ) {
+
+        currentPage =
+            totalPages;
+
+    }
+
+
+    /* Clear existing posts */
+
+    container.innerHTML = "";
+
+
+    /* Empty state */
+
+    if (
+        totalPosts === 0
+    ) {
+
+        if (emptyState) {
+            emptyState.hidden = false;
+        }
+
+        renderPagination(
+            0,
+            0
         );
 
         return;
@@ -665,54 +727,141 @@ function initialiseBlog() {
     }
 
 
-    /*
-     * Populate categories.
-     */
-    populateCategories(
-        posts,
-        categoryFilter
+    if (emptyState) {
+        emptyState.hidden = true;
+    }
+
+
+    /* Determine visible posts */
+
+    const startIndex =
+        (
+            currentPage - 1
+        ) *
+        POSTS_PER_PAGE;
+
+
+    const endIndex =
+        startIndex +
+        POSTS_PER_PAGE;
+
+
+    const visiblePosts =
+        filteredPosts.slice(
+            startIndex,
+            endIndex
+        );
+
+
+    /* Render cards */
+
+    visiblePosts.forEach(
+        post => {
+
+            const card =
+                createPostCard(post);
+
+
+            container.appendChild(
+                card
+            );
+
+
+            /*
+             * Reading time is only
+             * calculated for internal
+             * articles.
+             */
+
+            if (
+                post.type === "internal"
+            ) {
+
+                calculateInternalReadingTime(
+                    post.url,
+                    card
+                );
+
+            }
+
+        }
     );
 
 
-    /*
-     * Rendering function.
-     */
-    function updateBlog() {
+    /* Render pagination */
 
-        renderPosts(
-            posts,
-            categoryFilter.value,
-            typeFilter.value,
-            container,
-            emptyState
+    renderPagination(
+        totalPosts,
+        totalPages
+    );
+
+}
+
+
+/* ================= INITIALISE ================= */
+
+function initialiseBlog() {
+
+    allPosts =
+        getBlogPosts();
+
+
+    populateCategories(
+        allPosts
+    );
+
+
+    const categoryFilter =
+        document.getElementById(
+            "blog-category-filter"
+        );
+
+
+    const typeFilter =
+        document.getElementById(
+            "blog-type-filter"
+        );
+
+
+    if (categoryFilter) {
+
+        categoryFilter.addEventListener(
+            "change",
+            () => {
+
+                currentPage = 1;
+
+                renderPosts();
+
+            }
         );
 
     }
 
 
-    /*
-     * Filters.
-     */
-    categoryFilter.addEventListener(
-        "change",
-        updateBlog
-    );
+    if (typeFilter) {
+
+        typeFilter.addEventListener(
+            "change",
+            () => {
+
+                currentPage = 1;
+
+                renderPosts();
+
+            }
+        );
+
+    }
 
 
-    typeFilter.addEventListener(
-        "change",
-        updateBlog
-    );
-
-
-    /*
-     * Initial render.
-     */
-    updateBlog();
+    renderPosts();
 
 }
 
 
+/* ================= EXPORT ================= */
+
 export {
-initialiseBlog
+    initialiseBlog
 };
