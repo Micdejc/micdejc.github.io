@@ -427,6 +427,263 @@ function populateCategories(posts) {
 }
 
 
+/* ================= SEARCH & FILTERS ================= */
+
+function getFilteredPosts() {
+
+    const categoryFilter =
+        document.getElementById(
+            "blog-category-filter"
+        );
+
+
+    const typeFilter =
+        document.getElementById(
+            "blog-type-filter"
+        );
+
+
+    const searchInput =
+        document.getElementById(
+            "blog-search"
+        );
+
+
+    const selectedCategory =
+        categoryFilter
+            ? categoryFilter.value
+            : "all";
+
+
+    const selectedType =
+        typeFilter
+            ? typeFilter.value
+            : "all";
+
+
+    const searchTerm =
+        searchInput
+            ? searchInput.value
+                .trim()
+                .toLowerCase()
+            : "";
+
+
+    return allPosts.filter(
+        post => {
+
+            /*
+             * Search across the most useful
+             * blog metadata.
+             *
+             * This includes:
+             * - title
+             * - description
+             * - category
+             * - tags
+             */
+
+            const searchableText = [
+
+                post.title,
+
+                post.description,
+
+                post.category,
+
+                ...(Array.isArray(post.tags)
+                    ? post.tags
+                    : [])
+
+            ]
+                .join(" ")
+                .toLowerCase();
+
+
+            const searchMatch =
+                !searchTerm ||
+                searchableText.includes(
+                    searchTerm
+                );
+
+
+            const categoryMatch =
+                selectedCategory === "all" ||
+                post.category === selectedCategory;
+
+
+            const typeMatch =
+                selectedType === "all" ||
+                post.type === selectedType;
+
+
+            return (
+                searchMatch &&
+                categoryMatch &&
+                typeMatch
+            );
+
+        }
+    );
+
+}
+
+
+/* ================= SEARCH CLEAR ================= */
+
+function updateSearchClearButton() {
+
+    const searchInput =
+        document.getElementById(
+            "blog-search"
+        );
+
+
+    const clearButton =
+        document.getElementById(
+            "blog-search-clear"
+        );
+
+
+    if (
+        !searchInput ||
+        !clearButton
+    ) {
+        return;
+    }
+
+
+    clearButton.hidden =
+        searchInput.value.length === 0;
+
+}
+
+
+/* ================= CONNECT FILTERS ================= */
+
+function initialiseBlogFilters() {
+
+    const searchInput =
+        document.getElementById(
+            "blog-search"
+        );
+
+
+    const clearButton =
+        document.getElementById(
+            "blog-search-clear"
+        );
+
+
+    const categoryFilter =
+        document.getElementById(
+            "blog-category-filter"
+        );
+
+
+    const typeFilter =
+        document.getElementById(
+            "blog-type-filter"
+        );
+
+
+    /*
+     * Search
+     */
+
+    if (searchInput) {
+
+        searchInput.addEventListener(
+            "input",
+            () => {
+
+                currentPage = 1;
+
+                updateSearchClearButton();
+
+                renderPosts();
+
+            }
+        );
+
+    }
+
+
+    /*
+     * Clear search
+     */
+
+    if (clearButton) {
+
+        clearButton.addEventListener(
+            "click",
+            () => {
+
+                if (searchInput) {
+
+                    searchInput.value = "";
+
+                    currentPage = 1;
+
+                    updateSearchClearButton();
+
+                    renderPosts();
+
+                    searchInput.focus();
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /*
+     * Category
+     */
+
+    if (categoryFilter) {
+
+        categoryFilter.addEventListener(
+            "change",
+            () => {
+
+                currentPage = 1;
+
+                renderPosts();
+
+            }
+        );
+
+    }
+
+
+    /*
+     * Source
+     */
+
+    if (typeFilter) {
+
+        typeFilter.addEventListener(
+            "change",
+            () => {
+
+                currentPage = 1;
+
+                renderPosts();
+
+            }
+        );
+
+    }
+
+
+    updateSearchClearButton();
+
+}
+
+
 /* ================= PAGINATION ================= */
 
 function renderPagination(
@@ -704,10 +961,6 @@ async function openInternalArticle(
 
     /*
      * Update browser history.
-     *
-     * The article still lives inside
-     * index.html. We are only changing
-     * the URL state.
      */
 
     if (updateHistory) {
@@ -782,21 +1035,11 @@ async function openInternalArticle(
 
         /*
          * Extract only the article.
-         *
-         * This prevents the internal HTML
-         * page from injecting another full
-         * document, navigation, scripts, etc.
          */
 
         const articleClone =
             article.cloneNode(true);
 
-
-        /*
-         * Remove scripts and other elements
-         * that should never be executed when
-         * injecting article content.
-         */
 
         articleClone
             .querySelectorAll(
@@ -853,19 +1096,13 @@ async function openInternalArticle(
 
 
         /*
-         * Make sure links inside the
-         * article behave correctly.
+         * Make sure article links behave correctly.
          */
 
         initialiseArticleLinks(
             blogBox
         );
 
-
-        /*
-         * Scroll to the beginning of
-         * the Blog section.
-         */
 
         scrollToBlogPosts();
 
@@ -938,11 +1175,6 @@ function initialiseArticleLinks(
     links.forEach(
         link => {
 
-            /*
-             * External links should open
-             * normally in a new tab.
-             */
-
             const href =
                 link.getAttribute(
                     "href"
@@ -998,52 +1230,18 @@ function renderPosts() {
     }
 
 
-    const categoryFilter =
-        document.getElementById(
-            "blog-category-filter"
-        );
-
-
-    const typeFilter =
-        document.getElementById(
-            "blog-type-filter"
-        );
-
-
-    const selectedCategory =
-        categoryFilter
-            ? categoryFilter.value
-            : "all";
-
-
-    const selectedType =
-        typeFilter
-            ? typeFilter.value
-            : "all";
-
+    /*
+     * Apply search + category + source
+     * filtering together.
+     */
 
     const filteredPosts =
-        allPosts.filter(
-            post => {
-
-                const categoryMatch =
-                    selectedCategory === "all" ||
-                    post.category === selectedCategory;
+        getFilteredPosts();
 
 
-                const typeMatch =
-                    selectedType === "all" ||
-                    post.type === selectedType;
-
-
-                return (
-                    categoryMatch &&
-                    typeMatch
-                );
-
-            }
-        );
-
+    /*
+     * Always sort newest first.
+     */
 
     filteredPosts.sort(
         (a, b) =>
@@ -1183,98 +1381,144 @@ function showBlogList(
 
     blogBox.innerHTML = `
 
-        <span class="section-number">
-            09 / BLOG
-        </span>
+        <div id="blog-list-view">
 
-        <h2>
-            Insights & perspectives
-        </h2>
+            <span class="section-number">
+                10 / BLOGS
+            </span>
 
-        <p>
-            Thoughts, insights, and perspectives on cybersecurity,
-            AI security, LLMs, adversarial AI, emerging AI risks,
-            and related topics.
-        </p>
-
-
-        <div
-            class="blog-source-data"
-            id="blog-source"
-        ></div>
-
-
-        <div class="blog-controls">
-
-            <div class="blog-filter">
-
-                <label for="blog-category-filter">
-                    Category
-                </label>
-
-                <select
-                    id="blog-category-filter"
-                >
-                    <option value="all">
-                        All categories
-                    </option>
-                </select>
-
-            </div>
-
-
-            <div class="blog-filter">
-
-                <label for="blog-type-filter">
-                    Source
-                </label>
-
-                <select
-                    id="blog-type-filter"
-                >
-
-                    <option value="all">
-                        All posts
-                    </option>
-
-                    <option value="internal">
-                        My website
-                    </option>
-
-                    <option value="external">
-                        External
-                    </option>
-
-                </select>
-
-            </div>
-
-        </div>
-
-
-        <div
-            class="blog-posts"
-            id="blog-posts"
-            aria-live="polite"
-        ></div>
-
-
-        <div
-            class="blog-pagination"
-            id="blog-pagination"
-            aria-label="Blog pagination"
-        ></div>
-
-
-        <div
-            class="blog-empty"
-            id="blog-empty"
-            hidden
-        >
+            <h2>
+                Insights & perspectives
+            </h2>
 
             <p>
-                No blog posts match your selected filters.
+                Thoughts, insights, and perspectives on cybersecurity,
+                AI security, LLMs, adversarial AI, emerging AI risks,
+                and related topics.
             </p>
+
+
+            <div
+                class="blog-source-data"
+                id="blog-source"
+            ></div>
+
+
+            <!-- BLOG SEARCH & FILTERS -->
+
+            <div class="blog-controls">
+
+                <div class="blog-filter blog-search">
+
+                    <label for="blog-search">
+                        Search
+                    </label>
+
+                    <div class="blog-search-input">
+
+                        <span
+                            class="blog-search-icon"
+                            aria-hidden="true"
+                        >
+                            ⌕
+                        </span>
+
+                        <input
+                            type="search"
+                            id="blog-search"
+                            placeholder="Search insights..."
+                            autocomplete="off"
+                            aria-label="Search blog posts"
+                        >
+
+                        <button
+                            type="button"
+                            id="blog-search-clear"
+                            class="blog-search-clear"
+                            aria-label="Clear blog search"
+                            hidden
+                        >
+                            ×
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="blog-filter">
+
+                    <label for="blog-category-filter">
+                        Category
+                    </label>
+
+                    <select
+                        id="blog-category-filter"
+                    >
+
+                        <option value="all">
+                            All categories
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="blog-filter">
+
+                    <label for="blog-type-filter">
+                        Source
+                    </label>
+
+                    <select
+                        id="blog-type-filter"
+                    >
+
+                        <option value="all">
+                            All posts
+                        </option>
+
+                        <option value="internal">
+                            My website
+                        </option>
+
+                        <option value="external">
+                            External
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="blog-posts"
+                id="blog-posts"
+                aria-live="polite"
+            ></div>
+
+
+            <div
+                class="blog-pagination"
+                id="blog-pagination"
+                aria-label="Blog pagination"
+            ></div>
+
+
+            <div
+                class="blog-empty"
+                id="blog-empty"
+                hidden
+            >
+
+                <p>
+                    No blog posts match your search or selected filters.
+                </p>
+
+            </div>
 
         </div>
 
@@ -1284,9 +1528,8 @@ function showBlogList(
     /*
      * Rebuild the source metadata.
      *
-     * This is necessary because the
-     * Blog box was temporarily replaced
-     * by the article.
+     * This is necessary because the Blog box
+     * was temporarily replaced by the article.
      */
 
     const source =
@@ -1345,57 +1588,26 @@ function showBlogList(
 
 
     /*
-     * Reconnect filters.
+     * Rebuild categories.
      */
-
-    const categoryFilter =
-        document.getElementById(
-            "blog-category-filter"
-        );
-
-
-    const typeFilter =
-        document.getElementById(
-            "blog-type-filter"
-        );
-
 
     populateCategories(
         allPosts
     );
 
 
-    if (categoryFilter) {
+    /*
+     * Reconnect all search and filters.
+     */
 
-        categoryFilter.addEventListener(
-            "change",
-            () => {
-
-                currentPage = 1;
-
-                renderPosts();
-
-            }
-        );
-
-    }
+    initialiseBlogFilters();
 
 
-    if (typeFilter) {
+    /*
+     * Render the Blog.
+     */
 
-        typeFilter.addEventListener(
-            "change",
-            () => {
-
-                currentPage = 1;
-
-                renderPosts();
-
-            }
-        );
-
-    }
-
+    currentPage = 1;
 
     renderPosts();
 
@@ -1536,61 +1748,31 @@ function initialiseBlog() {
     );
 
 
-    const categoryFilter =
-        document.getElementById(
-            "blog-category-filter"
-        );
+    /*
+     * Connect search, category and
+     * source filters.
+     */
+
+    initialiseBlogFilters();
 
 
-    const typeFilter =
-        document.getElementById(
-            "blog-type-filter"
-        );
-
-
-    if (categoryFilter) {
-
-        categoryFilter.addEventListener(
-            "change",
-            () => {
-
-                currentPage = 1;
-
-                renderPosts();
-
-            }
-        );
-
-    }
-
-
-    if (typeFilter) {
-
-        typeFilter.addEventListener(
-            "change",
-            () => {
-
-                currentPage = 1;
-
-                renderPosts();
-
-            }
-        );
-
-    }
-
+    /*
+     * Initial Blog rendering.
+     */
 
     renderPosts();
 
+
+    /*
+     * Browser history.
+     */
 
     initialiseHistoryHandling();
 
 
     /*
-     * If the page was loaded directly
-     * with ?article=..., restore that
-     * article after the Blog section
-     * has been initialized.
+     * Restore article if URL contains
+     * ?article=...
      */
 
     loadArticleFromURL();
