@@ -24,7 +24,6 @@ export async function loadMentorship() {
             "mentorship-list"
         );
 
-
     if (!container) {
         return;
     }
@@ -82,7 +81,7 @@ function initialiseMentorshipPagination() {
 
     const mentorshipCards =
         document.querySelectorAll(
-            ".research-card"
+            "#mentorship-list .research-card"
         );
 
 
