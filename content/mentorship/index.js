@@ -43,7 +43,7 @@ export async function loadMentorship() {
 
 
     /* =========================================================
-       LOAD ALL MENTORSHIP CARDS
+       LOAD MENTORSHIP CARDS
     ========================================================= */
 
     for (const file of mentorshipFiles) {
@@ -89,7 +89,20 @@ export async function loadMentorship() {
 
 
     /* =========================================================
-       LOAD MORE
+       LOAD MORE SETTINGS
+    ========================================================= */
+
+    const initialMentorship = 2;
+
+    const mentorshipPerClick = 2;
+
+
+    let visibleMentorship =
+        initialMentorship;
+
+
+    /* =========================================================
+       GET MENTORSHIP CARDS
     ========================================================= */
 
     const mentorshipCards =
@@ -100,15 +113,20 @@ export async function loadMentorship() {
         );
 
 
-    const initialMentorship = 2;
-
-    const mentorshipPerClick = 2;
-
-    let visibleMentorship =
-        initialMentorship;
-
+    /* =========================================================
+       UPDATE DISPLAY
+    ========================================================= */
 
     function updateMentorship() {
+
+        const totalMentorship =
+            mentorshipCards.length;
+
+
+        /*
+         * Show only the allowed number
+         * of mentorship cards.
+         */
 
         mentorshipCards.forEach(
             (card, index) => {
@@ -120,17 +138,14 @@ export async function loadMentorship() {
         );
 
 
-        /* ---------------------------------------------
-           UPDATE LOAD MORE BUTTON
-        --------------------------------------------- */
-
-        const remaining =
-            mentorshipCards.length -
-            visibleMentorship;
-
+        /*
+         * Hide the Load More button when
+         * every mentorship card is visible.
+         */
 
         if (
-            remaining <= 0
+            visibleMentorship >=
+            totalMentorship
         ) {
 
             if (loadMoreContainer) {
@@ -149,7 +164,7 @@ export async function loadMentorship() {
 
 
     /* =========================================================
-       LOAD MORE BUTTON
+       LOAD MORE
     ========================================================= */
 
     if (loadMoreButton) {
@@ -163,8 +178,8 @@ export async function loadMentorship() {
 
 
                 /*
-                 * Never allow the visible count
-                 * to exceed the actual number of cards.
+                 * Do not allow the counter to exceed
+                 * the actual number of mentorship cards.
                  */
 
                 visibleMentorship =
