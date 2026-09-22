@@ -566,7 +566,8 @@
 
         /* ================= NEWS LOAD MORE ================= */
 
-        .news-card.hidden-news {
+        .news-card.hidden-news,
+        .features-card.hidden-features {
             display: none;
         }
         
