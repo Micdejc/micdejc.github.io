@@ -2,22 +2,30 @@
    FEATURES
 ========================================================= */
 
+const featureFiles = [
+
+    "uk-cyber-security-council.html",
+
+    "heads-talk.html",
+
+    "ai-and-partners.html"
+
+];
+
+
 export async function loadFeatures() {
 
     const container =
-        document.getElementById("features-list");
+        document.getElementById(
+            "features-list"
+        );
 
     if (!container) {
         return;
     }
 
-    const files = [
-        "uk-cyber-security-council.html",
-        "heads-talk.html",
-        "ai-and-partners.html"
-    ];
 
-    for (const file of files) {
+    for (const file of featureFiles) {
 
         try {
 
@@ -26,20 +34,27 @@ export async function loadFeatures() {
                     `content/features/${file}`
                 );
 
+
             if (!response.ok) {
+
                 console.error(
                     `Could not load feature ${file}`
                 );
+
                 continue;
+
             }
+
 
             const html =
                 await response.text();
+
 
             container.insertAdjacentHTML(
                 "beforeend",
                 html
             );
+
 
         } catch (error) {
 
@@ -47,6 +62,108 @@ export async function loadFeatures() {
                 `Could not load feature ${file}`,
                 error
             );
+
         }
+
     }
+
+
+    initialiseFeaturesPagination();
+
+}
+
+
+/* =========================================================
+   FEATURES PAGINATION
+========================================================= */
+
+function initialiseFeaturesPagination() {
+
+    const featureCards =
+        document.querySelectorAll(
+            ".feature-card"
+        );
+
+
+    const loadMoreButton =
+        document.getElementById(
+            "loadMoreFeatures"
+        );
+
+
+    if (
+        !featureCards.length ||
+        !loadMoreButton
+    ) {
+        return;
+    }
+
+
+    const initialFeatures = 3;
+
+    const featuresPerClick = 3;
+
+    let visibleFeatures =
+        initialFeatures;
+
+
+    function updateFeatures() {
+
+        featureCards.forEach(
+            (card, index) => {
+
+                if (
+                    index < visibleFeatures
+                ) {
+
+                    card.classList.remove(
+                        "hidden-feature"
+                    );
+
+                } else {
+
+                    card.classList.add(
+                        "hidden-feature"
+                    );
+
+                }
+
+            }
+        );
+
+
+        if (
+            visibleFeatures >=
+            featureCards.length
+        ) {
+
+            loadMoreButton.style.display =
+                "none";
+
+        } else {
+
+            loadMoreButton.style.display =
+                "";
+
+        }
+
+    }
+
+
+    loadMoreButton.addEventListener(
+        "click",
+        function () {
+
+            visibleFeatures +=
+                featuresPerClick;
+
+
+            updateFeatures();
+
+        }
+    );
+
+
+    updateFeatures();
+
 }
