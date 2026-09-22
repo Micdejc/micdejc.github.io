@@ -3,12 +3,6 @@
 
 /* ================= BLOG SOURCE DATA ================= */
 
-/*
- * Blog source data is metadata only.
- * The actual entries are stored in section/blog.html
- * and rendered dynamically by blog.js.
- */
-
 .blog-source-data {
     display: none;
 }
@@ -44,6 +38,7 @@
 
 .blog-filter select {
     min-width: 180px;
+
     padding: 9px 12px;
 
     background: var(--surface);
@@ -56,6 +51,15 @@
     font-size: 0.85rem;
 
     cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.blog-filter select:hover {
+    border-color: var(--primary);
 }
 
 .blog-filter select:focus {
@@ -77,21 +81,22 @@
 
 .blog-card {
     background: var(--surface);
+    color: var(--text);
+
     border: 1px solid var(--border);
     border-radius: 15px;
+
     padding: 27px;
 
     transition:
         transform 0.2s ease,
         border-color 0.2s ease,
-        box-shadow 0.2s ease;
+        background 0.2s ease;
 }
 
 .blog-card:hover {
     transform: translateY(-2px);
     border-color: var(--primary);
-    box-shadow:
-        0 8px 24px rgba(0, 0, 0, 0.08);
 }
 
 
@@ -164,6 +169,8 @@
 }
 
 .blog-title {
+    color: var(--text);
+
     margin-bottom: 9px;
 
     font-size: 1.15rem;
@@ -239,6 +246,7 @@
     padding: 30px;
 
     background: var(--surface);
+    color: var(--text);
 
     border: 1px solid var(--border);
     border-radius: 15px;
@@ -294,6 +302,7 @@
 }
 
 .blog-pagination-button:hover:not(:disabled) {
+    background: var(--surface-alt);
     color: var(--primary);
     border-color: var(--primary);
 
@@ -302,8 +311,9 @@
 
 .blog-pagination-button.active {
     background: var(--primary);
-    border-color: var(--primary);
     color: var(--surface);
+
+    border-color: var(--primary);
 }
 
 .blog-pagination-button:disabled {
@@ -323,19 +333,14 @@
     width: 100%;
 }
 
-
-/* Article header */
-
 .blog-article-header {
     margin-bottom: 30px;
 }
 
 .blog-article-header h1 {
+    color: var(--text);
     margin-bottom: 10px;
 }
-
-
-/* Article metadata */
 
 .blog-article-meta {
     display: flex;
@@ -362,11 +367,15 @@
 }
 
 .blog-content h2 {
+    color: var(--text);
+
     margin-top: 35px;
     margin-bottom: 14px;
 }
 
 .blog-content h3 {
+    color: var(--text);
+
     margin-top: 28px;
     margin-bottom: 12px;
 }
@@ -390,11 +399,10 @@
     padding: 15px 20px;
 
     background: var(--surface-alt);
+    color: var(--muted);
 
     border-left: 3px solid var(--primary);
     border-radius: 0 8px 8px 0;
-
-    color: var(--muted);
 }
 
 .blog-content img {
@@ -416,6 +424,7 @@
     padding: 18px;
 
     background: var(--surface-alt);
+    color: var(--text);
 
     border: 1px solid var(--border);
     border-radius: 10px;
