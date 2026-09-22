@@ -423,7 +423,7 @@ blog/posts/ai-security-governance.html
 ```text
 sections/blog.html
 ```
-Add the following inside #blog-source:
+Add the following inside `#blog-source`:
 ```text
 <article
     class="blog-entry"
@@ -438,7 +438,7 @@ Add the following inside #blog-source:
 ```
 4. Save and refresh the website.
 
-The Blog system automatically generates the preview, calculates reading time from .blog-content, and handles filtering, pagination, and the full article view.
+The Blog system automatically generates the preview, calculates reading time from `.blog-content`, and handles filtering, pagination, and the full article view.
 
 ---
 
