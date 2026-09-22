@@ -38,7 +38,10 @@ function escapeAttribute(value) {
 
 function formatDate(dateString) {
 
-    const date = new Date(dateString + "T00:00:00");
+    const date =
+        new Date(
+            dateString + "T00:00:00"
+        );
 
     return date.toLocaleDateString(
         "en-US",
@@ -54,7 +57,10 @@ function formatDate(dateString) {
 
 /* ================= READING TIME ================= */
 
-async function calculateInternalReadingTime(url, card) {
+async function calculateInternalReadingTime(
+    url,
+    card
+) {
 
     try {
 
@@ -76,7 +82,7 @@ async function calculateInternalReadingTime(url, card) {
             new DOMParser();
 
 
-        const document =
+        const articleDocument =
             parser.parseFromString(
                 html,
                 "text/html"
@@ -84,13 +90,13 @@ async function calculateInternalReadingTime(url, card) {
 
 
         const content =
-            document.querySelector(
+            articleDocument.querySelector(
                 ".blog-content"
             ) ||
-            document.querySelector(
+            articleDocument.querySelector(
                 ".blog-article"
             ) ||
-            document.querySelector(
+            articleDocument.querySelector(
                 "article"
             );
 
@@ -132,7 +138,8 @@ async function calculateInternalReadingTime(url, card) {
             Math.max(
                 1,
                 Math.ceil(
-                    words / WORDS_PER_MINUTE
+                    words /
+                    WORDS_PER_MINUTE
                 )
             );
 
@@ -178,12 +185,20 @@ async function calculateInternalReadingTime(url, card) {
 function createPostCard(post) {
 
     const card =
-        document.createElement("article");
+        document.createElement(
+            "article"
+        );
 
 
     card.className =
         "blog-card";
 
+
+    /*
+     * Internal links are handled by JavaScript.
+     * External links remain normal links and
+     * open in a new tab.
+     */
 
     const externalAttributes =
         post.type === "external"
@@ -201,12 +216,16 @@ function createPostCard(post) {
         post.tags.length > 0
             ? `
                 <div class="blog-tags">
+
                     ${post.tags
                         .map(
                             tag =>
-                                `<span class="blog-tag">${escapeHTML(tag)}</span>`
+                                `<span class="blog-tag">
+                                    ${escapeHTML(tag)}
+                                </span>`
                         )
                         .join("")}
+
                 </div>
             `
             : "";
@@ -217,6 +236,7 @@ function createPostCard(post) {
         <a
             class="blog-card-link"
             href="${escapeAttribute(post.url)}"
+            data-blog-type="${post.type}"
             ${externalAttributes}
         >
 
@@ -258,7 +278,9 @@ function createPostCard(post) {
                     post.description
                         ? `
                             <p class="blog-description">
-                                ${escapeHTML(post.description)}
+                                ${escapeHTML(
+                                    post.description
+                                )}
                             </p>
                         `
                         : ""
@@ -285,6 +307,54 @@ function createPostCard(post) {
         </a>
 
     `;
+
+
+    /*
+     * Intercept only internal articles.
+     */
+
+    if (
+        post.type === "internal"
+    ) {
+
+        const link =
+            card.querySelector(
+                ".blog-card-link"
+            );
+
+
+        link.addEventListener(
+            "click",
+            event => {
+
+                /*
+                 * Preserve normal browser
+                 * behavior for modifier clicks.
+                 */
+
+                if (
+                    event.ctrlKey ||
+                    event.metaKey ||
+                    event.shiftKey ||
+                    event.altKey ||
+                    event.button !== 0
+                ) {
+                    return;
+                }
+
+
+                event.preventDefault();
+
+
+                openInternalArticle(
+                    post,
+                    true
+                );
+
+            }
+        );
+
+    }
 
 
     return card;
@@ -322,9 +392,11 @@ function populateCategories(posts) {
 
 
     select.innerHTML = `
+
         <option value="all">
             All categories
         </option>
+
     `;
 
 
@@ -376,17 +448,12 @@ function renderPagination(
     pagination.innerHTML = "";
 
 
-    /*
-     * No pagination needed when
-     * all posts fit on one page.
-     */
-
     if (totalPages <= 1) {
         return;
     }
 
 
-    /* Previous button */
+    /* Previous */
 
     const previousButton =
         document.createElement(
@@ -420,7 +487,9 @@ function renderPagination(
         "click",
         () => {
 
-            if (currentPage > 1) {
+            if (
+                currentPage > 1
+            ) {
 
                 currentPage--;
 
@@ -509,7 +578,7 @@ function renderPagination(
     }
 
 
-    /* Next button */
+    /* Next */
 
     const nextButton =
         document.createElement(
@@ -570,21 +639,340 @@ function renderPagination(
 
 function scrollToBlogPosts() {
 
-    const postsContainer =
+    const blogSection =
         document.getElementById(
-            "blog-posts"
+            "blog"
         );
 
 
-    if (!postsContainer) {
+    if (!blogSection) {
         return;
     }
 
 
-    postsContainer.scrollIntoView({
+    blogSection.scrollIntoView({
         behavior: "smooth",
         block: "start"
     });
+
+}
+
+
+/* ================= ARTICLE CONTAINER ================= */
+
+function getBlogBox() {
+
+    return document.querySelector(
+        "#blog .blog-box"
+    );
+
+}
+
+
+/* ================= OPEN INTERNAL ARTICLE ================= */
+
+async function openInternalArticle(
+    post,
+    updateHistory = true
+) {
+
+    const blogBox =
+        getBlogBox();
+
+
+    if (!blogBox) {
+        return;
+    }
+
+
+    /*
+     * Show a temporary loading state.
+     */
+
+    blogBox.innerHTML = `
+
+        <div class="blog-loading">
+
+            <p>
+                Loading article...
+            </p>
+
+        </div>
+
+    `;
+
+
+    /*
+     * Update browser history.
+     *
+     * The article still lives inside
+     * index.html. We are only changing
+     * the URL state.
+     */
+
+    if (updateHistory) {
+
+        const url =
+            new URL(
+                window.location.href
+            );
+
+
+        url.searchParams.set(
+            "article",
+            post.url
+        );
+
+
+        window.history.pushState(
+            {
+                blogArticle: post.url
+            },
+            "",
+            url
+        );
+
+    }
+
+
+    try {
+
+        const response =
+            await fetch(post.url);
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                `HTTP ${response.status}`
+            );
+
+        }
+
+
+        const html =
+            await response.text();
+
+
+        const parser =
+            new DOMParser();
+
+
+        const articleDocument =
+            parser.parseFromString(
+                html,
+                "text/html"
+            );
+
+
+        const article =
+            articleDocument.querySelector(
+                ".blog-article"
+            );
+
+
+        if (!article) {
+
+            throw new Error(
+                "The page does not contain a .blog-article element."
+            );
+
+        }
+
+
+        /*
+         * Extract only the article.
+         *
+         * This prevents the internal HTML
+         * page from injecting another full
+         * document, navigation, scripts, etc.
+         */
+
+        const articleClone =
+            article.cloneNode(true);
+
+
+        /*
+         * Remove scripts and other elements
+         * that should never be executed when
+         * injecting article content.
+         */
+
+        articleClone
+            .querySelectorAll(
+                "script, iframe"
+            )
+            .forEach(
+                element => element.remove()
+            );
+
+
+        /*
+         * Build the in-page article view.
+         */
+
+        blogBox.innerHTML = "";
+
+
+        const backButton =
+            document.createElement(
+                "button"
+            );
+
+
+        backButton.type =
+            "button";
+
+
+        backButton.className =
+            "blog-back-button";
+
+
+        backButton.innerHTML =
+            "← Back to Blog";
+
+
+        backButton.addEventListener(
+            "click",
+            () => {
+
+                window.history.back();
+
+            }
+        );
+
+
+        blogBox.appendChild(
+            backButton
+        );
+
+
+        blogBox.appendChild(
+            articleClone
+        );
+
+
+        /*
+         * Make sure links inside the
+         * article behave correctly.
+         */
+
+        initialiseArticleLinks(
+            blogBox
+        );
+
+
+        /*
+         * Scroll to the beginning of
+         * the Blog section.
+         */
+
+        scrollToBlogPosts();
+
+
+    } catch (error) {
+
+        console.error(
+            "Could not load blog article:",
+            error
+        );
+
+
+        blogBox.innerHTML = `
+
+            <button
+                type="button"
+                class="blog-back-button"
+                id="blog-error-back"
+            >
+                ← Back to Blog
+            </button>
+
+            <div class="blog-empty">
+
+                <p>
+                    Sorry, this article could not be loaded.
+                </p>
+
+            </div>
+
+        `;
+
+
+        const backButton =
+            document.getElementById(
+                "blog-error-back"
+            );
+
+
+        if (backButton) {
+
+            backButton.addEventListener(
+                "click",
+                () => {
+
+                    window.history.back();
+
+                }
+            );
+
+        }
+
+    }
+
+}
+
+
+/* ================= ARTICLE LINKS ================= */
+
+function initialiseArticleLinks(
+    container
+) {
+
+    const links =
+        container.querySelectorAll(
+            ".blog-content a"
+        );
+
+
+    links.forEach(
+        link => {
+
+            /*
+             * External links should open
+             * normally in a new tab.
+             */
+
+            const href =
+                link.getAttribute(
+                    "href"
+                );
+
+
+            if (!href) {
+                return;
+            }
+
+
+            if (
+                href.startsWith(
+                    "http://"
+                ) ||
+                href.startsWith(
+                    "https://"
+                )
+            ) {
+
+                link.target =
+                    "_blank";
+
+                link.rel =
+                    "noopener noreferrer";
+
+            }
+
+        }
+    );
 
 }
 
@@ -634,8 +1022,6 @@ function renderPosts() {
             : "all";
 
 
-    /* Filter posts */
-
     const filteredPosts =
         allPosts.filter(
             post => {
@@ -659,16 +1045,12 @@ function renderPosts() {
         );
 
 
-    /* Sort newest first */
-
     filteredPosts.sort(
         (a, b) =>
             new Date(b.date) -
             new Date(a.date)
     );
 
-
-    /* Calculate pages */
 
     const totalPosts =
         filteredPosts.length;
@@ -680,11 +1062,6 @@ function renderPosts() {
             POSTS_PER_PAGE
         );
 
-
-    /*
-     * Make sure the current page
-     * remains valid after filtering.
-     */
 
     if (
         totalPages === 0
@@ -702,12 +1079,8 @@ function renderPosts() {
     }
 
 
-    /* Clear existing posts */
-
     container.innerHTML = "";
 
-
-    /* Empty state */
 
     if (
         totalPosts === 0
@@ -717,10 +1090,12 @@ function renderPosts() {
             emptyState.hidden = false;
         }
 
+
         renderPagination(
             0,
             0
         );
+
 
         return;
 
@@ -731,8 +1106,6 @@ function renderPosts() {
         emptyState.hidden = true;
     }
 
-
-    /* Determine visible posts */
 
     const startIndex =
         (
@@ -753,8 +1126,6 @@ function renderPosts() {
         );
 
 
-    /* Render cards */
-
     visiblePosts.forEach(
         post => {
 
@@ -766,12 +1137,6 @@ function renderPosts() {
                 card
             );
 
-
-            /*
-             * Reading time is only
-             * calculated for internal
-             * articles.
-             */
 
             if (
                 post.type === "internal"
@@ -788,11 +1153,371 @@ function renderPosts() {
     );
 
 
-    /* Render pagination */
-
     renderPagination(
         totalPosts,
         totalPages
+    );
+
+}
+
+
+/* ================= SHOW BLOG LIST ================= */
+
+function showBlogList(
+    updateHistory = false
+) {
+
+    const blogBox =
+        getBlogBox();
+
+
+    if (!blogBox) {
+        return;
+    }
+
+
+    /*
+     * Restore the original Blog
+     * section structure.
+     */
+
+    blogBox.innerHTML = `
+
+        <span class="section-number">
+            09 / BLOG
+        </span>
+
+        <h2>
+            Insights & perspectives
+        </h2>
+
+        <p>
+            Thoughts, insights, and perspectives on cybersecurity,
+            AI security, LLMs, adversarial AI, emerging AI risks,
+            and related topics.
+        </p>
+
+
+        <div
+            class="blog-source-data"
+            id="blog-source"
+        ></div>
+
+
+        <div class="blog-controls">
+
+            <div class="blog-filter">
+
+                <label for="blog-category-filter">
+                    Category
+                </label>
+
+                <select
+                    id="blog-category-filter"
+                >
+                    <option value="all">
+                        All categories
+                    </option>
+                </select>
+
+            </div>
+
+
+            <div class="blog-filter">
+
+                <label for="blog-type-filter">
+                    Source
+                </label>
+
+                <select
+                    id="blog-type-filter"
+                >
+
+                    <option value="all">
+                        All posts
+                    </option>
+
+                    <option value="internal">
+                        My website
+                    </option>
+
+                    <option value="external">
+                        External
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="blog-posts"
+            id="blog-posts"
+            aria-live="polite"
+        ></div>
+
+
+        <div
+            class="blog-pagination"
+            id="blog-pagination"
+            aria-label="Blog pagination"
+        ></div>
+
+
+        <div
+            class="blog-empty"
+            id="blog-empty"
+            hidden
+        >
+
+            <p>
+                No blog posts match your selected filters.
+            </p>
+
+        </div>
+
+    `;
+
+
+    /*
+     * Rebuild the source metadata.
+     *
+     * This is necessary because the
+     * Blog box was temporarily replaced
+     * by the article.
+     */
+
+    const source =
+        document.getElementById(
+            "blog-source"
+        );
+
+
+    allPosts.forEach(
+        post => {
+
+            const entry =
+                document.createElement(
+                    "article"
+                );
+
+
+            entry.className =
+                "blog-entry";
+
+
+            entry.dataset.title =
+                post.title;
+
+
+            entry.dataset.date =
+                post.date;
+
+
+            entry.dataset.category =
+                post.category;
+
+
+            entry.dataset.type =
+                post.type;
+
+
+            entry.dataset.url =
+                post.url;
+
+
+            entry.dataset.description =
+                post.description;
+
+
+            entry.dataset.tags =
+                post.tags.join(", ");
+
+
+            source.appendChild(
+                entry
+            );
+
+        }
+    );
+
+
+    /*
+     * Reconnect filters.
+     */
+
+    const categoryFilter =
+        document.getElementById(
+            "blog-category-filter"
+        );
+
+
+    const typeFilter =
+        document.getElementById(
+            "blog-type-filter"
+        );
+
+
+    populateCategories(
+        allPosts
+    );
+
+
+    if (categoryFilter) {
+
+        categoryFilter.addEventListener(
+            "change",
+            () => {
+
+                currentPage = 1;
+
+                renderPosts();
+
+            }
+        );
+
+    }
+
+
+    if (typeFilter) {
+
+        typeFilter.addEventListener(
+            "change",
+            () => {
+
+                currentPage = 1;
+
+                renderPosts();
+
+            }
+        );
+
+    }
+
+
+    renderPosts();
+
+
+    /*
+     * Restore the clean index.html URL.
+     */
+
+    if (updateHistory) {
+
+        const url =
+            new URL(
+                window.location.href
+            );
+
+
+        url.searchParams.delete(
+            "article"
+        );
+
+
+        window.history.pushState(
+            {},
+            "",
+            url
+        );
+
+    }
+
+}
+
+
+/* ================= RESTORE FROM URL ================= */
+
+function loadArticleFromURL() {
+
+    const url =
+        new URL(
+            window.location.href
+        );
+
+
+    const articleURL =
+        url.searchParams.get(
+            "article"
+        );
+
+
+    if (!articleURL) {
+        return;
+    }
+
+
+    const post =
+        allPosts.find(
+            item =>
+                item.type === "internal" &&
+                item.url === articleURL
+        );
+
+
+    if (!post) {
+        return;
+    }
+
+
+    openInternalArticle(
+        post,
+        false
+    );
+
+}
+
+
+/* ================= BROWSER BACK / FORWARD ================= */
+
+function initialiseHistoryHandling() {
+
+    window.addEventListener(
+        "popstate",
+        () => {
+
+            const url =
+                new URL(
+                    window.location.href
+                );
+
+
+            const articleURL =
+                url.searchParams.get(
+                    "article"
+                );
+
+
+            if (articleURL) {
+
+                const post =
+                    allPosts.find(
+                        item =>
+                            item.type === "internal" &&
+                            item.url === articleURL
+                    );
+
+
+                if (post) {
+
+                    openInternalArticle(
+                        post,
+                        false
+                    );
+
+                }
+
+            } else {
+
+                showBlogList(
+                    false
+                );
+
+            }
+
+        }
     );
 
 }
@@ -856,6 +1581,19 @@ function initialiseBlog() {
 
 
     renderPosts();
+
+
+    initialiseHistoryHandling();
+
+
+    /*
+     * If the page was loaded directly
+     * with ?article=..., restore that
+     * article after the Blog section
+     * has been initialized.
+     */
+
+    loadArticleFromURL();
 
 }
 
