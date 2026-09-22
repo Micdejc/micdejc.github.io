@@ -1,168 +1,185 @@
-<section class="blog-section" id="blog">
+<section id="blog">
 
-    <div class="blog-header">
+    <div class="container">
 
-        <span class="section-eyebrow">BLOG</span>
+        <div class="blog-box">
 
-        <h2>Insights, Research & Perspectives</h2>
+            <span class="section-number">
+                09 / BLOG
+            </span>
 
-        <p>
-            Thoughts and articles on cybersecurity, AI security,
-            research, technology, and professional development.
-        </p>
+            <h2>
+                Insights & perspectives
+            </h2>
 
-    </div>
-
-
-    <!--
-        ============================================================
-        BLOG SOURCE DATA
-        ============================================================
-
-        Add new blog posts here.
-
-        Required:
-        data-title
-        data-date
-        data-category
-        data-type
-        data-url
-
-        data-type:
-        internal = article hosted on this website
-        external = article hosted elsewhere
-
-        Optional:
-        data-description
-        data-tags
-
-        Reading time is calculated automatically for internal
-        HTML articles. Do NOT add a reading-time field.
-        ============================================================
-    -->
-
-    <div class="blog-source-data" id="blog-source">
-
-        <!-- INTERNAL ARTICLE EXAMPLE -->
-
-        <article
-            class="blog-entry"
-            data-title="New Cybersecurity Article"
-            data-date="2026-08-31"
-            data-category="Cybersecurity"
-            data-type="internal"
-            data-url="blog/posts/my-new-cybersecurity-article.html"
-            data-description="Exploring main concepts of cybersecurity."
-            data-tags="Cybersecurity,Literacy"
-        ></article>
+            <p>
+                Thoughts, insights, and perspectives on cybersecurity, AI security,
+                LLMs, adversarial AI, emerging AI risks, and related topics.
+            </p>
 
 
-        <!--
-        ============================================================
-        ADD MORE INTERNAL ARTICLES LIKE THIS
-        ============================================================
+            <!-- ==================================================
+                 BLOG SOURCE DATA
+                 ==================================================
 
-        <article
-            class="blog-entry"
-            data-title="Your Article Title"
-            data-date="2026-09-10"
-            data-category="AI Security"
-            data-type="internal"
-            data-url="blog/posts/your-article.html"
-            data-description="A short description of your article."
-            data-tags="AI Security,LLM Security,Research"
-        ></article>
-        -->
+                 Add new blog posts here.
+
+                 Required:
+                 data-title
+                 data-date
+                 data-category
+                 data-type
+                 data-url
+
+                 data-type:
+                 internal = article hosted on this website
+                 external = article hosted elsewhere
+
+                 Optional:
+                 data-description
+                 data-tags
+
+                 Reading time is calculated automatically for
+                 internal HTML articles.
+                 ================================================== -->
+
+            <div
+                class="blog-source-data"
+                id="blog-source"
+            >
+
+                <!-- INTERNAL BLOG ARTICLE -->
+
+                <article
+                    class="blog-entry"
+                    data-title="New Cybersecurity Article"
+                    data-date="2026-08-31"
+                    data-category="Cybersecurity"
+                    data-type="internal"
+                    data-url="blog/posts/my-new-cybersecurity-article.html"
+                    data-description="Exploring main concepts of cybersecurity."
+                    data-tags="Cybersecurity,Literacy"
+                ></article>
 
 
-        <!--
-        ============================================================
-        EXTERNAL ARTICLE EXAMPLE
-        ============================================================
+                <!--
+                ==================================================
+                ADD FUTURE INTERNAL ARTICLES HERE
+                ==================================================
 
-        Reading time is intentionally NOT included.
-
-        External pages are not scraped because browsers may block
-        cross-origin requests through CORS.
-        ============================================================
-        -->
-
-        <article
-            class="blog-entry"
-            data-title="Humans as the Main Social Engineering Target"
-            data-date="2026-08-15"
-            data-category="Cybersecurity"
-            data-type="external"
-            data-url="https://example.com/your-article"
-            data-description="Why humans remain a critical target in modern social engineering attacks."
-            data-tags="Cybersecurity,Social Engineering,Human Risk"
-        ></article>
+                <article
+                    class="blog-entry"
+                    data-title="My New Cyber Blog Article"
+                    data-date="2026-09-22"
+                    data-category="AI Security"
+                    data-type="internal"
+                    data-url="blog/posts/my-new-cyber-blog.html"
+                    data-description="A short description of my new cybersecurity article."
+                    data-tags="AI Security,LLM Security,Research"
+                ></article>
+                -->
 
 
-    </div>
+                <!--
+                ==================================================
+                EXTERNAL ARTICLE EXAMPLE
+                ==================================================
+
+                No reading-time field is required.
+                ==================================================
+                -->
+
+                <article
+                    class="blog-entry"
+                    data-title="Humans as the Main Social Engineering Target"
+                    data-date="2026-08-15"
+                    data-category="Cybersecurity"
+                    data-type="external"
+                    data-url="https://example.com/your-article"
+                    data-description="Why humans remain a critical target in modern social engineering attacks."
+                    data-tags="Cybersecurity,Social Engineering,Human Risk"
+                ></article>
+
+            </div>
 
 
-    <!-- FILTERS -->
+            <!-- ==================================================
+                 BLOG FILTERS
+                 ================================================== -->
 
-    <div class="blog-controls">
+            <div class="blog-controls">
 
-        <div class="blog-filter">
+                <div class="blog-filter">
 
-            <label for="blog-category-filter">
-                Category
-            </label>
+                    <label for="blog-category-filter">
+                        Category
+                    </label>
 
-            <select id="blog-category-filter">
-                <option value="all">All categories</option>
-            </select>
+                    <select id="blog-category-filter">
+
+                        <option value="all">
+                            All categories
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="blog-filter">
+
+                    <label for="blog-type-filter">
+                        Source
+                    </label>
+
+                    <select id="blog-type-filter">
+
+                        <option value="all">
+                            All posts
+                        </option>
+
+                        <option value="internal">
+                            My website
+                        </option>
+
+                        <option value="external">
+                            External
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- ==================================================
+                 BLOG POSTS
+                 ================================================== -->
+
+            <div
+                class="blog-posts"
+                id="blog-posts"
+                aria-live="polite"
+            ></div>
+
+
+            <!-- ==================================================
+                 EMPTY STATE
+                 ================================================== -->
+
+            <div
+                class="blog-empty"
+                id="blog-empty"
+                hidden
+            >
+                <p>
+                    No blog posts match your selected filters.
+                </p>
+            </div>
 
         </div>
 
-
-        <div class="blog-filter">
-
-            <label for="blog-type-filter">
-                Source
-            </label>
-
-            <select id="blog-type-filter">
-
-                <option value="all">
-                    All posts
-                </option>
-
-                <option value="internal">
-                    My website
-                </option>
-
-                <option value="external">
-                    External
-                </option>
-
-            </select>
-
-        </div>
-
-    </div>
-
-
-    <!-- BLOG POSTS ARE RENDERED HERE -->
-
-    <div
-        class="blog-posts"
-        id="blog-posts"
-        aria-live="polite"
-    ></div>
-
-
-    <!-- EMPTY STATE -->
-
-    <div
-        class="blog-empty"
-        id="blog-empty"
-        hidden
-    >
-        <p>No blog posts match your selected filters.</p>
     </div>
 
 </section>
