@@ -30,7 +30,7 @@ export async function loadFlagship() {
 
             const response =
                 await fetch(
-                    `sections/${file}`
+                    `content/flagship/${file}`
                 );
 
 
