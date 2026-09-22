@@ -572,7 +572,7 @@
         }
         
         .news-pagination,
-        .feature-pagination {
+        .features-pagination {
             display: flex;
             justify-content: center;
             margin-top: 35px;
