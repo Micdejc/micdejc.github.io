@@ -89,41 +89,43 @@ export async function loadMentorship() {
 
 
     /* ---------------------------------------------------------
-       LOAD MORE BY ROW
-       
-       Each row contains 2 cards.
+       LOAD MORE
     --------------------------------------------------------- */
 
-    const cards =
+    const mentorshipCards =
         Array.from(
             container.children
         );
 
 
-    const cardsPerRow = 2;
+    const initialMentorship = 2;
 
-    let visibleCards = cardsPerRow;
+    const mentorshipPerClick = 2;
+
+    let visibleMentorship =
+        initialMentorship;
 
 
-    function updateMentorshipCards() {
+    function updateMentorship() {
 
-        cards.forEach(
+        mentorshipCards.forEach(
             (card, index) => {
 
                 card.hidden =
-                    index >= visibleCards;
+                    index >= visibleMentorship;
 
             }
         );
 
 
         /*
-         * Hide Load More when all cards
-         * are already visible.
+         * Hide Load More when all mentorship
+         * cards are already visible.
          */
 
         if (
-            visibleCards >= cards.length
+            visibleMentorship >=
+            mentorshipCards.length
         ) {
 
             if (loadMoreContainer) {
@@ -142,7 +144,7 @@ export async function loadMentorship() {
 
 
     /* ---------------------------------------------------------
-       LOAD NEXT ROW
+       LOAD MORE BUTTON
     --------------------------------------------------------- */
 
     if (loadMoreButton) {
@@ -151,13 +153,10 @@ export async function loadMentorship() {
             "click",
             () => {
 
-                /*
-                 * Reveal exactly one additional row.
-                 */
+                visibleMentorship +=
+                    mentorshipPerClick;
 
-                visibleCards += cardsPerRow;
-
-                updateMentorshipCards();
+                updateMentorship();
 
             }
         );
@@ -166,12 +165,10 @@ export async function loadMentorship() {
 
 
     /* ---------------------------------------------------------
-       INITIAL STATE
-       
-       Show exactly one row = 2 cards.
+       INITIAL DISPLAY
     --------------------------------------------------------- */
 
-    updateMentorshipCards();
+    updateMentorship();
 
 }
 
