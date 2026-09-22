@@ -8,6 +8,10 @@ const featureFiles = [
 
     "heads-talk.html",
 
+    "ai-and-partners.html",
+
+    "heads-talk.html",
+
     "ai-and-partners.html"
 
 ];
