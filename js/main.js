@@ -179,11 +179,6 @@ async function loadPage() {
 
     initialiseVisitorCount();
 
-    console.log(
-    "Calendar toggle after components loaded:",
-    document.getElementById("calendarToggle")
-    );
-   
     initialiseCalendar();
 
 }
