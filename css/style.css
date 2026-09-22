@@ -275,9 +275,11 @@
             scroll-margin-top: 70px;
         }
 
+        /*       
         section:nth-child(even) {
             background: var(--surface-alt);
-        }
+        } 
+        */
 
         .section-header {
             margin-bottom: 45px;
