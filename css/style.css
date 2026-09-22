@@ -600,7 +600,7 @@
         /* ================= MENTORSHIP LOAD MORE ================= */
 
         .hidden-mentorship {
-            display: none;
+            display: none !important;
         }
         
         .mentorship-load-more-container {
