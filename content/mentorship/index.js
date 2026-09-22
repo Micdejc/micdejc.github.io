@@ -25,26 +25,10 @@ export async function loadMentorship() {
         );
 
 
-    const loadMoreButton =
-        document.getElementById(
-            "mentorship-load-more"
-        );
-
-
-    const loadMoreContainer =
-        document.getElementById(
-            "mentorship-load-more-container"
-        );
-
-
     if (!container) {
         return;
     }
 
-
-    /* =========================================================
-       LOAD MENTORSHIP CARDS
-    ========================================================= */
 
     for (const file of mentorshipFiles) {
 
@@ -59,10 +43,11 @@ export async function loadMentorship() {
             if (!response.ok) {
 
                 console.error(
-                    `Could not load ${file}`
+                    `Could not load mentorship item: ${file}`
                 );
 
                 continue;
+
             }
 
 
@@ -79,7 +64,7 @@ export async function loadMentorship() {
         } catch (error) {
 
             console.error(
-                `Could not load mentorship item ${file}`,
+                `Error loading mentorship item ${file}:`,
                 error
             );
 
@@ -88,122 +73,98 @@ export async function loadMentorship() {
     }
 
 
-    /* =========================================================
-       LOAD MORE SETTINGS
-    ========================================================= */
+    initialiseMentorshipPagination();
+
+}
+
+
+function initialiseMentorshipPagination() {
+
+    const mentorshipCards =
+        document.querySelectorAll(
+            ".research-card"
+        );
+
+
+    const loadMoreButton =
+        document.getElementById(
+            "loadMoreMentorship"
+        );
+
+
+    if (
+        !mentorshipCards.length ||
+        !loadMoreButton
+    ) {
+        return;
+    }
+
 
     const initialMentorship = 2;
 
     const mentorshipPerClick = 2;
 
-
     let visibleMentorship =
         initialMentorship;
 
 
-    /* =========================================================
-       GET MENTORSHIP CARDS
-    ========================================================= */
-
-    const mentorshipCards =
-        Array.from(
-            container.querySelectorAll(
-                ".research-card"
-            )
-        );
-
-
-    /* =========================================================
-       UPDATE DISPLAY
-    ========================================================= */
-
     function updateMentorship() {
-
-        const totalMentorship =
-            mentorshipCards.length;
-
-
-        /*
-         * Show only the allowed number
-         * of mentorship cards.
-         */
 
         mentorshipCards.forEach(
             (card, index) => {
 
-                card.hidden =
-                    index >= visibleMentorship;
+                if (
+                    index < visibleMentorship
+                ) {
+
+                    card.classList.remove(
+                        "hidden-mentorship"
+                    );
+
+                } else {
+
+                    card.classList.add(
+                        "hidden-mentorship"
+                    );
+
+                }
 
             }
         );
 
 
-        /*
-         * Hide the Load More button when
-         * every mentorship card is visible.
-         */
-
         if (
             visibleMentorship >=
-            totalMentorship
+            mentorshipCards.length
         ) {
 
-            if (loadMoreContainer) {
-                loadMoreContainer.hidden = true;
-            }
+            loadMoreButton.style.display =
+                "none";
 
         } else {
 
-            if (loadMoreContainer) {
-                loadMoreContainer.hidden = false;
-            }
+            loadMoreButton.style.display =
+                "";
 
         }
 
     }
 
 
-    /* =========================================================
-       LOAD MORE
-    ========================================================= */
+    loadMoreButton.addEventListener(
+        "click",
+        function () {
 
-    if (loadMoreButton) {
-
-        loadMoreButton.addEventListener(
-            "click",
-            () => {
-
-                visibleMentorship +=
-                    mentorshipPerClick;
+            visibleMentorship +=
+                mentorshipPerClick;
 
 
-                /*
-                 * Do not allow the counter to exceed
-                 * the actual number of mentorship cards.
-                 */
+            updateMentorship();
 
-                visibleMentorship =
-                    Math.min(
-                        visibleMentorship,
-                        mentorshipCards.length
-                    );
+        }
+    );
 
-
-                updateMentorship();
-
-            }
-        );
-
-    }
-
-
-    /* =========================================================
-       INITIAL DISPLAY
-    ========================================================= */
 
     updateMentorship();
 
 }
-
-
-window.loadMentorship = loadMentorship;
