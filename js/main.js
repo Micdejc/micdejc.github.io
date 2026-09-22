@@ -1178,8 +1178,12 @@ async function initialiseVisitorCount() {
             data.count
         );
 
+       
+        /* Website visitor-count start date */
 
+        const visitorStartDate = "September 2026";
 
+       
         /* Update footer */
 
         if (
@@ -1188,7 +1192,7 @@ async function initialiseVisitorCount() {
         ) {
 
             totalVisitors.textContent =
-                `Total visitors: ${data.count}`;
+                `Total: ${data.count} since ${visitorStartDate}`;
 
         }
 
