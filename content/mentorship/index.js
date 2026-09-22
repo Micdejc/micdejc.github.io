@@ -89,7 +89,9 @@ export async function loadMentorship() {
 
 
     /* ---------------------------------------------------------
-       LOAD MORE
+       LOAD MORE BY ROW
+       
+       Each row contains 2 cards.
     --------------------------------------------------------- */
 
     const cards =
@@ -98,9 +100,9 @@ export async function loadMentorship() {
         );
 
 
-    const cardsPerLoad = 2;
+    const cardsPerRow = 2;
 
-    let visibleCards = cardsPerLoad;
+    let visibleCards = cardsPerRow;
 
 
     function updateMentorshipCards() {
@@ -116,7 +118,7 @@ export async function loadMentorship() {
 
 
         /*
-         * Hide the button when all cards
+         * Hide Load More when all cards
          * are already visible.
          */
 
@@ -139,10 +141,9 @@ export async function loadMentorship() {
     }
 
 
-    /*
-     * Load two more mentorship cards
-     * each time the button is clicked.
-     */
+    /* ---------------------------------------------------------
+       LOAD NEXT ROW
+    --------------------------------------------------------- */
 
     if (loadMoreButton) {
 
@@ -150,7 +151,11 @@ export async function loadMentorship() {
             "click",
             () => {
 
-                visibleCards += cardsPerLoad;
+                /*
+                 * Reveal exactly one additional row.
+                 */
+
+                visibleCards += cardsPerRow;
 
                 updateMentorshipCards();
 
@@ -160,9 +165,11 @@ export async function loadMentorship() {
     }
 
 
-    /*
-     * Initially show only the first two cards.
-     */
+    /* ---------------------------------------------------------
+       INITIAL STATE
+       
+       Show exactly one row = 2 cards.
+    --------------------------------------------------------- */
 
     updateMentorshipCards();
 
