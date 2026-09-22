@@ -108,6 +108,7 @@ Examples:
 - Mentorship
 - Achievements
 - Service
+- Blogs
 - Contact
 
 ### `content/`
@@ -360,6 +361,84 @@ content/mentorship/student-name.html
 5. Test locally.
 
 6. Commit and push.
+
+---
+
+# Blog
+
+The website includes a modular Blog system for publishing cybersecurity, AI security, LLM security, research, and professional insights.
+
+### Add a New Blog Post
+
+1. Create a new HTML file in:
+
+```text
+blog/posts/
+```
+
+Example:
+
+```text
+blog/posts/ai-security-governance.html
+```
+
+2. Add the article using this structure:
+```text
+<article class="blog-article">
+
+    <header class="blog-article-header">
+
+        <h1>
+            Your Blog Title
+        </h1>
+
+        <div class="blog-article-meta">
+            <span>
+                22 September 2026
+            </span>
+        </div>
+
+    </header>
+
+    <div class="blog-content">
+
+        <p>
+            Your article content goes here.
+        </p>
+
+        <h2>
+            Your Section
+        </h2>
+
+        <p>
+            More content goes here.
+        </p>
+
+    </div>
+
+</article>
+```
+3. Register the post in:
+
+```text
+sections/blog.html
+```
+Add the following inside #blog-source:
+```text
+<article
+    class="blog-entry"
+    data-title="Your Blog Title"
+    data-date="2026-09-22"
+    data-category="AI Security"
+    data-type="internal"
+    data-url="blog/posts/ai-security-governance.html"
+    data-description="A short description of the article."
+    data-tags="AI Security,Cybersecurity"
+></article>
+```
+4. Save and refresh the website.
+
+The Blog system automatically generates the preview, calculates reading time from .blog-content, and handles filtering, pagination, and the full article view.
 
 ---
 
