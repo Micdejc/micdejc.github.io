@@ -2,6 +2,7 @@ import { loadPublications } from "../content/publications/index.js";
 import { loadNews } from "../content/news/index.js";
 import { loadFeatures } from "../content/features/index.js";
 import { loadMentorship } from "../content/mentorship/index.js";
+import { initialiseBlog } from "./blog.js";
 
 /* =========================================================
    HTML COMPONENT LOADER
@@ -185,6 +186,12 @@ async function loadPage() {
     initialiseVisitorCount();
 
     initialiseCalendar();
+
+    /*
+     * Blog HTML is now in the DOM,
+     * so it is safe to initialise it.
+     */
+    initialiseBlog();
 
 }
 
