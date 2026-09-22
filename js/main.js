@@ -1142,8 +1142,15 @@ async function initialiseVisitorCount() {
         );
 
 
+
     if (!totalVisitors) {
+
+        console.error(
+            "total-visitors element was not found."
+        );
+
         return;
+
     }
 
 
@@ -1174,8 +1181,12 @@ async function initialiseVisitorCount() {
         );
 
 
+
+        /* Update footer */
+
         if (
-            typeof data.count === "number"
+            data.count !== undefined &&
+            data.count !== null
         ) {
 
             totalVisitors.textContent =
