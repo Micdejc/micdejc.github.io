@@ -1167,6 +1167,12 @@ async function initialiseVisitorCount() {
         const data =
             await response.json();
 
+       
+        console.log(
+            "GoatCounter total visitors:",
+            data.count
+        );
+
 
         if (
             typeof data.count === "number"
