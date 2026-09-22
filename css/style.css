@@ -598,11 +598,14 @@
 
 
         /* ================= MENTORSHIP LOAD MORE ================= */
+
+        .hidden-mentorship {
+            display: none;
+        }
         
         .mentorship-load-more-container {
             display: flex;
             justify-content: center;
-        
             margin-top: 30px;
         }
 
