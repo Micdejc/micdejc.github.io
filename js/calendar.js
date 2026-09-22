@@ -2150,6 +2150,9 @@ function initialiseCalendar() {
    SAFE STARTUP
    ========================================================= */
 
+/* No need as the calendar is initialized in main.js
+
+
 function startCalendar() {
     if (
         document.readyState ===
@@ -2168,3 +2171,5 @@ function startCalendar() {
 }
 
 startCalendar();
+
+*/
