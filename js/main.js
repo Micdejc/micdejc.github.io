@@ -137,6 +137,11 @@ async function loadPage() {
         ),
 
         loadComponent(
+            "blogs",
+            "sections/blog.html"
+        ),
+
+        loadComponent(
             "contact",
             "sections/contact.html"
         ),
