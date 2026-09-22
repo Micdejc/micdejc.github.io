@@ -1192,7 +1192,7 @@ async function initialiseVisitorCount() {
         ) {
 
             totalVisitors.textContent =
-                `Total: ${data.count} since ${visitorStartDate}`;
+                `Total visitors: ${data.count} since ${visitorStartDate}`;
 
         }
 
