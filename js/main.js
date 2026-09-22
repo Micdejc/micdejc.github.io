@@ -83,16 +83,6 @@ async function loadPage() {
             "sections/research.html"
         ),
 
- /*       loadComponent(
-            "refusalguard",
-            "sections/flagship-refusalguard.html"
-        ),
-
-        loadComponent(
-            "grammatical-mirage",
-            "sections/flagship-grammatical-mirage.html"
-        ),
-*/
         loadComponent(
             "flagships",
             "sections/flagship.html"
