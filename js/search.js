@@ -32,7 +32,7 @@
             name: "Grammatical Mirage"
         },*/
         {
-            id: "flagship",
+            id: "flagships",
             name: "Flagship"
         },
         {
