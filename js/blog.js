@@ -13,7 +13,12 @@ const WORDS_PER_MINUTE = 225;
 
 let allPosts = [];
 let currentPage = 1;
-
+let previousBlogState = {
+    page: 1,
+    search: "",
+    category: "all",
+    type: "all"
+};
 
 /* ================= HELPERS ================= */
 
@@ -933,8 +938,33 @@ async function openInternalArticle(
     updateHistory = true
 ) {
 
+
     const blogBox =
         getBlogBox();
+
+    /*
+     * Preserve the complete Blog state
+     * before replacing the list with the article.
+     */
+
+    previousBlogState = {
+        page: currentPage,
+
+        search:
+            document.getElementById(
+                "blog-search"
+            )?.value || "",
+
+        category:
+            document.getElementById(
+                "blog-category-filter"
+            )?.value || "all",
+
+        type:
+            document.getElementById(
+                "blog-type-filter"
+            )?.value || "all"
+    };
 
 
     if (!blogBox) {
@@ -1596,6 +1626,51 @@ function showBlogList(
     );
 
 
+
+    /*
+     * Restore the Blog filters.
+     */
+    
+    const searchInput =
+        document.getElementById(
+            "blog-search"
+        );
+    
+    const categoryFilter =
+        document.getElementById(
+            "blog-category-filter"
+        );
+    
+    const typeFilter =
+        document.getElementById(
+            "blog-type-filter"
+        );
+    
+    
+    if (searchInput) {
+    
+        searchInput.value =
+            previousBlogState.search;
+    
+    }
+    
+    
+    if (categoryFilter) {
+    
+        categoryFilter.value =
+            previousBlogState.category;
+    
+    }
+    
+    
+    if (typeFilter) {
+    
+        typeFilter.value =
+            previousBlogState.type;
+    
+    }
+
+
     /*
      * Reconnect all search and filters.
      */
@@ -1607,7 +1682,9 @@ function showBlogList(
      * Render the Blog.
      */
 
-    currentPage = 1;
+    currentPage =  previousBlogState.page;
+
+    updateSearchClearButton();
 
     renderPosts();
 
