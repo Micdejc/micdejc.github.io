@@ -1122,9 +1122,37 @@ async function openInternalArticle(
         backButton.addEventListener(
             "click",
             () => {
-
-                window.history.back();
-
+        
+                /*
+                 * If the article was opened from the
+                 * Blog list, the history state contains
+                 * blogArticle and we can safely go back.
+                 */
+        
+                if (
+                    window.history.state &&
+                    window.history.state.blogArticle
+                ) {
+        
+                    window.history.back();
+        
+                    return;
+        
+                }
+        
+        
+                /*
+                 * If the article was opened directly
+                 * using a shared URL such as:
+                 *
+                 * ?blog=grammatical-mirage
+                 *
+                 * there is no previous Blog history
+                 * entry. Show the Blog list directly.
+                 */
+        
+                showBlogList(true);
+        
             }
         );
 
@@ -1191,9 +1219,21 @@ async function openInternalArticle(
             backButton.addEventListener(
                 "click",
                 () => {
-
-                    window.history.back();
-
+            
+                    if (
+                        window.history.state &&
+                        window.history.state.blogArticle
+                    ) {
+            
+                        window.history.back();
+            
+                        return;
+            
+                    }
+            
+            
+                    showBlogList(true);
+            
                 }
             );
 
