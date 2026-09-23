@@ -34,6 +34,7 @@ micdejc.github.io/
 │   ├── mentorship.html
 │   ├── features.html
 │   ├── blog.html
+│   ├── testimonials.html
 │   └── contact.html
 │
 ├── content/
@@ -41,6 +42,7 @@ micdejc.github.io/
 │   ├── news/
 │   ├── flagship/
 │   ├── mentorship/
+│   ├── testimonials/
 │   └── features/
 │
 ├── blog/
@@ -54,6 +56,7 @@ micdejc.github.io/
 │   ├── calendar.css
 │   ├── feature-modal.css
 │   ├── blog.css
+│   ├── testimonials.css
 │   └── search.css
 │
 ├── js/
@@ -68,6 +71,7 @@ micdejc.github.io/
 │   ├── favicon.png
 │   ├── profile.png
 │   ├── news/
+│   ├── testimonials/
 │   └── features/
 │
 ├── CV.pdf
@@ -109,6 +113,7 @@ Examples:
 - Achievements
 - Service
 - Blogs
+- Testimonials
 - Contact
 
 ### `content/`
@@ -121,6 +126,7 @@ Examples:
 - Individual news items
 - Individual flagship research
 - Individual mentorship entries
+- Individual testimonial quotes
 - Individual professional features
 
 This is normally where new content should be added.
@@ -362,6 +368,54 @@ content/mentorship/student-name.html
 5. Test locally.
 
 6. Commit and push.
+
+---
+
+# Testimonials
+
+Testimonials are stored in:
+
+```text
+content/testimonials/
+```
+
+For example:
+
+```text
+content/testimonials/
+├── amy.html
+├── phil.html
+├── thilini.html
+└── douglas.html
+```
+
+## To add a new testimonial
+
+1. Create a new HTML file inside:
+
+```text
+content/testimonials/
+```
+
+2. Give it a descriptive filename.
+
+For example:
+
+```text
+content/testimonials/new-testimonial-title.html
+```
+
+3. Add the testimonial to the testimonial list in:
+
+```text
+content/testimonials/index.js
+```
+
+4. Add any associated image or asset under the appropriate `assets/` directory if required.
+
+5. Test the website locally.
+
+6. Commit and push the changes.
 
 ---
 
