@@ -520,12 +520,18 @@
 }
 
 .blog-content img {
-    max-width: 100%;
+    /* max-width: 100%; */
+    max-width: 60%;
     height: auto;
 
     margin: 20px 0;
 
     border-radius: 12px;
+}
+
+.blog-content figure.blog-image {
+    display: block;
+    text-align: center;
 }
 
 
@@ -663,6 +669,10 @@
         height: 36px;
 
         padding: 0 9px;
+    }
+
+    .blog-content img {
+        max-width: 100%;
     }
 
 }
