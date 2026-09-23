@@ -80,6 +80,9 @@ function getBlogPosts() {
             const url =
                 clean(entry.dataset.url);
 
+            const slug =
+                clean(entry.dataset.slug);
+
             const description =
                 clean(
                     entry.dataset.description
@@ -96,7 +99,8 @@ function getBlogPosts() {
                 !date ||
                 !category ||
                 !type ||
-                !url
+                !url ||
+                (type === "internal" && !slug)
             ) {
 
                 console.warn(
@@ -145,6 +149,7 @@ function getBlogPosts() {
             posts.push({
 
                 title,
+                slug,
                 date,
                 category,
                 type,
