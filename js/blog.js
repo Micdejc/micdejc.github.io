@@ -1000,7 +1000,7 @@ async function openInternalArticle(
                 window.location.href
             );
 
-
+        /*
         url.searchParams.set(
             "article",
             post.url
@@ -1010,6 +1010,20 @@ async function openInternalArticle(
         window.history.pushState(
             {
                 blogArticle: post.url
+            },
+            "",
+            url
+        );
+        */
+
+        url.searchParams.set(
+            "blog",
+            post.slug
+        );
+
+        window.history.pushState(
+            {
+                blogArticle: post.slug
             },
             "",
             url
@@ -1584,7 +1598,9 @@ function showBlogList(
             entry.dataset.title =
                 post.title;
 
-
+            entry.dataset.slug =
+                post.slug;
+            
             entry.dataset.date =
                 post.date;
 
@@ -1700,9 +1716,14 @@ function showBlogList(
                 window.location.href
             );
 
-
+        /*
         url.searchParams.delete(
             "article"
+        );
+        */
+
+        url.searchParams.delete(
+            "blog"
         );
 
 
@@ -1727,13 +1748,13 @@ function loadArticleFromURL() {
         );
 
 
-    const articleURL =
+    const blogSlug =
         url.searchParams.get(
-            "article"
+            "blog"
         );
 
 
-    if (!articleURL) {
+    if (!blogSlug) {
         return;
     }
 
@@ -1742,11 +1763,15 @@ function loadArticleFromURL() {
         allPosts.find(
             item =>
                 item.type === "internal" &&
-                item.url === articleURL
+                item.slug === blogSlug
         );
 
 
     if (!post) {
+        console.warn(
+            `Blog article with slug "${blogSlug}" was not found.`
+        );
+
         return;
     }
 
@@ -1773,19 +1798,19 @@ function initialiseHistoryHandling() {
                 );
 
 
-            const articleURL =
+            const blogSlug =
                 url.searchParams.get(
-                    "article"
+                    "blog"
                 );
 
 
-            if (articleURL) {
+            if (blogSlug) {
 
                 const post =
                     allPosts.find(
                         item =>
                             item.type === "internal" &&
-                            item.url === articleURL
+                            item.slug === blogSlug
                     );
 
 
