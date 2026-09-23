@@ -8,7 +8,9 @@ const featureFiles = [
 
     "heads-talk.html",
 
-    "ai-and-partners.html"
+    "ai-and-partners.html",
+   
+    "thinkers360.html"
 
 ];
 
