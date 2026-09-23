@@ -429,6 +429,7 @@ Add the following inside `#blog-source`:
 <article
     class="blog-entry"
     data-title="Your Blog Title"
+    data-slug="your-blog-title"
     data-date="2026-09-22"
     data-category="AI Security"
     data-type="internal"
