@@ -125,6 +125,22 @@ const featureContributions = {
 
         contributions: [
 
+           
+            {
+                title:
+                    "Expert Profile",
+
+                description:
+                    "UK CSC Assessor and EVP Member ",
+
+                url:
+                    "https://www.ukcybersecuritycouncil.org.uk/public-register/cmmfo434301l6fti8teq16n76",
+
+                type:
+                    "Profile"
+            },
+
+           
             {
                 title:
                     "Humans as the Main Social Engineering Target",
