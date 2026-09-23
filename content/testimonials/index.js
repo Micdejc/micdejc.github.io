@@ -6,7 +6,13 @@ const testimonialFiles = [
 
     "amy.html",
 
-    "phil.html"
+    "phil.html",
+
+    "thilini.html",
+
+    "douglas.html",
+
+    "t-scott.html"
 
 ];
 
