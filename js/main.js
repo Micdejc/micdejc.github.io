@@ -3,6 +3,7 @@ import { loadNews } from "../content/news/index.js";
 import { loadFeatures } from "../content/features/index.js";
 import { loadMentorship } from "../content/mentorship/index.js";
 import { loadFlagship } from "../content/flagship/index.js";
+import { loadTestimonials } from "../content/testimonials/index.js";
 import { initialiseBlog } from "./blog.js";
 
 /* =========================================================
@@ -139,6 +140,11 @@ async function loadPage() {
         ),
 
         loadComponent(
+            "testimonials",
+            "sections/testimonials.html"
+        ),
+
+        loadComponent(
             "contact",
             "sections/contact.html"
         ),
@@ -165,6 +171,8 @@ async function loadPage() {
     await loadFeatures();
 
     await loadFlagship();
+
+    await loadTestimonials();
 
     /*
      * Initialise interface controls only after
