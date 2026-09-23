@@ -160,7 +160,82 @@ const featureContributions = {
              */
 
         ]
-    }
+    },
+
+
+    "thinkers360": {
+
+        title: "Thinkers360",
+
+        type: "Thought Leader",
+
+        description:
+            "Cybersecurity thought leader contributed to cybersecurity community.",
+
+        contributions: [
+
+            {
+                title:
+                    "Top 50 Global Thought Leaders and Influencers on Cybersecurity 2026",
+
+                description:
+                    "Honoured to be ranked #37 on this list, and the first Black person to appear in the ranking.",
+
+                url:
+                    "https://www.thinkers360.com/top-50-global-thought-leaders-and-influencers-on-cybersecurity-2026/",
+
+                type:
+                    "Honors & Awards"
+            }
+
+        ]
+    },
+
+
+/*
+       "feature-contribution-name": {
+
+        title: "Feature Contribution Title",
+
+        type: "Feature Contribution Type",
+
+        description:
+            "Feature Contribution Brief Description",
+
+        contributions: [
+
+            {
+                title:
+                    "Contribution title",
+
+                description:
+                    "Contribution brief description.",
+
+                url:
+                    "Contribution URL",
+
+                type:
+                    "Contribution Type"
+            }
+
+            /*
+             * Add more contributions here.
+             *
+             * Example:
+             *
+             * {
+             *     title: "Another Heads Talk Contribution",
+             *     description: "Short description.",
+             *     url: "https://example.com",
+             *     type: "Expert Analysis"
+             * }
+             */
+
+        ]
+    },
+*/
+
+
 
 };
 
