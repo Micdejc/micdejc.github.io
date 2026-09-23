@@ -186,7 +186,21 @@ const featureContributions = {
 
                 type:
                     "Honors & Awards"
-            }
+            },
+
+            {
+                title:
+                    "Top 50 Global Thought Leaders and Influencers on Education 2026",
+
+                description:
+                    "Honored to be ranked #15 on this list.",
+
+                url:
+                    "https://www.thinkers360.com/top-50-global-thought-leaders-and-influencers-on-education-2026/",
+
+                type:
+                    "Honors & Awards"
+            },
 
         ]
     },
