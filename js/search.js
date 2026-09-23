@@ -68,6 +68,10 @@
             name: "Blogs"
         },
         {
+            id: "testimonials",
+            name: "Testimonials"
+        },
+        {
             id: "contact",
             name: "Contact"
         }
