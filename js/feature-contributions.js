@@ -217,7 +217,7 @@ const featureContributions = {
                 type:
                     "Contribution Type"
             }
-
+*/
             /*
              * Add more contributions here.
              *
@@ -230,7 +230,7 @@ const featureContributions = {
              *     type: "Expert Analysis"
              * }
              */
-
+/*
         ]
     },
 */
