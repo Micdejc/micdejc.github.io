@@ -774,6 +774,18 @@ function typeText(
 
 /*
  * Start the console animation.
+ *
+ * The animation runs continuously:
+ *
+ * Text 1 types
+ *       ↓
+ * 600 ms pause
+ *       ↓
+ * Text 2 types
+ *       ↓
+ * 1200 ms pause
+ *       ↓
+ * Animation starts again
  */
 
 function startConsoleAnimation() {
@@ -911,10 +923,62 @@ function startConsoleAnimation() {
                         }
 
 
+                        /*
+                         * Animate the second text.
+                         */
+
                         typeText(
                             textElement2,
                             text2,
-                            25
+                            25,
+                            function () {
+
+                                /*
+                                 * Do not restart if
+                                 * Terminal Mode is off.
+                                 */
+
+                                if (
+                                    !document.body.classList.contains(
+                                        "terminal-mode"
+                                    )
+                                ) {
+
+                                    return;
+
+                                }
+
+
+                                /*
+                                 * Wait 1200 ms after
+                                 * the second line has
+                                 * finished, then start
+                                 * the complete animation
+                                 * again.
+                                 */
+
+                                animationDelayTimer =
+                                    setTimeout(
+                                        function () {
+
+                                            if (
+                                                !document.body.classList.contains(
+                                                    "terminal-mode"
+                                                )
+                                            ) {
+
+                                                return;
+
+                                            }
+
+
+                                            startConsoleAnimation();
+
+                                        },
+                                        1200
+                                    );
+
+                            }
                         );
 
                     },
@@ -943,7 +1007,7 @@ function stopConsoleAnimation() {
 
 
     /*
-     * Cancel the 600 ms delay timer.
+     * Cancel any animation delay timer.
      */
 
     clearTimeout(
