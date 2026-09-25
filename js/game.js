@@ -242,10 +242,10 @@ function closeGameModal() {
    ========================================================= */
 
 function startDlnGame() {
-
+   
     const name =
         dlnElements.playerName.value.trim();
-
+    /*
     if (
         name.length > 0 &&
         name.length < 3
@@ -260,6 +260,40 @@ function startDlnGame() {
 
         return;
     }
+    */
+    if (!name) {
+        showDlnFeedback(
+            "Player name required",
+            "Please enter your name before starting the game.",
+            "warning"
+        );
+
+        shakeDlnElement(dlnElements.playerName);
+        return;
+    }
+
+    if (name.length < 3) {
+        showDlnFeedback(
+            "Name too short",
+            "Your name must contain at least 3 characters.",
+            "warning"
+        );
+
+        shakeDlnElement(dlnElements.playerName);
+        return;
+    }
+
+    if (name.includes(";")) {
+        showDlnFeedback(
+            "Invalid name",
+            "Please choose a name without the ';' character.",
+            "warning"
+        );
+
+        shakeDlnElement(dlnElements.playerName);
+        return;
+    }
+
 
     dlnGame.player =
         name || "Player";
@@ -509,15 +543,28 @@ function handleCorrectGuess() {
 
         dlnGame.attempts += DLN.BONUS;
 
+        /*
         showDlnFeedback(
             "🔥 Super Hit! +10 attempts!",
             "success"
         );
+        */
+       
+        showDlnFeedback(
+            `🔥 Super hit! You found the number ${dlnGame.target} on your first attempt! +${DLN.BONUS * 2} attempts.`,
+            "success"
+        );
 
     } else {
-
+        /*
         showDlnFeedback(
             `✨ Correct! The number was ${dlnGame.target}.`,
+            "success"
+        );
+        */
+
+        showDlnFeedback(
+            `🎉 Well done! You found the number ${dlnGame.target}! +${DLN.BONUS} attempts.`,
             "success"
         );
 
@@ -537,6 +584,14 @@ function handleCorrectGuess() {
             dlnGame.score;
 
         updateDlnRecord();
+
+        setTimeout(() => {
+            showDlnFeedback(
+               `🏆 NEW RECORD! ${dlnGame.player} set the new game record with ${dlnGame.score} points!`,
+               "record"
+            );
+
+        }, 450);
 
     }
 
@@ -563,10 +618,16 @@ function handleCorrectGuess() {
     ) {
 
         setTimeout(() => {
-
+            /*
             showDlnFeedback(
                 "🎁 Level milestone! Bonus attempts awarded.",
                 "record"
+            );
+            */
+            dlnGame.attempts += DLN.BONUS;
+            showDlnFeedback(
+               `🎁 Milestone bonus! Level ${dlnGame.level} reached! +${DLN.BONUS} extra attempts.`,
+               "success"
             );
 
         }, 450);
@@ -825,7 +886,7 @@ function showDlnHint() {
                 : "around";
 
     showDlnFeedback(
-        `💡 The target is ${distance} step(s) ${direction} from ${reference}.`,
+        `💡 The target is ${distance} step(s) ${direction} from ${reference} (-${DLN.HINT_COST} attempts).`,
         "record"
     );
 
