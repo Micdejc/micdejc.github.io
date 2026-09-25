@@ -1,6 +1,6 @@
 # Michael Tchuindjang | Personal Website
 
-Personal academic and professional website of **Michael Tchuindjang**, focused on cybersecurity, AI security research, academic publications, professional activities, and selected achievements.
+Personal academic and professional website of **Michael Tchuindjang**, designed and developed by him to showcase his work in cybersecurity, AI security research, academic publications, professional activities, and selected achievements.
 
 The website is hosted as a static GitHub Pages site and follows a modular structure so that new content can be added without unnecessarily modifying the main page.
 
