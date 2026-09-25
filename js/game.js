@@ -4,24 +4,25 @@
    No PHP / No database
    ========================================================= */
 
-const DLN = {
-    MAX_LEVEL: 100,
-    STEP: 10,
-    DEFAULT_ATTEMPTS: 5,
-    BONUS: 5,
-    HINT_COST: 11
-};
+/*
+ * Session-only record.
+ *
+ * Because this is a GitHub Pages game, the record is kept
+ * in JavaScript memory only.
+ *
+ * Refreshing the page resets the record.
+ */
+window.dlnRecord = 0;
 
-// Session-only global record.
-// It disappears when the page is refreshed.
-if (typeof window.dlnRecord !== "number") {
-    window.dlnRecord = 0;
-}
+
+/* =========================================================
+   GAME STATE
+   ========================================================= */
 
 const dlnGame = {
-    player: "",
+    player: "Player",
     level: 1,
-    attempts: DLN.DEFAULT_ATTEMPTS,
+    attempts: 5,
     superHits: 0,
     target: null,
     score: 0,
@@ -31,88 +32,172 @@ const dlnGame = {
 
 
 /* =========================================================
+   CONSTANTS
+   ========================================================= */
+
+const DLN = {
+    MAX_LEVEL: 100,
+    STEP: 10,
+    DEFAULT_ATTEMPTS: 5,
+    BONUS: 5,
+    HINT_COST: 11
+};
+
+
+/* =========================================================
+   DOM
+   ========================================================= */
+
+let dlnElements = {};
+
+
+/* =========================================================
    INITIALIZATION
    ========================================================= */
 
 export function initDLN() {
-    const modal = document.getElementById("gameModal");
 
-    if (!modal) {
-        console.error("DLN: game modal was not found.");
+    dlnElements = {
+        modal: document.getElementById("gameModal"),
+        backdrop: document.getElementById("gameModalBackdrop"),
+        openButton: document.getElementById("gameToggle"),
+        closeButton: document.getElementById("gameModalClose"),
+
+        startScreen: document.getElementById("dlnStartScreen"),
+        gameScreen: document.getElementById("dlnGameScreen"),
+
+        playerName: document.getElementById("dlnPlayerName"),
+        startButton: document.getElementById("dlnStartButton"),
+        startFeedback: document.getElementById("dlnStartFeedback"),
+
+        level: document.getElementById("dlnLevel"),
+        instruction: document.getElementById("dlnInstruction"),
+
+        attempts: document.getElementById("dlnAttempts"),
+        superHits: document.getElementById("dlnSuperHits"),
+        score: document.getElementById("dlnScore"),
+        record: document.getElementById("dlnRecord"),
+
+        feedback: document.getElementById("dlnFeedback"),
+
+        numberInput: document.getElementById("dlnNumber"),
+        validateButton: document.getElementById("dlnValidate"),
+
+        hintButton: document.getElementById("dlnHint"),
+        nextButton: document.getElementById("dlnNext"),
+        restartButton: document.getElementById("dlnRestart"),
+
+        result: document.getElementById("dlnResult"),
+        resultIcon: document.getElementById("dlnResultIcon"),
+        resultTitle: document.getElementById("dlnResultTitle"),
+        resultMessage: document.getElementById("dlnResultMessage"),
+        resultContinue: document.getElementById("dlnResultContinue"),
+        resultRestart: document.getElementById("dlnResultRestart")
+    };
+
+    if (!dlnElements.modal) {
+        console.warn("DLN: game modal was not found.");
         return;
     }
 
     bindDlnEvents();
+    updateDlnRecord();
 
-    console.log("DLN: game initialized.");
 }
 
 
 /* =========================================================
-   EVENT BINDING
+   EVENT LISTENERS
    ========================================================= */
 
 function bindDlnEvents() {
 
-    const gameToggle = document.getElementById("gameToggle");
-    const closeButton = document.getElementById("gameModalClose");
+    dlnElements.openButton?.addEventListener(
+        "click",
+        openGameModal
+    );
 
-    const startButton = document.getElementById("dlnStart");
-    const validateButton = document.getElementById("bouton");
-    const continueButton = document.getElementById("bouton2");
-    const restartButton = document.getElementById("bouton3");
-    const hintButton = document.getElementById("boutonIndice");
+    dlnElements.closeButton?.addEventListener(
+        "click",
+        closeGameModal
+    );
 
-    const numberInput = document.getElementById("nombre");
-    const playerInput = document.getElementById("nom");
+    dlnElements.backdrop?.addEventListener(
+        "click",
+        closeGameModal
+    );
 
-    if (gameToggle) {
-        gameToggle.addEventListener("click", openGameModal);
-    }
+    dlnElements.startButton?.addEventListener(
+        "click",
+        startDlnGame
+    );
 
-    if (closeButton) {
-        closeButton.addEventListener("click", closeGameModal);
-    }
+    dlnElements.validateButton?.addEventListener(
+        "click",
+        validateDlnGuess
+    );
 
-    if (startButton) {
-        startButton.addEventListener("click", startDlnGame);
-    }
+    dlnElements.hintButton?.addEventListener(
+        "click",
+        showDlnHint
+    );
 
-    if (validateButton) {
-        validateButton.addEventListener("click", validateDlnGuess);
-    }
+    dlnElements.nextButton?.addEventListener(
+        "click",
+        continueDlnGame
+    );
 
-    if (continueButton) {
-        continueButton.addEventListener("click", continueDlnGame);
-    }
+    dlnElements.restartButton?.addEventListener(
+        "click",
+        restartDlnGame
+    );
 
-    if (restartButton) {
-        restartButton.addEventListener("click", restartDlnGame);
-    }
+    dlnElements.resultContinue?.addEventListener(
+        "click",
+        continueDlnGame
+    );
 
-    if (hintButton) {
-        hintButton.addEventListener("click", showDlnHint);
-    }
+    dlnElements.resultRestart?.addEventListener(
+        "click",
+        restartDlnGame
+    );
 
-    if (numberInput) {
-        numberInput.addEventListener("keydown", event => {
-
-            if (event.key === "Enter" && !numberInput.disabled) {
-                event.preventDefault();
-                validateDlnGuess();
-            }
-        });
-    }
-
-    if (playerInput) {
-        playerInput.addEventListener("keydown", event => {
+    dlnElements.playerName?.addEventListener(
+        "keydown",
+        event => {
 
             if (event.key === "Enter") {
-                event.preventDefault();
                 startDlnGame();
             }
-        });
-    }
+
+        }
+    );
+
+    dlnElements.numberInput?.addEventListener(
+        "keydown",
+        event => {
+
+            if (event.key === "Enter") {
+                validateDlnGuess();
+            }
+
+        }
+    );
+
+    document.addEventListener(
+        "keydown",
+        event => {
+
+            if (
+                event.key === "Escape" &&
+                dlnElements.modal?.classList.contains("is-open")
+            ) {
+                closeGameModal();
+            }
+
+        }
+    );
+
 }
 
 
@@ -122,30 +207,31 @@ function bindDlnEvents() {
 
 function openGameModal() {
 
-    const modal = document.getElementById("gameModal");
-
-    if (!modal) {
-        console.error("DLN: game modal was not found.");
-        return;
-    }
-
-    modal.classList.add("active");
-    modal.setAttribute("aria-hidden", "false");
+    dlnElements.modal.classList.add("is-open");
+    dlnElements.modal.setAttribute(
+        "aria-hidden",
+        "false"
+    );
 
     document.body.classList.add("game-modal-open");
+
+    setTimeout(() => {
+        if (!dlnGame.active) {
+            dlnElements.playerName?.focus();
+        } else {
+            dlnElements.numberInput?.focus();
+        }
+    }, 250);
 }
 
 
 function closeGameModal() {
 
-    const modal = document.getElementById("gameModal");
-
-    if (!modal) {
-        return;
-    }
-
-    modal.classList.remove("active");
-    modal.setAttribute("aria-hidden", "true");
+    dlnElements.modal.classList.remove("is-open");
+    dlnElements.modal.setAttribute(
+        "aria-hidden",
+        "true"
+    );
 
     document.body.classList.remove("game-modal-open");
 }
@@ -157,128 +243,109 @@ function closeGameModal() {
 
 function startDlnGame() {
 
-    const playerInput = document.getElementById("nom");
-    const playerName = playerInput
-        ? playerInput.value.trim()
-        : "";
+    const name =
+        dlnElements.playerName.value.trim();
 
-    if (!playerName) {
-        showDlnFeedback(
-            "Player name required",
-            "Please enter your name before starting the game.",
-            "warning"
+    if (
+        name.length > 0 &&
+        name.length < 3
+    ) {
+
+        showStartFeedback(
+            "Please enter at least 3 characters.",
+            "invalid"
         );
 
-        shakeDlnElement(playerInput);
+        shakeInput(dlnElements.playerName);
+
         return;
     }
 
-    if (playerName.length < 3) {
-        showDlnFeedback(
-            "Name too short",
-            "Your name must contain at least 3 characters.",
-            "warning"
-        );
+    dlnGame.player =
+        name || "Player";
 
-        shakeDlnElement(playerInput);
-        return;
-    }
-
-    if (playerName.includes(";")) {
-        showDlnFeedback(
-            "Invalid name",
-            "Please choose a name without the ';' character.",
-            "warning"
-        );
-
-        shakeDlnElement(playerInput);
-        return;
-    }
-
-    dlnGame.player = playerName;
     dlnGame.level = 1;
     dlnGame.attempts = DLN.DEFAULT_ATTEMPTS;
     dlnGame.superHits = 0;
-    dlnGame.target = null;
     dlnGame.score = 0;
     dlnGame.active = true;
     dlnGame.firstAttempt = true;
 
-    showDlnGameScreen();
+    dlnElements.startScreen.hidden = true;
+    dlnElements.gameScreen.hidden = false;
+    dlnElements.result.hidden = true;
 
-    launchDlnLevel();
+    startDlnLevel();
+
 }
 
 
 /* =========================================================
-   GAME SCREEN
+   START LEVEL
    ========================================================= */
 
-function showDlnGameScreen() {
+function startDlnLevel() {
 
-    const startScreen = document.getElementById("blockNom");
-    const gameScreen = document.getElementById("blockJeu");
-
-    if (startScreen) {
-        startScreen.style.display = "none";
-    }
-
-    if (gameScreen) {
-        gameScreen.style.display = "block";
-    }
-}
-
-
-/* =========================================================
-   LEVEL
-   ========================================================= */
-
-function launchDlnLevel() {
-
-    if (!dlnGame.active) {
+    if (dlnGame.level > DLN.MAX_LEVEL) {
+        completeEntireDlnGame();
         return;
     }
 
-    const max = dlnGame.level * DLN.STEP;
+    const maximum =
+        dlnGame.level * DLN.STEP;
 
-    dlnGame.target = generateRandomNumber(1, max);
-    dlnGame.attempts = DLN.DEFAULT_ATTEMPTS;
+    dlnGame.target =
+        generateNumber(1, maximum);
+
     dlnGame.firstAttempt = true;
 
-    updateDlnStats();
-    updateDlnLevelDisplay();
+    dlnElements.numberInput.value = "";
 
-    const numberInput = document.getElementById("nombre");
-    const validateButton = document.getElementById("bouton");
-    const continueButton = document.getElementById("bouton2");
-    const restartButton = document.getElementById("bouton3");
+    dlnElements.level.textContent =
+        dlnGame.level;
 
-    if (numberInput) {
-        numberInput.disabled = false;
-        numberInput.value = "";
-        numberInput.focus();
-    }
+    dlnElements.instruction.textContent =
+        `Guess a number between 1 and ${maximum}.`;
 
-    if (validateButton) {
-        validateButton.disabled = false;
-        validateButton.style.display = "inline-flex";
-    }
+    dlnElements.attempts.textContent =
+        dlnGame.attempts;
 
-    if (continueButton) {
-        continueButton.style.display = "none";
-        continueButton.disabled = false;
-    }
+    dlnElements.superHits.textContent =
+        dlnGame.superHits;
 
-    if (restartButton) {
-        restartButton.style.display = "none";
-        restartButton.disabled = false;
-    }
+    dlnElements.score.textContent =
+        dlnGame.score;
+
+    updateDlnRecord();
 
     clearDlnFeedback();
 
-    setDlnInstruction(
-        `Find the hidden number between 1 and ${max}.`
-    );
+    dlnElements.hintButton.hidden =
+        dlnGame.attempts <= DLN.HINT_COST;
+
+    dlnElements.nextButton.hidden = true;
+    dlnElements.restartButton.hidden = true;
+
+    dlnElements.validateButton.hidden = false;
+    dlnElements.numberInput.disabled = false;
+
+    setTimeout(() => {
+        dlnElements.numberInput.focus();
+    }, 100);
+
+}
+
+
+/* =========================================================
+   GENERATE RANDOM NUMBER
+   ========================================================= */
+
+function generateNumber(min, max) {
+
+    return Math.floor(
+        Math.random() * (max - min + 1)
+    ) + min;
+
 }
 
 
@@ -292,61 +359,117 @@ function validateDlnGuess() {
         return;
     }
 
-    const numberInput = document.getElementById("nombre");
+    const rawValue =
+        dlnElements.numberInput.value.trim();
 
-    if (!numberInput || numberInput.disabled) {
-        return;
-    }
+    const guess = Number(rawValue);
 
-    const value = numberInput.value.trim();
+    const maximum =
+        dlnGame.level * DLN.STEP;
 
-    if (value === "") {
 
-        showDlnFeedback(
-            "Enter a number",
-            "Please enter a number before validating your guess.",
-            "warning"
-        );
+    /* Invalid input */
 
-        shakeDlnElement(numberInput);
-        return;
-    }
-
-    const guess = Number(value);
-
-    if (!Number.isInteger(guess)) {
+    if (
+        rawValue === "" ||
+        !Number.isInteger(guess)
+    ) {
 
         showDlnFeedback(
-            "Invalid number",
             "Please enter a whole number.",
-            "warning"
+            "invalid"
         );
 
-        shakeDlnElement(numberInput);
+        shakeInput(
+            dlnElements.numberInput
+        );
+
         return;
     }
 
-    const maximum = dlnGame.level * DLN.STEP;
 
-    if (guess < 1 || guess > maximum) {
+    /* Outside range */
+
+    if (
+        guess < 1 ||
+        guess > maximum
+    ) {
 
         showDlnFeedback(
-            "Outside the range",
             `Choose a number between 1 and ${maximum}.`,
-            "warning"
+            "invalid"
         );
 
-        shakeDlnElement(numberInput);
+        shakeInput(
+            dlnElements.numberInput
+        );
+
         return;
     }
+
+
+    /* Correct */
 
     if (guess === dlnGame.target) {
 
         handleCorrectGuess();
+
         return;
     }
 
-    handleWrongGuess(guess);
+
+    /* Incorrect */
+
+    dlnGame.attempts--;
+    dlnGame.firstAttempt = false;
+
+    updateDlnStats();
+
+    const distance =
+        Math.abs(
+            guess - dlnGame.target
+        );
+
+    const proximity =
+        (maximum * 3) / 10;
+
+    const close =
+        distance <= proximity;
+
+
+    if (guess < dlnGame.target) {
+
+        showDlnFeedback(
+            close
+                ? "↑ Too low, but you're close!"
+                : "↑ Too low. Keep going!",
+            "low"
+        );
+
+    } else {
+
+        showDlnFeedback(
+            close
+                ? "↓ Too high, but you're close!"
+                : "↓ Too high. Keep going!",
+            "high"
+        );
+
+    }
+
+
+    /* No attempts remaining */
+
+    if (dlnGame.attempts <= 0) {
+
+        dlnGame.attempts = 0;
+
+        updateDlnStats();
+
+        endDlnGame();
+
+    }
+
 }
 
 
@@ -356,183 +479,119 @@ function validateDlnGuess() {
 
 function handleCorrectGuess() {
 
-    const numberInput = document.getElementById("nombre");
-    const validateButton = document.getElementById("bouton");
-    const continueButton = document.getElementById("bouton2");
-    const restartButton = document.getElementById("bouton3");
+    const level =
+        dlnGame.level;
 
-    /*
-     * IMPORTANT:
-     * Disable the input immediately after the correct answer.
-     * The player cannot submit another guess until they choose
-     * Continue or Restart.
-     */
+    let bonusAttempts = DLN.BONUS;
 
-    if (numberInput) {
-        numberInput.disabled = true;
-    }
+    dlnGame.attempts += bonusAttempts;
 
-    if (validateButton) {
-        validateButton.disabled = true;
-    }
 
-    /*
-     * Normal correct-answer bonus.
-     */
-    dlnGame.attempts += DLN.BONUS;
-
-    /*
-     * Super hit:
-     * If the player found the number on their first attempt,
-     * award another bonus.
-     */
+    /* First attempt = Super Hit */
 
     if (dlnGame.firstAttempt) {
 
-        dlnGame.superHits += 1;
+        dlnGame.superHits++;
+
         dlnGame.attempts += DLN.BONUS;
 
         showDlnFeedback(
-            "🔥 Super hit!",
-            `You found the number ${dlnGame.target} on your first attempt! +${DLN.BONUS * 2} attempts.`,
+            "🔥 Super Hit! +10 attempts!",
             "success"
         );
 
     } else {
 
         showDlnFeedback(
-            "🎉 Well done!",
-            `You found the number ${dlnGame.target}! +${DLN.BONUS} attempts.`,
+            `✨ Correct! The number was ${dlnGame.target}.`,
             "success"
         );
+
     }
 
-    /*
-     * Move to the completed level.
-     */
-    dlnGame.level += 1;
 
-    /*
-     * Milestone bonus every 20 completed levels.
-     * The original game awards the BONUS value.
-     */
-    if (
-        dlnGame.level % 20 === 0 &&
-        dlnGame.level <= DLN.MAX_LEVEL
-    ) {
-
-        dlnGame.attempts += DLN.BONUS;
-
-        showDlnFeedback(
-            "🎁 Milestone bonus!",
-            `Level ${dlnGame.level} reached! +${DLN.BONUS} extra attempts.`,
-            "success"
-        );
-    }
-
-    /*
-     * Calculate score after completing the level.
-     */
-    dlnGame.score = calculateDlnScore();
+    dlnGame.level++;
 
     updateDlnStats();
 
-    /*
-     * Check if the player has completed all levels.
-     */
-    if (dlnGame.level > DLN.MAX_LEVEL) {
 
-        completeDlnGame();
+    /* Record */
+
+    if (dlnGame.score > window.dlnRecord) {
+
+        window.dlnRecord =
+            dlnGame.score;
+
+        updateDlnRecord();
+
+    }
+
+
+    /* Final level */
+
+    if (
+        level >= DLN.MAX_LEVEL
+    ) {
+
+        setTimeout(
+            completeEntireDlnGame,
+            650
+        );
+
         return;
     }
 
-    /*
-     * The player must now explicitly choose Continue or Restart.
-     */
 
-    if (continueButton) {
-        continueButton.style.display = "inline-flex";
-        continueButton.disabled = false;
+    /* Every 20 levels */
+
+    if (
+        level % 20 === 0
+    ) {
+
+        setTimeout(() => {
+
+            showDlnFeedback(
+                "🎁 Level milestone! Bonus attempts awarded.",
+                "record"
+            );
+
+        }, 450);
+
     }
 
-    if (restartButton) {
-        restartButton.style.display = "inline-flex";
-        restartButton.disabled = false;
-    }
 
-    /*
-     * Keep the input disabled.
-     */
-    if (numberInput) {
-        numberInput.disabled = true;
-    }
+    setTimeout(() => {
 
-    if (validateButton) {
-        validateButton.disabled = true;
-    }
+        showDlnLevelComplete();
+
+    }, 750);
+
 }
 
 
 /* =========================================================
-   WRONG GUESS
+   LEVEL COMPLETE
    ========================================================= */
 
-function handleWrongGuess(guess) {
+function showDlnLevelComplete() {
 
-    dlnGame.firstAttempt = false;
+    dlnElements.result.hidden = false;
 
-    dlnGame.attempts -= 1;
+    dlnElements.resultIcon.textContent =
+        "✨";
 
-    if (dlnGame.attempts <= 0) {
+    dlnElements.resultTitle.textContent =
+        `Well done, ${dlnGame.player}!`;
 
-        dlnGame.attempts = 0;
+    dlnElements.resultMessage.textContent =
+        `You passed level ${dlnGame.level - 1}. Ready for level ${dlnGame.level}?`;
 
-        updateDlnStats();
+    dlnElements.resultContinue.hidden =
+        false;
 
-        showDlnFeedback(
-            "💥 Game over",
-            `The number was ${dlnGame.target}.`,
-            "error"
-        );
+    dlnElements.resultRestart.hidden =
+        false;
 
-        endDlnGame();
-
-        return;
-    }
-
-    let message = "";
-
-    if (guess < dlnGame.target) {
-
-        message = `Too low! Try a number higher than ${guess}.`;
-
-    } else {
-
-        message = `Too high! Try a number lower than ${guess}.`;
-    }
-
-    /*
-     * Add a more specific distance hint.
-     */
-
-    const maximum = dlnGame.level * DLN.STEP;
-    const difference = Math.abs(guess - dlnGame.target);
-
-    if (difference <= maximum * 0.3) {
-        message += " 🔥 You are very close!";
-    } else {
-        message += " ❄️ You are still far away.";
-    }
-
-    showDlnFeedback(
-        guess < dlnGame.target ? "⬆️ Go higher" : "⬇️ Go lower",
-        `${message} Attempts remaining: ${dlnGame.attempts}.`,
-        guess < dlnGame.target ? "low" : "high"
-    );
-
-    updateDlnStats();
-
-    shakeDlnElement(document.getElementById("nombre"));
 }
 
 
@@ -542,73 +601,12 @@ function handleWrongGuess(guess) {
 
 function continueDlnGame() {
 
-    if (!dlnGame.active) {
-        return;
-    }
+    dlnElements.result.hidden = true;
 
-    const continueButton = document.getElementById("bouton2");
-    const restartButton = document.getElementById("bouton3");
+    clearDlnFeedback();
 
-    if (continueButton) {
-        continueButton.style.display = "none";
-    }
+    startDlnLevel();
 
-    if (restartButton) {
-        restartButton.style.display = "none";
-    }
-
-    launchDlnLevel();
-
-    const numberInput = document.getElementById("nombre");
-
-    if (numberInput) {
-        numberInput.disabled = false;
-        numberInput.value = "";
-        numberInput.focus();
-    }
-
-    const validateButton = document.getElementById("bouton");
-
-    if (validateButton) {
-        validateButton.disabled = false;
-    }
-}
-
-
-/* =========================================================
-   RESTART
-   ========================================================= */
-
-function restartDlnGame() {
-
-    dlnGame.level = 1;
-    dlnGame.attempts = DLN.DEFAULT_ATTEMPTS;
-    dlnGame.superHits = 0;
-    dlnGame.target = null;
-    dlnGame.score = 0;
-    dlnGame.active = true;
-    dlnGame.firstAttempt = true;
-
-    launchDlnLevel();
-
-    const numberInput = document.getElementById("nombre");
-    const validateButton = document.getElementById("bouton");
-
-    if (numberInput) {
-        numberInput.disabled = false;
-        numberInput.value = "";
-        numberInput.focus();
-    }
-
-    if (validateButton) {
-        validateButton.disabled = false;
-    }
-
-    showDlnFeedback(
-        "🔄 New game",
-        "The game has been restarted. Good luck!",
-        "info"
-    );
 }
 
 
@@ -620,82 +618,100 @@ function endDlnGame() {
 
     dlnGame.active = false;
 
-    const numberInput = document.getElementById("nombre");
-    const validateButton = document.getElementById("bouton");
-    const restartButton = document.getElementById("bouton3");
-    const continueButton = document.getElementById("bouton2");
+    dlnElements.validateButton.hidden = true;
+    dlnElements.hintButton.hidden = true;
 
-    if (numberInput) {
-        numberInput.disabled = true;
-    }
+    dlnElements.numberInput.disabled = true;
 
-    if (validateButton) {
-        validateButton.disabled = true;
-    }
+    dlnElements.result.hidden = false;
 
-    if (continueButton) {
-        continueButton.style.display = "none";
-    }
+    dlnElements.resultIcon.textContent =
+        "😔";
 
-    if (restartButton) {
-        restartButton.style.display = "inline-flex";
-        restartButton.disabled = false;
-    }
+    dlnElements.resultTitle.textContent =
+        "Game Over";
+
+    dlnElements.resultMessage.textContent =
+        `${dlnGame.player}, your adventure ends at level ${dlnGame.level}. The number was ${dlnGame.target}.`;
+
+    dlnElements.resultContinue.hidden =
+        true;
+
+    dlnElements.resultRestart.hidden =
+        false;
+
+    showDlnFeedback(
+        `The number was ${dlnGame.target}.`,
+        "failure"
+    );
+
 }
 
 
 /* =========================================================
-   COMPLETE GAME
+   COMPLETE ENTIRE GAME
    ========================================================= */
 
-function completeDlnGame() {
+function completeEntireDlnGame() {
 
     dlnGame.active = false;
 
-    const numberInput = document.getElementById("nombre");
-    const validateButton = document.getElementById("bouton");
-    const continueButton = document.getElementById("bouton2");
-    const restartButton = document.getElementById("bouton3");
+    dlnElements.validateButton.hidden = true;
+    dlnElements.hintButton.hidden = true;
+    dlnElements.numberInput.disabled = true;
 
-    if (numberInput) {
-        numberInput.disabled = true;
+    dlnElements.result.hidden = false;
+
+    dlnElements.resultIcon.textContent =
+        "🏆";
+
+    dlnElements.resultTitle.textContent =
+        `Congratulations, ${dlnGame.player}!`;
+
+    dlnElements.resultMessage.textContent =
+        `You completed all ${DLN.MAX_LEVEL} levels of DLN with a score of ${dlnGame.score}.`;
+
+    dlnElements.resultContinue.hidden =
+        true;
+
+    dlnElements.resultRestart.hidden =
+        false;
+
+    if (
+        dlnGame.score > window.dlnRecord
+    ) {
+
+        window.dlnRecord =
+            dlnGame.score;
+
+        updateDlnRecord();
+
     }
 
-    if (validateButton) {
-        validateButton.disabled = true;
-    }
+}
 
-    if (continueButton) {
-        continueButton.style.display = "none";
-    }
 
-    if (restartButton) {
-        restartButton.style.display = "inline-flex";
-        restartButton.disabled = false;
-    }
+/* =========================================================
+   RESTART
+   ========================================================= */
 
-    const oldRecord = window.dlnRecord;
+function restartDlnGame() {
 
-    if (dlnGame.score > oldRecord) {
+    dlnElements.result.hidden = true;
 
-        window.dlnRecord = dlnGame.score;
+    dlnGame.player =
+        dlnGame.player || "Player";
 
-        showDlnFeedback(
-            "🏆 NEW RECORD!",
-            `${dlnGame.player} finished the game with ${dlnGame.score} points!`,
-            "record"
-        );
+    dlnGame.level = 1;
+    dlnGame.attempts =
+        DLN.DEFAULT_ATTEMPTS;
 
-        animateDlnRecord();
+    dlnGame.superHits = 0;
+    dlnGame.score = 0;
+    dlnGame.active = true;
 
-    } else {
+    startDlnLevel();
 
-        showDlnFeedback(
-            "🏆 Game completed!",
-            `Congratulations ${dlnGame.player}! Your score is ${dlnGame.score}.`,
-            "success"
-        );
-    }
 }
 
 
@@ -703,51 +719,34 @@ function completeDlnGame() {
    SCORE
    ========================================================= */
 
-function calculateDlnScore() {
-
-    return (
-        ((dlnGame.level - 1) * DLN.STEP) +
-        (dlnGame.superHits * DLN.BONUS)
-    );
-}
-
-
 function updateDlnStats() {
 
-    const levelElement = document.getElementById("niveau");
-    const attemptsElement = document.getElementById("tentatives");
-    const superHitsElement = document.getElementById("supercoups");
-    const scoreElement = document.getElementById("score");
+    dlnGame.score =
+        ((dlnGame.level - 1) * DLN.STEP) +
+        (dlnGame.superHits * DLN.BONUS);
 
-    if (levelElement) {
-        levelElement.textContent =
-            Math.min(dlnGame.level, DLN.MAX_LEVEL);
-    }
+    dlnElements.attempts.textContent =
+        dlnGame.attempts;
 
-    if (attemptsElement) {
-        attemptsElement.textContent =
-            dlnGame.attempts;
-    }
+    dlnElements.superHits.textContent =
+        dlnGame.superHits;
 
-    if (superHitsElement) {
-        superHitsElement.textContent =
-            dlnGame.superHits;
-    }
+    dlnElements.score.textContent =
+        dlnGame.score;
 
-    if (scoreElement) {
-        scoreElement.textContent =
-            dlnGame.score;
-    }
+    updateDlnRecord();
+
 }
 
 
-function updateDlnLevelDisplay() {
+/* =========================================================
+   RECORD
+   ========================================================= */
 
-    const levelElement = document.getElementById("niveau");
+function updateDlnRecord() {
 
-    if (levelElement) {
-        levelElement.textContent = dlnGame.level;
-    }
+    dlnElements.record.textContent =
+        window.dlnRecord;
 }
 
 
@@ -757,44 +756,58 @@ function updateDlnLevelDisplay() {
 
 function showDlnHint() {
 
-    if (!dlnGame.active) {
-        return;
-    }
-
-    if (dlnGame.attempts <= DLN.HINT_COST) {
-
+    if (
+        dlnGame.attempts <= DLN.HINT_COST
+    ) {
         showDlnFeedback(
-            "💡 Hint unavailable",
-            `You need more than ${DLN.HINT_COST} attempts to use a hint.`,
-            "warning"
+            "You need more than 11 attempts to use a hint.",
+            "invalid"
         );
 
         return;
     }
 
-    dlnGame.attempts -= DLN.HINT_COST;
+    const guess =
+        Number(
+            dlnElements.numberInput.value
+        );
 
-    const distance = Math.abs(
-        dlnGame.target - Math.floor((dlnGame.level * DLN.STEP) / 2)
-    );
+    let reference;
 
-    let hint;
-
-    if (distance <= DLN.STEP * 0.2) {
-        hint = "The number is somewhere near the middle of the range.";
-    } else if (dlnGame.target <= (dlnGame.level * DLN.STEP) / 2) {
-        hint = "The number is in the lower half of the range.";
+    if (
+        Number.isInteger(guess)
+    ) {
+        reference = guess;
     } else {
-        hint = "The number is in the upper half of the range.";
+        reference =
+            (dlnGame.level * DLN.STEP) / 2;
     }
 
+    const distance =
+        Math.abs(
+            dlnGame.target - reference
+        );
+
+    const direction =
+        dlnGame.target > reference
+            ? "higher"
+            : dlnGame.target < reference
+                ? "lower"
+                : "around";
+
     showDlnFeedback(
-        "💡 Hint",
-        `${hint} (-${DLN.HINT_COST} attempts)`,
-        "info"
+        `💡 The target is ${distance} step(s) ${direction} from ${reference}.`,
+        "record"
     );
 
+    dlnGame.attempts -=
+        DLN.HINT_COST;
+
     updateDlnStats();
+
+    dlnElements.hintButton.hidden =
+        dlnGame.attempts <= DLN.HINT_COST;
+
 }
 
 
@@ -802,133 +815,102 @@ function showDlnHint() {
    FEEDBACK
    ========================================================= */
 
-function showDlnFeedback(title, message, type = "info") {
+function showDlnFeedback(
+    message,
+    type = ""
+) {
 
-    const notification = document.getElementById("notificationJeu");
+    const element =
+        dlnElements.feedback;
 
-    if (!notification) {
-        return;
-    }
+    element.className =
+        "dln-feedback";
 
-    notification.className = "";
-    notification.classList.add("dln-feedback", `dln-${type}`);
+    /*
+     * Force the animation to restart when
+     * the same notification is displayed twice.
+     */
+    void element.offsetWidth;
 
-    notification.innerHTML = `
-        <strong>${escapeHtml(title)}</strong>
-        <span>${escapeHtml(message)}</span>
-    `;
+    element.textContent =
+        message;
 
-    void notification.offsetWidth;
+    element.classList.add(
+        "show",
+        type
+    );
 
-    notification.classList.add("dln-feedback-show");
+}
+
+
+function showStartFeedback(
+    message,
+    type = ""
+) {
+
+    const element =
+        dlnElements.startFeedback;
+
+    element.className =
+        "dln-feedback";
+
+    void element.offsetWidth;
+
+    element.textContent =
+        message;
+
+    element.classList.add(
+        "show",
+        type
+    );
+
 }
 
 
 function clearDlnFeedback() {
 
-    const notification = document.getElementById("notificationJeu");
+    dlnElements.feedback.className =
+        "dln-feedback";
 
-    if (!notification) {
-        return;
-    }
+    dlnElements.feedback.textContent =
+        "";
 
-    notification.className = "dln-feedback";
-    notification.innerHTML = "";
 }
 
 
-function setDlnInstruction(message) {
+function shakeInput(element) {
 
-    const instruction = document.getElementById("instruction");
-
-    if (instruction) {
-        instruction.textContent = message;
-    }
-}
-
-
-/* =========================================================
-   ANIMATION
-   ========================================================= */
-
-function shakeDlnElement(element) {
-
-    if (!element) {
-        return;
-    }
-
-    element.classList.remove("dln-shake");
+    element.classList.remove("shake");
 
     void element.offsetWidth;
 
-    element.classList.add("dln-shake");
+    element.classList.add("shake");
 
     setTimeout(() => {
-        element.classList.remove("dln-shake");
-    }, 500);
-}
 
+        element.classList.remove("shake");
 
-function animateDlnRecord() {
+    }, 450);
 
-    const notification = document.getElementById("notificationJeu");
-
-    if (!notification) {
-        return;
-    }
-
-    notification.classList.add("dln-record-animation");
 }
 
 
 /* =========================================================
-   UTILITY
-   ========================================================= */
-
-function generateRandomNumber(min, max) {
-
-    return Math.floor(
-        Math.random() * (max - min + 1)
-    ) + min;
-}
-
-
-function escapeHtml(value) {
-
-    return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-}
-
-
-/* =========================================================
-   RESET
+   PUBLIC RESET
    ========================================================= */
 
 export function resetDLN() {
 
-    dlnGame.player = "";
+    dlnGame.player = "Player";
     dlnGame.level = 1;
-    dlnGame.attempts = DLN.DEFAULT_ATTEMPTS;
+    dlnGame.attempts =
+        DLN.DEFAULT_ATTEMPTS;
+
     dlnGame.superHits = 0;
     dlnGame.target = null;
     dlnGame.score = 0;
     dlnGame.active = false;
-    dlnGame.firstAttempt = true;
-
-    const startScreen = document.getElementById("blockNom");
-    const gameScreen = document.getElementById("blockJeu");
-
-    if (startScreen) {
-        startScreen.style.display = "block";
-    }
-
-    if (gameScreen) {
-        gameScreen.style.display = "none";
-    }
 
     clearDlnFeedback();
+
 }
