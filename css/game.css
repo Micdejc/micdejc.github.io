@@ -1,5 +1,5 @@
 /* =========================================================
-   GAME & HOBBIES MODAL
+   GAME & HOBBIES TOGGLE
    ========================================================= */
 
 .game-toggle {
@@ -26,8 +26,9 @@
     transform: translateY(-2px);
 }
 
+
 /* =========================================================
-   MODAL
+   GAME MODAL
    ========================================================= */
 
 .game-modal {
@@ -55,15 +56,33 @@
     opacity: 1;
 }
 
+
+/* =========================================================
+   BACKDROP
+   ========================================================= */
+
 .game-modal-backdrop {
     position: absolute;
     inset: 0;
 
-    background: rgba(0, 0, 0, 0.72);
+    /*
+     * Uses the active website theme instead of
+     * forcing a black overlay.
+     */
+    background: color-mix(
+        in srgb,
+        var(--background) 82%,
+        transparent
+    );
 
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
 }
+
+
+/* =========================================================
+   MODAL CONTENT
+   ========================================================= */
 
 .game-modal-content {
     position: relative;
@@ -75,20 +94,25 @@
 
     padding: 28px;
 
+    border: 1px solid var(--border);
     border-radius: 18px;
 
-    background: var(--card-background, #ffffff);
-    color: var(--text-color, #222222);
-
-    border: 1px solid var(--border-color, rgba(0, 0, 0, 0.12));
+    background: var(--surface);
+    color: var(--text);
 
     box-shadow:
-        0 25px 70px rgba(0, 0, 0, 0.35);
+        0 25px 70px rgba(0, 0, 0, 0.25);
 
     transform: translateY(20px) scale(0.97);
 
     transition:
         transform 0.3s ease;
+
+    /*
+     * Allows native controls to follow
+     * the selected light/dark theme.
+     */
+    color-scheme: light dark;
 }
 
 .game-modal.is-open .game-modal-content {
@@ -116,7 +140,7 @@ body.game-modal-open {
     border-radius: 50%;
 
     background: transparent;
-    color: inherit;
+    color: var(--text);
 
     cursor: pointer;
 
@@ -125,11 +149,19 @@ body.game-modal-open {
 
     transition:
         background 0.2s ease,
+        color 0.2s ease,
         transform 0.2s ease;
 }
 
 .game-modal-close:hover {
-    background: rgba(127, 127, 127, 0.12);
+    background: color-mix(
+        in srgb,
+        var(--text) 10%,
+        transparent
+    );
+
+    color: var(--primary);
+
     transform: rotate(90deg);
 }
 
@@ -147,16 +179,21 @@ body.game-modal-open {
 
 .game-modal-header h2 {
     margin: 0;
+
+    color: var(--text);
 }
 
 .game-modal-header p {
     margin: 4px 0 0;
+
+    color: var(--text);
+
     opacity: 0.7;
 }
 
 
 /* =========================================================
-   DLN
+   DLN CONTAINER
    ========================================================= */
 
 .dln-container {
@@ -164,17 +201,16 @@ body.game-modal-open {
 
     padding: 24px;
 
+    border: 1px solid var(--border);
     border-radius: 16px;
 
-    background: var(
-        --secondary-background,
-        rgba(127, 127, 127, 0.08)
+    background: color-mix(
+        in srgb,
+        var(--background) 92%,
+        var(--surface)
     );
 
-    border: 1px solid var(
-        --border-color,
-        rgba(127, 127, 127, 0.15)
-    );
+    color: var(--text);
 
     overflow: hidden;
 }
@@ -199,8 +235,8 @@ body.game-modal-open {
 
     border-radius: 10px;
 
-    background: var(--accent-color, #2563eb);
-    color: white;
+    background: var(--primary);
+    color: var(--surface);
 
     font-weight: 800;
     letter-spacing: 0.08em;
@@ -208,10 +244,15 @@ body.game-modal-open {
 
 .dln-heading h3 {
     margin: 0;
+
+    color: var(--text);
 }
 
 .dln-heading p {
     margin: 3px 0 0;
+
+    color: var(--text);
+
     opacity: 0.7;
 }
 
@@ -236,7 +277,10 @@ body.game-modal-open {
 }
 
 .dln-subtle {
+    color: var(--text);
+
     opacity: 0.65;
+
     font-size: 0.9rem;
 }
 
@@ -255,6 +299,8 @@ body.game-modal-open {
 
     margin-bottom: 7px;
 
+    color: var(--text);
+
     font-size: 0.9rem;
     font-weight: 600;
 }
@@ -266,19 +312,11 @@ body.game-modal-open {
 
     padding: 12px 14px;
 
-    border: 1px solid var(
-        --border-color,
-        rgba(127, 127, 127, 0.3)
-    );
-
+    border: 1px solid var(--border);
     border-radius: 10px;
 
-    background: var(
-        --card-background,
-        #ffffff
-    );
-
-    color: inherit;
+    background: var(--background);
+    color: var(--text);
 
     font-size: 1rem;
 
@@ -290,15 +328,31 @@ body.game-modal-open {
         transform 0.2s ease;
 }
 
+.dln-input::placeholder {
+    color: var(--text);
+    opacity: 0.5;
+}
+
 .dln-input:focus {
-    border-color: var(--accent-color, #2563eb);
+    border-color: var(--primary);
 
     box-shadow:
-        0 0 0 3px rgba(37, 99, 235, 0.15);
+        0 0 0 3px color-mix(
+            in srgb,
+            var(--primary) 15%,
+            transparent
+        );
+}
+
+.dln-input:disabled {
+    cursor: not-allowed;
+
+    opacity: 0.55;
 }
 
 .dln-number-input {
     text-align: center;
+
     font-size: 1.25rem;
     font-weight: 700;
 }
@@ -310,19 +364,21 @@ body.game-modal-open {
 
 .dln-primary-button,
 .dln-secondary-button {
-    border: 0;
     border-radius: 10px;
 
     padding: 11px 18px;
 
     cursor: pointer;
 
+    font: inherit;
     font-weight: 700;
 
     transition:
         transform 0.2s ease,
         opacity 0.2s ease,
-        box-shadow 0.2s ease;
+        box-shadow 0.2s ease,
+        border-color 0.2s ease,
+        background 0.2s ease;
 }
 
 .dln-primary-button {
@@ -330,30 +386,61 @@ body.game-modal-open {
 
     margin-top: 12px;
 
-    background: var(--accent-color, #2563eb);
-    color: white;
+    border: 1px solid var(--primary);
+
+    background: var(--primary);
+    color: var(--surface);
 }
 
 .dln-secondary-button {
+    border: 1px solid var(--border);
+
     background: transparent;
-
-    color: inherit;
-
-    border: 1px solid var(
-        --border-color,
-        rgba(127, 127, 127, 0.3)
-    );
+    color: var(--text);
 }
 
 .dln-primary-button:hover,
 .dln-secondary-button:hover {
     transform: translateY(-2px);
+
     opacity: 0.9;
+}
+
+.dln-primary-button:hover {
+    box-shadow:
+        0 6px 18px color-mix(
+            in srgb,
+            var(--primary) 20%,
+            transparent
+        );
+}
+
+.dln-secondary-button:hover {
+    border-color: var(--primary);
+
+    color: var(--primary);
+
+    background: color-mix(
+        in srgb,
+        var(--primary) 7%,
+        transparent
+    );
 }
 
 .dln-primary-button:active,
 .dln-secondary-button:active {
     transform: translateY(0);
+}
+
+.dln-primary-button:disabled,
+.dln-secondary-button:disabled {
+    cursor: not-allowed;
+
+    opacity: 0.45;
+
+    transform: none;
+
+    box-shadow: none;
 }
 
 .dln-actions {
@@ -378,28 +465,38 @@ body.game-modal-open {
 .dln-level-display span {
     display: block;
 
+    color: var(--text);
+
     font-size: 0.7rem;
+
     letter-spacing: 0.15em;
+
     opacity: 0.6;
 }
 
 .dln-level-display strong {
     display: block;
 
+    color: var(--text);
+
     font-size: 2rem;
 }
 
 .dln-instruction {
-    text-align: center;
-
     margin: 0 0 18px;
+
+    color: var(--text);
+
+    text-align: center;
 
     font-weight: 600;
 }
 
 .dln-stats {
     display: grid;
+
     grid-template-columns: repeat(4, 1fr);
+
     gap: 8px;
 
     margin-bottom: 18px;
@@ -408,17 +505,27 @@ body.game-modal-open {
 .dln-stat {
     padding: 10px 6px;
 
-    text-align: center;
-
+    border: 1px solid var(--border);
     border-radius: 10px;
 
-    background: rgba(127, 127, 127, 0.08);
+    background: color-mix(
+        in srgb,
+        var(--background) 92%,
+        var(--surface)
+    );
+
+    color: var(--text);
+
+    text-align: center;
 }
 
 .dln-stat span {
     display: block;
 
+    color: var(--text);
+
     font-size: 0.7rem;
+
     opacity: 0.65;
 }
 
@@ -426,6 +533,8 @@ body.game-modal-open {
     display: block;
 
     margin-top: 3px;
+
+    color: var(--text);
 
     font-size: 1.05rem;
 }
@@ -442,13 +551,17 @@ body.game-modal-open {
 
     padding: 10px 14px;
 
+    border: 1px solid transparent;
     border-radius: 10px;
+
+    color: var(--text);
 
     text-align: center;
 
     font-weight: 700;
 
     opacity: 0;
+
     transform: translateY(8px);
 
     pointer-events: none;
@@ -458,16 +571,34 @@ body.game-modal-open {
     animation: dlnFeedbackIn 0.35s ease forwards;
 }
 
+
+/*
+ * Feedback colors are mixed with the site's
+ * active theme rather than using fixed backgrounds.
+ */
+
 .dln-feedback.low {
-    background: rgba(59, 130, 246, 0.12);
+    background: color-mix(
+        in srgb,
+        var(--primary) 12%,
+        var(--surface)
+    );
 }
 
 .dln-feedback.high {
-    background: rgba(245, 158, 11, 0.12);
+    background: color-mix(
+        in srgb,
+        #f59e0b 12%,
+        var(--surface)
+    );
 }
 
 .dln-feedback.success {
-    background: rgba(34, 197, 94, 0.14);
+    background: color-mix(
+        in srgb,
+        #22c55e 14%,
+        var(--surface)
+    );
 
     animation:
         dlnFeedbackIn 0.35s ease forwards,
@@ -475,7 +606,11 @@ body.game-modal-open {
 }
 
 .dln-feedback.record {
-    background: rgba(168, 85, 247, 0.14);
+    background: color-mix(
+        in srgb,
+        #a855f7 14%,
+        var(--surface)
+    );
 
     animation:
         dlnFeedbackIn 0.35s ease forwards,
@@ -484,7 +619,11 @@ body.game-modal-open {
 
 .dln-feedback.invalid,
 .dln-feedback.failure {
-    background: rgba(239, 68, 68, 0.12);
+    background: color-mix(
+        in srgb,
+        #ef4444 12%,
+        var(--surface)
+    );
 }
 
 @keyframes dlnFeedbackIn {
@@ -573,9 +712,11 @@ body.game-modal-open {
    ========================================================= */
 
 .dln-result {
-    text-align: center;
-
     padding: 25px 10px;
+
+    color: var(--text);
+
+    text-align: center;
 
     animation: dlnResultIn 0.45s ease;
 }
@@ -614,15 +755,21 @@ body.game-modal-open {
 
 .dln-result h3 {
     margin: 10px 0;
+
+    color: var(--text);
 }
 
 .dln-result p {
+    color: var(--text);
+
     opacity: 0.8;
 }
 
 .dln-result-actions {
     display: flex;
+
     justify-content: center;
+
     gap: 10px;
 
     margin-top: 20px;
@@ -643,6 +790,8 @@ body.game-modal-open {
         padding: 20px;
 
         max-height: 94vh;
+
+        border-radius: 14px;
     }
 
     .dln-container {
