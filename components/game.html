@@ -1,1 +1,242 @@
+<!-- Games & Hobbies Modal -->
+<div
+    class="game-modal"
+    id="gameModal"
+    aria-hidden="true"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="gameModalTitle"
+>
+    <div class="game-modal-backdrop" id="gameModalBackdrop"></div>
 
+    <div class="game-modal-content">
+
+        <button
+            class="game-modal-close"
+            id="gameModalClose"
+            aria-label="Close Games and Hobbies"
+            title="Close"
+        >
+            ×
+        </button>
+
+        <div class="game-modal-header">
+            <span class="game-modal-icon">♟</span>
+
+            <div>
+                <h2 id="gameModalTitle">Games &amp; Hobbies</h2>
+                <p>Take a break and have some fun.</p>
+            </div>
+        </div>
+
+        <!-- DLN -->
+        <section class="dln-container" id="dlnContainer">
+
+            <div class="dln-heading">
+                <span class="dln-badge">DLN</span>
+
+                <div>
+                    <h3>Deviner le Nombre</h3>
+                    <p>Can you find the hidden number?</p>
+                </div>
+            </div>
+
+            <!-- START SCREEN -->
+            <div class="dln-screen" id="dlnStartScreen">
+
+                <div class="dln-introduction">
+                    <p>
+                        Guess the secret number and progress through
+                        increasingly challenging levels.
+                    </p>
+
+                    <p class="dln-subtle">
+                        The range starts at 1–10 and can reach 1–1000.
+                    </p>
+                </div>
+
+                <label for="dlnPlayerName">
+                    Player name
+                </label>
+
+                <input
+                    type="text"
+                    id="dlnPlayerName"
+                    class="dln-input"
+                    placeholder="Enter your name"
+                    maxlength="30"
+                    autocomplete="nickname"
+                >
+
+                <div
+                    class="dln-feedback"
+                    id="dlnStartFeedback"
+                    aria-live="polite"
+                ></div>
+
+                <button
+                    class="dln-primary-button"
+                    id="dlnStartButton"
+                    type="button"
+                >
+                    Start Game
+                </button>
+
+            </div>
+
+            <!-- GAME SCREEN -->
+            <div
+                class="dln-screen"
+                id="dlnGameScreen"
+                hidden
+            >
+
+                <div class="dln-level-display">
+                    <span>LEVEL</span>
+                    <strong id="dlnLevel">1</strong>
+                </div>
+
+                <p
+                    class="dln-instruction"
+                    id="dlnInstruction"
+                >
+                    Guess a number between 1 and 10.
+                </p>
+
+                <!-- Statistics -->
+                <div class="dln-stats">
+
+                    <div class="dln-stat">
+                        <span>Attempts</span>
+                        <strong id="dlnAttempts">5</strong>
+                    </div>
+
+                    <div class="dln-stat">
+                        <span>Super Hits</span>
+                        <strong id="dlnSuperHits">0</strong>
+                    </div>
+
+                    <div class="dln-stat">
+                        <span>Score</span>
+                        <strong id="dlnScore">0</strong>
+                    </div>
+
+                    <div class="dln-stat">
+                        <span>Record</span>
+                        <strong id="dlnRecord">0</strong>
+                    </div>
+
+                </div>
+
+                <!-- Feedback -->
+                <div
+                    class="dln-feedback"
+                    id="dlnFeedback"
+                    aria-live="assertive"
+                ></div>
+
+                <!-- Number input -->
+                <div class="dln-input-group">
+
+                    <label for="dlnNumber">
+                        Your guess
+                    </label>
+
+                    <input
+                        type="number"
+                        id="dlnNumber"
+                        class="dln-input dln-number-input"
+                        placeholder="Enter a number"
+                        inputmode="numeric"
+                    >
+
+                </div>
+
+                <!-- Main action -->
+                <button
+                    class="dln-primary-button"
+                    id="dlnValidate"
+                    type="button"
+                >
+                    Guess
+                </button>
+
+                <!-- Secondary actions -->
+                <div class="dln-actions">
+
+                    <button
+                        class="dln-secondary-button"
+                        id="dlnHint"
+                        type="button"
+                        hidden
+                    >
+                        Hint
+                    </button>
+
+                    <button
+                        class="dln-secondary-button"
+                        id="dlnNext"
+                        type="button"
+                        hidden
+                    >
+                        Continue
+                    </button>
+
+                    <button
+                        class="dln-secondary-button"
+                        id="dlnRestart"
+                        type="button"
+                        hidden
+                    >
+                        Restart
+                    </button>
+
+                </div>
+
+            </div>
+
+            <!-- GAME RESULT OVERLAY -->
+            <div
+                class="dln-result"
+                id="dlnResult"
+                hidden
+            >
+
+                <div class="dln-result-icon" id="dlnResultIcon">
+                    ✨
+                </div>
+
+                <h3 id="dlnResultTitle">
+                    Well done!
+                </h3>
+
+                <p id="dlnResultMessage"></p>
+
+                <div class="dln-result-actions">
+
+                    <button
+                        class="dln-primary-button"
+                        id="dlnResultContinue"
+                        type="button"
+                        hidden
+                    >
+                        Continue
+                    </button>
+
+                    <button
+                        class="dln-secondary-button"
+                        id="dlnResultRestart"
+                        type="button"
+                        hidden
+                    >
+                        Restart
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </div>
+</div>
