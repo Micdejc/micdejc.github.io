@@ -17,6 +17,7 @@ micdejc.github.io/
 │   ├── nav.html
 │   ├── hero.html
 │   ├── calendar.html
+│   ├── game.html
 │   └── footer.html
 │
 ├── sections/
@@ -56,6 +57,7 @@ micdejc.github.io/
 │   ├── calendar.css
 │   ├── feature-modal.css
 │   ├── blog.css
+│   ├── game.css
 │   ├── testimonials.css
 │   └── search.css
 │
@@ -64,6 +66,7 @@ micdejc.github.io/
 │   ├── calendar.js
 │   ├── feature.js
 │   ├── blog.js
+│   ├── game.js
 │   ├── blog-posts.js
 │   └── search.js
 │
@@ -772,6 +775,18 @@ The implementation currently uses:
 - Additional calendar data sources for UK holidays and broader international observances
 
 Where possible, events are represented using their official or commonly recognized names, dates, and relevant descriptions.
+
+---
+
+# Games & Hobbies
+
+The website includes **DLN (Deviner Le Nombre)**, an interactive number-guessing game designed and proposed by myself.
+
+Players progress through increasingly challenging levels by guessing a randomly generated number, with attempts, hints, bonuses, super hits, and scores tracked throughout the session. The game also includes animated feedback for correct and incorrect guesses, level progression, and new records.
+
+The game runs entirely in the browser and does **not require a database or server-side storage**. The current high score is maintained as a JavaScript session variable and resets when the page is refreshed.
+
+The game is integrated directly into the website through a responsive modal and automatically follows the site's light and dark themes.
 
 ---
 # Local Testing
