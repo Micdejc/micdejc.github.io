@@ -262,7 +262,7 @@ function startDlnGame() {
     }
     */
     if (!name) {
-        showDlnFeedback(
+        showStartFeedback(
             "Please enter your name before starting the game.",
             "invalid"
         );
@@ -272,7 +272,7 @@ function startDlnGame() {
     }
 
     if (name.length < 3) {
-        showDlnFeedback(
+        showStartFeedback(
             "Your name must contain at least 3 characters.",
             "invalid"
         );
@@ -282,7 +282,7 @@ function startDlnGame() {
     }
 
     if (name.includes(";")) {
-        showDlnFeedback(
+        showStartFeedback(
             "Please choose a name without the ';' character.",
             "invalid"
         );
@@ -582,14 +582,6 @@ function handleCorrectGuess() {
 
         updateDlnRecord();
 
-        setTimeout(() => {
-            showDlnFeedback(
-               `🏆 NEW RECORD! ${dlnGame.player} set the new game record with ${dlnGame.score} points!`,
-               "record"
-            );
-
-        }, 450);
-
     }
 
 
@@ -624,7 +616,7 @@ function handleCorrectGuess() {
             dlnGame.attempts += DLN.BONUS;
             showDlnFeedback(
                `🎁 Milestone bonus! Level ${dlnGame.level} reached! +${DLN.BONUS} extra attempts.`,
-               "success"
+               "record"
             );
 
         }, 450);
@@ -728,9 +720,29 @@ function endDlnGame() {
         false;
 
     showDlnFeedback(
-        `The number was ${dlnGame.target}.`,
-        "failure"
+           `The number was ${dlnGame.target}.`,
+           "failure"
     );
+
+   /* If the game end and the user set a new record game */
+   const oldRecord = window.dlnRecord;
+
+   if (dlnGame.score > oldRecord) {
+
+        window.dlnRecord = dlnGame.score;
+
+        setTimeout(() => {
+            showDlnFeedback(
+               `🏆 NEW RECORD! ${dlnGame.player} set a new game record with ${dlnGame.score} points.`,
+               "record"
+            );
+
+        }, 450);
+
+    } else {
+      /* Nothing to do */
+    }
+
 
 }
 
