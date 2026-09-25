@@ -413,10 +413,13 @@ function validateDlnGuess() {
     if (guess === dlnGame.target) {
 
         /* We disable the input and validate button when correct number is guessed */
-        input.disabled = true;
-   
-        const validateButton = document.getElementById("dlnSubmit");
-   
+        const numberInput = document.getElementById("dlnNumber");
+        const validateButton = document.getElementById("dlnValidate");
+
+        if (numberInput) {
+            numberInput.disabled = true;
+        }    
+
         if (validateButton) {
             validateButton.disabled = true;
         }      
@@ -611,12 +614,12 @@ function showDlnLevelComplete() {
 function continueDlnGame() {
 
     /* We enable the input and validate button each new start of game level */
-    const input = document.getElementById("dlnNumber");
-    const validateButton = document.getElementById("dlnSubmit");
+    const numberInput = document.getElementById("dlnNumber");
+    const validateButton = document.getElementById("dlnValidate");
 
-    if (input) {
-        input.disabled = false;
-        input.value = "";
+    if (numberInput) {
+        numberInput.disabled = false;
+        numberInput.value = "";
     }
 
     if (validateButton) {
