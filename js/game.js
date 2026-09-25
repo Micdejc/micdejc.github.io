@@ -267,7 +267,7 @@ function startDlnGame() {
             "invalid"
         );
 
-        shakeDlnElement(dlnElements.playerName);
+        shakeInput(dlnElements.playerName);
         return;
     }
 
@@ -277,7 +277,7 @@ function startDlnGame() {
             "invalid"
         );
 
-        shakeDlnElement(dlnElements.playerName);
+        shakeInput(dlnElements.playerName);
         return;
     }
 
@@ -287,7 +287,7 @@ function startDlnGame() {
             "invalid"
         );
 
-        shakeDlnElement(dlnElements.playerName);
+        shakeInput(dlnElements.playerName);
         return;
     }
 
