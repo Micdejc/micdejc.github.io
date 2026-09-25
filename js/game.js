@@ -574,6 +574,18 @@ function handleCorrectGuess() {
             "success"
         );
 
+        /* Every 5 super hits */
+        if (dlnGame.superHits % DLN.BONUS === 0){
+              setTimeout(() => {
+                  dlnGame.attempts += DLN.BONUS;
+                  showDlnFeedback(
+                     `⭐ Bonus Unlocked! ${dlnGame.superHits} super hits achieved! +${DLN.BONUS} extra attempts.`,
+                     "record"
+                  );
+      
+              }, 450);
+        }
+
     } else {
         /*
         showDlnFeedback(
@@ -633,7 +645,7 @@ function handleCorrectGuess() {
     /* Every 20 levels */
 
     if (
-        level % 20 === 0
+        level % (DLN.STEP * 2) === 0
     ) {
 
         setTimeout(() => {
