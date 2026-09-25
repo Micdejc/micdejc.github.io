@@ -5,6 +5,7 @@ import { loadMentorship } from "../content/mentorship/index.js";
 import { loadFlagship } from "../content/flagship/index.js";
 import { loadTestimonials } from "../content/testimonials/index.js";
 import { initialiseBlog } from "./blog.js";
+import { initDLN } from "./game.js";
 
 /* =========================================================
    HTML COMPONENT LOADER
@@ -67,6 +68,11 @@ async function loadPage() {
         loadComponent(
             "calendarContainer",
             "components/calendar.html"
+        ),
+
+        loadComponent(
+            "game",
+            "components/game.html"
         ),
 
         loadComponent(
@@ -198,6 +204,9 @@ async function loadPage() {
      * so it is safe to initialise it.
      */
     initialiseBlog();
+
+    /* Initialization of the game modal */
+    initDLN();
 
 }
 
