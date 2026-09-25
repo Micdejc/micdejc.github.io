@@ -48,6 +48,7 @@ micdejc.github.io/
 │
 ├── blog/
 │   └── posts/
+│       ├── my-brief-introductory-story.html
 │       ├── my-new-cybersecurity-article.html
 │       └── ...
 │
