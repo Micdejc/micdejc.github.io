@@ -34,13 +34,35 @@ const dlnGame = {
 /* =========================================================
    CONSTANTS
    ========================================================= */
-
+/*
 const DLN = {
     MAX_LEVEL: 100,
     STEP: 10,
     DEFAULT_ATTEMPTS: 5,
     BONUS: 5,
     HINT_COST: 11
+};
+*/
+// The original game logic is based on these relationships:
+//   MAX_LEVEL  = MAX_NUMBER / STEP
+//   BONUS      = STEP / 2
+//   HINT_COST  = STEP + 1
+const DLN = {
+    MAX_NUMBER: 1000,
+    STEP: 10,
+    DEFAULT_ATTEMPTS: 5,
+
+    get MAX_LEVEL() {
+        return this.MAX_NUMBER / this.STEP;
+    },
+
+    get BONUS() {
+        return this.STEP / 2;
+    },
+
+    get HINT_COST() {
+        return this.STEP + 1;
+    }
 };
 
 
