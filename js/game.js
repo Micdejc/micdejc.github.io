@@ -263,9 +263,8 @@ function startDlnGame() {
     */
     if (!name) {
         showDlnFeedback(
-            "Player name required",
             "Please enter your name before starting the game.",
-            "warning"
+            "invalid"
         );
 
         shakeDlnElement(dlnElements.playerName);
@@ -274,9 +273,8 @@ function startDlnGame() {
 
     if (name.length < 3) {
         showDlnFeedback(
-            "Name too short",
             "Your name must contain at least 3 characters.",
-            "warning"
+            "invalid"
         );
 
         shakeDlnElement(dlnElements.playerName);
@@ -285,9 +283,8 @@ function startDlnGame() {
 
     if (name.includes(";")) {
         showDlnFeedback(
-            "Invalid name",
             "Please choose a name without the ';' character.",
-            "warning"
+            "invalid"
         );
 
         shakeDlnElement(dlnElements.playerName);
