@@ -55,7 +55,7 @@ let dlnElements = {};
    INITIALIZATION
    ========================================================= */
 
-function initDLN() {
+export function initDLN() {
 
     dlnElements = {
         modal: document.getElementById("gameModal"),
