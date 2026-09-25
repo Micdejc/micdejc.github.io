@@ -582,6 +582,14 @@ function handleCorrectGuess() {
 
         updateDlnRecord();
 
+        setTimeout(() => {
+            showDlnFeedback(
+               `🏆 NEW RECORD! ${dlnGame.player} set a new game record with ${dlnGame.score} points.`,
+               "record"
+            );
+
+        }, 450);
+
     }
 
 
@@ -723,26 +731,6 @@ function endDlnGame() {
            `The number was ${dlnGame.target}.`,
            "failure"
     );
-
-   /* If the game end and the user set a new record game */
-   const oldRecord = window.dlnRecord;
-
-   if (dlnGame.score > oldRecord) {
-
-        window.dlnRecord = dlnGame.score;
-
-        setTimeout(() => {
-            showDlnFeedback(
-               `🏆 NEW RECORD! ${dlnGame.player} set a new game record with ${dlnGame.score} points.`,
-               "record"
-            );
-
-        }, 450);
-
-    } else {
-      /* Nothing to do */
-    }
-
 
 }
 
