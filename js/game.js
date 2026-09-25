@@ -465,7 +465,7 @@ function validateDlnGuess() {
 
     if (guess === dlnGame.target) {
 
-        /* We disable the input and validate button when correct number is guessed */
+        /* We disable the input and validate & hint buttons when correct number is guessed */
         const numberInput = document.getElementById("dlnNumber");
         const validateButton = document.getElementById("dlnValidate");
 
@@ -477,7 +477,9 @@ function validateDlnGuess() {
             validateButton.disabled = true;
             //validateButton.className = "dln-secondary-button";
             validateButton.classList.add("dln-secondary-button");
-        }      
+        }
+
+        dlnElements.hintButton.hidden = true;
        
         handleCorrectGuess();
 
