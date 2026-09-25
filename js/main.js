@@ -71,7 +71,7 @@ async function loadPage() {
         ),
 
         loadComponent(
-            "gameModal",
+            "gameContainer",
             "components/game.html"
         ),
 
