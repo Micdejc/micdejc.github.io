@@ -412,6 +412,15 @@ function validateDlnGuess() {
 
     if (guess === dlnGame.target) {
 
+        /* We disable the input and validate button when correct number is guessed */
+        input.disabled = true;
+   
+        const validateButton = document.getElementById("dlnSubmit");
+   
+        if (validateButton) {
+            validateButton.disabled = true;
+        }      
+       
         handleCorrectGuess();
 
         return;
@@ -600,6 +609,20 @@ function showDlnLevelComplete() {
    ========================================================= */
 
 function continueDlnGame() {
+
+    /* We enable the input and validate button each new start of game level */
+    const input = document.getElementById("dlnNumber");
+    const validateButton = document.getElementById("dlnSubmit");
+
+    if (input) {
+        input.disabled = false;
+        input.value = "";
+    }
+
+    if (validateButton) {
+        validateButton.disabled = false;
+    }
+   
 
     dlnElements.result.hidden = true;
 
