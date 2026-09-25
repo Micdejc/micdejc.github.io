@@ -422,7 +422,8 @@ function validateDlnGuess() {
 
         if (validateButton) {
             validateButton.disabled = true;
-            validateButton.className = "dln-secondary-button";
+            //validateButton.className = "dln-secondary-button";
+            validateButton.classList.add("dln-secondary-button");
         }      
        
         handleCorrectGuess();
