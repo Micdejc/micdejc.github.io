@@ -3,38 +3,28 @@
    ========================================================= */
 
 .game-toggle {
-    border: 0;
-    background: transparent;
-    color: inherit;
-    cursor: pointer;
-
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
     width: 40px;
     height: 40px;
 
-    padding: 0;
+    border: 1px solid var(--border);
+    border-radius: 50%;
 
-    font-size: 1.35rem;
-    line-height: 1;
+    background: var(--surface);
+    color: var(--text);
 
-    transition:
-        transform 0.2s ease,
-        opacity 0.2s ease;
+    cursor: pointer;
+
+    font-size: 0.9rem;
+    font-weight: 800;
+
+    transition: all 0.2s ease;
 }
 
 .game-toggle:hover {
-    transform: scale(1.12);
-    opacity: 0.8;
+    color: var(--primary);
+    border-color: var(--primary);
+    transform: translateY(-2px);
 }
-
-.game-toggle:focus-visible {
-    outline: 2px solid currentColor;
-    outline-offset: 3px;
-}
-
 
 /* =========================================================
    MODAL
