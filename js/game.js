@@ -381,6 +381,7 @@ function startDlnLevel() {
 
     dlnElements.validateButton.hidden = false;
     dlnElements.validateButton.className = "dln-primary-button";
+    dlnElements.validateButton.disabled = false;
     dlnElements.numberInput.disabled = false;
 
     setTimeout(() => {
