@@ -1134,7 +1134,7 @@ function handleCorrectGuess() {
 
 
     /*
-     * Every 20 levels = +5 attempts.
+     * Every 20 levels = +10 attempts.
      *
      * We deliberately use "level" here rather
      * than dlnGame.level because "level" represents
