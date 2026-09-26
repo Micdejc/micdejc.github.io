@@ -44,6 +44,7 @@ const dlnGame = {
     score: 0,
     active: false,
     firstAttempt: true,
+    hintUsed: false,
 
     /*
      * Indicates that a level has been completed and
@@ -536,6 +537,9 @@ function startDlnGame() {
 
     dlnGame.firstAttempt =
         true;
+   
+    dlnGame.hintUsed = 
+        false;
 
     dlnGame.awaitingNextLevel =
         false;
@@ -664,6 +668,11 @@ function startDlnLevel(
         restore
             ? dlnGame.firstAttempt
             : true;
+
+    dlnGame.hintUsed =
+        restore
+           ? dlnGame.hintUsed
+           : false;
 
 
     dlnGame.awaitingNextLevel =
@@ -958,7 +967,8 @@ function handleCorrectGuess() {
     /* First attempt = Super Hit */
 
     if (
-        dlnGame.firstAttempt
+        dlnGame.firstAttempt &&
+        !dlnGame.hintUsed
     ) {
 
         dlnGame.superHits++;
@@ -1426,6 +1436,10 @@ function restartDlnGame() {
     dlnGame.firstAttempt =
         true;
 
+   
+    dlnGame.hintUsed =
+        false;
+
 
     dlnGame.awaitingNextLevel =
         false;
@@ -1522,6 +1536,9 @@ function saveDlnState() {
 
         firstAttempt:
             dlnGame.firstAttempt,
+
+        hintUsed: 
+            dlnGame.hintUsed,
 
         awaitingNextLevel:
             dlnGame.awaitingNextLevel
@@ -1710,6 +1727,9 @@ function loadDlnState() {
 
         dlnGame.firstAttempt =
             state.firstAttempt;
+       
+        dlnGame.hintUsed =
+            hintUsed;
 
         dlnGame.awaitingNextLevel =
             state.awaitingNextLevel;
@@ -1804,6 +1824,8 @@ function showDlnHint() {
         "record"
     );
 
+    dlnGame.hintUsed =
+        true;
 
     dlnGame.attempts -=
         DLN.HINT_COST;
@@ -1961,6 +1983,9 @@ export function resetDLN() {
 
     dlnGame.firstAttempt =
         true;
+
+    dlnGame.hintUsed =
+        false;
 
 
     dlnGame.awaitingNextLevel =
