@@ -286,6 +286,70 @@ body.game-modal-open {
 
 
 /* =========================================================
+   SAVED GAME
+   ========================================================= */
+
+.dln-saved-game {
+    margin: 16px 0;
+
+    padding: 14px 16px;
+
+    border: 1px solid var(--border);
+    border-radius: 10px;
+
+    background: color-mix(
+        in srgb,
+        var(--primary) 7%,
+        var(--surface)
+    );
+
+    color: var(--text);
+
+    text-align: left;
+}
+
+.dln-saved-game strong {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: var(--text);
+
+    font-size: 0.95rem;
+}
+
+.dln-saved-game p {
+    margin: 0;
+
+    color: var(--text);
+
+    opacity: 0.75;
+
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   START ACTIONS
+   ========================================================= */
+
+.dln-start-actions {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+
+    margin-top: 16px;
+}
+
+.dln-start-actions .dln-primary-button {
+    margin-top: 0;
+}
+
+
+/* =========================================================
    INPUTS
    ========================================================= */
 
@@ -808,5 +872,13 @@ body.game-modal-open {
 
     .dln-secondary-button {
         width: 100%;
+    }
+
+    .dln-saved-game {
+        padding: 12px 14px;
+    }
+
+    .dln-start-actions {
+        gap: 8px;
     }
 }
