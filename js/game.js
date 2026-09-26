@@ -4,15 +4,31 @@
    No PHP / No database
    ========================================================= */
 
+
+/* =========================================================
+   PERSISTENT STORAGE
+   ========================================================= */
+
+const DLN_STORAGE_KEY =
+    "dlnGameState";
+
+const DLN_RECORD_KEY =
+    "dlnRecord";
+
+
 /*
- * Session-only record.
+ * Persistent record.
  *
- * Because this is a GitHub Pages game, the record is kept
- * in JavaScript memory only.
+ * Because this is a GitHub Pages game, the record is stored
+ * locally in the player's browser.
  *
- * Refreshing the page resets the record.
+ * It survives page refreshes and browser restarts, but it is
+ * not a shared global leaderboard.
  */
-window.dlnRecord = 0;
+window.dlnRecord =
+    Number(
+        localStorage.getItem(DLN_RECORD_KEY)
+    ) || 0;
 
 
 /* =========================================================
@@ -27,27 +43,29 @@ const dlnGame = {
     target: null,
     score: 0,
     active: false,
-    firstAttempt: true
+    firstAttempt: true,
+
+    /*
+     * Indicates that a level has been completed and
+     * the player is currently on the level-complete screen.
+     */
+    awaitingNextLevel: false
 };
 
 
 /* =========================================================
    CONSTANTS
    ========================================================= */
+
 /*
+ * The original game logic is based on these relationships:
+ *
+ *   MAX_LEVEL = MAX_NUMBER / STEP
+ *   BONUS     = STEP / 2
+ *   HINT_COST = STEP + 1
+ */
 const DLN = {
-    MAX_LEVEL: 100,
-    STEP: 10,
-    DEFAULT_ATTEMPTS: 5,
-    BONUS: 5,
-    HINT_COST: 11
-};
-*/
-// The original game logic is based on these relationships:
-//   MAX_LEVEL  = MAX_NUMBER / STEP
-//   BONUS      = STEP / 2
-//   HINT_COST  = STEP + 1
-const DLN = {
+
     MAX_NUMBER: 1000,
     STEP: 10,
     DEFAULT_ATTEMPTS: 5,
@@ -63,6 +81,7 @@ const DLN = {
     get HINT_COST() {
         return this.STEP + 1;
     }
+
 };
 
 
@@ -80,50 +99,124 @@ let dlnElements = {};
 export function initDLN() {
 
     dlnElements = {
-        modal: document.getElementById("gameModal"),
-        backdrop: document.getElementById("gameModalBackdrop"),
-        openButton: document.getElementById("gameToggle"),
-        closeButton: document.getElementById("gameModalClose"),
 
-        startScreen: document.getElementById("dlnStartScreen"),
-        gameScreen: document.getElementById("dlnGameScreen"),
+        modal:
+            document.getElementById("gameModal"),
 
-        playerName: document.getElementById("dlnPlayerName"),
-        startButton: document.getElementById("dlnStartButton"),
-        startFeedback: document.getElementById("dlnStartFeedback"),
+        backdrop:
+            document.getElementById("gameModalBackdrop"),
 
-        level: document.getElementById("dlnLevel"),
-        instruction: document.getElementById("dlnInstruction"),
+        openButton:
+            document.getElementById("gameToggle"),
 
-        attempts: document.getElementById("dlnAttempts"),
-        superHits: document.getElementById("dlnSuperHits"),
-        score: document.getElementById("dlnScore"),
-        record: document.getElementById("dlnRecord"),
+        closeButton:
+            document.getElementById("gameModalClose"),
 
-        feedback: document.getElementById("dlnFeedback"),
+        startScreen:
+            document.getElementById("dlnStartScreen"),
 
-        numberInput: document.getElementById("dlnNumber"),
-        validateButton: document.getElementById("dlnValidate"),
+        gameScreen:
+            document.getElementById("dlnGameScreen"),
 
-        hintButton: document.getElementById("dlnHint"),
-        nextButton: document.getElementById("dlnNext"),
-        restartButton: document.getElementById("dlnRestart"),
+        playerName:
+            document.getElementById("dlnPlayerName"),
 
-        result: document.getElementById("dlnResult"),
-        resultIcon: document.getElementById("dlnResultIcon"),
-        resultTitle: document.getElementById("dlnResultTitle"),
-        resultMessage: document.getElementById("dlnResultMessage"),
-        resultContinue: document.getElementById("dlnResultContinue"),
-        resultRestart: document.getElementById("dlnResultRestart")
+        startButton:
+            document.getElementById("dlnStartButton"),
+
+        continueButton:
+            document.getElementById("dlnContinueButton"),
+
+        startFeedback:
+            document.getElementById("dlnStartFeedback"),
+
+        savedGame:
+            document.getElementById("dlnSavedGame"),
+
+        savedGameTitle:
+            document.getElementById("dlnSavedGameTitle"),
+
+        savedGameInfo:
+            document.getElementById("dlnSavedGameInfo"),
+
+        level:
+            document.getElementById("dlnLevel"),
+
+        instruction:
+            document.getElementById("dlnInstruction"),
+
+        attempts:
+            document.getElementById("dlnAttempts"),
+
+        superHits:
+            document.getElementById("dlnSuperHits"),
+
+        score:
+            document.getElementById("dlnScore"),
+
+        record:
+            document.getElementById("dlnRecord"),
+
+        feedback:
+            document.getElementById("dlnFeedback"),
+
+        numberInput:
+            document.getElementById("dlnNumber"),
+
+        validateButton:
+            document.getElementById("dlnValidate"),
+
+        hintButton:
+            document.getElementById("dlnHint"),
+
+        nextButton:
+            document.getElementById("dlnNext"),
+
+        restartButton:
+            document.getElementById("dlnRestart"),
+
+        result:
+            document.getElementById("dlnResult"),
+
+        resultIcon:
+            document.getElementById("dlnResultIcon"),
+
+        resultTitle:
+            document.getElementById("dlnResultTitle"),
+
+        resultMessage:
+            document.getElementById("dlnResultMessage"),
+
+        resultContinue:
+            document.getElementById("dlnResultContinue"),
+
+        resultRestart:
+            document.getElementById("dlnResultRestart")
+
     };
 
+
     if (!dlnElements.modal) {
-        console.warn("DLN: game modal was not found.");
+
+        console.warn(
+            "DLN: game modal was not found."
+        );
+
         return;
     }
 
+
+    /*
+     * Load saved progress, but do not automatically
+     * resume the game.
+     */
+    loadDlnState();
+
     bindDlnEvents();
+
     updateDlnRecord();
+
+    updateDlnStartScreen();
 
 }
 
@@ -152,6 +245,11 @@ function bindDlnEvents() {
     dlnElements.startButton?.addEventListener(
         "click",
         startDlnGame
+    );
+
+    dlnElements.continueButton?.addEventListener(
+        "click",
+        continueSavedDlnGame
     );
 
     dlnElements.validateButton?.addEventListener(
@@ -184,6 +282,7 @@ function bindDlnEvents() {
         restartDlnGame
     );
 
+
     dlnElements.playerName?.addEventListener(
         "keydown",
         event => {
@@ -194,6 +293,7 @@ function bindDlnEvents() {
 
         }
     );
+
 
     dlnElements.numberInput?.addEventListener(
         "keydown",
@@ -206,15 +306,20 @@ function bindDlnEvents() {
         }
     );
 
+
     document.addEventListener(
         "keydown",
         event => {
 
             if (
                 event.key === "Escape" &&
-                dlnElements.modal?.classList.contains("is-open")
+                dlnElements.modal?.classList.contains(
+                    "is-open"
+                )
             ) {
+
                 closeGameModal();
+
             }
 
         }
@@ -229,44 +334,113 @@ function bindDlnEvents() {
 
 function openGameModal() {
 
-    dlnElements.modal.classList.add("is-open");
+    dlnElements.modal.classList.add(
+        "is-open"
+    );
+
     dlnElements.modal.setAttribute(
         "aria-hidden",
         "false"
     );
 
-    document.body.classList.add("game-modal-open");
+    document.body.classList.add(
+        "game-modal-open"
+    );
+
 
     setTimeout(() => {
+
         if (!dlnGame.active) {
+
             dlnElements.playerName?.focus();
+
         } else {
+
             dlnElements.numberInput?.focus();
+
         }
+
     }, 250);
+
 }
 
 
 function closeGameModal() {
 
-    dlnElements.modal.classList.remove("is-open");
+    dlnElements.modal.classList.remove(
+        "is-open"
+    );
+
     dlnElements.modal.setAttribute(
         "aria-hidden",
         "true"
     );
 
-    document.body.classList.remove("game-modal-open");
+    document.body.classList.remove(
+        "game-modal-open"
+    );
+
 }
 
 
 /* =========================================================
-   START GAME
+   START SCREEN
+   ========================================================= */
+
+function updateDlnStartScreen() {
+
+    const hasSavedGame =
+        dlnGame.active;
+
+
+    if (!hasSavedGame) {
+
+        dlnElements.continueButton.hidden =
+            true;
+
+        dlnElements.savedGame.hidden =
+            true;
+
+        dlnElements.startButton.hidden =
+            false;
+
+        return;
+    }
+
+
+    dlnElements.continueButton.hidden =
+        false;
+
+    dlnElements.savedGame.hidden =
+        false;
+
+    dlnElements.startButton.hidden =
+        false;
+
+
+    dlnElements.savedGameTitle.textContent =
+        `👋 Welcome back, ${dlnGame.player}!`;
+
+
+    dlnElements.savedGameInfo.textContent =
+        `You're on level ${dlnGame.level} with ` +
+        `${dlnGame.attempts} attempts, ` +
+        `${dlnGame.superHits} Super Hits, ` +
+        `and ${dlnGame.score} points.`;
+
+}
+
+
+/* =========================================================
+   START NEW GAME
    ========================================================= */
 
 function startDlnGame() {
-   
+
     const name =
         dlnElements.playerName.value.trim();
+
+
     /*
     if (
         name.length > 0 &&
@@ -283,52 +457,162 @@ function startDlnGame() {
         return;
     }
     */
+
+
     if (!name) {
+
         showStartFeedback(
             "Please enter your name before starting the game.",
             "invalid"
         );
 
-        shakeInput(dlnElements.playerName);
+        shakeInput(
+            dlnElements.playerName
+        );
+
         return;
     }
 
+
     if (name.length < 3) {
+
         showStartFeedback(
             "Your name must contain at least 3 characters.",
             "invalid"
         );
 
-        shakeInput(dlnElements.playerName);
+        shakeInput(
+            dlnElements.playerName
+        );
+
         return;
     }
 
+
     if (name.includes(";")) {
+
         showStartFeedback(
             "Please choose a name without the ';' character.",
             "invalid"
         );
 
-        shakeInput(dlnElements.playerName);
+        shakeInput(
+            dlnElements.playerName
+        );
+
         return;
     }
+
+
+    /*
+     * Starting a new game intentionally removes
+     * the previous unfinished game.
+     *
+     * The record is preserved.
+     */
+    clearDlnState();
 
 
     dlnGame.player =
         name || "Player";
 
-    dlnGame.level = 1;
-    dlnGame.attempts = DLN.DEFAULT_ATTEMPTS;
-    dlnGame.superHits = 0;
-    dlnGame.score = 0;
-    dlnGame.active = true;
-    dlnGame.firstAttempt = true;
+    dlnGame.level =
+        1;
 
-    dlnElements.startScreen.hidden = true;
-    dlnElements.gameScreen.hidden = false;
-    dlnElements.result.hidden = true;
+    dlnGame.attempts =
+        DLN.DEFAULT_ATTEMPTS;
+
+    dlnGame.superHits =
+        0;
+
+    dlnGame.target =
+        null;
+
+    dlnGame.score =
+        0;
+
+    dlnGame.active =
+        true;
+
+    dlnGame.firstAttempt =
+        true;
+
+    dlnGame.awaitingNextLevel =
+        false;
+
+
+    dlnElements.startScreen.hidden =
+        true;
+
+    dlnElements.gameScreen.hidden =
+        false;
+
+    dlnElements.result.hidden =
+        true;
+
 
     startDlnLevel();
+
+}
+
+
+/* =========================================================
+   CONTINUE SAVED GAME
+   ========================================================= */
+
+function continueSavedDlnGame() {
+
+    if (!dlnGame.active) {
+        return;
+    }
+
+
+    dlnElements.startScreen.hidden =
+        true;
+
+    dlnElements.gameScreen.hidden =
+        false;
+
+    dlnElements.result.hidden =
+        true;
+
+
+    dlnElements.playerName.value =
+        dlnGame.player;
+
+
+    /*
+     * If the player closed the page while the
+     * level-complete screen was visible, restore
+     * that state rather than generating a new target.
+     */
+    if (dlnGame.awaitingNextLevel) {
+
+        dlnElements.level.textContent =
+            dlnGame.level;
+
+        dlnElements.attempts.textContent =
+            dlnGame.attempts;
+
+        dlnElements.superHits.textContent =
+            dlnGame.superHits;
+
+        dlnElements.score.textContent =
+            dlnGame.score;
+
+        updateDlnRecord();
+
+        showDlnLevelComplete();
+
+        return;
+    }
+
+
+    /*
+     * Otherwise restore the exact target and
+     * current level.
+     */
+    startDlnLevel(true);
 
 }
 
@@ -337,55 +621,119 @@ function startDlnGame() {
    START LEVEL
    ========================================================= */
 
-function startDlnLevel() {
+function startDlnLevel(
+    restore = false
+) {
 
-    if (dlnGame.level > DLN.MAX_LEVEL) {
+    if (
+        dlnGame.level >
+        DLN.MAX_LEVEL
+    ) {
+
         completeEntireDlnGame();
+
         return;
     }
+
 
     const maximum =
         dlnGame.level * DLN.STEP;
 
-    dlnGame.target =
-        generateNumber(1, maximum);
 
-    dlnGame.firstAttempt = true;
+    /*
+     * Generate a new number only when starting
+     * a genuinely new level.
+     *
+     * When restoring, preserve the saved target.
+     */
+    if (
+        !restore ||
+        dlnGame.target === null
+    ) {
 
-    dlnElements.numberInput.value = "";
+        dlnGame.target =
+            generateNumber(
+                1,
+                maximum
+            );
+
+    }
+
+
+    dlnGame.firstAttempt =
+        restore
+            ? dlnGame.firstAttempt
+            : true;
+
+
+    dlnGame.awaitingNextLevel =
+        false;
+
+
+    dlnElements.numberInput.value =
+        "";
+
 
     dlnElements.level.textContent =
         dlnGame.level;
 
+
     dlnElements.instruction.textContent =
         `Guess a number between 1 and ${maximum}.`;
+
 
     dlnElements.attempts.textContent =
         dlnGame.attempts;
 
+
     dlnElements.superHits.textContent =
         dlnGame.superHits;
 
+
     dlnElements.score.textContent =
         dlnGame.score;
+
 
     updateDlnRecord();
 
     clearDlnFeedback();
 
+
     dlnElements.hintButton.hidden =
         dlnGame.attempts <= DLN.HINT_COST;
 
-    dlnElements.nextButton.hidden = true;
-    dlnElements.restartButton.hidden = true;
 
-    dlnElements.validateButton.hidden = false;
-    dlnElements.validateButton.className = "dln-primary-button";
-    dlnElements.validateButton.disabled = false;
-    dlnElements.numberInput.disabled = false;
+    dlnElements.nextButton.hidden =
+        true;
+
+
+    dlnElements.restartButton.hidden =
+        true;
+
+
+    dlnElements.validateButton.hidden =
+        false;
+
+
+    dlnElements.validateButton.className =
+        "dln-primary-button";
+
+
+    dlnElements.validateButton.disabled =
+        false;
+
+
+    dlnElements.numberInput.disabled =
+        false;
+
+
+    saveDlnState();
+
 
     setTimeout(() => {
+
         dlnElements.numberInput.focus();
+
     }, 100);
 
 }
@@ -395,7 +743,10 @@ function startDlnLevel() {
    GENERATE RANDOM NUMBER
    ========================================================= */
 
-function generateNumber(min, max) {
+function generateNumber(
+    min,
+    max
+) {
 
     return Math.floor(
         Math.random() * (max - min + 1)
@@ -414,10 +765,14 @@ function validateDlnGuess() {
         return;
     }
 
+
     const rawValue =
         dlnElements.numberInput.value.trim();
 
-    const guess = Number(rawValue);
+
+    const guess =
+        Number(rawValue);
+
 
     const maximum =
         dlnGame.level * DLN.STEP;
@@ -465,24 +820,49 @@ function validateDlnGuess() {
 
     /* Correct */
 
-    if (guess === dlnGame.target) {
+    if (
+        guess === dlnGame.target
+    ) {
 
-        /* We disable the input and validate & hint buttons when correct number is guessed */
-        const numberInput = document.getElementById("dlnNumber");
-        const validateButton = document.getElementById("dlnValidate");
+        /*
+         * We disable the input and validate &
+         * hint buttons when correct number is guessed.
+         */
+        const numberInput =
+            document.getElementById(
+                "dlnNumber"
+            );
+
+        const validateButton =
+            document.getElementById(
+                "dlnValidate"
+            );
+
 
         if (numberInput) {
             numberInput.disabled = true;
-        }    
-
-        if (validateButton) {
-            validateButton.disabled = true;
-            //validateButton.className = "dln-secondary-button";
-            validateButton.classList.add("dln-secondary-button");
         }
 
-        dlnElements.hintButton.hidden = true;
-       
+
+        if (validateButton) {
+
+            validateButton.disabled =
+                true;
+
+            //validateButton.className =
+            //    "dln-secondary-button";
+
+            validateButton.classList.add(
+                "dln-secondary-button"
+            );
+
+        }
+
+
+        dlnElements.hintButton.hidden =
+            true;
+
+
         handleCorrectGuess();
 
         return;
@@ -492,23 +872,33 @@ function validateDlnGuess() {
     /* Incorrect */
 
     dlnGame.attempts--;
-    dlnGame.firstAttempt = false;
+
+    dlnGame.firstAttempt =
+        false;
+
 
     updateDlnStats();
+
+    saveDlnState();
+
 
     const distance =
         Math.abs(
             guess - dlnGame.target
         );
 
+
     const proximity =
         (maximum * 3) / 10;
+
 
     const close =
         distance <= proximity;
 
 
-    if (guess < dlnGame.target) {
+    if (
+        guess < dlnGame.target
+    ) {
 
         showDlnFeedback(
             close
@@ -531,9 +921,12 @@ function validateDlnGuess() {
 
     /* No attempts remaining */
 
-    if (dlnGame.attempts <= 0) {
+    if (
+        dlnGame.attempts <= 0
+    ) {
 
-        dlnGame.attempts = 0;
+        dlnGame.attempts =
+            0;
 
         updateDlnStats();
 
@@ -553,18 +946,26 @@ function handleCorrectGuess() {
     const level =
         dlnGame.level;
 
-    let bonusAttempts = DLN.BONUS;
 
-    dlnGame.attempts += bonusAttempts;
+    let bonusAttempts =
+        DLN.BONUS;
+
+
+    dlnGame.attempts +=
+        bonusAttempts;
 
 
     /* First attempt = Super Hit */
 
-    if (dlnGame.firstAttempt) {
+    if (
+        dlnGame.firstAttempt
+    ) {
 
         dlnGame.superHits++;
 
-        dlnGame.attempts += DLN.BONUS;
+        dlnGame.attempts +=
+            DLN.BONUS;
+
 
         /*
         showDlnFeedback(
@@ -572,31 +973,50 @@ function handleCorrectGuess() {
             "success"
         );
         */
-       
+
+
         showDlnFeedback(
             `🔥 Super hit! You found the number ${dlnGame.target} on your first attempt! +${DLN.BONUS * 2} attempts.`,
             "success"
         );
 
+
         /* Every 5 super hits */
-        if (dlnGame.superHits % DLN.BONUS === 0){
-              setTimeout(() => {
-                  dlnGame.attempts += DLN.BONUS;
-                  showDlnFeedback(
-                     `⭐ Bonus Unlocked! ${dlnGame.superHits} super hits achieved! +${DLN.BONUS} extra attempts.`,
-                     "record"
-                  );
-      
-              }, 450);
+
+        if (
+            dlnGame.superHits %
+            DLN.BONUS === 0
+        ) {
+
+            setTimeout(() => {
+
+                dlnGame.attempts +=
+                    DLN.BONUS;
+
+
+                showDlnFeedback(
+                    `⭐ Bonus Unlocked! ${dlnGame.superHits} super hits achieved! +${DLN.BONUS} extra attempts.`,
+                    "record"
+                );
+
+
+                updateDlnStats();
+
+                saveDlnState();
+
+            }, 450);
+
         }
 
     } else {
+
         /*
         showDlnFeedback(
             `✨ Correct! The number was ${dlnGame.target}.`,
             "success"
         );
         */
+
 
         showDlnFeedback(
             `🎉 Well done! You found the number ${dlnGame.target}! +${DLN.BONUS} attempts.`,
@@ -606,36 +1026,33 @@ function handleCorrectGuess() {
     }
 
 
-    dlnGame.level++;
-
-    updateDlnStats();
-
-
-    /* Record */
-
-    if (dlnGame.score > window.dlnRecord) {
-
-        window.dlnRecord =
-            dlnGame.score;
-
-        updateDlnRecord();
-
-        setTimeout(() => {
-            showDlnFeedback(
-               `🏅 NEW RECORD! ${dlnGame.player} set a new game record with ${dlnGame.score} points.`,
-               "record"
-            );
-
-        }, 450);
-
-    }
+    /*
+     * Score is calculated using the level that
+     * has just been completed.
+     */
+    dlnGame.score =
+        ((dlnGame.level - 1) * DLN.STEP) +
+        (dlnGame.superHits * DLN.BONUS);
 
 
-    /* Final level */
+    /*
+     * Final level
+     */
 
     if (
         level >= DLN.MAX_LEVEL
     ) {
+
+        dlnGame.level =
+            DLN.MAX_LEVEL;
+
+        dlnGame.target =
+            null;
+
+        updateDlnStats();
+
+        saveDlnState();
+
 
         setTimeout(
             completeEntireDlnGame,
@@ -646,23 +1063,85 @@ function handleCorrectGuess() {
     }
 
 
-    /* Every 20 levels */
+    /*
+     * Every 20 levels
+     */
 
     if (
         level % (DLN.STEP * 2) === 0
     ) {
 
         setTimeout(() => {
+
             /*
             showDlnFeedback(
                 "🎁 Level milestone! Bonus attempts awarded.",
                 "record"
             );
             */
-            dlnGame.attempts += DLN.BONUS;
+
+            dlnGame.attempts +=
+                DLN.BONUS;
+
+
             showDlnFeedback(
-               `🎁 Milestone bonus! Level ${level} passed! +${DLN.BONUS} extra attempts.`,
-               "record"
+                `🎁 Milestone bonus! Level ${level} passed! +${DLN.BONUS} extra attempts.`,
+                "record"
+            );
+
+
+            updateDlnStats();
+
+            saveDlnState();
+
+        }, 450);
+
+    }
+
+
+    /*
+     * Move to the next level logically, but do not
+     * generate its target yet.
+     *
+     * This lets the saved state represent exactly
+     * what is shown on the level-complete screen.
+     */
+    dlnGame.level++;
+
+    dlnGame.target =
+        null;
+
+    dlnGame.awaitingNextLevel =
+        true;
+
+
+    updateDlnStats();
+
+    saveDlnState();
+
+
+    /*
+     * Record
+     */
+
+    if (
+        dlnGame.score >
+        window.dlnRecord
+    ) {
+
+        window.dlnRecord =
+            dlnGame.score;
+
+        saveDlnRecord();
+
+        updateDlnRecord();
+
+
+        setTimeout(() => {
+
+            showDlnFeedback(
+                `🏅 NEW RECORD! ${dlnGame.player} set a new game record with ${dlnGame.score} points.`,
+                "record"
             );
 
         }, 450);
@@ -685,19 +1164,25 @@ function handleCorrectGuess() {
 
 function showDlnLevelComplete() {
 
-    dlnElements.result.hidden = false;
+    dlnElements.result.hidden =
+        false;
+
 
     dlnElements.resultIcon.textContent =
         "😎";
 
+
     dlnElements.resultTitle.textContent =
         `Well done, ${dlnGame.player}!`;
+
 
     dlnElements.resultMessage.textContent =
         `You passed level ${dlnGame.level - 1}. Ready for level ${dlnGame.level}?`;
 
+
     dlnElements.resultContinue.hidden =
         false;
+
 
     dlnElements.resultRestart.hidden =
         false;
@@ -711,24 +1196,49 @@ function showDlnLevelComplete() {
 
 function continueDlnGame() {
 
-    /* We enable the input and validate button each new start of game level */
-    const numberInput = document.getElementById("dlnNumber");
-    const validateButton = document.getElementById("dlnValidate");
+    /*
+     * We enable the input and validate button each
+     * new start of game level.
+     */
+    const numberInput =
+        document.getElementById(
+            "dlnNumber"
+        );
+
+    const validateButton =
+        document.getElementById(
+            "dlnValidate"
+        );
+
 
     if (numberInput) {
-        numberInput.disabled = false;
-        numberInput.value = "";
+
+        numberInput.disabled =
+            false;
+
+        numberInput.value =
+            "";
+
     }
+
 
     if (validateButton) {
-        validateButton.disabled = false;
-        validateButton.className = "dln-primary-button";
-    }
-   
 
-    dlnElements.result.hidden = true;
+        validateButton.disabled =
+            false;
+
+        validateButton.className =
+            "dln-primary-button";
+
+    }
+
+
+    dlnElements.result.hidden =
+        true;
+
 
     clearDlnFeedback();
+
 
     startDlnLevel();
 
@@ -741,33 +1251,55 @@ function continueDlnGame() {
 
 function endDlnGame() {
 
-    dlnGame.active = false;
+    dlnGame.active =
+        false;
 
-    dlnElements.validateButton.hidden = true;
-    dlnElements.hintButton.hidden = true;
+    dlnGame.awaitingNextLevel =
+        false;
 
-    dlnElements.numberInput.disabled = true;
 
-    dlnElements.result.hidden = false;
+    clearDlnState();
+
+
+    dlnElements.validateButton.hidden =
+        true;
+
+
+    dlnElements.hintButton.hidden =
+        true;
+
+
+    dlnElements.numberInput.disabled =
+        true;
+
+
+    dlnElements.result.hidden =
+        false;
+
 
     dlnElements.resultIcon.textContent =
         "😔";
 
+
     dlnElements.resultTitle.textContent =
         "Game Over";
+
 
     dlnElements.resultMessage.textContent =
         `${dlnGame.player}, your adventure ends at level ${dlnGame.level}. The number was ${dlnGame.target}.`;
 
+
     dlnElements.resultContinue.hidden =
         true;
+
 
     dlnElements.resultRestart.hidden =
         false;
 
+
     showDlnFeedback(
-           `The number was ${dlnGame.target}.`,
-           "failure"
+        `The number was ${dlnGame.target}.`,
+        "failure"
     );
 
 }
@@ -779,35 +1311,64 @@ function endDlnGame() {
 
 function completeEntireDlnGame() {
 
-    dlnGame.active = false;
+    dlnGame.active =
+        false;
 
-    dlnElements.validateButton.hidden = true;
-    dlnElements.hintButton.hidden = true;
-    dlnElements.numberInput.disabled = true;
+    dlnGame.awaitingNextLevel =
+        false;
 
-    dlnElements.result.hidden = false;
+    dlnGame.target =
+        null;
+
+
+    clearDlnState();
+
+
+    dlnElements.validateButton.hidden =
+        true;
+
+
+    dlnElements.hintButton.hidden =
+        true;
+
+
+    dlnElements.numberInput.disabled =
+        true;
+
+
+    dlnElements.result.hidden =
+        false;
+
 
     dlnElements.resultIcon.textContent =
         "🏆";
 
+
     dlnElements.resultTitle.textContent =
         `Congratulations, ${dlnGame.player}!`;
+
 
     dlnElements.resultMessage.textContent =
         `You completed all ${DLN.MAX_LEVEL} levels of DLN with a score of ${dlnGame.score}.`;
 
+
     dlnElements.resultContinue.hidden =
         true;
+
 
     dlnElements.resultRestart.hidden =
         false;
 
+
     if (
-        dlnGame.score > window.dlnRecord
+        dlnGame.score >
+        window.dlnRecord
     ) {
 
         window.dlnRecord =
             dlnGame.score;
+
+        saveDlnRecord();
 
         updateDlnRecord();
 
@@ -822,18 +1383,53 @@ function completeEntireDlnGame() {
 
 function restartDlnGame() {
 
-    dlnElements.result.hidden = true;
+    /*
+     * Restart means a completely new run.
+     *
+     * The record is intentionally preserved.
+     */
+    clearDlnState();
+
+
+    dlnElements.result.hidden =
+        true;
+
 
     dlnGame.player =
         dlnGame.player || "Player";
 
-    dlnGame.level = 1;
+
+    dlnGame.level =
+        1;
+
+
     dlnGame.attempts =
         DLN.DEFAULT_ATTEMPTS;
 
-    dlnGame.superHits = 0;
-    dlnGame.score = 0;
-    dlnGame.active = true;
+
+    dlnGame.superHits =
+        0;
+
+
+    dlnGame.target =
+        null;
+
+
+    dlnGame.score =
+        0;
+
+
+    dlnGame.active =
+        true;
+
+
+    dlnGame.firstAttempt =
+        true;
+
+
+    dlnGame.awaitingNextLevel =
+        false;
+
 
     startDlnLevel();
 
@@ -850,14 +1446,18 @@ function updateDlnStats() {
         ((dlnGame.level - 1) * DLN.STEP) +
         (dlnGame.superHits * DLN.BONUS);
 
+
     dlnElements.attempts.textContent =
         dlnGame.attempts;
+
 
     dlnElements.superHits.textContent =
         dlnGame.superHits;
 
+
     dlnElements.score.textContent =
         dlnGame.score;
+
 
     updateDlnRecord();
 
@@ -872,6 +1472,273 @@ function updateDlnRecord() {
 
     dlnElements.record.textContent =
         window.dlnRecord;
+
+}
+
+
+function saveDlnRecord() {
+
+    localStorage.setItem(
+        DLN_RECORD_KEY,
+        String(window.dlnRecord)
+    );
+
+}
+
+
+/* =========================================================
+   STORAGE
+   ========================================================= */
+
+function saveDlnState() {
+
+    if (!dlnGame.active) {
+        return;
+    }
+
+
+    const state = {
+
+        player:
+            dlnGame.player,
+
+        level:
+            dlnGame.level,
+
+        attempts:
+            dlnGame.attempts,
+
+        superHits:
+            dlnGame.superHits,
+
+        target:
+            dlnGame.target,
+
+        score:
+            dlnGame.score,
+
+        active:
+            dlnGame.active,
+
+        firstAttempt:
+            dlnGame.firstAttempt,
+
+        awaitingNextLevel:
+            dlnGame.awaitingNextLevel
+
+    };
+
+
+    localStorage.setItem(
+        DLN_STORAGE_KEY,
+        JSON.stringify(state)
+    );
+
+}
+
+
+function loadDlnState() {
+
+    const savedState =
+        localStorage.getItem(
+            DLN_STORAGE_KEY
+        );
+
+
+    if (!savedState) {
+        return false;
+    }
+
+
+    try {
+
+        const state =
+            JSON.parse(savedState);
+
+
+        if (
+            !state ||
+            typeof state !== "object"
+        ) {
+
+            clearDlnState();
+
+            return false;
+        }
+
+
+        /*
+         * Validate the essential saved values.
+         */
+        if (
+            typeof state.player !== "string" ||
+            !state.player.trim()
+        ) {
+
+            clearDlnState();
+
+            return false;
+        }
+
+
+        if (
+            !Number.isInteger(state.level) ||
+            state.level < 1 ||
+            state.level > DLN.MAX_LEVEL
+        ) {
+
+            clearDlnState();
+
+            return false;
+        }
+
+
+        if (
+            !Number.isInteger(state.attempts) ||
+            state.attempts < 0
+        ) {
+
+            clearDlnState();
+
+            return false;
+        }
+
+
+        if (
+            !Number.isInteger(state.superHits) ||
+            state.superHits < 0
+        ) {
+
+            clearDlnState();
+
+            return false;
+        }
+
+
+        if (
+            !Number.isFinite(state.score) ||
+            state.score < 0
+        ) {
+
+            clearDlnState();
+
+            return false;
+        }
+
+
+        if (
+            typeof state.active !== "boolean"
+        ) {
+
+            clearDlnState();
+
+            return false;
+        }
+
+
+        if (
+            typeof state.firstAttempt !== "boolean"
+        ) {
+
+            clearDlnState();
+
+            return false;
+        }
+
+
+        if (
+            typeof state.awaitingNextLevel !==
+            "boolean"
+        ) {
+
+            clearDlnState();
+
+            return false;
+        }
+
+
+        /*
+         * If the saved game is currently inside a level,
+         * the target must be valid for that level.
+         */
+        if (
+            state.active &&
+            !state.awaitingNextLevel
+        ) {
+
+            const maximum =
+                state.level * DLN.STEP;
+
+
+            if (
+                !Number.isInteger(state.target) ||
+                state.target < 1 ||
+                state.target > maximum
+            ) {
+
+                clearDlnState();
+
+                return false;
+            }
+
+        }
+
+
+        /*
+         * Restore the validated state.
+         */
+        dlnGame.player =
+            state.player;
+
+        dlnGame.level =
+            state.level;
+
+        dlnGame.attempts =
+            state.attempts;
+
+        dlnGame.superHits =
+            state.superHits;
+
+        dlnGame.target =
+            state.target;
+
+        dlnGame.score =
+            state.score;
+
+        dlnGame.active =
+            state.active;
+
+        dlnGame.firstAttempt =
+            state.firstAttempt;
+
+        dlnGame.awaitingNextLevel =
+            state.awaitingNextLevel;
+
+
+        return true;
+
+    } catch (error) {
+
+        console.warn(
+            "DLN: unable to restore saved game.",
+            error
+        );
+
+
+        clearDlnState();
+
+        return false;
+    }
+
+}
+
+
+function clearDlnState() {
+
+    localStorage.removeItem(
+        DLN_STORAGE_KEY
+    );
+
 }
 
 
@@ -884,6 +1751,7 @@ function showDlnHint() {
     if (
         dlnGame.attempts <= DLN.HINT_COST
     ) {
+
         showDlnFeedback(
             "You need more than 11 attempts to use a hint.",
             "invalid"
@@ -892,26 +1760,36 @@ function showDlnHint() {
         return;
     }
 
+
     const guess =
         Number(
             dlnElements.numberInput.value
         );
 
+
     let reference;
+
 
     if (
         Number.isInteger(guess)
     ) {
-        reference = guess;
+
+        reference =
+            guess;
+
     } else {
+
         reference =
             (dlnGame.level * DLN.STEP) / 2;
+
     }
+
 
     const distance =
         Math.abs(
             dlnGame.target - reference
         );
+
 
     const direction =
         dlnGame.target > reference
@@ -920,15 +1798,21 @@ function showDlnHint() {
                 ? "lower"
                 : "around";
 
+
     showDlnFeedback(
         `💡 The target is ${distance} step(s) ${direction} from ${reference} (-${DLN.HINT_COST} attempts).`,
         "record"
     );
 
+
     dlnGame.attempts -=
         DLN.HINT_COST;
 
+
     updateDlnStats();
+
+    saveDlnState();
+
 
     dlnElements.hintButton.hidden =
         dlnGame.attempts <= DLN.HINT_COST;
@@ -948,8 +1832,10 @@ function showDlnFeedback(
     const element =
         dlnElements.feedback;
 
+
     element.className =
         "dln-feedback";
+
 
     /*
      * Force the animation to restart when
@@ -957,8 +1843,10 @@ function showDlnFeedback(
      */
     void element.offsetWidth;
 
+
     element.textContent =
         message;
+
 
     element.classList.add(
         "show",
@@ -976,13 +1864,17 @@ function showStartFeedback(
     const element =
         dlnElements.startFeedback;
 
+
     element.className =
         "dln-feedback";
 
+
     void element.offsetWidth;
+
 
     element.textContent =
         message;
+
 
     element.classList.add(
         "show",
@@ -997,6 +1889,7 @@ function clearDlnFeedback() {
     dlnElements.feedback.className =
         "dln-feedback";
 
+
     dlnElements.feedback.textContent =
         "";
 
@@ -1005,15 +1898,24 @@ function clearDlnFeedback() {
 
 function shakeInput(element) {
 
-    element.classList.remove("shake");
+    element.classList.remove(
+        "shake"
+    );
+
 
     void element.offsetWidth;
 
-    element.classList.add("shake");
+
+    element.classList.add(
+        "shake"
+    );
+
 
     setTimeout(() => {
 
-        element.classList.remove("shake");
+        element.classList.remove(
+            "shake"
+        );
 
     }, 450);
 
@@ -1026,16 +1928,50 @@ function shakeInput(element) {
 
 export function resetDLN() {
 
-    dlnGame.player = "Player";
-    dlnGame.level = 1;
+    clearDlnState();
+
+
+    dlnGame.player =
+        "Player";
+
+
+    dlnGame.level =
+        1;
+
+
     dlnGame.attempts =
         DLN.DEFAULT_ATTEMPTS;
 
-    dlnGame.superHits = 0;
-    dlnGame.target = null;
-    dlnGame.score = 0;
-    dlnGame.active = false;
 
-    clearDlnFeedback();
+    dlnGame.superHits =
+        0;
+
+
+    dlnGame.target =
+        null;
+
+
+    dlnGame.score =
+        0;
+
+
+    dlnGame.active =
+        false;
+
+
+    dlnGame.firstAttempt =
+        true;
+
+
+    dlnGame.awaitingNextLevel =
+        false;
+
+
+    if (dlnElements.feedback) {
+        clearDlnFeedback();
+    }
+
+
+    updateDlnStartScreen();
 
 }
