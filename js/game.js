@@ -44,7 +44,7 @@ const dlnGame = {
     score: 0,
     active: false,
     firstAttempt: true,
-    : false,
+    hintUsed: false,
 
     /*
      * Indicates that a level has been completed and
