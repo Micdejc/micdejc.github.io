@@ -622,7 +622,7 @@ function handleCorrectGuess() {
 
         setTimeout(() => {
             showDlnFeedback(
-               `🏆 NEW RECORD! ${dlnGame.player} set a new game record with ${dlnGame.score} points.`,
+               `🏅 NEW RECORD! ${dlnGame.player} set a new game record with ${dlnGame.score} points.`,
                "record"
             );
 
@@ -688,7 +688,7 @@ function showDlnLevelComplete() {
     dlnElements.result.hidden = false;
 
     dlnElements.resultIcon.textContent =
-        "✨";
+        "😎";
 
     dlnElements.resultTitle.textContent =
         `Well done, ${dlnGame.player}!`;
