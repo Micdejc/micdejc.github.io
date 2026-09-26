@@ -1147,11 +1147,11 @@ function handleCorrectGuess() {
         setTimeout(() => {
 
             dlnGame.attempts +=
-                DLN.BONUS;
+                DLN.BONUS * 2;
 
 
             showDlnFeedback(
-                `🎁 Milestone bonus! Level ${level} passed! +${DLN.BONUS} extra attempts.`,
+                `🎁 Milestone bonus! Level ${level} passed! +${DLN.BONUS* 2} extra attempts.`,
                 "record"
             );
 
