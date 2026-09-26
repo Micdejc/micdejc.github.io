@@ -1908,11 +1908,22 @@ function displayCalendarToday() {
    SESSION CACHE
    ========================================================= */
 
+/*
+ * Cache calendar events in localStorage for persistent caching.
+ *
+ * localStorage keeps the cache available across page refreshes,
+ * browser tabs, and future sessions, while sessionStorage would
+ * limit the cache to the current browser tab/session.
+ *
+ * The cache is still controlled by the timestamp and expiration
+ * logic defined in CALENDAR_CONFIG.
+ */
+
 function cacheCalendarEvents(events) {
     try {
         const year = new Date().getFullYear();
 
-        sessionStorage.setItem(
+        localStorage.setItem(
             "calendarEvents",
             JSON.stringify({
                 timestamp: Date.now(),
@@ -1946,7 +1957,7 @@ function cacheCalendarEvents(events) {
 function getCachedCalendarEvents() {
     try {
         const cached =
-            sessionStorage.getItem(
+            localStorage.getItem(
                 "calendarEvents"
             );
 
@@ -1963,7 +1974,7 @@ function getCachedCalendarEvents() {
             !data.year ||
             !Array.isArray(data.events)
         ) {
-            sessionStorage.removeItem(
+            localStorage.removeItem(
                 "calendarEvents"
             );
 
@@ -1978,7 +1989,7 @@ function getCachedCalendarEvents() {
             new Date().getFullYear();
 
         if (data.year !== currentYear) {
-            sessionStorage.removeItem(
+            localStorage.removeItem(
                 "calendarEvents"
             );
 
@@ -2001,7 +2012,7 @@ function getCachedCalendarEvents() {
                 data.timestamp >
             CALENDAR_CONFIG.cacheDuration
         ) {
-            sessionStorage.removeItem(
+            localStorage.removeItem(
                 "calendarEvents"
             );
 
@@ -2030,7 +2041,7 @@ function getCachedCalendarEvents() {
             });
 
     } catch (error) {
-        sessionStorage.removeItem(
+        localStorage.removeItem(
             "calendarEvents"
         );
 
