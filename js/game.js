@@ -661,7 +661,7 @@ function handleCorrectGuess() {
             */
             dlnGame.attempts += DLN.BONUS;
             showDlnFeedback(
-               `🎁 Milestone bonus! Level ${dlnGame.level} reached! +${DLN.BONUS} extra attempts.`,
+               `🎁 Milestone bonus! Level ${dlnGame.level - 1} passed! +${DLN.BONUS} extra attempts.`,
                "record"
             );
 
