@@ -48,7 +48,7 @@ const DLN = {
 //   BONUS      = STEP / 2
 //   HINT_COST  = STEP + 1
 const DLN = {
-    MAX_NUMBER: 100,
+    MAX_NUMBER: 1000,
     STEP: 10,
     DEFAULT_ATTEMPTS: 5,
 
