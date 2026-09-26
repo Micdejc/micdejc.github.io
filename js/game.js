@@ -44,7 +44,7 @@ const dlnGame = {
     score: 0,
     active: false,
     firstAttempt: true,
-    hintUsed: false,
+    : false,
 
     /*
      * Indicates that a level has been completed and
@@ -1729,7 +1729,7 @@ function loadDlnState() {
             state.firstAttempt;
        
         dlnGame.hintUsed =
-            hintUsed;
+            state.hintUsed;
 
         dlnGame.awaitingNextLevel =
             state.awaitingNextLevel;
