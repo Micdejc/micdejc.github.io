@@ -69,19 +69,46 @@
                     autocomplete="nickname"
                 >
 
+                <!-- SAVED GAME -->
+                <div
+                    class="dln-saved-game"
+                    id="dlnSavedGame"
+                    hidden
+                >
+                    <strong id="dlnSavedGameTitle">
+                        👋 Welcome back!
+                    </strong>
+
+                    <p id="dlnSavedGameInfo"></p>
+                </div>
+
                 <div
                     class="dln-feedback"
                     id="dlnStartFeedback"
                     aria-live="polite"
                 ></div>
 
-                <button
-                    class="dln-primary-button"
-                    id="dlnStartButton"
-                    type="button"
-                >
-                    Start Game
-                </button>
+                <!-- START ACTIONS -->
+                <div class="dln-start-actions">
+
+                    <button
+                        class="dln-primary-button"
+                        id="dlnContinueButton"
+                        type="button"
+                        hidden
+                    >
+                        ▶ Continue Game
+                    </button>
+
+                    <button
+                        class="dln-primary-button"
+                        id="dlnStartButton"
+                        type="button"
+                    >
+                        🎮 Start New Game
+                    </button>
+
+                </div>
 
             </div>
 
