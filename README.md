@@ -785,7 +785,7 @@ The website includes **DLN (Deviner le Nombre)**, an interactive number-guessing
 
 Players progress through increasingly challenging levels by guessing a randomly generated number, with attempts, hints, bonuses, super hits, and scores tracked throughout the session. The game also includes animated feedback for correct and incorrect guesses, level progression, and new records.
 
-The game runs entirely in the browser and does **not require a database or server-side storage**. The current high score is maintained as a JavaScript session variable and resets when the page is refreshed.
+The game runs entirely in the browser and does **not require a database or server-side storage**. Game progress and the current high score are stored locally in the browser using `localStorage`, allowing them to persist across page refreshes and browser sessions. The saved data is specific to each browser and device and is not shared between users.
 
 The game is integrated directly into the website through a responsive modal and automatically follows the site's light and dark themes.
 
