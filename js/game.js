@@ -36,21 +36,51 @@ window.dlnRecord =
    ========================================================= */
 
 const dlnGame = {
-    player: "Player",
-    level: 1,
-    attempts: 5,
-    superHits: 0,
-    target: null,
-    score: 0,
-    active: false,
-    firstAttempt: true,
-    hintUsed: false,
+
+    player:
+        "Player",
+
+    level:
+        1,
+
+    attempts:
+        5,
+
+    superHits:
+        0,
+
+    target:
+        null,
+
+    score:
+        0,
+
+    active:
+        false,
+
+    firstAttempt:
+        true,
+
+    /*
+     * Tracks whether a hint has been used during
+     * the current level.
+     *
+     * A level can only produce a genuine Super Hit
+     * when:
+     *
+     *   firstAttempt === true
+     *   hintUsed === false
+     */
+    hintUsed:
+        false,
 
     /*
      * Indicates that a level has been completed and
      * the player is currently on the level-complete screen.
      */
-    awaitingNextLevel: false
+    awaitingNextLevel:
+        false
+
 };
 
 
@@ -64,12 +94,23 @@ const dlnGame = {
  *   MAX_LEVEL = MAX_NUMBER / STEP
  *   BONUS     = STEP / 2
  *   HINT_COST = STEP + 1
+ *
+ * With the current values:
+ *
+ *   MAX_LEVEL = 100
+ *   BONUS     = 5
+ *   HINT_COST = 11
  */
 const DLN = {
 
-    MAX_NUMBER: 1000,
-    STEP: 10,
-    DEFAULT_ATTEMPTS: 5,
+    MAX_NUMBER:
+        1000,
+
+    STEP:
+        10,
+
+    DEFAULT_ATTEMPTS:
+        5,
 
     get MAX_LEVEL() {
         return this.MAX_NUMBER / this.STEP;
@@ -537,8 +578,8 @@ function startDlnGame() {
 
     dlnGame.firstAttempt =
         true;
-   
-    dlnGame.hintUsed = 
+
+    dlnGame.hintUsed =
         false;
 
     dlnGame.awaitingNextLevel =
@@ -664,6 +705,15 @@ function startDlnLevel(
     }
 
 
+    /*
+     * A genuinely new level starts with:
+     *
+     *   firstAttempt = true
+     *   hintUsed     = false
+     *
+     * When restoring a saved level, both values
+     * are preserved.
+     */
     dlnGame.firstAttempt =
         restore
             ? dlnGame.firstAttempt
@@ -671,8 +721,8 @@ function startDlnLevel(
 
     dlnGame.hintUsed =
         restore
-           ? dlnGame.hintUsed
-           : false;
+            ? dlnGame.hintUsed
+            : false;
 
 
     dlnGame.awaitingNextLevel =
@@ -952,20 +1002,29 @@ function validateDlnGuess() {
 
 function handleCorrectGuess() {
 
+    /*
+     * Store the level that has just been completed.
+     *
+     * This is important because dlnGame.level is
+     * incremented later.
+     */
     const level =
         dlnGame.level;
 
 
-    let bonusAttempts =
+    /*
+     * Every correct guess = +5 attempts.
+     */
+    dlnGame.attempts +=
         DLN.BONUS;
 
 
-    dlnGame.attempts +=
-        bonusAttempts;
-
-
-    /* First attempt = Super Hit */
-
+    /*
+     * Genuine Super Hit =
+     *
+     *   1. Correct on the first attempt.
+     *   2. No hint was used on this level.
+     */
     if (
         dlnGame.firstAttempt &&
         !dlnGame.hintUsed
@@ -973,16 +1032,15 @@ function handleCorrectGuess() {
 
         dlnGame.superHits++;
 
-        dlnGame.attempts +=
-            DLN.BONUS;
-
 
         /*
-        showDlnFeedback(
-            "🔥 Super Hit! +10 attempts!",
-            "success"
-        );
-        */
+         * Additional +5 attempts.
+         *
+         * Combined with the normal +5 above,
+         * a genuine Super Hit gives +10 attempts total.
+         */
+        dlnGame.attempts +=
+            DLN.BONUS;
 
 
         showDlnFeedback(
@@ -991,8 +1049,10 @@ function handleCorrectGuess() {
         );
 
 
-        /* Every 5 super hits */
-
+        /*
+         * Every 5 genuine Super Hits =
+         * +10 additional attempts.
+         */
         if (
             dlnGame.superHits %
             DLN.BONUS === 0
@@ -1001,11 +1061,11 @@ function handleCorrectGuess() {
             setTimeout(() => {
 
                 dlnGame.attempts +=
-                    DLN.BONUS;
+                    DLN.BONUS * 2;
 
 
                 showDlnFeedback(
-                    `⭐ Bonus Unlocked! ${dlnGame.superHits} super hits achieved! +${DLN.BONUS} extra attempts.`,
+                    `⭐ Bonus Unlocked! ${dlnGame.superHits} super hits achieved! +${DLN.BONUS * 2} extra attempts.`,
                     "record"
                 );
 
@@ -1021,13 +1081,14 @@ function handleCorrectGuess() {
     } else {
 
         /*
-        showDlnFeedback(
-            `✨ Correct! The number was ${dlnGame.target}.`,
-            "success"
-        );
-        */
-
-
+         * This includes:
+         *
+         *   - Correct guess after one or more attempts.
+         *   - Correct guess after using a hint.
+         *
+         * In both cases the player receives the
+         * normal +5 reward, but not the Super Hit bonus.
+         */
         showDlnFeedback(
             `🎉 Well done! You found the number ${dlnGame.target}! +${DLN.BONUS} attempts.`,
             "success"
@@ -1041,14 +1102,13 @@ function handleCorrectGuess() {
      * has just been completed.
      */
     dlnGame.score =
-        ((dlnGame.level - 1) * DLN.STEP) +
+        ((level - 1) * DLN.STEP) +
         (dlnGame.superHits * DLN.BONUS);
 
 
     /*
      * Final level
      */
-
     if (
         level >= DLN.MAX_LEVEL
     ) {
@@ -1074,21 +1134,17 @@ function handleCorrectGuess() {
 
 
     /*
-     * Every 20 levels
+     * Every 20 levels = +5 attempts.
+     *
+     * We deliberately use "level" here rather
+     * than dlnGame.level because "level" represents
+     * the level that was just completed.
      */
-
     if (
         level % (DLN.STEP * 2) === 0
     ) {
 
         setTimeout(() => {
-
-            /*
-            showDlnFeedback(
-                "🎁 Level milestone! Bonus attempts awarded.",
-                "record"
-            );
-            */
 
             dlnGame.attempts +=
                 DLN.BONUS;
@@ -1436,7 +1492,7 @@ function restartDlnGame() {
     dlnGame.firstAttempt =
         true;
 
-   
+
     dlnGame.hintUsed =
         false;
 
@@ -1537,7 +1593,12 @@ function saveDlnState() {
         firstAttempt:
             dlnGame.firstAttempt,
 
-        hintUsed: 
+        /*
+         * Persist hint usage so that refreshing
+         * the page cannot restore a level as a
+         * Super Hit opportunity after a hint.
+         */
+        hintUsed:
             dlnGame.hintUsed,
 
         awaitingNextLevel:
@@ -1675,6 +1736,20 @@ function loadDlnState() {
 
 
         /*
+         * Backward compatibility:
+         *
+         * Older saved games do not contain hintUsed.
+         *
+         * Such games are treated as having no hint
+         * used rather than being deleted.
+         */
+        const hintUsed =
+            typeof state.hintUsed === "boolean"
+                ? state.hintUsed
+                : false;
+
+
+        /*
          * If the saved game is currently inside a level,
          * the target must be valid for that level.
          */
@@ -1727,9 +1802,9 @@ function loadDlnState() {
 
         dlnGame.firstAttempt =
             state.firstAttempt;
-       
+
         dlnGame.hintUsed =
-            state.hintUsed;
+            hintUsed;
 
         dlnGame.awaitingNextLevel =
             state.awaitingNextLevel;
@@ -1773,7 +1848,7 @@ function showDlnHint() {
     ) {
 
         showDlnFeedback(
-            "You need more than 11 attempts to use a hint.",
+            `You need more than ${DLN.HINT_COST} attempts to use a hint.`,
             "invalid"
         );
 
@@ -1824,8 +1899,15 @@ function showDlnHint() {
         "record"
     );
 
+
+    /*
+     * Using a hint permanently disqualifies
+     * the current level from being a genuine
+     * Super Hit.
+     */
     dlnGame.hintUsed =
         true;
+
 
     dlnGame.attempts -=
         DLN.HINT_COST;
@@ -1983,6 +2065,7 @@ export function resetDLN() {
 
     dlnGame.firstAttempt =
         true;
+
 
     dlnGame.hintUsed =
         false;
