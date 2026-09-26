@@ -1453,6 +1453,12 @@ function getHolidayGreeting(event) {
     }
 
     if (
+        title.includes("international women's day")
+    ) {
+        return "👩‍💼 Happy International Women's Day!";
+    }
+
+    if (
         title.includes("international day of women and girls in science")
     ) {
         return "👩‍🔬 Happy Women & Girls in Science Day!";
