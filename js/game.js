@@ -1134,24 +1134,24 @@ function handleCorrectGuess() {
 
 
     /*
-     * Every 20 levels = +10 attempts.
+     * Every 10 levels = +5 attempts.
      *
      * We deliberately use "level" here rather
      * than dlnGame.level because "level" represents
      * the level that was just completed.
      */
     if (
-        level % (DLN.STEP * 2) === 0
+        level % DLN.STEP === 0
     ) {
 
         setTimeout(() => {
 
             dlnGame.attempts +=
-                DLN.BONUS * 2;
+                DLN.BONUS;
 
 
             showDlnFeedback(
-                `🎁 Milestone bonus! Level ${level} passed! +${DLN.BONUS* 2} extra attempts.`,
+                `🎁 Milestone bonus! Level ${level} passed! +${DLN.BONUS} extra attempts.`,
                 "record"
             );
 
