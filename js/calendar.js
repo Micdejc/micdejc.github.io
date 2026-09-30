@@ -1215,18 +1215,42 @@ async function loadCalendarEvents() {
 }
 
 /* =========================================================
-   NEXT EVENT
+   NEXT EVENTS
    ========================================================= */
 
-function getNextEvent() {
+/*
+ * Return all events occurring on the earliest upcoming date.
+ *
+ * Multiple events can legitimately share the same date.
+ * The calendar therefore treats the date as the primary
+ * "next" unit rather than selecting only one event.
+ */
+function getNextEvents() {
     const today =
         dateOnly(new Date());
 
-    return calendarEvents.find(
+    const nextEvent =
+        calendarEvents.find(
+            function(event) {
+                return (
+                    dateOnly(event.start) >=
+                    today
+                );
+            }
+        );
+
+    if (!nextEvent) {
+        return [];
+    }
+
+    const nextDateKey =
+        dateKey(nextEvent.start);
+
+    return calendarEvents.filter(
         function(event) {
             return (
-                dateOnly(event.start) >=
-                today
+                dateKey(event.start) ===
+                nextDateKey
             );
         }
     );
@@ -1258,7 +1282,7 @@ function handleTodayHoliday() {
         todayEvents.length > 0
     ) {
         showHolidayNotification(
-            todayEvents[0]
+            todayEvents
         );
     }
 }
@@ -1648,7 +1672,7 @@ function getRandomHolidayIcon() {
 }
 
 
-function showHolidayNotification(event) {
+function showHolidayNotification(events) {
     let notification =
         document.getElementById(
             "holidayNotification"
@@ -1671,6 +1695,29 @@ function showHolidayNotification(event) {
         );
     }
 
+    const multipleEvents =
+        events.length > 1;
+
+    const firstEvent =
+        events[0];
+
+    const eventList =
+        events
+            .map(function(event) {
+                return `
+                    <div class="holiday-notification-event">
+                        <span>
+                            ${event.title}
+                        </span>
+
+                        <p class="holiday-notification-description">
+                            ${getHolidayDescription(event)}
+                        </p>
+                    </div>
+                `;
+            })
+            .join("");
+
     notification.innerHTML = `
         <button
             class="holiday-notification-close"
@@ -1678,23 +1725,23 @@ function showHolidayNotification(event) {
         >
             ×
         </button>
-    
+
         <div class="holiday-notification-icon">
             ${getRandomHolidayIcon()}
         </div>
-    
+
         <div class="holiday-notification-content">
+
             <strong>
-                ${getHolidayGreeting(event)}
+                ${multipleEvents
+                    ? "Today's Events"
+                    : getHolidayGreeting(firstEvent)}
             </strong>
-    
-            <span>
-                ${event.title}
-            </span>
-    
-            <p class="holiday-notification-description">
-                ${getHolidayDescription(event)}
-            </p>
+
+            <div class="holiday-notification-events">
+                ${eventList}
+            </div>
+
         </div>
     `;
 
@@ -1793,10 +1840,10 @@ function displayNextEvent() {
         return;
     }
 
-    const nextEvent =
-        getNextEvent();
+    const nextEvents =
+        getNextEvents();
 
-    if (!nextEvent) {
+    if (nextEvents.length === 0) {
         container.innerHTML = `
             <strong>
                 No upcoming events
@@ -1806,19 +1853,35 @@ function displayNextEvent() {
         return;
     }
 
+    const nextDate =
+        nextEvents[0].start;
+
+    const eventItems =
+        nextEvents
+            .map(function(event) {
+                return `
+                    <span class="calendar-next-event-item">
+                        ${event.title}
+                    </span>
+                `;
+            })
+            .join("");
+
     container.innerHTML = `
         <strong>
-            Next Event
+            ${nextEvents.length > 1
+                ? "Next Events"
+                : "Next Event"}
         </strong>
 
-        <span>
-            ${nextEvent.title}
-        </span>
+        <div class="calendar-next-event-list">
+            ${eventItems}
+        </div>
 
         <small>
-            ${formatEventDate(nextEvent.start)}
+            ${formatEventDate(nextDate)}
             <b>
-            - ${getRemainingDays(nextEvent.start)}
+                - ${getRemainingDays(nextDate)}
             </b>
         </small>
     `;
@@ -1838,21 +1901,42 @@ function displayCalendarEvents() {
         return;
     }
 
-    const today = dateOnly(new Date());
+    const today =
+        dateOnly(new Date());
 
-    /*  We get next event from the holidays list to avoid duplicate from upcoming events  */
-    const nextEvent = getNextEvent();
+    /*
+     * Get all events belonging to the earliest
+     * upcoming date so they can be displayed
+     * together in the Next Events section.
+     */
+    const nextEvents =
+        getNextEvents();
 
-    /*  Instead of showing all the events in calendars (calendarEvents) we show only the upcoming events (upcomingEvents) from current date  */
-    
+    const nextEventIds =
+        new Set(
+            nextEvents.map(
+                function(event) {
+                    return event.id;
+                }
+            )
+        );
+
+    /*
+     * Display only upcoming events that do not
+     * belong to the Next Events group.
+     */
     const upcomingEvents =
-        calendarEvents.filter(function(event) {
-            return (
-                dateOnly(event.start) >= today &&
-                (!nextEvent ||
-                    event.id !== nextEvent.id)
-            );
-        });
+        calendarEvents.filter(
+            function(event) {
+                return (
+                    dateOnly(event.start) >=
+                        today &&
+                    !nextEventIds.has(
+                        event.id
+                    )
+                );
+            }
+        );
 
     if (upcomingEvents.length === 0) {
         container.innerHTML = `
