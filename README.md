@@ -781,7 +781,7 @@ Where possible, events are represented using their official or commonly recogniz
 
 # Games & Hobbies
 
-The website includes **DLN (Deviner le Nombre)**, an interactive number-guessing game designed and developed by me.
+The website includes **DLN (Deviner Le Nombre)**, an interactive number-guessing game designed and developed by me.
 
 Players progress through increasingly challenging levels by guessing a randomly generated number, with attempts, hints, bonuses, super hits, and scores tracked throughout the session. The game also includes animated feedback for correct and incorrect guesses, level progression, and new records.
 
