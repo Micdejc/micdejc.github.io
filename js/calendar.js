@@ -1080,15 +1080,35 @@ function removeDuplicateEvents(events) {
 
 async function loadCalendarEvents() {
 
-/*
+
     // TEMPORARY TEST
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    
     calendarEvents = [
         {
             id: "test-cybersecurity-awareness-month",
             title: "cybersecurity awareness month",
             category: "Cybersecurity",
-            start: new Date(),
-            end: new Date()
+            start: new Date(today),
+            end: new Date(today)
+        },
+        {
+            id: "test2-cybersecurity-awareness-month",
+            title: "cybersecurity day",
+            category: "Cybersecurity",
+            start: new Date(today),
+            end: new Date(today)
+        },
+        {
+            id: "test3-cybersecurity-awareness-month",
+            title: "Another day",
+            category: "Cybersecurity",
+            start: new Date(tomorrow),
+            end: new Date(tomorrow)
         }
     ];
     
@@ -1100,7 +1120,7 @@ async function loadCalendarEvents() {
     
     return calendarEvents; 
     
-*/
+
 
     
     if (calendarDataLoaded) {
