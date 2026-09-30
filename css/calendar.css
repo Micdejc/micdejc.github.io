@@ -508,6 +508,16 @@
 
 }
 
+.calendar-next-event-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    margin: 0.5rem 0;
+}
+
+.calendar-next-event-item {
+    display: block;
+}
 
 /* =========================================================
    CALENDAR EVENTS
@@ -759,6 +769,23 @@
         0.9s
         ease-in-out;
 
+}
+
+.holiday-notification-events {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.holiday-notification-event {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.holiday-notification-event
+.holiday-notification-description {
+    margin: 0;
 }
 
 
