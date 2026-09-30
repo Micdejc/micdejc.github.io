@@ -1096,13 +1096,13 @@ async function loadCalendarEvents() {
             start: new Date(today),
             end: new Date(today)
         },
-       /* {
+        {
             id: "test2-cybersecurity-awareness-month",
             title: "cybersecurity day",
             category: "Cybersecurity",
             start: new Date(today),
             end: new Date(today)
-        },*/
+        },
         {
             id: "test3-cybersecurity-awareness-month",
             title: "Another day",
