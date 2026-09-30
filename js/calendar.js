@@ -1715,56 +1715,171 @@ function showHolidayNotification(events) {
         );
     }
 
-    const multipleEvents =
-        events.length > 1;
+    /*
+     * Store the events and current position on
+     * the notification element itself.
+     */
+    notification._holidayEvents =
+        events;
 
-    const firstEvent =
-        events[0];
+    notification._holidayIndex = 0;
 
-    const eventList =
-        events
-            .map(function(event) {
-                return `
-                    <div class="holiday-notification-event">
-                        <span>
-                            ${event.title}
-                        </span>
+    function renderHoliday() {
+        const holidayEvents =
+            notification._holidayEvents;
 
-                        <p class="holiday-notification-description">
-                            ${getHolidayDescription(event)}
-                        </p>
-                    </div>
-                `;
-            })
-            .join("");
+        const index =
+            notification._holidayIndex;
 
-    notification.innerHTML = `
-        <button
-            class="holiday-notification-close"
-            aria-label="Close notification"
-        >
-            ×
-        </button>
+        const event =
+            holidayEvents[index];
 
-        <div class="holiday-notification-icon">
-            ${getRandomHolidayIcon()}
-        </div>
+        const multipleEvents =
+            holidayEvents.length > 1;
 
-        <div class="holiday-notification-content">
+        notification.innerHTML = `
+            <button
+                class="holiday-notification-close"
+                aria-label="Close notification"
+            >
+                ×
+            </button>
 
-            <strong>
-                ${multipleEvents
-                    ? "Today's Events"
-                    : getHolidayGreeting(firstEvent)}
-            </strong>
-
-            <div class="holiday-notification-events">
-                ${eventList}
+            <div class="holiday-notification-icon">
+                ${getRandomHolidayIcon()}
             </div>
 
-        </div>
-    `;
+            <div class="holiday-notification-content">
 
+                <strong>
+                    ${getHolidayGreeting(event)}
+                </strong>
+
+                <span>
+                    ${event.title}
+                </span>
+
+                <p class="holiday-notification-description">
+                    ${getHolidayDescription(event)}
+                </p>
+
+                ${
+                    multipleEvents
+                        ? `
+                            <div class="holiday-notification-navigation">
+
+                                <button
+                                    type="button"
+                                    class="holiday-notification-prev"
+                                    aria-label="Previous holiday"
+                                >
+                                    ‹
+                                </button>
+
+                                <span class="holiday-notification-counter">
+                                    ${index + 1} / ${holidayEvents.length}
+                                </span>
+
+                                <button
+                                    type="button"
+                                    class="holiday-notification-next"
+                                    aria-label="Next holiday"
+                                >
+                                    ›
+                                </button>
+
+                            </div>
+                        `
+                        : ""
+                }
+
+            </div>
+        `;
+
+        /*
+         * Previous holiday
+         */
+        const previous =
+            notification.querySelector(
+                ".holiday-notification-prev"
+            );
+
+        if (previous) {
+            previous.addEventListener(
+                "click",
+                function() {
+                    notification._holidayIndex =
+                        (
+                            notification._holidayIndex -
+                            1 +
+                            notification._holidayEvents.length
+                        ) %
+                        notification._holidayEvents.length;
+
+                    renderHoliday();
+                }
+            );
+        }
+
+        /*
+         * Next holiday
+         */
+        const next =
+            notification.querySelector(
+                ".holiday-notification-next"
+            );
+
+        if (next) {
+            next.addEventListener(
+                "click",
+                function() {
+                    notification._holidayIndex =
+                        (
+                            notification._holidayIndex +
+                            1
+                        ) %
+                        notification._holidayEvents.length;
+
+                    renderHoliday();
+                }
+            );
+        }
+
+        /*
+         * Close notification
+         */
+        const close =
+            notification.querySelector(
+                ".holiday-notification-close"
+            );
+
+        if (close) {
+            close.addEventListener(
+                "click",
+                function() {
+                    clearInterval(
+                        notification._ringInterval
+                    );
+
+                    notification._ringInterval =
+                        null;
+
+                    notification.classList.remove(
+                        "show"
+                    );
+                }
+            );
+        }
+    }
+
+    /*
+     * Render the first holiday.
+     */
+    renderHoliday();
+
+    /*
+     * Reset existing timers.
+     */
     if (
         notification._ringInterval
     ) {
@@ -1781,6 +1896,9 @@ function showHolidayNotification(events) {
         );
     }
 
+    /*
+     * Show notification.
+     */
     notification.classList.add(
         "show"
     );
@@ -1789,6 +1907,9 @@ function showHolidayNotification(events) {
         "ringing"
     );
 
+    /*
+     * Repeat the ringing animation.
+     */
     notification._ringInterval =
         setInterval(
             function() {
@@ -1805,29 +1926,9 @@ function showHolidayNotification(events) {
             5000
         );
 
-    const close =
-        notification.querySelector(
-            ".holiday-notification-close"
-        );
-
-    if (close) {
-        close.addEventListener(
-            "click",
-            function() {
-                clearInterval(
-                    notification._ringInterval
-                );
-
-                notification._ringInterval =
-                    null;
-
-                notification.classList.remove(
-                    "show"
-                );
-            }
-        );
-    }
-
+    /*
+     * Automatically hide after 30 seconds.
+     */
     notification._hideTimeout =
         setTimeout(
             function() {
