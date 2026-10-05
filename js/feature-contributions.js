@@ -153,7 +153,22 @@ const featureContributions = {
 
                 type:
                     "Blog"
+            },
+
+            {
+                title:
+                    "The Cyber Security Experience Paradox: How do you get Experience without Experience",
+
+                description:
+                    "Exploring the cybersecurity experience paradox and practical ways to break the cycle of needing experience to gain experience.",
+
+                url:
+                    "https://www.ukcybersecuritycouncil.org.uk/blogs/the-cyber-security-experience-paradox-how-do-you-get-experience-without-experience",
+
+                type:
+                    "Blog"
             }
+           
 
             /*
              * Add additional UKCSC contributions here.
