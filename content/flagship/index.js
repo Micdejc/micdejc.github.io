@@ -4,10 +4,10 @@
 
 const flagshipFiles = [
 
-    "flagship-grammatical-mirage.html",
+    "flagship-refusalguard.html",
 
-    "flagship-refusalguard.html"
-
+    "flagship-grammatical-mirage.html"
+   
 ];
 
 
