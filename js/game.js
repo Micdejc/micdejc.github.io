@@ -1979,7 +1979,10 @@ function showStartFeedback(
     element.textContent =
         message;
 
+   
+    element.hidden = false;
 
+   
     element.classList.add(
         "show",
         type
