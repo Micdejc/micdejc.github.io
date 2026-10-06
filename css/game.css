@@ -293,8 +293,16 @@ body.game-modal-open {
     text-align: center;
     opacity: 0.85;
     border-radius: 8px;
-    border: 1px solid var(--border);
-    background: var(--primary);
+    border: 1px solid color-mix(
+        in srgb,
+        #22c55e 35%,
+        var(--border)
+    );
+    background: color-mix(
+        in srgb,
+        #22c55e 14%,
+        var(--surface)
+    );
 }
 
 
