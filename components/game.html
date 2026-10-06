@@ -57,17 +57,22 @@
                 </div>
 
                 <label for="dlnPlayerName">
-                    Player name
+                    Player nickname
                 </label>
 
                 <input
                     type="text"
                     id="dlnPlayerName"
                     class="dln-input"
-                    placeholder="Enter your name"
+                    placeholder="Choose a nickname (no real name needed)"
                     maxlength="30"
                     autocomplete="nickname"
+                    aria-describedby="dlnPrivacyNote"
                 >
+                
+                <p class="dln-privacy-note" id="dlnPrivacyNote">
+                    🔒 Your nickname stays on your device and is not sent to a server.
+                </p>
 
                 <!-- SAVED GAME -->
                 <div
