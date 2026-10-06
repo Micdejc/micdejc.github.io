@@ -1980,9 +1980,6 @@ function showStartFeedback(
         message;
 
    
-    element.hidden = false;
-
-   
     element.classList.add(
         "show",
         type
