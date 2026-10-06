@@ -483,7 +483,8 @@ body.game-modal-open {
     /* background: transparent; */
     background: lightgray;
    
-    color: var(--text);
+    /* color: var(--text); */
+    color: var(--surface);
 }
 
 .dln-primary-button:hover,
