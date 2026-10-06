@@ -480,7 +480,7 @@ body.game-modal-open {
 .dln-secondary-button {
     border: 1px solid var(--border);
 
-    background: transparent;
+    /* background: transparent; */
     color: var(--text);
 }
 
