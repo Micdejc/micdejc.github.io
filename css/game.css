@@ -630,6 +630,9 @@ body.game-modal-open {
    ========================================================= */
 
 .dln-feedback {
+
+    display: none;
+   
     min-height: 24px;
 
     margin: 12px 0;
@@ -653,6 +656,7 @@ body.game-modal-open {
 }
 
 .dln-feedback.show {
+    display: block;
     animation: dlnFeedbackIn 0.35s ease forwards;
 }
 
