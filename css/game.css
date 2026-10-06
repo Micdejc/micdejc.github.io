@@ -481,6 +481,8 @@ body.game-modal-open {
     border: 1px solid var(--border);
 
     /* background: transparent; */
+    background: lightgray;
+   
     color: var(--text);
 }
 
