@@ -769,19 +769,20 @@ body.game-modal-open {
 @keyframes hintPulse {
   0%, 82%, 100% {
     transform: scale(1);
-    box-shadow: 0 0 0 0 rgba(0, 123, 255, 0);
+    box-shadow: 0 0 0 0 transparent;
   }
 
   87% {
-    transform: scale(1.06);
-    box-shadow: 0 0 0 6px rgba(0, 123, 255, 0.15);
+    transform: scale(1.09);
+    box-shadow: 0 0 0 6px color-mix(in srgb, var(--primary) 15%, transparent);
   }
 
   92% {
     transform: scale(1);
-    box-shadow: 0 0 0 0 rgba(0, 123, 255, 0);
+    box-shadow: 0 0 0 0 transparent;
   }
 }
+
 
 .hint-button {
   animation: hintPulse 6s ease-in-out infinite;
