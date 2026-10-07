@@ -480,11 +480,11 @@ body.game-modal-open {
 .dln-secondary-button {
     border: 1px solid var(--border);
 
-    /* background: transparent; */
-    background: grey;
+    background: transparent;
+    /* background: grey; */
    
-    /* color: var(--text); */
-    color: var(--surface);
+    color: var(--text);
+    /* color: var(--surface); */
 }
 
 .dln-primary-button:hover,
@@ -786,6 +786,9 @@ body.game-modal-open {
 
 .hint-button {
   animation: hintPulse 6s ease-in-out infinite;
+  background: #F59E0B;
+  /* color: var(--text); */
+  color: var(--surface);
 }
 
 /* =========================================================
