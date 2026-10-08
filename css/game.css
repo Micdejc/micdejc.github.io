@@ -773,8 +773,8 @@ body.game-modal-open {
   }
 
   87% {
-    transform: scale(1.09);
-    box-shadow: 0 0 0 6px color-mix(in srgb, var(--primary) 15%, transparent);
+    transform: scale(1.1);
+    box-shadow: 0 0 0 8px color-mix(in srgb, var(--primary) 15%, transparent);
   }
 
   92% {
@@ -933,4 +933,8 @@ body.game-modal-open {
     .dln-start-actions {
         gap: 8px;
     }
+
+   .hint-button {
+        width: 50%;
+   }
 }
