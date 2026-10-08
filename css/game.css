@@ -295,12 +295,12 @@ body.game-modal-open {
     border-radius: 8px;
     border: 1px solid color-mix(
         in srgb,
-        #22c55e 35%,
+        #374151 35%,
         var(--border)
     );
     background: color-mix(
         in srgb,
-        #22c55e 14%,
+        #F3F4F6 14%,
         var(--surface)
     );
 }
