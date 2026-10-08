@@ -767,22 +767,46 @@ body.game-modal-open {
 }
 
 @keyframes hintPulse {
-  0%, 82%, 100% {
+  /* Idle */
+  0%, 12% {
     transform: scale(1);
     box-shadow: 0 0 0 0 transparent;
   }
 
-  87% {
-    transform: scale(1.1);
+  /* First pulse */
+  18% {
+    transform: scale(1.08);
     box-shadow: 0 0 0 8px color-mix(in srgb, var(--primary) 15%, transparent);
   }
 
-  92% {
+  24% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 transparent;
+  }
+
+  /* Short pause */
+  30% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 transparent;
+  }
+
+  /* Second pulse */
+  36% {
+    transform: scale(1.08);
+    box-shadow: 0 0 0 8px color-mix(in srgb, var(--primary) 15%, transparent);
+  }
+
+  42% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 transparent;
+  }
+
+  /* Long still period */
+  42%, 100% {
     transform: scale(1);
     box-shadow: 0 0 0 0 transparent;
   }
 }
-
 
 .hint-button {
   animation: hintPulse 6s ease-in-out infinite;
