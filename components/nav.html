@@ -79,50 +79,80 @@
 
         <div class="nav-controls">
 
-            <button
-                class="theme-toggle"
-                id="themeToggle"
-                aria-label="Toggle dark mode"
-            >
-                ☾
-            </button>
-
-
-            <button
-                class="terminal-toggle"
-                id="terminalToggle"
-                aria-label="Toggle Linux terminal mode"
-                title="Linux terminal mode"
-            >
-                >_
-            </button>
-
-            <button
-                class="search-toggle"
-                id="searchToggle"
-                aria-label="Search website"
-                title="Search website (Ctrl/Cmd + K)"
-            >
-                 ⌕
-            </button>
-
-            <button
-                class="game-toggle"
-                id="gameToggle"
-                aria-label="Games and hobbies"
-                title="Games and hobbies"
-            >
-                ♧
-            </button>
-
-            <button
-                class="calendar-toggle"
-                id="calendarToggle"
-                aria-label="Open holidays and events calendar"
-                title="Holidays and events"    
-            >
-                📅
-            </button>
+            <!-- Tools dropdown -->
+            <div class="utility-dropdown">
+                <button
+                    class="utility-menu-toggle"
+                    aria-expanded="false"
+                    aria-label="Open tools menu"
+                >
+                    Tools <span aria-hidden="true">▾</span>
+                </button>
+        
+                <div class="utility-menu">
+        
+                    <button
+                        class="theme-toggle"
+                        id="themeToggle"
+                        aria-label="Toggle dark mode"
+                        title="Toggle dark mode"
+                    >
+                        ☾ <span>Dark mode</span>
+                    </button>
+        
+                    <button
+                        class="terminal-toggle"
+                        id="terminalToggle"
+                        aria-label="Toggle Linux terminal mode"
+                        title="Linux terminal mode"
+                    >
+                        &gt;_ <span>Terminal mode</span>
+                    </button>
+        
+                    <button
+                        class="search-toggle"
+                        id="searchToggle"
+                        aria-label="Search website"
+                        title="Search website (Ctrl/Cmd + K)"
+                    >
+                        ⌕ <span>Search</span>
+                    </button>
+        
+                </div>
+            </div>
+        
+            <!-- Explore dropdown -->
+            <div class="utility-dropdown">
+                <button
+                    class="utility-menu-toggle"
+                    aria-expanded="false"
+                    aria-label="Open explore menu"
+                >
+                    Explore <span aria-hidden="true">▾</span>
+                </button>
+        
+                <div class="utility-menu">
+        
+                    <button
+                        class="game-toggle"
+                        id="gameToggle"
+                        aria-label="Games and hobbies"
+                        title="Games and hobbies"
+                    >
+                        ♧ <span>Games &amp; Hobbies</span>
+                    </button>
+        
+                    <button
+                        class="calendar-toggle"
+                        id="calendarToggle"
+                        aria-label="Open holidays and events calendar"
+                        title="Holidays and events"
+                    >
+                        📅 <span>Holidays &amp; Events</span>
+                    </button>
+        
+                </div>
+            </div>
 
         </div>
 
