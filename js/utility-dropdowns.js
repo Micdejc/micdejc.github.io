@@ -1,7 +1,9 @@
 
 /* ========================================
-   NAVIGATION UTILITY DROPDOWNS
-   Tools and Explore
+   NAVIGATION DROPDOWNS
+   Main navigation: About, Research,
+   Insights, Community
+   Utility menus: Tools and Explore
 ======================================== */
 
 (() => {
@@ -9,7 +11,11 @@
     if (window.utilityDropdownsInitialized) return;
     window.utilityDropdownsInitialized = true;
 
-    function closeDropdown(dropdown, returnFocus = false) {
+    /* ========================================
+       UTILITY DROPDOWNS
+    ======================================== */
+
+    function closeUtilityDropdown(dropdown, returnFocus = false) {
         dropdown.classList.remove("is-open");
 
         const toggle = dropdown.querySelector(".utility-menu-toggle");
@@ -23,69 +29,137 @@
         }
     }
 
-    function closeAllDropdowns(except = null) {
+    function closeAllUtilityDropdowns(except = null) {
         document.querySelectorAll(".utility-dropdown").forEach((dropdown) => {
             if (dropdown !== except) {
-                closeDropdown(dropdown);
+                closeUtilityDropdown(dropdown);
             }
         });
     }
 
-    // Handle clicks anywhere on the page.
-    document.addEventListener("click", (event) => {
-        const toggle = event.target.closest(".utility-menu-toggle");
+    /* ========================================
+       MAIN NAVIGATION DROPDOWNS
+       Uses native <details> and <summary>
+    ======================================== */
 
-        // A Tools or Explore trigger was clicked.
-        if (toggle) {
-            const dropdown = toggle.closest(".utility-dropdown");
+    function closeMainDropdowns(except = null) {
+        document.querySelectorAll(
+            ".nav-links .nav-dropdown > details[open]"
+        ).forEach((details) => {
+            if (details !== except) {
+                details.open = false;
+            }
+        });
+    }
+
+    /* ========================================
+       CLICK HANDLING
+    ======================================== */
+
+    document.addEventListener("click", (event) => {
+        // Main navigation dropdown trigger.
+        const summary = event.target.closest(
+            ".nav-links .nav-dropdown > details > summary"
+        );
+
+        if (summary) {
+            const currentDetails = summary.parentElement;
+
+            // Let the browser toggle <details> first.
+            setTimeout(() => {
+                if (currentDetails.open) {
+                    closeMainDropdowns(currentDetails);
+                }
+            }, 0);
+
+            // Keep utility menus separate, but close them
+            // when opening a main navigation dropdown.
+            closeAllUtilityDropdowns();
+
+            return;
+        }
+
+        // Utility dropdown trigger.
+        const utilityToggle = event.target.closest(
+            ".utility-menu-toggle"
+        );
+
+        if (utilityToggle) {
+            const dropdown = utilityToggle.closest(".utility-dropdown");
 
             if (!dropdown) return;
 
             const wasOpen = dropdown.classList.contains("is-open");
 
-            closeAllDropdowns(dropdown);
+            // Close other utility menus.
+            closeAllUtilityDropdowns(dropdown);
+
+            // Close any open main navigation menu.
+            closeMainDropdowns();
 
             if (wasOpen) {
-                closeDropdown(dropdown);
+                closeUtilityDropdown(dropdown);
             } else {
                 dropdown.classList.add("is-open");
-                toggle.setAttribute("aria-expanded", "true");
+                utilityToggle.setAttribute("aria-expanded", "true");
             }
 
             return;
         }
 
-        // A button inside a utility menu was clicked.
-        const utilityButton = event.target.closest(".utility-menu button");
+        // Utility action button, such as Search or Dark mode.
+        const utilityButton = event.target.closest(
+            ".utility-menu button"
+        );
 
         if (utilityButton) {
             const dropdown = utilityButton.closest(".utility-dropdown");
 
             if (dropdown) {
-                closeDropdown(dropdown);
+                closeUtilityDropdown(dropdown);
             }
 
-            // Do not prevent the button's existing action.
+            // Preserve the button's existing action.
             return;
         }
 
-        // Click outside the utility dropdowns.
+        // Click outside the main navigation and utility menus.
+        if (!event.target.closest(".nav-links")) {
+            closeMainDropdowns();
+        }
+
         if (!event.target.closest(".utility-dropdown")) {
-            closeAllDropdowns();
+            closeAllUtilityDropdowns();
         }
     });
 
-    // Keyboard support.
+    /* ========================================
+       KEYBOARD SUPPORT
+    ======================================== */
+
     document.addEventListener("keydown", (event) => {
         if (event.key !== "Escape") return;
 
-        const openDropdown = document.querySelector(
+        const openUtilityDropdown = document.querySelector(
             ".utility-dropdown.is-open"
         );
 
-        if (openDropdown) {
-            closeDropdown(openDropdown, true);
+        if (openUtilityDropdown) {
+            closeUtilityDropdown(openUtilityDropdown, true);
+        }
+
+        const openMainDropdown = document.querySelector(
+            ".nav-links .nav-dropdown > details[open]"
+        );
+
+        if (openMainDropdown) {
+            openMainDropdown.open = false;
+
+            const summary = openMainDropdown.querySelector("summary");
+
+            if (summary) {
+                summary.focus();
+            }
         }
     });
 })();
-
