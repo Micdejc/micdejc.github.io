@@ -296,6 +296,10 @@
                 right: 0;
                 min-width: 200px;
             }
+                
+            .utility-menu > button {
+                font-size: 0.65rem;
+            }
         }
         
         @media (prefers-reduced-motion: reduce) {
