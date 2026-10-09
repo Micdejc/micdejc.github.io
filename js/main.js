@@ -229,14 +229,28 @@ function initialiseTheme() {
 
     // Update the icon to reflect the current theme.
     function updateThemeIcon() {
-        const isDark = body.classList.contains("dark");
+          const isDark = document.body.classList.contains("dark");
+          const icon = toggle.querySelector(".utility-icon");
+          const label = toggle.querySelector(".utility-label");
+      
+          if (icon) icon.textContent = isDark ? "☀" : "☾";
+      
+          if (label) {
+              label.textContent = isDark ? "Light Mode" : "Dark Mode";
+          }
+      
+          toggle.setAttribute(
+              "aria-label",
+              isDark ? "Switch to light mode" : "Switch to dark mode"
+          );
+      
+          toggle.setAttribute(
+              "title",
+              isDark ? "Switch to light mode" : "Switch to dark mode"
+          );
+      
+          toggle.setAttribute("aria-pressed", String(isDark));
 
-        toggle.textContent = isDark ? "☀" : "☾";
-        toggle.setAttribute(
-            "aria-label",
-            isDark ? "Switch to light mode" : "Switch to dark mode"
-        );
-        toggle.setAttribute("aria-pressed", String(isDark));
     }
 
     updateThemeIcon();
@@ -485,42 +499,67 @@ function initialiseTerminalMode() {
 
     const body = document.body;
 
+    // Update the Terminal Mode icon, label and accessibility attributes.
     function updateTerminalToggle() {
         const isTerminal = body.classList.contains("terminal-mode");
+        const icon = toggle.querySelector(".utility-icon");
+        const label = toggle.querySelector(".utility-label");
 
-        toggle.textContent = isTerminal ? "$_" : ">_";
-        toggle.title = isTerminal
+        if (icon) {
+            icon.textContent = isTerminal ? "$_" : ">_";
+        }
+
+        if (label) {
+            label.textContent = isTerminal
+                ? "Exit Terminal Mode"
+                : "Terminal Mode";
+        }
+
+        const description = isTerminal
             ? "Exit Linux terminal mode"
             : "Enable Linux terminal mode";
 
-        toggle.setAttribute(
-            "aria-label",
-            isTerminal
-                ? "Exit Linux terminal mode"
-                : "Enable Linux terminal mode"
-        );
-
+        toggle.title = description;
+        toggle.setAttribute("aria-label", description);
         toggle.setAttribute("aria-pressed", String(isTerminal));
     }
 
+    // Keep the Theme toggle synchronised with the current theme.
     function updateThemeToggle() {
         const themeToggle = document.getElementById("themeToggle");
 
         if (!themeToggle) return;
 
         const isDark = body.classList.contains("dark");
+        const icon = themeToggle.querySelector(".utility-icon");
+        const label = themeToggle.querySelector(".utility-label");
 
-        themeToggle.textContent = isDark ? "☀" : "☾";
-        themeToggle.setAttribute(
-            "aria-label",
-            isDark ? "Switch to light mode" : "Switch to dark mode"
-        );
+        if (icon) {
+            icon.textContent = isDark ? "☀" : "☾";
+        }
+
+        if (label) {
+            label.textContent = isDark ? "Light Mode" : "Dark Mode";
+        }
+
+        const description = isDark
+            ? "Switch to light mode"
+            : "Switch to dark mode";
+
+        themeToggle.title = description;
+        themeToggle.setAttribute("aria-label", description);
         themeToggle.setAttribute("aria-pressed", String(isDark));
     }
 
+    // Apply and persist the selected theme.
     function setTheme(isDark) {
         body.classList.toggle("dark", isDark);
-        localStorage.setItem("theme", isDark ? "dark" : "light");
+
+        localStorage.setItem(
+            "theme",
+            isDark ? "dark" : "light"
+        );
+
         updateThemeToggle();
     }
 
@@ -529,29 +568,37 @@ function initialiseTerminalMode() {
 
     if (savedMode === "on") {
         body.classList.add("terminal-mode");
+
+        // Terminal Mode always requires Dark Mode.
         setTheme(true);
 
         // hero.html must be loaded before the animation starts.
         setTimeout(startConsoleAnimation, 150);
     }
 
+    // Initialise both utility menu buttons.
     updateTerminalToggle();
     updateThemeToggle();
 
     toggle.addEventListener("click", () => {
-        const enableTerminal = !body.classList.contains("terminal-mode");
+        const enableTerminal =
+            !body.classList.contains("terminal-mode");
 
         body.classList.toggle("terminal-mode", enableTerminal);
-        localStorage.setItem("terminalMode", enableTerminal ? "on" : "off");
+
+        localStorage.setItem(
+            "terminalMode",
+            enableTerminal ? "on" : "off"
+        );
 
         if (enableTerminal) {
-            // Terminal Mode requires Dark Mode.
+            // Enter Terminal Mode and force Dark Mode.
             setTheme(true);
 
             // Start the terminal console animation.
             setTimeout(startConsoleAnimation, 150);
         } else {
-            // Return to the default Light Mode.
+            // Exit Terminal Mode and return to Light Mode.
             setTheme(false);
 
             // Stop the animation and restore the original text.
