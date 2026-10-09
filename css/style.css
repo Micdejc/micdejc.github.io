@@ -156,25 +156,25 @@
         /* Hover highlight */
         .nav-dropdown details > summary:hover {
             background: var(--surface);
-            color: var(--text);
+            color: var(--primary);
         }
         
         /* Highlight the currently open dropdown */
         .nav-dropdown details[open] > summary {
             background: var(--surface);
-            color: var(--text);
+            color: var(--primary);
             font-weight: 600;
         }
         
         /* Rotate and highlight the arrow */
         .nav-dropdown details[open] > summary::after {
-            color: var(--text);
+            color: var(--primary);
             transform: rotate(180deg);
         }
         
         /* Keyboard accessibility */
         .nav-dropdown details > summary:focus-visible {
-            outline: 2px solid var(--text);
+            outline: 2px solid var(--primary);
             outline-offset: 3px;
         }
         
@@ -217,7 +217,7 @@
         .nav-dropdown-menu a:hover,
         .nav-dropdown-menu a:focus-visible {
             background: var(--border);
-            color: var(--text);
+            color: var(--primary);
             outline: none;
         }
         
@@ -230,6 +230,14 @@
             }
         }
 
+        /* Keep Contact aligned with the dropdown triggers */
+        .nav-links > li > a {
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            border-radius: 8px;
+            line-height: normal;
+        }
 
         /* ========================================
            Dropdown Container
