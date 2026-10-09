@@ -254,18 +254,6 @@
                 color 0.2s ease;
         }
 
-        .utility-icon {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 24px;
-            flex-shrink: 0;
-        }
-        
-        .utility-label {
-            white-space: nowrap;
-        }
-        
         /* Button hover and keyboard focus */
         .utility-menu > button:hover,
         .utility-menu > button:focus-visible {
