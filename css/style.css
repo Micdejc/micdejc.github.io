@@ -246,7 +246,7 @@
             background: transparent;
             color: var(--text);
             font: inherit;
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             text-align: left;
             cursor: pointer;
             transition:
@@ -295,10 +295,6 @@
             .utility-menu {
                 right: 0;
                 min-width: 200px;
-            }
-                
-            .utility-menu > button {
-                font-size: 0.65rem;
             }
         }
         
