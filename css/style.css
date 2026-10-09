@@ -170,8 +170,112 @@
             background: var(--surface);
         }
         
+        /* Dropdown container */
+        .utility-dropdown {
+            position: relative;
+        }
+        
+        /* Dropdown trigger */
+        .utility-menu-toggle {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            padding: 9px 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: transparent;
+            color: var(--text);
+            font: inherit;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition:
+                background 0.2s ease,
+                border-color 0.2s ease,
+                color 0.2s ease;
+        }
+        
+        .utility-menu-toggle:hover,
+        .utility-menu-toggle[aria-expanded="true"] {
+            background: var(--surface);
+            border-color: var(--border);
+            color: var(--text);
+        }
+        
+        .utility-menu-toggle span {
+            font-size: 0.75rem;
+            transition: transform 0.2s ease;
+        }
+        
+        .utility-menu-toggle[aria-expanded="true"] span {
+            transform: rotate(180deg);
+        }
+        
+        /* Dropdown panel */
+        .utility-menu {
+            display: none;
+            position: absolute;
+            top: calc(100% + 10px);
+            right: 0;
+            min-width: 210px;
+            padding: 7px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+            z-index: 1100;
+        }
+        
+        /* Open state controlled by JavaScript */
+        .utility-dropdown.is-open .utility-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+        
+        /* Utility buttons inside dropdowns */
+        .utility-menu > button {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            width: 100%;
+            padding: 11px 12px;
+            border: none;
+            border-radius: 7px;
+            background: transparent;
+            color: var(--text);
+            font: inherit;
+            font-size: 0.9rem;
+            text-align: left;
+            cursor: pointer;
+            transition:
+                background 0.2s ease,
+                color 0.2s ease;
+        }
+        
+        /* Button hover and keyboard focus */
+        .utility-menu > button:hover,
+        .utility-menu > button:focus-visible {
+            background: var(--surface);
+            color: var(--text);
+            outline: none;
+        }
+        
+        /* Keep icons visually consistent */
+        .utility-menu > button > span {
+            flex: 1;
+        }
+        
+        /* Keyboard accessibility */
+        .utility-menu-toggle:focus-visible {
+            outline: 2px solid var(--border);
+            outline-offset: 3px;
+        }
+
         /* Keep dropdowns within the mobile navigation */
         @media (max-width: 768px) {
+
             .nav-dropdown-menu {
                 position: static;
                 min-width: 0;
@@ -181,6 +285,24 @@
         
             .nav-dropdown-menu a {
                 white-space: normal;
+            }
+     
+            .utility-menu-toggle {
+                padding: 8px 9px;
+                font-size: 0.82rem;
+            }
+        
+            .utility-menu {
+                right: 0;
+                min-width: 200px;
+            }
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            .utility-menu-toggle,
+            .utility-menu-toggle span,
+            .utility-menu > button {
+                transition: none;
             }
         }
 
