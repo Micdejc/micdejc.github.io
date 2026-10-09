@@ -479,182 +479,87 @@ function initialiseCalendar() {
 
 function initialiseTerminalMode() {
 
-    const toggle =
-        document.getElementById(
-            "terminalToggle"
+    const toggle = document.getElementById("terminalToggle");
+
+    if (!toggle) return;
+
+    const body = document.body;
+
+    function updateTerminalToggle() {
+        const isTerminal = body.classList.contains("terminal-mode");
+
+        toggle.textContent = isTerminal ? "$_" : ">_";
+        toggle.title = isTerminal
+            ? "Exit Linux terminal mode"
+            : "Enable Linux terminal mode";
+
+        toggle.setAttribute(
+            "aria-label",
+            isTerminal
+                ? "Exit Linux terminal mode"
+                : "Enable Linux terminal mode"
         );
 
-
-    if (!toggle) {
-        return;
+        toggle.setAttribute("aria-pressed", String(isTerminal));
     }
 
+    function updateThemeToggle() {
+        const themeToggle = document.getElementById("themeToggle");
 
-    const savedMode =
-        localStorage.getItem(
-            "terminalMode"
+        if (!themeToggle) return;
+
+        const isDark = body.classList.contains("dark");
+
+        themeToggle.textContent = isDark ? "☀" : "☾";
+        themeToggle.setAttribute(
+            "aria-label",
+            isDark ? "Switch to light mode" : "Switch to dark mode"
         );
+        themeToggle.setAttribute("aria-pressed", String(isDark));
+    }
 
+    function setTheme(isDark) {
+        body.classList.toggle("dark", isDark);
+        localStorage.setItem("theme", isDark ? "dark" : "light");
+        updateThemeToggle();
+    }
 
-    /*
-     * Restore Terminal Mode if it was enabled
-     * during the previous visit.
-     */
+    // Restore the saved Terminal Mode preference.
+    const savedMode = localStorage.getItem("terminalMode");
 
     if (savedMode === "on") {
+        body.classList.add("terminal-mode");
+        setTheme(true);
 
-        document.body.classList.add(
-            "terminal-mode"
-        );
-
-        toggle.textContent = "$_";
-
-        toggle.title =
-            "Exit Linux terminal mode";
-
-
-        /*
-         * hero.html has already been loaded by
-         * loadPage() before this function runs.
-         *
-         * Therefore consoleText1 and consoleText2
-         * now exist in the DOM.
-         */
-
-        setTimeout(
-            startConsoleAnimation,
-            150
-        );
-
+        // hero.html must be loaded before the animation starts.
+        setTimeout(startConsoleAnimation, 150);
     }
 
+    updateTerminalToggle();
+    updateThemeToggle();
 
-    toggle.addEventListener(
-        "click",
-        function () {
+    toggle.addEventListener("click", () => {
+        const enableTerminal = !body.classList.contains("terminal-mode");
 
-            document.body.classList.toggle(
-                "terminal-mode"
-            );
+        body.classList.toggle("terminal-mode", enableTerminal);
+        localStorage.setItem("terminalMode", enableTerminal ? "on" : "off");
 
+        if (enableTerminal) {
+            // Terminal Mode requires Dark Mode.
+            setTheme(true);
 
-            /*
-             * TERMINAL MODE ON
-             */
+            // Start the terminal console animation.
+            setTimeout(startConsoleAnimation, 150);
+        } else {
+            // Return to the default Light Mode.
+            setTheme(false);
 
-            if (
-                document.body.classList.contains(
-                    "terminal-mode"
-                )
-            ) {
-
-                toggle.textContent = "$_";
-
-                toggle.title =
-                    "Exit Linux terminal mode";
-
-                localStorage.setItem(
-                    "terminalMode",
-                    "on"
-                );
-
-
-                /*
-                 * Automatically switch to dark mode.
-                 */
-
-                document.body.classList.add(
-                    "dark"
-                );
-
-                localStorage.setItem(
-                    "theme",
-                    "dark"
-                );
-
-
-                const themeToggle =
-                    document.getElementById(
-                        "themeToggle"
-                    );
-
-
-                if (themeToggle) {
-
-                    themeToggle.textContent =
-                        "☀";
-
-                }
-
-
-                /*
-                 * Start console animation.
-                 */
-
-                setTimeout(
-                    startConsoleAnimation,
-                    150
-                );
-
-            }
-
-
-            /*
-             * TERMINAL MODE OFF
-             */
-
-            else {
-
-                toggle.textContent = ">_";
-
-                toggle.title =
-                    "Linux terminal mode";
-
-                localStorage.setItem(
-                    "terminalMode",
-                    "off"
-                );
-
-
-                /*
-                 * Automatically switch to light mode.
-                 */
-
-                document.body.classList.remove(
-                    "dark"
-                );
-
-                localStorage.setItem(
-                    "theme",
-                    "light"
-                );
-
-
-                const themeToggle =
-                    document.getElementById(
-                        "themeToggle"
-                    );
-
-
-                if (themeToggle) {
-
-                    themeToggle.textContent =
-                        "☾";
-
-                }
-
-
-                /*
-                 * Completely stop the animation
-                 * and restore the original text.
-                 */
-
-                stopConsoleAnimation();
-
-            }
-
+            // Stop the animation and restore the original text.
+            stopConsoleAnimation();
         }
-    );
+
+        updateTerminalToggle();
+    });
 
 }
 
