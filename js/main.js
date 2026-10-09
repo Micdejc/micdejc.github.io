@@ -509,7 +509,7 @@ function initialiseTerminalMode() {
 
         if (label) {
             label.textContent = isTerminal
-                ? "Exit Terminal mode"
+                ? "Exit Terminal"
                 : "Terminal mode";
         }
 
