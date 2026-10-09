@@ -217,69 +217,42 @@ async function loadPage() {
 
 function initialiseTheme() {
 
-    const toggle =
-        document.getElementById("themeToggle");
+    const toggle = document.getElementById("themeToggle");
 
-    if (!toggle) {
-        return;
+    if (!toggle) return;
+
+    const body = document.body;
+    const savedTheme = localStorage.getItem("theme");
+
+    // Restore the saved theme.
+    body.classList.toggle("dark", savedTheme === "dark");
+
+    // Update the icon to reflect the current theme.
+    function updateThemeIcon() {
+        const isDark = body.classList.contains("dark");
+
+        toggle.textContent = isDark ? "☀" : "☾";
+        toggle.setAttribute(
+            "aria-label",
+            isDark ? "Switch to light mode" : "Switch to dark mode"
+        );
+        toggle.setAttribute("aria-pressed", String(isDark));
     }
 
+    updateThemeIcon();
 
-    const savedTheme =
-        localStorage.getItem("theme");
+    toggle.addEventListener("click", () => {
+        // Theme switching is disabled while Terminal Mode is active.
+        if (body.classList.contains("terminal-mode")) return;
 
+        body.classList.toggle("dark");
 
-    if (savedTheme === "dark") {
+        const isDark = body.classList.contains("dark");
 
-        document.body.classList.add("dark");
+        localStorage.setItem("theme", isDark ? "dark" : "light");
 
-        toggle.textContent = "☀";
-
-    }
-
-
-    toggle.addEventListener(
-        "click",
-        function () {
-           
-            /* The theme toggle to work only when Terminal Mode is OFF */
-            if (
-               document.body.classList.contains(
-                   "terminal-mode"
-               )
-               ) {
-               return;
-                 }
-
-
-           
-            document.body.classList.toggle("dark");
-
-
-            if (
-                document.body.classList.contains("dark")
-            ) {
-
-                toggle.textContent = "☀";
-
-                localStorage.setItem(
-                    "theme",
-                    "dark"
-                );
-
-            } else {
-
-                toggle.textContent = "☾";
-
-                localStorage.setItem(
-                    "theme",
-                    "light"
-                );
-
-            }
-
-        }
-    );
+        updateThemeIcon();
+    });
 
 }
 
