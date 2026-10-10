@@ -400,6 +400,10 @@
             .utility-menu > button {
                 font-size: 0.82rem;
             }
+
+            .logo {
+                letter-spacing: -0.06em;
+            }
         }
         
         @media (prefers-reduced-motion: reduce) {
