@@ -689,214 +689,111 @@ function initialiseBlogFilters() {
 }
 
 
+
 /* ================= PAGINATION ================= */
 
-function renderPagination(
-    totalPosts,
-    totalPages
-) {
-
-    const pagination =
-        document.getElementById(
-            "blog-pagination"
-        );
-
+function renderPagination(totalPosts, totalPages) {
+    const pagination = document.getElementById("blog-pagination");
 
     if (!pagination) {
         return;
     }
 
-
     pagination.innerHTML = "";
-
 
     if (totalPages <= 1) {
         return;
     }
 
+    /* Helper: create SVG chevron */
+    function createPaginationArrow(direction) {
+        const arrow = document.createElement("span");
 
-    /* Previous */
+        arrow.className = `pagination-arrow pagination-arrow-${direction}`;
+        arrow.setAttribute("aria-hidden", "true");
 
-    const previousButton =
-        document.createElement(
-            "button"
-        );
-
-
-    previousButton.type =
-        "button";
-
-
-    previousButton.className =
-        "blog-pagination-button";
-
-
-    previousButton.textContent =
-        "Previous";
-        /*"← Previous"; */
-
-
-    previousButton.disabled =
-        currentPage === 1;
-
-
-    previousButton.setAttribute(
-        "aria-label",
-        "Previous page"
-    );
-
-
-    previousButton.addEventListener(
-        "click",
-        () => {
-
-            if (
-                currentPage > 1
-            ) {
-
-                currentPage--;
-
-                renderPosts();
-
-                scrollToBlogPosts();
-
-            }
-
-        }
-    );
-
-
-    pagination.appendChild(
-        previousButton
-    );
-
-
-    /* Page numbers */
-
-    for (
-        let page = 1;
-        page <= totalPages;
-        page++
-    ) {
-
-        const pageButton =
-            document.createElement(
-                "button"
-            );
-
-
-        pageButton.type =
-            "button";
-
-
-        pageButton.className =
-            "blog-pagination-button";
-
-
-        pageButton.textContent =
-            page;
-
-
-        pageButton.setAttribute(
-            "aria-label",
-            `Page ${page}`
-        );
-
-
-        if (
-            page === currentPage
-        ) {
-
-            pageButton.classList.add(
-                "active"
-            );
-
-            pageButton.setAttribute(
-                "aria-current",
-                "page"
-            );
-
-        }
-
-
-        pageButton.addEventListener(
-            "click",
-            () => {
-
-                currentPage =
-                    page;
-
-                renderPosts();
-
-                scrollToBlogPosts();
-
-            }
-        );
-
-
-        pagination.appendChild(
-            pageButton
-        );
-
+        return arrow;
     }
 
+    /* Previous */
+    const previousButton = document.createElement("button");
+
+    previousButton.type = "button";
+    previousButton.className = "blog-pagination-button";
+    previousButton.disabled = currentPage === 1;
+
+    previousButton.setAttribute("aria-label", "Previous page");
+
+    previousButton.appendChild(
+        createPaginationArrow("left")
+    );
+
+    previousButton.appendChild(
+        document.createTextNode("Previous")
+    );
+
+    previousButton.addEventListener("click", () => {
+        if (currentPage > 1) {
+            currentPage--;
+            renderPosts();
+            scrollToBlogPosts();
+        }
+    });
+
+    pagination.appendChild(previousButton);
+
+    /* Page numbers */
+    for (let page = 1; page <= totalPages; page++) {
+        const pageButton = document.createElement("button");
+
+        pageButton.type = "button";
+        pageButton.className = "blog-pagination-button";
+        pageButton.textContent = page;
+
+        pageButton.setAttribute("aria-label", `Page ${page}`);
+
+        if (page === currentPage) {
+            pageButton.classList.add("active");
+            pageButton.setAttribute("aria-current", "page");
+        }
+
+        pageButton.addEventListener("click", () => {
+            currentPage = page;
+            renderPosts();
+            scrollToBlogPosts();
+        });
+
+        pagination.appendChild(pageButton);
+    }
 
     /* Next */
+    const nextButton = document.createElement("button");
 
-    const nextButton =
-        document.createElement(
-            "button"
-        );
+    nextButton.type = "button";
+    nextButton.className = "blog-pagination-button";
+    nextButton.disabled = currentPage === totalPages;
 
+    nextButton.setAttribute("aria-label", "Next page");
 
-    nextButton.type =
-        "button";
-
-
-    nextButton.className =
-        "blog-pagination-button";
-
-
-    nextButton.textContent =
-        "Next";
-        /* "Next →"; */
-
-
-    nextButton.disabled =
-        currentPage === totalPages;
-
-
-    nextButton.setAttribute(
-        "aria-label",
-        "Next page"
+    nextButton.appendChild(
+        document.createTextNode("Next")
     );
 
+    nextButton.appendChild(
+        createPaginationArrow("right")
+    );
 
-    nextButton.addEventListener(
-        "click",
-        () => {
-
-            if (
-                currentPage < totalPages
-            ) {
-
-                currentPage++;
-
-                renderPosts();
-
-                scrollToBlogPosts();
-
-            }
-
+    nextButton.addEventListener("click", () => {
+        if (currentPage < totalPages) {
+            currentPage++;
+            renderPosts();
+            scrollToBlogPosts();
         }
-    );
+    });
 
-
-    pagination.appendChild(
-        nextButton
-    );
-
+    pagination.appendChild(nextButton);
 }
+
 
 
 /* ================= SCROLL ================= */
