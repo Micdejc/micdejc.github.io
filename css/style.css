@@ -1490,10 +1490,30 @@
             .service-grid {
                 grid-template-columns: 1fr;
             }
-
+                
+            /*
             .profile-links {
                 grid-template-columns: repeat(2, 1fr);
+            } */
+
+            .profile-links {
+                    display: grid;
+                    grid-template-columns: repeat(2, minmax(0, 1fr));
+                    gap: 16px;
             }
+
+            .profile-link > svg {
+                    display: block;
+                    width: 24px;
+                    height: 24px;
+                    flex-shrink: 0;
+                    color: var(--primary);
+                    margin-bottom: 8px;
+             }
+                
+                .profile-link:hover > svg {
+                    color: var(--primary);
+             }
 
             .hero {
                 padding: 70px 0;
