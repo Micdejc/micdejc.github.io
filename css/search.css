@@ -6,6 +6,11 @@
     width: 40px;
     height: 40px;
 
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
     border: 1px solid var(--border);
     border-radius: 50%;
 
@@ -14,16 +19,39 @@
 
     cursor: pointer;
 
-    font-size: 0.9rem;
-    font-weight: 800;
-
-    transition: all 0.2s ease;
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
 }
 
+/* SVG search icon */
+.search-toggle::before {
+    content: "";
+    display: block;
+
+    width: 19px;
+    height: 19px;
+
+    background-color: currentColor;
+
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='10.5' cy='10.5' r='6.5' fill='none' stroke='black' stroke-width='2'/%3E%3Cpath d='m15.5 15.5 5 5' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center / contain no-repeat;
+
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='10.5' cy='10.5' r='6.5' fill='none' stroke='black' stroke-width='2'/%3E%3Cpath d='m15.5 15.5 5 5' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+/* Hover effect */
 .search-toggle:hover {
     color: var(--primary);
     border-color: var(--primary);
     transform: translateY(-2px);
+}
+
+/* Keyboard accessibility */
+.search-toggle:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 3px;
 }
 
 
