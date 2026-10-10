@@ -732,7 +732,8 @@ function renderPagination(
 
 
     previousButton.textContent =
-        "← Previous";
+        "Previous";
+        /*"← Previous"; */
 
 
     previousButton.disabled =
@@ -857,7 +858,8 @@ function renderPagination(
 
 
     nextButton.textContent =
-        "Next →";
+        "Next";
+        /* "Next →"; */
 
 
     nextButton.disabled =
