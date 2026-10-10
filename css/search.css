@@ -11,18 +11,17 @@
     justify-content: center;
     flex-shrink: 0;
 
-    border: 1px solid var(--border);
+    border: none;
     border-radius: 50%;
 
-    background: var(--surface);
+    background: transparent;
     color: var(--text);
 
     cursor: pointer;
 
     transition:
-        background 0.2s ease,
         color 0.2s ease,
-        border-color 0.2s ease,
+        background 0.2s ease,
         transform 0.2s ease;
 }
 
@@ -31,8 +30,8 @@
     content: "";
     display: block;
 
-    width: 19px;
-    height: 19px;
+    width: 21px;
+    height: 21px;
 
     background-color: currentColor;
 
@@ -44,14 +43,14 @@
 /* Hover effect */
 .search-toggle:hover {
     color: var(--primary);
-    border-color: var(--primary);
+    background: var(--surface);
     transform: translateY(-2px);
 }
 
 /* Keyboard accessibility */
 .search-toggle:focus-visible {
     outline: 2px solid var(--primary);
-    outline-offset: 3px;
+    outline-offset: 2px;
 }
 
 
