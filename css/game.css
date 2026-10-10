@@ -916,9 +916,9 @@ body.game-modal-open {
 
 .hint-button {
   animation: hintPulse 10s ease-in-out infinite;
-  background: #F59E0B;
-  /* color: var(--text); */
-  color: var(--surface);
+  background: color-mix( in srgb, var(--primary) 15%, var(--surface) );
+  color: var(--text);
+  /* color: var(--surface); */
 }
 
 /* =========================================================
