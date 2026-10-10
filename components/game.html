@@ -136,7 +136,7 @@
                     Guess a number between 1 and 10.
                 </p>
 
-                <!-- Statistics -->
+                <!-- Statistics 
                 <div class="dln-stats">
 
                     <div class="dln-stat">
@@ -159,7 +159,78 @@
                         <strong id="dlnRecord">0</strong>
                     </div>
 
+                </div> -->
+
+                <!-- Statistics -->
+                <div class="dln-stats">
+                
+                    <div class="dln-stat">
+                        <div class="dln-stat-label">
+                            <span>Attempts</span>
+                            <button
+                                type="button"
+                                class="dln-stat-help"
+                                aria-label="Help: Attempts"
+                                aria-expanded="false"
+                                data-help="The number of attempts you have left to guess the secret number."
+                            >?</button>
+                        </div>
+                        <strong id="dlnAttempts">5</strong>
+                    </div>
+                
+                    <div class="dln-stat">
+                        <div class="dln-stat-label">
+                            <span>Super Hits</span>
+                            <button
+                                type="button"
+                                class="dln-stat-help"
+                                aria-label="Help: Super Hits"
+                                aria-expanded="false"
+                                data-help="The number of times you correctly guessed the number on your first attempt without hints."
+                            >?</button>
+                        </div>
+                        <strong id="dlnSuperHits">0</strong>
+                    </div>
+                
+                    <div class="dln-stat">
+                        <div class="dln-stat-label">
+                            <span>Score</span>
+                            <button
+                                type="button"
+                                class="dln-stat-help"
+                                aria-label="Help: Score"
+                                aria-expanded="false"
+                                data-help="Your score for the current game, calculated according to the game's scoring rules."
+                            >?</button>
+                        </div>
+                        <strong id="dlnScore">0</strong>
+                    </div>
+                
+                    <div class="dln-stat">
+                        <div class="dln-stat-label">
+                            <span>Record</span>
+                            <button
+                                type="button"
+                                class="dln-stat-help"
+                                aria-label="Help: Record"
+                                aria-expanded="false"
+                                data-help="Your highest score across all games played on this device."
+                            >?</button>
+                        </div>
+                        <strong id="dlnRecord">0</strong>
+                    </div>
+                
                 </div>
+                
+                <!-- Statistics help message -->
+                <div
+                    id="dlnStatHelpMessage"
+                    class="dln-stat-help-message"
+                    role="status"
+                    aria-live="polite"
+                    hidden
+                ></div>
+
 
                 <!-- Feedback -->
                 <div
