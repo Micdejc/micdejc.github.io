@@ -375,7 +375,7 @@
         }
 
         /* Keep dropdowns within the mobile navigation */
-        @media (max-width: 768px) {
+        @media (max-width: 900px) {
 
             .nav-dropdown-menu {
                 position: static;
@@ -390,7 +390,7 @@
      
             .utility-menu-toggle {
                 padding: 8px 9px;
-                font-size: 0.8rem;
+                font-size: 0.82rem;
             }
         
             .utility-menu {
@@ -398,7 +398,7 @@
                 min-width: 200px;
             }
             .utility-menu > button {
-                font-size: 0.8rem;
+                font-size: 0.82rem;
             }
         }
         
