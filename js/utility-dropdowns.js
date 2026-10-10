@@ -1,9 +1,9 @@
-
 /* ========================================
    NAVIGATION DROPDOWNS
    Main navigation: About, Research,
    Insights, Community
    Utility menus: Tools and Explore
+   DLN statistics help
 ======================================== */
 
 (() => {
@@ -53,6 +53,59 @@
     }
 
     /* ========================================
+       DLN STATISTICS HELP
+    ======================================== */
+
+    function closeDLNStatHelp() {
+        const message = document.getElementById("dlnStatHelpMessage");
+
+        document.querySelectorAll(".dln-stat-help").forEach((button) => {
+            button.setAttribute("aria-expanded", "false");
+        });
+
+        if (message) {
+            message.hidden = true;
+            message.textContent = "";
+        }
+    }
+
+    function initialiseDLNStatHelp() {
+        // Event delegation also supports dynamically added DLN content.
+        document.addEventListener("click", (event) => {
+            const button = event.target.closest(".dln-stat-help");
+
+            if (!button) return;
+
+            const message = document.getElementById("dlnStatHelpMessage");
+
+            if (!message) return;
+
+            const wasExpanded =
+                button.getAttribute("aria-expanded") === "true";
+
+            // Reset all statistic help buttons.
+            document.querySelectorAll(".dln-stat-help").forEach((item) => {
+                item.setAttribute("aria-expanded", "false");
+            });
+
+            // Clicking the active button closes its explanation.
+            if (wasExpanded) {
+                message.hidden = true;
+                message.textContent = "";
+                return;
+            }
+
+            // Display the selected statistic's explanation.
+            button.setAttribute("aria-expanded", "true");
+            message.textContent = button.dataset.help || "";
+            message.hidden = false;
+        });
+    }
+
+    // Initialise DLN help independently of navigation dropdowns.
+    initialiseDLNStatHelp();
+
+    /* ========================================
        CLICK HANDLING
     ======================================== */
 
@@ -72,8 +125,7 @@
                 }
             }, 0);
 
-            // Keep utility menus separate, but close them
-            // when opening a main navigation dropdown.
+            // Close utility menus when opening main navigation.
             closeAllUtilityDropdowns();
 
             return;
@@ -140,6 +192,10 @@
     document.addEventListener("keydown", (event) => {
         if (event.key !== "Escape") return;
 
+        // Close DLN statistics help.
+        closeDLNStatHelp();
+
+        // Close the open utility dropdown.
         const openUtilityDropdown = document.querySelector(
             ".utility-dropdown.is-open"
         );
@@ -148,6 +204,7 @@
             closeUtilityDropdown(openUtilityDropdown, true);
         }
 
+        // Close the open main navigation dropdown.
         const openMainDropdown = document.querySelector(
             ".nav-links .nav-dropdown > details[open]"
         );
