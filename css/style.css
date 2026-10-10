@@ -390,12 +390,15 @@
      
             .utility-menu-toggle {
                 padding: 8px 9px;
-                font-size: 0.82rem;
+                font-size: 0.8rem;
             }
         
             .utility-menu {
                 right: 0;
                 min-width: 200px;
+            }
+            .utility-menu > button {
+                font-size: 0.8rem;
             }
         }
         
