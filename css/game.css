@@ -720,7 +720,7 @@ body.game-modal-open {
     border-radius: 8px;
     background: color-mix(
         in srgb,
-        var(--background) 92%,
+        var(--primary) 92%,
         var(--surface)
     );
     color: var(--text);
