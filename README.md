@@ -245,6 +245,10 @@ content/news/new-award.html
 
 3. Add the filename to the news content list.
 
+```text
+content/news/index.js
+```
+
 4. If the item has an image, place it in:
 
 ```text
@@ -323,6 +327,10 @@ assets/features/
 
 4. Add the new feature to the Features content list.
 
+```text
+content/features/index.js
+```
+
 5. Include the relevant external link.
 
 6. Ensure the logo has appropriate alternative text.
@@ -366,6 +374,10 @@ content/mentorship/student-name.html
 ```
 
 3. Add the file to the mentorship content list.
+
+```text
+content/mentorship/index.js
+```
 
 4. Add any relevant external publication or project links.
 
@@ -934,6 +946,7 @@ The website should remain:
 | Main JavaScript        | `js/main.js`             |
 | Calendar JavaScript    | `js/calendar.js`         |
 | Game JavaScript        | `js/game.js`             |
+| Blog JavaScript        | `js/blog.js`             |
 | Profile assets         | `assets/`                |
 | News images            | `assets/news/`           |
 | Feature logos          | `assets/features/`       |
