@@ -725,6 +725,8 @@ body.game-modal-open {
         var(--surface)
     );
     color: var(--text);
+    font-size: 0.85rem;
+    line-height: 1.5;
     text-align: left;
     overflow-wrap: anywhere;
     transform-origin: bottom;
