@@ -5,7 +5,7 @@ import { getBlogPosts } from "./blog-posts.js";
 
 /* ================= CONFIGURATION ================= */
 
-const POSTS_PER_PAGE = 1;
+const POSTS_PER_PAGE = 5;
 const WORDS_PER_MINUTE = 225;
 
 
