@@ -725,25 +725,22 @@ body.game-modal-open {
         var(--surface)
     );
     color: var(--text);
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.10);
-    font-size: 0.85rem;
-    line-height: 1.5;
     text-align: left;
     overflow-wrap: anywhere;
-    transform-origin: top;
+    transform-origin: bottom;
     animation: dln-help-appear 0.25s ease-out;
 }
 
-/* Speech-bubble pointer */
+/* Speech-bubble pointer at the bottom */
 .dln-stat-help-message::before {
     content: "";
     position: absolute;
-    top: -6px;
+    bottom: -6px;
     left: 50%;
     width: 10px;
     height: 10px;
-    border-top: 1px solid var(--border);
-    border-left: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
     background: color-mix(
         in srgb,
         var(--primary) 7%,
@@ -752,11 +749,11 @@ body.game-modal-open {
     transform: translateX(-50%) rotate(45deg);
 }
 
-/* Fade-in and slide-down animation */
+/* Fade-in and slide-up animation */
 @keyframes dln-help-appear {
     from {
         opacity: 0;
-        transform: translateY(-6px);
+        transform: translateY(6px);
     }
 
     to {
