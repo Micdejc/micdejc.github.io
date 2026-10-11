@@ -1,5 +1,6 @@
 let calendarEvents = [];
 let calendarDataLoaded = false;
+let calendarClockInterval = null;
 
 const CALENDAR_CONFIG = {
     /* 12 hours update basis for cache  */
@@ -2160,8 +2161,6 @@ function displayCalendarToday() {
 }
 
 /* ================= CALENDAR LIVE CLOCK ================= */
-
-let calendarClockInterval = null;
 
 function initialiseCalendarClock() {
 
