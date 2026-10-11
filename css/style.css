@@ -398,11 +398,12 @@
                 min-width: 200px;
             }
             .utility-menu > button {
-                font-size: 0.82rem;
+                font-size: 0.8rem;
             }
 
             .logo {
                 letter-spacing: -0.1em;
+                font-size: 0.95rem;
             }
         }
         
