@@ -555,7 +555,7 @@ blog/posts/ai-security-governance.html
 ```
 
 2. Add the article using this structure:
-```text
+```html
 <article class="blog-article">
 
     <header class="blog-article-header">
@@ -596,7 +596,7 @@ blog/posts/ai-security-governance.html
 sections/blog.html
 ```
 Add the following inside `#blog-source`:
-```text
+```html
 <article
     class="blog-entry"
     data-title="Your Blog Title"
