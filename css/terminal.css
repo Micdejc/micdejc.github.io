@@ -216,8 +216,9 @@ body.terminal-mode a:hover {
 ========================================================= */
 
 body.terminal-mode .hero-description:first-of-type::before {
-    content: "root@Michael:~# ";
+    content: "root@Michael:~# whoami \A ";
     color: #3b82f6;
+    white-space: pre;
 }
 
 
