@@ -55,10 +55,11 @@
     outline-offset: 2px;
 }
 
-/* Search tooltip bubble */
+/* Search tooltip bubble below the button */
 .search-tooltip {
     position: absolute;
-    bottom: calc(100% + 10px);
+    top: calc(100% + 10px);
+    bottom: auto;
     left: 50%;
     z-index: 1000;
 
@@ -68,10 +69,8 @@
 
     border: 1px solid var(--border);
     border-radius: 9px;
-
     background: var(--surface);
     color: var(--text);
-
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
 
     font-family: inherit;
@@ -84,8 +83,7 @@
     pointer-events: none;
     opacity: 0;
     visibility: hidden;
-
-    transform: translate(-50%, 5px);
+    transform: translate(-50%, -5px);
 
     transition:
         opacity 0.2s ease,
@@ -93,24 +91,25 @@
         visibility 0.2s ease;
 }
 
-/* Pointer below the tooltip */
+/* Pointer at the top of the bubble */
 .search-tooltip::after {
     content: "";
     position: absolute;
-    bottom: -5px;
+    top: -5px;
+    bottom: auto;
     left: 50%;
 
     width: 8px;
     height: 8px;
 
     background: var(--surface);
-    border-right: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
+    border-top: 1px solid var(--border);
+    border-left: 1px solid var(--border);
 
     transform: translateX(-50%) rotate(45deg);
 }
 
-/* Show tooltip on hover or keyboard focus */
+/* Show on hover or keyboard focus */
 .search-toggle:hover .search-tooltip,
 .search-toggle:focus-visible .search-tooltip {
     opacity: 1;
