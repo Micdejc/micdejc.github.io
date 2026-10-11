@@ -2164,6 +2164,8 @@ function displayCalendarToday() {
 
 function initialiseCalendarClock() {
 
+    console.log("1. initialiseCalendarClock() called");
+
     if (calendarClockInterval !== null) {
         clearInterval(calendarClockInterval);
     }
