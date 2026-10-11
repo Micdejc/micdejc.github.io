@@ -197,8 +197,9 @@ async function loadPage() {
 
     initialiseVisitorCount();
 
-    initialiseCalendar();
-
+    //initialiseCalendar();
+    window.initialiseCalendar();
+   
     /*
      * Blog HTML is now in the DOM,
      * so it is safe to initialise it.
