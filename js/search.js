@@ -64,10 +64,6 @@
             name: "Features & Media"
         },
         {
-            id: "featureContributionsModal",
-            name: "Feature Contributions"
-        },
-        {
             id: "blogs",
             name: "Blogs"
         },
