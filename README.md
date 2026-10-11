@@ -339,6 +339,107 @@ content/features/index.js
 
 8. Commit and push.
 
+## Adding a Feature Contribution
+
+Feature contributions are managed in `js/feature-contribution.js`. You can add a new feature contribution by creating an entry in the feature contributions object, using a unique identifier as the key.
+
+### 1. Feature Contribution Structure
+
+Use the following syntax when adding a new feature contribution:
+
+```javascript
+"feature-contribution-name": {
+    title: "Feature Contribution Title",
+
+    type: "Feature Contribution Type",
+
+    description:
+        "Feature Contribution Brief Description",
+
+    contributions: [
+        {
+            title: "Contribution title",
+
+            description:
+                "Contribution brief description.",
+
+            url:
+                "https://example.com",
+
+            type:
+                "Contribution Type"
+        }
+
+        // Add more contributions here.
+    ]
+},
+```
+
+### 2. Field Reference
+
+#### Feature contribution properties
+
+| Property | Description |
+|---|---|
+| `feature-contribution-name` | Unique identifier for the feature contribution. Use a descriptive, URL-friendly name. |
+| `title` | Display title of the feature contribution. |
+| `type` | Type or category of the feature contribution. |
+| `description` | Brief description of the feature contribution. |
+| `contributions` | Array containing the individual contributions associated with the feature. |
+
+#### Individual contribution properties
+
+| Property | Description |
+|---|---|
+| `title` | Title of the individual contribution. |
+| `description` | Brief description of the contribution. |
+| `url` | URL linking to the contribution or its associated resource. |
+| `type` | Category or format of the contribution, such as `Expert Analysis`, `Publication`, or `Interview`. |
+
+### 3. Example
+
+The following example demonstrates how to add a feature contribution with multiple entries:
+
+```javascript
+"heads-talk-analysis": {
+    title: "Heads Talk Analysis",
+
+    type: "Media Contributions",
+
+    description:
+        "Expert analysis and commentary on cybersecurity and emerging technology.",
+
+    contributions: [
+        {
+            title: "Cybersecurity Expert Analysis",
+
+            description:
+                "Expert insights on emerging cybersecurity threats and industry developments.",
+
+            url:
+                "https://example.com/contribution",
+
+            type:
+                "Expert Analysis"
+        },
+
+        {
+            title:
+                "Another Heads Talk Contribution",
+
+            description:
+                "Short description of the contribution.",
+
+            url:
+                "https://example.com/another-contribution",
+
+            type:
+                "Expert Analysis"
+        }
+    ]
+},
+```
+
 ---
 
 # Mentorship
