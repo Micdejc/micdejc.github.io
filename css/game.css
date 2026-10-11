@@ -727,12 +727,32 @@ body.game-modal-open {
     font-size: 0.85rem;
     line-height: 1.5;
     text-align: left;
+    transform-origin: top;
+    animation: dln-help-appear 0.25s ease-out;
 }
 
 .dln-stat-help-message[hidden] {
     display: none;
 }
 
+@keyframes dln-help-appear {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    .dln-stat-help-message {
+        animation: none;
+    }
+}
 
 /* =========================================================
    FEEDBACK
