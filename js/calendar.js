@@ -2445,6 +2445,10 @@ function initialiseCalendar() {
     );
 }
 
+
+/* Make calendar initialisation accessible to main.js */
+window.initialiseCalendar = initialiseCalendar;
+
 /* =========================================================
    SAFE STARTUP
    ========================================================= */
