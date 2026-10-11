@@ -79,14 +79,26 @@
 
         <div class="nav-controls">
 
-            <!-- We place the button search outside the tool dropdown for accessibility -->
+            <!-- We place the button search outside the tool dropdown for accessibility 
             <button
                 class="search-toggle"
                 id="searchToggle"
                 aria-label="Search website"
                 title="Search website (Ctrl/Cmd + K)"
             >
-                <!-- ⌕ -->
+                ⌕
+            </button>
+            -->
+            <!-- Search button -->
+            <button
+                class="search-toggle"
+                id="searchToggle"
+                aria-label="Search website"
+                aria-describedby="searchTooltip"
+            >
+                <span class="search-tooltip" id="searchTooltip" role="tooltip">
+                    Search website (Ctrl/Cmd + K)
+                </span>
             </button>
             <!-- Tools dropdown -->
             <div class="utility-dropdown">
