@@ -801,7 +801,8 @@ async function loadMuslimHolidays(year) {
             error
         );
 
-        return [];
+        //return [];
+        return events;
     }
 }
 
@@ -924,7 +925,8 @@ async function loadJewishHolidays(year) {
             error
         );
 
-        return [];
+        //return [];
+        return events;
     }
 }
 
@@ -1045,7 +1047,8 @@ async function loadHinduHolidays(year) {
             error
         );
 
-        return [];
+        //return [];
+        return events;
     }
 }
 
@@ -1075,7 +1078,7 @@ function removeDuplicateEvents(events) {
 }
 
 /* =========================================================
-   LOAD ALL EVENTS
+   LOAD ALL EVENTS WITH INDEPENDENT SOURCE FALLBACK   
    ========================================================= */
 
 async function loadCalendarEvents() {
@@ -1130,7 +1133,7 @@ async function loadCalendarEvents() {
     const cachedEvents =
         getCachedCalendarEvents();
 
-    if (cachedEvents) {
+        if (cachedEvents && cachedEvents.length > 0) {
         calendarEvents = cachedEvents;
         calendarDataLoaded = true;
 
@@ -1141,97 +1144,131 @@ async function loadCalendarEvents() {
         return calendarEvents;
     }
 
-    const year =
-        new Date().getFullYear();
+    const year = new Date().getFullYear();
 
-    try {
-        const [
-            ukEvents,
-            internationalEvents,
-            christianEvents,
-            muslimEvents,
-            jewishEvents,
-            hinduEvents
-        ] = await Promise.all([
-            Promise.resolve(
-                loadUKHolidays(year)
-            ),
-            Promise.resolve(
-                loadInternationalHolidays(year)
-            ),
-            Promise.resolve(
-                loadChristianHolidays(year)
-            ),
-            loadMuslimHolidays(year),
-            loadJewishHolidays(year),
-            loadHinduHolidays(year)
-        ]);
+    /*
+     * Each source runs independently.
+     * A synchronous error or rejected promise from one source
+     * will not prevent the other sources from running.
+     */
+    const sources = [
+        {
+            name: "UK bank holidays",
+            load: () => loadUKHolidays(year)
+        },
+        {
+            name: "International and cultural holidays",
+            load: () => loadInternationalHolidays(year)
+        },
+        {
+            name: "Christian observances",
+            load: () => loadChristianHolidays(year)
+        },
+        {
+            name: "Muslim observances",
+            load: () => loadMuslimHolidays(year)
+        },
+        {
+            name: "Jewish observances",
+            load: () => loadJewishHolidays(year)
+        },
+        {
+            name: "Hindu observances",
+            load: () => loadHinduHolidays(year)
+        }
+    ];
 
-        calendarEvents =
-            removeDuplicateEvents([
-                ...ukEvents,
-                ...internationalEvents,
-                ...christianEvents,
-                ...muslimEvents,
-                ...jewishEvents,
-                ...hinduEvents
-            ]);
+    /*
+     * Run all sources concurrently without allowing one
+     * failure to reject the entire loading operation.
+     */
+    const results = await Promise.allSettled(
+        sources.map(source =>
+            Promise.resolve().then(source.load)
+        )
+    );
 
-        calendarEvents.sort(
-            function(a, b) {
-                return (
-                    a.start - b.start
+    const collectedEvents = [];
+
+    results.forEach((result, index) => {
+        const sourceName = sources[index].name;
+
+        if (result.status === "fulfilled") {
+            const events = Array.isArray(result.value)
+                ? result.value
+                : [];
+
+            collectedEvents.push(...events);
+
+            if (events.length > 0) {
+                console.log(
+                    `${sourceName}: loaded ${events.length} events.`
+                );
+            } else {
+                console.warn(
+                    `${sourceName}: returned no events.`
                 );
             }
-        );
-
-        if (
-            calendarEvents.length === 0
-        ) {
-            throw new Error(
-                "No calendar events were generated."
+        } else {
+            console.error(
+                `${sourceName} failed. Continuing with other sources:`,
+                result.reason
             );
         }
+    });
 
-        calendarDataLoaded = true;
+    /*
+     * Remove duplicates and sort the combined results.
+     */
+    calendarEvents = removeDuplicateEvents(collectedEvents);
 
-        cacheCalendarEvents(
-            calendarEvents
-        );
+    calendarEvents.sort((a, b) => a.start - b.start);
 
-        displayNextEvent();
-        displayCalendarEvents();
-        handleTodayHoliday();
-
-        console.log(
-            "Calendar loaded:",
-            calendarEvents.length,
-            "events for",
-            year
-        );
-
-        return calendarEvents;
-    } catch (error) {
+    /*
+     * Only show a complete loading error if every source
+     * failed to produce usable events.
+     */
+    if (calendarEvents.length === 0) {
         console.error(
-            "Unable to load calendar events:",
-            error
+            "No calendar events could be loaded from any source."
         );
 
-        const container =
-            document.getElementById(
-                "calendarEvents"
-            );
+        const container = document.getElementById("calendarEvents");
 
         if (container) {
             container.innerHTML = `
                 <p class="calendar-error">
                     Unable to load holidays and observances.
+                    Please try again later.
                 </p>
             `;
         }
 
         return [];
     }
+
+    /*
+     * Save the successful results, even if one or more
+     * external sources failed.
+     */
+    calendarDataLoaded = true;
+    cacheCalendarEvents(calendarEvents);
+
+    displayNextEvent();
+    displayCalendarEvents();
+    handleTodayHoliday();
+
+    const failedSources = results.filter(
+        result => result.status === "rejected"
+    ).length;
+
+    console.log(
+        `Calendar loaded: ${calendarEvents.length} unique events for ${year}.`,
+        `${failedSources} source(s) failed.`
+    );
+
+    return calendarEvents;
+
 }
 
 /* =========================================================
