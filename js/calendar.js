@@ -2148,7 +2148,11 @@ function displayCalendarToday() {
             {
                 day: "numeric",
                 month: "long",
-                year: "numeric"
+                year: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+                /*second: "2-digit",*/
+                hour12: false
             }
         ).format(new Date());
 }
@@ -2311,7 +2315,14 @@ function initialiseCalendar() {
      */
     loadCalendarEvents();
 
+    /* Display the current date and time immediately */
     displayCalendarToday();
+
+    /* Refresh the date and time every 60 seconds */
+    setInterval(
+        displayCalendarToday,
+        60 * 1000
+    );
 
     const toggle =
         document.getElementById(
