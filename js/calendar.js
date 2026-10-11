@@ -2178,6 +2178,10 @@ function initialiseCalendarClock() {
         displayCalendarToday,
         60 * 1000
     );
+
+    console.log(
+        "Calendar clock started. Interval: 60 seconds."
+    );
 }
 
 /* =========================================================
