@@ -479,6 +479,15 @@
     outline-offset: 2px;
 }
 
+.blog-pagination .pagination-ellipsis {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4px;
+    color: var(--text-secondary, #777);
+    user-select: none;
+}
+
 
 /* ================= BLOG ARTICLE ================= */
 
