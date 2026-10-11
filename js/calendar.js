@@ -1083,7 +1083,7 @@ function removeDuplicateEvents(events) {
 
 async function loadCalendarEvents() {
 
-    
+    /*
     // TEMPORARY TEST
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -1115,8 +1115,7 @@ async function loadCalendarEvents() {
         }
     ];
 
-    calendarEvents = []
-    
+
     calendarDataLoaded = true;
     
     displayNextEvent();
@@ -1124,7 +1123,7 @@ async function loadCalendarEvents() {
     handleTodayHoliday();
     
     return calendarEvents; 
-    
+    */
 
 
     
