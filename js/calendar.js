@@ -2147,7 +2147,7 @@ function displayCalendarToday() {
             "en-GB",
             {
                 day: "numeric",
-                month: "long",
+                month: "short",
                 year: "numeric",
                 hour: "2-digit",
                 minute: "2-digit",
