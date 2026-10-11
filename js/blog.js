@@ -5,7 +5,7 @@ import { getBlogPosts } from "./blog-posts.js";
 
 /* ================= CONFIGURATION ================= */
 
-const POSTS_PER_PAGE = 5;
+const POSTS_PER_PAGE = 1;
 const WORDS_PER_MINUTE = 225;
 
 
@@ -689,11 +689,12 @@ function initialiseBlogFilters() {
 }
 
 
-
 /* ================= PAGINATION ================= */
 
 function renderPagination(totalPosts, totalPages) {
-    const pagination = document.getElementById("blog-pagination");
+
+    const pagination =
+        document.getElementById("blog-pagination");
 
     if (!pagination) {
         return;
@@ -707,43 +708,102 @@ function renderPagination(totalPosts, totalPages) {
 
     /* Helper: create SVG chevron */
     function createPaginationArrow(direction) {
+
         const arrow = document.createElement("span");
 
-        arrow.className = `pagination-arrow pagination-arrow-${direction}`;
+        arrow.className =
+            `pagination-arrow pagination-arrow-${direction}`;
+
         arrow.setAttribute("aria-hidden", "true");
 
         return arrow;
     }
 
-    /* Previous */
-    const previousButton = document.createElement("button");
+    /* Helper: create Previous / Next buttons */
+    function createNavigationButton(label, direction) {
 
-    previousButton.type = "button";
-    previousButton.className = "blog-pagination-button";
-    previousButton.disabled = currentPage === 1;
+        const button = document.createElement("button");
 
-    previousButton.setAttribute("aria-label", "Previous page");
+        button.type = "button";
+        button.className = "blog-pagination-button";
+        button.disabled =
+            direction === "previous"
+                ? currentPage === 1
+                : currentPage === totalPages;
 
-    previousButton.appendChild(
-        createPaginationArrow("left")
-    );
+        button.setAttribute("aria-label", `${label} page`);
 
-    previousButton.appendChild(
-        document.createTextNode("Previous")
-    );
+        if (direction === "previous") {
+            button.appendChild(createPaginationArrow("left"));
+            button.appendChild(document.createTextNode(label));
+        } else {
+            button.appendChild(document.createTextNode(label));
+            button.appendChild(createPaginationArrow("right"));
+        }
 
-    previousButton.addEventListener("click", () => {
-        if (currentPage > 1) {
-            currentPage--;
+        button.addEventListener("click", () => {
+
+            if (direction === "previous" && currentPage > 1) {
+                currentPage--;
+            } else if (
+                direction === "next" &&
+                currentPage < totalPages
+            ) {
+                currentPage++;
+            } else {
+                return;
+            }
+
             renderPosts();
             scrollToBlogPosts();
+
+        });
+
+        return button;
+    }
+
+    /* Previous */
+    pagination.appendChild(
+        createNavigationButton("Previous", "previous")
+    );
+
+    /*
+     * Show:
+     * - First page
+     * - Two pages before the current page
+     * - Current page
+     * - Two pages after the current page
+     * - Last page
+     */
+
+    const pages = new Set([1, totalPages]);
+
+    for (
+        let page = Math.max(1, currentPage - 2);
+        page <= Math.min(totalPages, currentPage + 2);
+        page++
+    ) {
+        pages.add(page);
+    }
+
+    const visiblePages = [...pages].sort((a, b) => a - b);
+
+    let previousPage = 0;
+
+    visiblePages.forEach(page => {
+
+        /* Insert ellipsis where pages are skipped */
+        if (page - previousPage > 1) {
+
+            const ellipsis = document.createElement("span");
+
+            ellipsis.className = "pagination-ellipsis";
+            ellipsis.textContent = "…";
+            ellipsis.setAttribute("aria-hidden", "true");
+
+            pagination.appendChild(ellipsis);
         }
-    });
 
-    pagination.appendChild(previousButton);
-
-    /* Page numbers */
-    for (let page = 1; page <= totalPages; page++) {
         const pageButton = document.createElement("button");
 
         pageButton.type = "button";
@@ -753,48 +813,37 @@ function renderPagination(totalPosts, totalPages) {
         pageButton.setAttribute("aria-label", `Page ${page}`);
 
         if (page === currentPage) {
+
             pageButton.classList.add("active");
+
             pageButton.setAttribute("aria-current", "page");
         }
 
         pageButton.addEventListener("click", () => {
+
+            if (currentPage === page) {
+                return;
+            }
+
             currentPage = page;
+
             renderPosts();
             scrollToBlogPosts();
+
         });
 
         pagination.appendChild(pageButton);
-    }
 
-    /* Next */
-    const nextButton = document.createElement("button");
+        previousPage = page;
 
-    nextButton.type = "button";
-    nextButton.className = "blog-pagination-button";
-    nextButton.disabled = currentPage === totalPages;
-
-    nextButton.setAttribute("aria-label", "Next page");
-
-    nextButton.appendChild(
-        document.createTextNode("Next")
-    );
-
-    nextButton.appendChild(
-        createPaginationArrow("right")
-    );
-
-    nextButton.addEventListener("click", () => {
-        if (currentPage < totalPages) {
-            currentPage++;
-            renderPosts();
-            scrollToBlogPosts();
-        }
     });
 
-    pagination.appendChild(nextButton);
+    /* Next */
+    pagination.appendChild(
+        createNavigationButton("Next", "next")
+    );
+
 }
-
-
 
 /* ================= SCROLL ================= */
 
