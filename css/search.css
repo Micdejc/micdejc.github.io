@@ -2,7 +2,10 @@
    SEARCH TOGGLE
    ========================================= */
 
+
+/* Search button */
 .search-toggle {
+    position: relative;
     width: 40px;
     height: 40px;
 
@@ -29,7 +32,6 @@
 .search-toggle::before {
     content: "";
     display: block;
-
     width: 21px;
     height: 21px;
 
@@ -53,6 +55,75 @@
     outline-offset: 2px;
 }
 
+/* Search tooltip bubble */
+.search-tooltip {
+    position: absolute;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    z-index: 1000;
+
+    width: max-content;
+    max-width: 240px;
+    padding: 8px 11px;
+
+    border: 1px solid var(--border);
+    border-radius: 9px;
+
+    background: var(--surface);
+    color: var(--text);
+
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+
+    font-family: inherit;
+    font-size: 0.78rem;
+    font-weight: 400;
+    line-height: 1.4;
+    text-align: center;
+    white-space: normal;
+
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+
+    transform: translate(-50%, 5px);
+
+    transition:
+        opacity 0.2s ease,
+        transform 0.2s ease,
+        visibility 0.2s ease;
+}
+
+/* Pointer below the tooltip */
+.search-tooltip::after {
+    content: "";
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+
+    width: 8px;
+    height: 8px;
+
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+
+    transform: translateX(-50%) rotate(45deg);
+}
+
+/* Show tooltip on hover or keyboard focus */
+.search-toggle:hover .search-tooltip,
+.search-toggle:focus-visible .search-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, 0);
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    .search-tooltip {
+        transition: none;
+    }
+}
 
 /* =========================================
    SEARCH OVERLAY
