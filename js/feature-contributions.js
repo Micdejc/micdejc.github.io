@@ -169,54 +169,6 @@ const featureContributions = {
                     "Blog"
             }
            
-           
-           ,
-
-
-           {
-                title:
-                    "Expert Profile",
-
-                description:
-                    "UK CSC Assessor and EVP Member ",
-
-                url:
-                    "https://www.ukcybersecuritycouncil.org.uk/public-register/cmmfo434301l6fti8teq16n76",
-
-                type:
-                    "Profile"
-            },
-
-           
-            {
-                title:
-                    "Humans as the Main Social Engineering Target",
-
-                description:
-                    "A cybersecurity perspective on why humans remain a central target for social engineering attacks.",
-
-                url:
-                    "https://www.ukcybersecuritycouncil.org.uk/blogs/humans-as-the-main-social-engineering-target",
-
-                type:
-                    "Blog"
-            },
-
-            {
-                title:
-                    "The Cyber Security Experience Paradox: How do you get Experience without Experience",
-
-                description:
-                    "Exploring the cybersecurity experience paradox and practical ways to break the cycle of needing experience to gain experience.",
-
-                url:
-                    "https://www.ukcybersecuritycouncil.org.uk/blogs/the-cyber-security-experience-paradox-how-do-you-get-experience-without-experience",
-
-                type:
-                    "Blog"
-            }
-           
-
             /*
              * Add additional UKCSC contributions here.
              */
