@@ -712,29 +712,47 @@ body.game-modal-open {
     font-size: 1.05rem;
 }
 
-/* Help explanation */
+/* Help explanation bubble */
 .dln-stat-help-message {
-    margin: -6px 0 18px;
-    padding: 10px 12px;
+    position: relative;
+    margin: 4px 0 18px;
+    padding: 10px 13px;
     border: 1px solid var(--border);
-    border-radius: 8px;
+    border-radius: 12px;
     background: color-mix(
         in srgb,
         var(--primary) 7%,
         var(--surface)
     );
     color: var(--text);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.10);
     font-size: 0.85rem;
     line-height: 1.5;
     text-align: left;
+    overflow-wrap: anywhere;
     transform-origin: top;
     animation: dln-help-appear 0.25s ease-out;
 }
 
-.dln-stat-help-message[hidden] {
-    display: none;
+/* Speech-bubble pointer */
+.dln-stat-help-message::before {
+    content: "";
+    position: absolute;
+    top: -6px;
+    left: 50%;
+    width: 10px;
+    height: 10px;
+    border-top: 1px solid var(--border);
+    border-left: 1px solid var(--border);
+    background: color-mix(
+        in srgb,
+        var(--primary) 7%,
+        var(--surface)
+    );
+    transform: translateX(-50%) rotate(45deg);
 }
 
+/* Fade-in and slide-down animation */
 @keyframes dln-help-appear {
     from {
         opacity: 0;
@@ -747,12 +765,18 @@ body.game-modal-open {
     }
 }
 
+/* Hidden state */
+.dln-stat-help-message[hidden] {
+    display: none;
+}
+
 /* Respect reduced-motion preferences */
 @media (prefers-reduced-motion: reduce) {
     .dln-stat-help-message {
         animation: none;
     }
 }
+
 
 /* =========================================================
    FEEDBACK
