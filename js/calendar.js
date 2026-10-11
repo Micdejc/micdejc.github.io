@@ -2159,6 +2159,27 @@ function displayCalendarToday() {
         ).format(new Date());
 }
 
+/* ================= CALENDAR LIVE CLOCK ================= */
+
+let calendarClockInterval = null;
+
+function initialiseCalendarClock() {
+
+    /* Display the date and time immediately */
+    displayCalendarToday();
+
+    /* Prevent multiple timers */
+    if (calendarClockInterval !== null) {
+        clearInterval(calendarClockInterval);
+    }
+
+    /* Refresh every 60 seconds */
+    calendarClockInterval = setInterval(
+        displayCalendarToday,
+        60 * 1000
+    );
+}
+
 /* =========================================================
    SESSION CACHE
    ========================================================= */
@@ -2318,13 +2339,8 @@ function initialiseCalendar() {
     loadCalendarEvents();
 
     /* Display the current date and time immediately */
-    displayCalendarToday();
-
-    /* Refresh the date and time every 60 seconds */
-    setInterval(
-        displayCalendarToday,
-        60 * 1000
-    );
+    /* displayCalendarToday(); */
+    initialiseCalendarClock();
 
     const toggle =
         document.getElementById(
