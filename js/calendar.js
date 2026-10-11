@@ -2164,22 +2164,26 @@ function displayCalendarToday() {
 
 function initialiseCalendarClock() {
 
-    /* Display the date and time immediately */
-    displayCalendarToday();
-
-    /* Prevent multiple timers */
     if (calendarClockInterval !== null) {
         clearInterval(calendarClockInterval);
     }
 
+    function updateClock() {
+        displayCalendarToday();
+
+        console.log(
+            "Calendar updated:",
+            new Date().toLocaleTimeString("en-GB")
+        );
+    }
+
+    /* Update immediately */
+    updateClock();
+
     /* Refresh every 60 seconds */
     calendarClockInterval = setInterval(
-        displayCalendarToday,
-        60 * 1000
-    );
-
-    console.log(
-        "Calendar clock started. Interval: 60 seconds."
+        updateClock,
+        60_000
     );
 }
 
