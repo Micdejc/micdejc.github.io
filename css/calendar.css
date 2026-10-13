@@ -522,87 +522,206 @@
     display: block;
 }
 
+
 /* =========================================================
    CALENDAR EVENTS
 ========================================================= */
 
 .calendar-events {
-
-    display:
-        grid;
-
-    gap:
-        0.75rem;
-
+    display: grid;
+    gap: 0.85rem;
 }
 
-
 .calendar-event {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
 
-    padding:
-        1rem;
+    padding: 1rem;
 
-    border:
-        1px solid var(--border-color);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
 
-    border-radius:
-        12px;
-
-    background:
-        rgba(
-            127,
-            127,
-            127,
-            0.06
-        );
+    background: rgba(127, 127, 127, 0.06);
 
     transition:
         background-color 0.2s ease,
+        border-color 0.2s ease,
         transform 0.2s ease;
-
 }
-
 
 .calendar-event:hover {
-
-    background:
-        rgba(59, 130, 246, 0.05);
-
-    transform:
-        translateY(-1px);
-
+    background: rgba(59, 130, 246, 0.05);
+    border-color: var(--primary);
+    transform: translateY(-1px);
 }
 
+/* DATE TILE */
 
-.calendar-event-date {
+.calendar-event-date-tile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 
-    margin-bottom:
-        0.25rem;
+    flex: 0 0 62px;
+    min-height: 68px;
 
-    color:
-        var(--text-color);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
 
-    font-size:
-        0.75rem;
+    background: rgba(59, 130, 246, 0.09);
+    color: var(--text-color);
 
-    font-weight:
-        700;
-
-    opacity:
-        0.6;
-
+    text-align: center;
 }
 
+.calendar-event-month {
+    color: var(--primary);
+    font-size: 0.72rem;
+    font-weight: 700;
+    line-height: 1.2;
+    text-transform: uppercase;
+}
+
+.calendar-event-day {
+    margin-top: 0.2rem;
+    color: var(--text-color);
+    font-size: 1.45rem;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+/* EVENT CONTENT */
+
+.calendar-event-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.calendar-event-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
 
 .calendar-event-name {
-
-    color:
-        var(--text-color);
-
-    font-weight:
-        600;
-
+    margin: 0;
+    color: var(--text-color);
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.4;
 }
+
+/* CATEGORY */
+
+.calendar-event-category {
+    display: inline-block;
+
+    padding: 0.2rem 0.55rem;
+
+    border: 1px solid var(--border-color);
+    border-radius: 999px;
+
+    color: var(--text-color);
+    font-size: 0.68rem;
+    font-weight: 600;
+    line-height: 1.4;
+
+    opacity: 0.8;
+}
+
+/* DESCRIPTION */
+
+.calendar-event-description {
+    margin: 0.45rem 0 0;
+
+    color: var(--text-color);
+    font-size: 0.88rem;
+    line-height: 1.55;
+
+    opacity: 0.8;
+}
+
+/* EVENT METADATA */
+
+.calendar-event-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.75rem;
+
+    margin-top: 0.65rem;
+
+    color: var(--text-color);
+    font-size: 0.75rem;
+
+    opacity: 0.65;
+}
+
+.calendar-event-countdown {
+    font-weight: 700;
+}
+
+/* EMPTY STATE */
+
+.calendar-empty {
+    margin: 0;
+    padding: 1rem;
+
+    color: var(--text-color);
+    font-size: 0.9rem;
+    text-align: center;
+
+    opacity: 0.7;
+}
+
+
+.calendar-event-icon {
+    display: block;
+    margin-bottom: 0.2rem;
+    color: var(--primary);
+    flex-shrink: 0;
+}
+
+
+/* =========================================================
+   RESPONSIVE LAYOUT
+========================================================= */
+
+@media (max-width: 480px) {
+    .calendar-event {
+        gap: 0.75rem;
+        padding: 0.8rem;
+    }
+
+    .calendar-event-date-tile {
+        flex-basis: 52px;
+        min-height: 60px;
+    }
+
+    .calendar-event-day {
+        font-size: 1.25rem;
+    }
+
+    .calendar-event-header {
+        flex-direction: column;
+        gap: 0.35rem;
+    }
+
+    .calendar-event-description {
+        font-size: 0.84rem;
+    }
+
+    .calendar-event-meta {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
 
 
 /* =========================================================
