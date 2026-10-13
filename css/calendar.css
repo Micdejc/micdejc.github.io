@@ -421,106 +421,221 @@
 }
 
 
+
 /* =========================================================
    NEXT EVENT
 ========================================================= */
 
 .calendar-next-event {
+    margin-bottom: 1.5rem;
+    padding: 1.25rem;
 
-    margin-bottom:
-        1.5rem;
+    border: 2px solid var(--primary);
+    border-radius: 14px;
 
-    padding:
-        1.25rem;
+    background: rgba(59, 130, 246, 0.05);
 
-    border:
-        2px solid var(--primary);
-
-    border-radius:
-        14px;
-
-    background:
-       rgba(59, 130, 246, 0.05);
-
-    box-shadow:
-        0 6px 20px
-        rgba(
-            0,
-            0,
-            0,
-            0.08
-        );
-
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
 }
 
+/* HEADING */
 
-.calendar-next-event strong {
+.calendar-next-event-heading {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
 
-    display:
-        block;
-
-    margin-bottom:
-        0.4rem;
-
-    color:
-        var(--text-color);
-
-    font-size:
-        1.1rem;
-
-    font-weight:
-        700;
-
+    margin-bottom: 1rem;
 }
 
-.calendar-next-event span {
-
-    display:
-        block;
-
-    color:
-        var(--text-color);
-
-    font-size:
-        1rem;
-
-    font-weight:
-        600;
-
+.calendar-next-event-heading strong {
+    color: var(--text-color);
+    font-size: 1.1rem;
+    font-weight: 700;
 }
 
-.calendar-next-event small {
-
-    display:
-        block;
-
-    margin-top:
-        0.35rem;
-
-    color:
-        var(--text-color);
-
-    font-size:
-        0.85rem;
-
-    font-weight:
-        500;
-
-    opacity:
-        0.7;
-
+.calendar-next-event-heading-icon {
+    flex-shrink: 0;
+    color: var(--primary);
 }
+
+/* MAIN CONTENT */
+
+.calendar-next-event-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.calendar-next-event-details {
+    flex: 1;
+    min-width: 0;
+}
+
+/* DATE TILE */
+
+.calendar-next-event-date-tile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    flex: 0 0 72px;
+    min-height: 82px;
+    padding: 0.4rem;
+
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+
+    background: rgba(59, 130, 246, 0.09);
+    color: var(--text-color);
+    text-align: center;
+}
+
+.calendar-next-event-icon {
+    display: block;
+    flex-shrink: 0;
+
+    margin-bottom: 0.2rem;
+
+    color: var(--primary);
+}
+
+.calendar-next-event-month {
+    color: var(--primary);
+    font-size: 0.7rem;
+    font-weight: 700;
+    line-height: 1.2;
+    text-transform: uppercase;
+}
+
+.calendar-next-event .calendar-next-event-day {
+    margin-top: 0.15rem;
+
+    color: var(--text-color);
+    font-size: 1.4rem;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+/* EVENT LIST */
 
 .calendar-next-event-list {
     display: flex;
     flex-direction: column;
-    gap: 0.35rem;
-    margin: 0.5rem 0;
+    gap: 0.85rem;
 }
 
 .calendar-next-event-item {
-    display: block;
+    min-width: 0;
 }
+
+.calendar-next-event-item-title {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+}
+
+.calendar-next-event-name {
+    color: var(--text-color);
+    font-size: 0.98rem;
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+/* CATEGORY BADGE */
+
+.calendar-next-event-category {
+    display: inline-block;
+
+    padding: 0.2rem 0.6rem;
+
+    border: 1px solid var(--border-color);
+    border-radius: 999px;
+
+    color: var(--text-color);
+    font-size: 0.68rem;
+    font-weight: 600;
+    line-height: 1.4;
+
+    opacity: 0.8;
+}
+
+/* DATE AND COUNTDOWN FOOTER */
+
+.calendar-next-event-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.6rem 1rem;
+
+    margin-top: 1rem;
+    padding-top: 0.8rem;
+
+    border-top: 1px solid var(--border-color);
+}
+
+.calendar-next-event-full-date,
+.calendar-next-event-countdown {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+
+    color: var(--text-color);
+    font-size: 0.78rem;
+    line-height: 1.4;
+}
+
+.calendar-next-event-full-date {
+    opacity: 0.7;
+}
+
+.calendar-next-event-countdown {
+    color: var(--primary);
+    font-weight: 700;
+}
+
+/* EMPTY STATE */
+
+.calendar-next-empty {
+    color: var(--text-color);
+    font-size: 0.95rem;
+    opacity: 0.75;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 480px) {
+    .calendar-next-event {
+        padding: 1rem;
+    }
+
+    .calendar-next-event-content {
+        gap: 0.75rem;
+    }
+
+    .calendar-next-event-date-tile {
+        flex-basis: 60px;
+        min-height: 74px;
+    }
+
+    .calendar-next-event .calendar-next-event-day {
+        font-size: 1.25rem;
+    }
+
+    .calendar-next-event-name {
+        font-size: 0.9rem;
+    }
+
+    .calendar-next-event-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.55rem;
+    }
+}
+
 
 
 /* =========================================================
