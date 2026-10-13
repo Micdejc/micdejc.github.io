@@ -1992,6 +1992,7 @@ function showHolidayNotification(events) {
 }
 
 
+
 /* =========================================================
    NEXT EVENT DISPLAY
 ========================================================= */
@@ -2037,8 +2038,11 @@ function displayNextEvent() {
             || event.category
             || "Observance";
 
+        const description = getHolidayDescription(event);
+
         return `
             <article class="calendar-next-event-item">
+
                 <div class="calendar-next-event-item-title">
                     <span class="calendar-next-event-name">
                         ${event.title}
@@ -2048,6 +2052,11 @@ function displayNextEvent() {
                         ${category}
                     </span>
                 </div>
+
+                <p class="calendar-next-event-description">
+                    ${description}
+                </p>
+
             </article>
         `;
     }).join("");
@@ -2111,44 +2120,17 @@ function displayNextEvent() {
         <div class="calendar-next-event-meta">
 
             <span class="calendar-next-event-full-date">
-                <svg xmlns="http://www.w3.org/2000/svg"
-                     width="15"
-                     height="15"
-                     viewBox="0 0 24 24"
-                     fill="none"
-                     stroke="currentColor"
-                     stroke-width="2"
-                     stroke-linecap="round"
-                     stroke-linejoin="round"
-                     aria-hidden="true">
-                    <rect x="3" y="5" width="18" height="16" rx="2"/>
-                    <path d="M16 3v4M8 3v4M3 11h18"/>
-                </svg>
-
                 ${formatEventDate(nextDate)}
             </span>
 
             <span class="calendar-next-event-countdown">
-                <svg xmlns="http://www.w3.org/2000/svg"
-                     width="15"
-                     height="15"
-                     viewBox="0 0 24 24"
-                     fill="none"
-                     stroke="currentColor"
-                     stroke-width="2"
-                     stroke-linecap="round"
-                     stroke-linejoin="round"
-                     aria-hidden="true">
-                    <circle cx="12" cy="13" r="8"/>
-                    <path d="M12 9v4l2 2M9 2h6M12 2v3"/>
-                </svg>
-
                 ${getRemainingDays(nextDate)}
             </span>
 
         </div>
     `;
 }
+
 
 
 /* =========================================================
