@@ -1199,7 +1199,13 @@ async function loadCalendarEvents() {
                 ? result.value
                 : [];
 
-            collectedEvents.push(...events);
+            //collectedEvents.push(...events);
+            collectedEvents.push(
+                ...events.map(event => ({
+                    ...event,
+                    category: event.category || sourceName
+                }))
+            );
 
             if (events.length > 0) {
                 console.log(
@@ -2048,84 +2054,123 @@ function displayNextEvent() {
 
 /* =========================================================
    EVENT LIST
-   ========================================================= */
+========================================================= */
 
 function displayCalendarEvents() {
-    const container =
-        document.getElementById(
-            "calendarEvents"
+    const container = document.getElementById("calendarEvents");
+
+    if (!container) return;
+
+    const today = dateOnly(new Date());
+    const nextEvents = getNextEvents();
+
+    const nextEventIds = new Set(
+        nextEvents.map(function(event) {
+            return event.id;
+        })
+    );
+
+    const upcomingEvents = calendarEvents.filter(function(event) {
+        return (
+            dateOnly(event.start) >= today &&
+            !nextEventIds.has(event.id)
         );
-
-    if (!container) {
-        return;
-    }
-
-    const today =
-        dateOnly(new Date());
-
-    /*
-     * Get all events belonging to the earliest
-     * upcoming date so they can be displayed
-     * together in the Next Events section.
-     */
-    const nextEvents =
-        getNextEvents();
-
-    const nextEventIds =
-        new Set(
-            nextEvents.map(
-                function(event) {
-                    return event.id;
-                }
-            )
-        );
-
-    /*
-     * Display only upcoming events that do not
-     * belong to the Next Events group.
-     */
-    const upcomingEvents =
-        calendarEvents.filter(
-            function(event) {
-                return (
-                    dateOnly(event.start) >=
-                        today &&
-                    !nextEventIds.has(
-                        event.id
-                    )
-                );
-            }
-        );
+    });
 
     if (upcomingEvents.length === 0) {
         container.innerHTML = `
-            <p>
+            <p class="calendar-empty">
                 No more upcoming events.
             </p>
         `;
-
         return;
     }
 
-    container.innerHTML =
-        upcomingEvents
-            .map(function(event) {
-                return `
-                    <article class="calendar-event">
-                        <div class="calendar-event-date">
-                            ${formatEventDate(event.start)}
-                            <strong>
-                                - ${getRemainingDays(event.start)}
-                            </strong>
-                        </div>
+    container.innerHTML = upcomingEvents.map(function(event) {
+        const eventDate = new Date(event.start);
 
-                        <div class="calendar-event-name">
+        const month = eventDate.toLocaleDateString("en-GB", {
+            month: "short"
+        });
+
+        const day = eventDate.toLocaleDateString("en-GB", {
+            day: "numeric"
+        });
+
+        const description = getHolidayDescription(event);
+
+        const categoryLabels = {
+            "UK bank holidays": "UK Bank Holiday",
+            "International and cultural holidays": "International",
+            "Christian observances": "Christian",
+            "Muslim observances": "Muslim",
+            "Jewish observances": "Jewish",
+            "Hindu observances": "Hindu"
+        };
+        
+        const category = categoryLabels[event.category]
+            || event.category
+            || "Observance";
+
+        //const category = event.category || "Observance";
+
+        return `
+            <article class="calendar-event">
+
+                <div class="calendar-event-date-tile"
+                     aria-label="${formatEventDate(event.start)}">
+                
+                    <svg class="calendar-event-icon"
+                         xmlns="http://www.w3.org/2000/svg"
+                         width="17"
+                         height="17"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round"
+                         aria-hidden="true">
+                        <rect x="3" y="5" width="18" height="16" rx="2"/>
+                        <path d="M16 3v4M8 3v4M3 11h18"/>
+                    </svg>
+                
+                    <span class="calendar-event-month">${month}</span>
+                
+                    <strong class="calendar-event-day">${day}</strong>
+                
+                </div>
+
+                <div class="calendar-event-content">
+
+                    <div class="calendar-event-header">
+
+                        <h3 class="calendar-event-name">
                             ${event.title}
-                        </div>
-                    </article>
-                `;
-            })
-            .join("");
+                        </h3>
+
+                        <span class="calendar-event-category">
+                            ${category}
+                        </span>
+
+                    </div>
+
+                    <p class="calendar-event-description">
+                        ${description}
+                    </p>
+
+                    <div class="calendar-event-meta">
+                        <span>${formatEventDate(event.start)}</span>
+                        <span class="calendar-event-countdown">
+                            ${getRemainingDays(event.start)}
+                        </span>
+                    </div>
+
+                </div>
+
+            </article>
+        `;
+    }).join("");
 }
 
 /* =========================================================
