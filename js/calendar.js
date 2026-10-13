@@ -1991,66 +1991,165 @@ function showHolidayNotification(events) {
         );
 }
 
+
 /* =========================================================
    NEXT EVENT DISPLAY
-   ========================================================= */
+========================================================= */
 
 function displayNextEvent() {
-    const container =
-        document.getElementById(
-            "calendarNextEvent"
-        );
+    const container = document.getElementById("calendarNextEvent");
 
-    if (!container) {
-        return;
-    }
+    if (!container) return;
 
-    const nextEvents =
-        getNextEvents();
+    const nextEvents = getNextEvents();
 
-    if (nextEvents.length === 0) {
+    if (!nextEvents || nextEvents.length === 0) {
         container.innerHTML = `
-            <strong>
-                No upcoming events
-            </strong>
+            <div class="calendar-next-empty">
+                <strong>No upcoming events</strong>
+            </div>
         `;
-
         return;
     }
 
-    const nextDate =
-        nextEvents[0].start;
+    const nextDate = nextEvents[0].start;
+    const eventDate = new Date(nextDate);
 
-    const eventItems =
-        nextEvents
-            .map(function(event) {
-                return `
-                    <span class="calendar-next-event-item">
+    const month = eventDate.toLocaleDateString("en-GB", {
+        month: "short"
+    });
+
+    const day = eventDate.toLocaleDateString("en-GB", {
+        day: "numeric"
+    });
+
+    const categoryLabels = {
+        "UK bank holidays": "UK Bank Holiday",
+        "International and cultural holidays": "International",
+        "Christian observances": "Christian",
+        "Muslim observances": "Muslim",
+        "Jewish observances": "Jewish",
+        "Hindu observances": "Hindu"
+    };
+
+    const eventItems = nextEvents.map(function(event) {
+        const category = categoryLabels[event.category]
+            || event.category
+            || "Observance";
+
+        return `
+            <article class="calendar-next-event-item">
+                <div class="calendar-next-event-item-title">
+                    <span class="calendar-next-event-name">
                         ${event.title}
                     </span>
-                `;
-            })
-            .join("");
+
+                    <span class="calendar-next-event-category">
+                        ${category}
+                    </span>
+                </div>
+            </article>
+        `;
+    }).join("");
 
     container.innerHTML = `
-        <strong>
-            ${nextEvents.length > 1
-                ? "Next Events"
-                : "Next Event"}
-        </strong>
+        <div class="calendar-next-event-heading">
+            <svg class="calendar-next-event-heading-icon"
+                 xmlns="http://www.w3.org/2000/svg"
+                 width="21"
+                 height="21"
+                 viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="2"
+                 stroke-linecap="round"
+                 stroke-linejoin="round"
+                 aria-hidden="true">
+                <rect x="3" y="5" width="18" height="16" rx="2"/>
+                <path d="M16 3v4M8 3v4M3 11h18"/>
+                <path d="m9 16 2 2 4-4"/>
+            </svg>
 
-        <div class="calendar-next-event-list">
-            ${eventItems}
+            <strong>
+                ${nextEvents.length > 1 ? "Next Events" : "Next Event"}
+            </strong>
         </div>
 
-        <small>
-            ${formatEventDate(nextDate)}
-            <b>
-                - ${getRemainingDays(nextDate)}
-            </b>
-        </small>
+        <div class="calendar-next-event-content">
+
+            <div class="calendar-next-event-date-tile"
+                 aria-label="${formatEventDate(nextDate)}">
+
+                <svg class="calendar-next-event-icon"
+                     xmlns="http://www.w3.org/2000/svg"
+                     width="20"
+                     height="20"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="2"
+                     stroke-linecap="round"
+                     stroke-linejoin="round"
+                     aria-hidden="true">
+                    <rect x="3" y="5" width="18" height="16" rx="2"/>
+                    <path d="M16 3v4M8 3v4M3 11h18"/>
+                </svg>
+
+                <span class="calendar-next-event-month">${month}</span>
+                <span class="calendar-next-event-day">${day}</span>
+
+            </div>
+
+            <div class="calendar-next-event-details">
+                <div class="calendar-next-event-list">
+                    ${eventItems}
+                </div>
+            </div>
+
+        </div>
+
+        <div class="calendar-next-event-meta">
+
+            <span class="calendar-next-event-full-date">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     width="15"
+                     height="15"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="2"
+                     stroke-linecap="round"
+                     stroke-linejoin="round"
+                     aria-hidden="true">
+                    <rect x="3" y="5" width="18" height="16" rx="2"/>
+                    <path d="M16 3v4M8 3v4M3 11h18"/>
+                </svg>
+
+                ${formatEventDate(nextDate)}
+            </span>
+
+            <span class="calendar-next-event-countdown">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     width="15"
+                     height="15"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="2"
+                     stroke-linecap="round"
+                     stroke-linejoin="round"
+                     aria-hidden="true">
+                    <circle cx="12" cy="13" r="8"/>
+                    <path d="M12 9v4l2 2M9 2h6M12 2v3"/>
+                </svg>
+
+                ${getRemainingDays(nextDate)}
+            </span>
+
+        </div>
     `;
 }
+
 
 /* =========================================================
    EVENT LIST
