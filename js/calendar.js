@@ -1084,7 +1084,7 @@ function removeDuplicateEvents(events) {
 
 async function loadCalendarEvents() {
 
-    
+    /*
     // TEMPORARY TEST
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -1124,7 +1124,7 @@ async function loadCalendarEvents() {
     handleTodayHoliday();
     
     return calendarEvents; 
-    
+    */
 
     
     if (calendarDataLoaded) {
@@ -2066,7 +2066,9 @@ function displayNextEvent(step = 0) {
                 <path d="m9 16 2 2 4-4"/>
             </svg>
 
-            <strong>Upcoming Events</strong>
+            <strong>
+                ${nextEvents.length > 1 ? "Next Events" : "Next Event"}
+            </strong>
         </div>
 
         <div class="calendar-next-event-content">
