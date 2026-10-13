@@ -2152,57 +2152,54 @@ function displayNextEvent(step = 0) {
 
         </div>
 
-        <div class="calendar-next-event-navigation">
-
-            <button type="button"
-                    class="calendar-event-nav-button"
-                    id="previousNextEvent"
-                    ${nextEventIndex === 0 ? "disabled" : ""}
-                    aria-label="Previous event"
-                    title="Previous event">
         
-                <svg xmlns="http://www.w3.org/2000/svg"
-                     width="20"
-                     height="20"
-                     viewBox="0 0 24 24"
-                     fill="none"
-                     stroke="currentColor"
-                     stroke-width="2"
-                     stroke-linecap="round"
-                     stroke-linejoin="round"
-                     aria-hidden="true">
-                    <path d="m15 18-6-6 6-6"/>
-                </svg>
+        ${nextEvents.length > 1 ? `
+            <div class="calendar-next-event-navigation">
         
-            </button>
-
-            <span class="calendar-next-event-position">
-                ${nextEventIndex + 1} of ${nextEvents.length}
-            </span>
+                <button type="button"
+                        class="calendar-event-nav-button"
+                        id="previousNextEvent"
+                        ${nextEventIndex === 0 ? "disabled" : ""}
+                        aria-label="Previous event"
+                        title="Previous event">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         width="20" height="20"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round"
+                         aria-hidden="true">
+                        <path d="m15 18-6-6 6-6"/>
+                    </svg>
+                </button>
         
-            <button type="button"
-                    class="calendar-event-nav-button"
-                    id="nextNextEvent"
-                    ${nextEventIndex === nextEvents.length - 1 ? "disabled" : ""}
-                    aria-label="Next event"
-                    title="Next event">
+                <span class="calendar-next-event-position">
+                    ${nextEventIndex + 1} of ${nextEvents.length}
+                </span>
         
-                <svg xmlns="http://www.w3.org/2000/svg"
-                     width="20"
-                     height="20"
-                     viewBox="0 0 24 24"
-                     fill="none"
-                     stroke="currentColor"
-                     stroke-width="2"
-                     stroke-linecap="round"
-                     stroke-linejoin="round"
-                     aria-hidden="true">
-                    <path d="m9 18 6-6-6-6"/>
-                </svg>
+                <button type="button"
+                        class="calendar-event-nav-button"
+                        id="nextNextEvent"
+                        ${nextEventIndex === nextEvents.length - 1 ? "disabled" : ""}
+                        aria-label="Next event"
+                        title="Next event">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         width="20" height="20"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round"
+                         aria-hidden="true">
+                        <path d="m9 18 6-6-6-6"/>
+                    </svg>
+                </button>
         
-            </button>
-        
-        </div>
+            </div>
+        ` : ""}
     `;
 
     document.getElementById("previousNextEvent")
