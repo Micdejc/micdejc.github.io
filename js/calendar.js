@@ -2067,10 +2067,6 @@ function displayNextEvent(step = 0) {
             </svg>
 
             <strong>Upcoming Events</strong>
-
-            <span class="calendar-next-event-position">
-                ${nextEventIndex + 1} of ${nextEvents.length}
-            </span>
         </div>
 
         <div class="calendar-next-event-content">
@@ -2153,6 +2149,10 @@ function displayNextEvent(step = 0) {
                 </svg>
         
             </button>
+
+            <span class="calendar-next-event-position">
+                ${nextEventIndex + 1} of ${nextEvents.length}
+            </span>
         
             <button type="button"
                     class="calendar-event-nav-button"
