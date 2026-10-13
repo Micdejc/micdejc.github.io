@@ -1992,12 +1992,7 @@ function showHolidayNotification(events) {
 }
 
 
-
-/* =========================================================
-   NEXT EVENT DISPLAY
-========================================================= */
-
-let nextEventIndex = 0;
+/* SHORT CATEGORY LABELS FOR EVENT DISPLAY */
 
 const categoryLabels = {
     "UK bank holidays": "UK Bank Holiday",
@@ -2007,6 +2002,12 @@ const categoryLabels = {
     "Jewish observances": "Jewish",
     "Hindu observances": "Hindu"
 };
+
+/* =========================================================
+   NEXT EVENT DISPLAY
+========================================================= */
+
+let nextEventIndex = 0;
 
 function displayNextEvent(step = 0) {
     const container = document.getElementById("calendarNextEvent");
