@@ -605,6 +605,28 @@
     opacity: 0.75;
 }
 
+/* NEXT EVENT DESCRIPTIONS */
+
+.calendar-next-event-description {
+    margin: 0.5rem 0 0;
+
+    color: var(--text-color);
+    font-size: 0.85rem;
+    font-weight: 400;
+    line-height: 1.6;
+
+    opacity: 0.8;
+
+    overflow-wrap: anywhere;
+}
+
+/* Separate events when several share the same date */
+
+.calendar-next-event-item + .calendar-next-event-item {
+    padding-top: 0.85rem;
+    border-top: 1px solid var(--border-color);
+}
+
 /* RESPONSIVE */
 
 @media (max-width: 480px) {
@@ -633,6 +655,11 @@
         flex-direction: column;
         align-items: flex-start;
         gap: 0.55rem;
+    }
+
+    .calendar-next-event-description {
+        font-size: 0.82rem;
+        line-height: 1.55;
     }
 }
 
