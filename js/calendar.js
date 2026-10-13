@@ -1997,11 +1997,14 @@ function showHolidayNotification(events) {
    NEXT EVENT DISPLAY
 ========================================================= */
 
-function displayNextEvent() {
+let nextEventIndex = 0;
+
+function displayNextEvent(step = 0) {
     const container = document.getElementById("calendarNextEvent");
 
     if (!container) return;
 
+    // Get all upcoming events in chronological order.
     const nextEvents = getNextEvents();
 
     if (!nextEvents || nextEvents.length === 0) {
@@ -2013,8 +2016,14 @@ function displayNextEvent() {
         return;
     }
 
-    const nextDate = nextEvents[0].start;
-    const eventDate = new Date(nextDate);
+    // Keep the selected index within the available range.
+    nextEventIndex = Math.max(
+        0,
+        Math.min(nextEventIndex + step, nextEvents.length - 1)
+    );
+
+    const event = nextEvents[nextEventIndex];
+    const eventDate = new Date(event.start);
 
     const month = eventDate.toLocaleDateString("en-GB", {
         month: "short"
@@ -2033,33 +2042,11 @@ function displayNextEvent() {
         "Hindu observances": "Hindu"
     };
 
-    const eventItems = nextEvents.map(function(event) {
-        const category = categoryLabels[event.category]
-            || event.category
-            || "Observance";
+    const category = categoryLabels[event.category]
+        || event.category
+        || "Observance";
 
-        const description = getHolidayDescription(event);
-
-        return `
-            <article class="calendar-next-event-item">
-
-                <div class="calendar-next-event-item-title">
-                    <span class="calendar-next-event-name">
-                        ${event.title}
-                    </span>
-
-                    <span class="calendar-next-event-category">
-                        ${category}
-                    </span>
-                </div>
-
-                <p class="calendar-next-event-description">
-                    ${description}
-                </p>
-
-            </article>
-        `;
-    }).join("");
+    const description = getHolidayDescription(event);
 
     container.innerHTML = `
         <div class="calendar-next-event-heading">
@@ -2079,15 +2066,17 @@ function displayNextEvent() {
                 <path d="m9 16 2 2 4-4"/>
             </svg>
 
-            <strong>
-                ${nextEvents.length > 1 ? "Next Events" : "Next Event"}
-            </strong>
+            <strong>Upcoming Events</strong>
+
+            <span class="calendar-next-event-position">
+                ${nextEventIndex + 1} of ${nextEvents.length}
+            </span>
         </div>
 
         <div class="calendar-next-event-content">
 
             <div class="calendar-next-event-date-tile"
-                 aria-label="${formatEventDate(nextDate)}">
+                 aria-label="${formatEventDate(event.start)}">
 
                 <svg class="calendar-next-event-icon"
                      xmlns="http://www.w3.org/2000/svg"
@@ -2110,9 +2099,21 @@ function displayNextEvent() {
             </div>
 
             <div class="calendar-next-event-details">
-                <div class="calendar-next-event-list">
-                    ${eventItems}
+
+                <div class="calendar-next-event-item-title">
+                    <span class="calendar-next-event-name">
+                        ${event.title}
+                    </span>
+
+                    <span class="calendar-next-event-category">
+                        ${category}
+                    </span>
                 </div>
+
+                <p class="calendar-next-event-description">
+                    ${description}
+                </p>
+
             </div>
 
         </div>
@@ -2120,15 +2121,69 @@ function displayNextEvent() {
         <div class="calendar-next-event-meta">
 
             <span class="calendar-next-event-full-date">
-                ${formatEventDate(nextDate)}
+                ${formatEventDate(event.start)}
             </span>
 
             <span class="calendar-next-event-countdown">
-                ${getRemainingDays(nextDate)}
+                ${getRemainingDays(event.start)}
             </span>
 
         </div>
+
+        <div class="calendar-next-event-navigation">
+
+            <button type="button"
+                    class="calendar-event-nav-button"
+                    id="previousNextEvent"
+                    ${nextEventIndex === 0 ? "disabled" : ""}
+                    aria-label="Previous event"
+                    title="Previous event">
+        
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     width="20"
+                     height="20"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="2"
+                     stroke-linecap="round"
+                     stroke-linejoin="round"
+                     aria-hidden="true">
+                    <path d="m15 18-6-6 6-6"/>
+                </svg>
+        
+            </button>
+        
+            <button type="button"
+                    class="calendar-event-nav-button"
+                    id="nextNextEvent"
+                    ${nextEventIndex === nextEvents.length - 1 ? "disabled" : ""}
+                    aria-label="Next event"
+                    title="Next event">
+        
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     width="20"
+                     height="20"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="2"
+                     stroke-linecap="round"
+                     stroke-linejoin="round"
+                     aria-hidden="true">
+                    <path d="m9 18 6-6-6-6"/>
+                </svg>
+        
+            </button>
+        
+        </div>
     `;
+
+    document.getElementById("previousNextEvent")
+        ?.addEventListener("click", () => displayNextEvent(-1));
+
+    document.getElementById("nextNextEvent")
+        ?.addEventListener("click", () => displayNextEvent(1));
 }
 
 
