@@ -2165,11 +2165,11 @@ function displayNextEvent(step = 0) {
                         aria-label="Previous event"
                         title="Previous event">
                     <svg xmlns="http://www.w3.org/2000/svg"
-                         width="20" height="20"
+                         width="30" height="30"
                          viewBox="0 0 24 24"
                          fill="none"
                          stroke="currentColor"
-                         stroke-width="2"
+                         stroke-width="3"
                          stroke-linecap="round"
                          stroke-linejoin="round"
                          aria-hidden="true">
@@ -2188,11 +2188,11 @@ function displayNextEvent(step = 0) {
                         aria-label="Next event"
                         title="Next event">
                     <svg xmlns="http://www.w3.org/2000/svg"
-                         width="40" height="40"
+                         width="30" height="30"
                          viewBox="0 0 24 24"
                          fill="none"
                          stroke="currentColor"
-                         stroke-width="4"
+                         stroke-width="3"
                          stroke-linecap="round"
                          stroke-linejoin="round"
                          aria-hidden="true">
