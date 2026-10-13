@@ -1999,6 +1999,15 @@ function showHolidayNotification(events) {
 
 let nextEventIndex = 0;
 
+const categoryLabels = {
+    "UK bank holidays": "UK Bank Holiday",
+    "International and cultural holidays": "International",
+    "Christian observances": "Christian",
+    "Muslim observances": "Muslim",
+    "Jewish observances": "Jewish",
+    "Hindu observances": "Hindu"
+};
+
 function displayNextEvent(step = 0) {
     const container = document.getElementById("calendarNextEvent");
 
@@ -2032,15 +2041,6 @@ function displayNextEvent(step = 0) {
     const day = eventDate.toLocaleDateString("en-GB", {
         day: "numeric"
     });
-
-    const categoryLabels = {
-        "UK bank holidays": "UK Bank Holiday",
-        "International and cultural holidays": "International",
-        "Christian observances": "Christian",
-        "Muslim observances": "Muslim",
-        "Jewish observances": "Jewish",
-        "Hindu observances": "Hindu"
-    };
 
     const category = categoryLabels[event.category]
         || event.category
@@ -2260,15 +2260,6 @@ function displayCalendarEvents() {
 
         const description = getHolidayDescription(event);
 
-        const categoryLabels = {
-            "UK bank holidays": "UK Bank Holiday",
-            "International and cultural holidays": "International",
-            "Christian observances": "Christian",
-            "Muslim observances": "Muslim",
-            "Jewish observances": "Jewish",
-            "Hindu observances": "Hindu"
-        };
-        
         const category = categoryLabels[event.category]
             || event.category
             || "Observance";
