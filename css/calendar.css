@@ -530,12 +530,21 @@
     min-width: 0;
 }
 
+.calendar-event-title,
 .calendar-next-event-item-title {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 0.4rem;
 }
+
+/* .calendar-event-title,
+.calendar-next-event-item-title {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+} */
 
 .calendar-next-event-name {
     color: var(--text-color);
@@ -833,21 +842,30 @@
 
 /* CATEGORY */
 
-.calendar-event-category {
-    display: inline-block;
+.calendar-event-category,
+.calendar-next-event-category {
+    
+    display: inline-flex;
+    align-items: center;
+    /* display: inline-block; */
 
-    padding: 0.2rem 0.55rem;
+    padding: 0.2rem 0.6rem;
 
     border: 1px solid var(--border-color);
     border-radius: 999px;
 
+    background: rgba(128, 128, 128, 0.12);
     color: var(--text-color);
+
     font-size: 0.68rem;
     font-weight: 600;
     line-height: 1.4;
 
-    opacity: 0.8;
+    white-space: nowrap;
+    /* opacity: 0.8; */
 }
+
+
 
 /* DESCRIPTION */
 
@@ -937,43 +955,6 @@
         align-items: flex-start;
     }
 }
-
-/* =========================================================
-   EVENT CATEGORY FORMATTING
-========================================================= */
-
-/* EVENT TITLE AND CATEGORY */
-
-.calendar-event-title,
-.calendar-next-event-item-title {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-}
-
-/* GREY CATEGORY BADGE: EVENT LIST AND NEXT EVENT */
-
-.calendar-event-category,
-.calendar-next-event-category {
-    display: inline-flex;
-    align-items: center;
-
-    padding: 0.2rem 0.6rem;
-
-    border: 1px solid var(--border-color);
-    border-radius: 999px;
-
-    background: rgba(128, 128, 128, 0.12);
-    color: var(--text-color);
-
-    font-size: 0.68rem;
-    font-weight: 600;
-    line-height: 1.4;
-
-    white-space: nowrap;
-}
-
 
 
 /* =========================================================
