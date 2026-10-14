@@ -530,7 +530,6 @@
     min-width: 0;
 }
 
-.calendar-event-title,
 .calendar-next-event-item-title {
     /* display: flex; */
     flex-direction: column;
