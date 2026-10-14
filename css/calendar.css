@@ -643,9 +643,11 @@
 /* EVENT NAVIGATION */
 
 .calendar-next-event-navigation {
-    display: grid;
-    grid-template-columns: 48px 1fr 48px;
+    /* display: grid;
+    grid-template-columns: 48px 1fr 48px; */
+    display: flex;
     align-items: center;
+    justify-content: center;
     gap: 0.75rem;
 
     margin-top: 1rem;
