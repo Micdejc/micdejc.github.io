@@ -611,7 +611,7 @@ Add the following inside `#blog-source`:
 ```
 4. Save and refresh the website.
 
-The Blog system automatically generates the preview, calculates reading time from `.blog-content`, and handles filtering, pagination, and the full article view.
+A template for new blog posts is provided in `blog/posts/my-new-cybersecurity-article.html` for reference. The Blog system automatically generates the preview, calculates reading time from `.blog-content`, and handles filtering, pagination, and the full article view.
 
 ---
 
