@@ -184,6 +184,11 @@ body.terminal-mode .blog-back-button {
     color: #fff;
 }
 
+body.terminal-mode .blog-back-button span{
+    color: #fff;
+    font-family: "Courier New", Courier, monospace;
+}
+
 
 /* =========================================================
    TIMELINE
