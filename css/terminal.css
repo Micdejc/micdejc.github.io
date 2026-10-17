@@ -179,6 +179,11 @@ body.terminal-mode .btn-secondary {
     border-color: #2563eb;
 }
 
+body.terminal-mode .blog-back-button {
+    background: #1d4ed8;
+    color: #fff;
+}
+
 
 /* =========================================================
    TIMELINE
