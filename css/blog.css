@@ -619,8 +619,11 @@
     margin-bottom: 30px;
     padding: 9px 14px;
 
-    background: var(--surface);
-    color: var(--primary);
+    /*background: var(--surface);
+    color: var(--primary);*/
+
+    background: var(--primary);
+    color: white;
 
     border: 1px solid var(--border);
     border-radius: 9px;
@@ -639,9 +642,10 @@
 }
 
 .blog-back-button:hover {
-    background: var(--surface-alt);
+    /*background: var(--surface-alt);
     color: var(--primary);
-    border-color: var(--primary);
+    border-color: var(--primary);*/
+    background: var(--primary-dark);
 
     transform: translateX(-2px);
 }
