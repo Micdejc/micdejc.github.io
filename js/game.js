@@ -1253,6 +1253,8 @@ function handleCorrectGuess() {
     dlnGame.target = null;
     dlnGame.awaitingNextLevel = true;
 
+
+    updateDlnStageBadge();
     updateDlnStats();
     saveDlnState();
 
@@ -1341,6 +1343,7 @@ function continueDlnGame() {
 
     clearDlnFeedback();
 
+    updateDlnStageBadge();
 
     startDlnLevel();
 
@@ -1536,7 +1539,8 @@ function restartDlnGame() {
     dlnGame.awaitingNextLevel =
         false;
 
-
+    updateDlnStageBadge();
+   
     startDlnLevel();
 
 }
@@ -1590,6 +1594,42 @@ function saveDlnRecord() {
     );
 
 }
+
+/* =========================================================
+   STAGE BADGE
+   ========================================================= */
+
+function updateDlnStageBadge() {
+    const badge = document.getElementById("dlnStageBadge");
+
+    if (!badge) return;
+
+    const stage = DLN.getStage(dlnGame.level);
+
+    const stageDetails = {
+        beginner: {
+            emoji: "🥉",
+            label: "Beginner"
+        },
+        intermediate: {
+            emoji: "🥈",
+            label: "Intermediate"
+        },
+        advanced: {
+            emoji: "🥇",
+            label: "Advanced"
+        }
+    };
+
+    const details = stageDetails[stage];
+
+    if (!details) return;
+
+    badge.className = `dln-stage-badge ${stage}`;
+    badge.textContent = `${details.emoji} ${details.label}`;
+    badge.setAttribute("aria-label", `${details.label} stage`);
+}
+
 
 
 /* =========================================================
@@ -1845,7 +1885,8 @@ function loadDlnState() {
         dlnGame.awaitingNextLevel =
             state.awaitingNextLevel;
 
-
+        updateDlnStageBadge();
+       
         return true;
 
     } catch (error) {
