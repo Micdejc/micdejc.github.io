@@ -1191,41 +1191,53 @@ function handleCorrectGuess() {
         return;
     }
 
+   
    /*
-     * Announce a change in difficulty stage.
-     */
-    const nextLevel = level + 1;
-    const nextStage = DLN.getStage(nextLevel);
+    * Announce the beginner stage after Level 1,
+    * then announce subsequent difficulty-stage transitions.
+    */
+   const nextLevel = level + 1;
+   const nextStage = DLN.getStage(nextLevel);
+   
+   const stageMessages = {
+       beginner: {
+           title: "🥉 Beginner Stage Unlocked!",
+           message: "Your journey starts here! Work your way up to the next stage!"
+       },
+       intermediate: {
+           title: "🥈 Intermediate Stage Unlocked!",
+           message: "You're making great progress! The challenges are getting harder. Stay focused!"
+       },
+       advanced: {
+           title: "🥇 Advanced Stage Unlocked!",
+           message: "Impressive achievement! You've reached the most challenging stage. Bring your A-game!"
+       }
+   };
+   
+   // Show the Beginner message after completing Level 1.
+   // Otherwise, show a message only when entering a new stage.
+   const shouldAnnounceBeginner = level === 1;
+   const isStageTransition = nextStage !== stage && nextStage !== null;
+   
+   if (shouldAnnounceBeginner || isStageTransition) {
+   
+       const announcedStage = shouldAnnounceBeginner
+           ? "beginner"
+           : nextStage;
+   
+       const transition = stageMessages[announcedStage];
+   
+       if (transition) {
+           setTimeout(() => {
+               showDlnFeedback(
+                   `${transition.title} ${transition.message}`,
+                   "record"
+               );
+           }, 850);
+       }
+   }
 
-    if (nextStage !== stage && nextStage !== null) {
-
-        const stageMessages = {
-            beginner: {
-                 title: "🥉 Beginner Stage Unlocked!",
-                 message: "Your journey starts here! Work your way up to the next stage!"
-             },
-            intermediate: {
-                title: "🥈 Intermediate Stage Unlocked!",
-                message: "You're making great progress! The challenges are getting harder. Stay focused!"
-            },
-            advanced: {
-                title: "🥇 Advanced Stage Unlocked!",
-                message: "Impressive achievement! You've reached the most challenging stage. Bring your A-game!"
-            }
-        };
-
-        const transition = stageMessages[nextStage];
-
-        if (transition) {
-            setTimeout(() => {
-                showDlnFeedback(
-                    `${transition.title} ${transition.message}`,
-                    "record"
-                );
-            }, 850);
-        }
-    }
-
+   
     /*
      * Update the record.
      */
