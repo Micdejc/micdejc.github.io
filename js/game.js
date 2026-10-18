@@ -15,6 +15,9 @@ const DLN_STORAGE_KEY =
 const DLN_RECORD_KEY =
     "dlnRecord";
 
+/* Default number of attempts */
+const DEFAULT_ATTEMPTS =
+     7;
 
 /*
  * Persistent record.
@@ -44,7 +47,7 @@ const dlnGame = {
         1,
 
     attempts:
-        5,
+        DEFAULT_ATTEMPTS,
 
     superHits:
         0,
@@ -93,39 +96,110 @@ const dlnGame = {
  *
  *   MAX_LEVEL = MAX_NUMBER / STEP
  *   BONUS     = STEP / 2
- *   HINT_COST = STEP + 1
+ *   HINT_COST = STEP
  *
  * With the current values:
  *
  *   MAX_LEVEL = 100
  *   BONUS     = 5
- *   HINT_COST = 11
+ *   HINT_COST = 10
  */
 const DLN = {
-
-    MAX_NUMBER:
-        1000,
-
-    STEP:
-        10,
-
-    DEFAULT_ATTEMPTS:
-        5,
+    MAX_NUMBER: 1000,
+    STEP: 10,
+   
+    // Initial attempts from the external variable
+    DEFAULT_ATTEMPTS: DEFAULT_ATTEMPTS,
+   
+    // Single source of truth for rewards
+    get BONUS() {
+        return this.STEP / 2;
+    },
 
     get MAX_LEVEL() {
         return this.MAX_NUMBER / this.STEP;
     },
 
-    get BONUS() {
-        return this.STEP / 2;
+    // Difficulty stages
+    LEVEL_STAGES: {
+        BEGINNER: {
+            MIN: 1,
+            MAX: 20,
+            NAME: "beginner"
+        },
+        INTERMEDIATE: {
+            MIN: 21,
+            MAX: 60,
+            NAME: "intermediate"
+        },
+        ADVANCED: {
+            MIN: 61,
+            MAX: 100,
+            NAME: "advanced"
+        }
     },
 
+    getStage(level) {
+        for (const stage of Object.values(this.LEVEL_STAGES)) {
+            if (level >= stage.MIN && level <= stage.MAX) {
+                return stage.NAME;
+            }
+        }
+
+        return null;
+    },
+
+    // Attempt economy
     get HINT_COST() {
-        return this.STEP + 1;
+        return this.BONUS * 2;
+    },
+
+    get SUPER_HIT_MILESTONE() {
+        return this.BONUS;
+    },
+
+    get LEVEL_MILESTONE() {
+        return this.BONUS * 2;
+    },
+
+    // Points for completing a level
+    getLevelReward() {
+        return this.BONUS;
+    },
+
+    // Super Hit points by difficulty
+    getSuperHitReward(level) {
+        const stage = this.getStage(level);
+
+        if (stage === "beginner") return this.BONUS;
+        if (stage === "intermediate") return this.BONUS * 2;
+        if (stage === "advanced") return this.BONUS * 3;
+
+        return 0;
+    },
+
+    // Bonus points for every Super Hit milestone
+    getSuperHitMilestoneReward(level) {
+        const stage = this.getStage(level);
+
+        if (stage === "beginner") return this.BONUS * 2;
+        if (stage === "intermediate") return this.BONUS * 3;
+        if (stage === "advanced") return this.BONUS * 5;
+
+        return 0;
+    },
+
+    // Extra attempts for completed-level milestones
+    getLevelMilestoneAttempts(level) {
+        const stage = this.getStage(level);
+
+        if (stage === "beginner") return this.BONUS;
+        if (stage === "intermediate") return this.BONUS;
+        if (stage === "advanced") return this.BONUS * 2;
+
+        return 0;
     }
-
 };
-
 
 /* =========================================================
    DOM
@@ -1002,28 +1076,16 @@ function validateDlnGuess() {
 
 function handleCorrectGuess() {
 
-    /*
-     * Store the level that has just been completed.
-     *
-     * This is important because dlnGame.level is
-     * incremented later.
-     */
-    const level =
-        dlnGame.level;
+    // Store the level just completed.
+    const level = dlnGame.level;
+    const stage = DLN.getStage(level);
 
+    // Reward for completing any level.
+    dlnGame.attempts += DLN.getLevelReward();
 
     /*
-     * Every correct guess = +5 attempts.
-     */
-    dlnGame.attempts +=
-        DLN.BONUS;
-
-
-    /*
-     * Genuine Super Hit =
-     *
-     *   1. Correct on the first attempt.
-     *   2. No hint was used on this level.
+     * Genuine Super Hit:
+     * Correct on the first attempt, without using a hint.
      */
     if (
         dlnGame.firstAttempt &&
@@ -1032,176 +1094,112 @@ function handleCorrectGuess() {
 
         dlnGame.superHits++;
 
-
-        /*
-         * Additional +5 attempts.
-         *
-         * Combined with the normal +5 above,
-         * a genuine Super Hit gives +10 attempts total.
-         */
-        dlnGame.attempts +=
-            DLN.BONUS;
-
+        // Extra attempts for a Super Hit.
+        const superHitReward = DLN.getSuperHitReward(level);
+        dlnGame.attempts += superHitReward;
 
         showDlnFeedback(
-            `🔥 Super hit! You found the number ${dlnGame.target} on your first attempt! +${DLN.BONUS * 2} attempts.`,
+            `🔥 Super Hit! You found the number ${dlnGame.target} on your first attempt! +${DLN.getLevelReward() + superHitReward} attempts.`,
             "success"
         );
 
-
         /*
-         * Every 5 genuine Super Hits =
-         * +10 additional attempts.
+         * Award bonus attempts at each Super Hit milestone.
          */
         if (
-            dlnGame.superHits %
-            DLN.BONUS === 0
+            dlnGame.superHits % DLN.SUPER_HIT_MILESTONE === 0
         ) {
+
+            const milestoneReward =
+                DLN.getSuperHitMilestoneReward(level);
+
+            dlnGame.attempts += milestoneReward;
 
             setTimeout(() => {
 
-                dlnGame.attempts +=
-                    DLN.BONUS * 2;
-
-
                 showDlnFeedback(
-                    `⭐ Bonus Unlocked! ${dlnGame.superHits} super hits achieved! +${DLN.BONUS * 2} extra attempts.`,
+                    `⭐ Bonus unlocked! ${dlnGame.superHits} Super Hits achieved! +${milestoneReward} extra attempts.`,
                     "record"
                 );
 
-
                 updateDlnStats();
-
                 saveDlnState();
 
             }, 450);
-
         }
 
     } else {
 
-        /*
-         * This includes:
-         *
-         *   - Correct guess after one or more attempts.
-         *   - Correct guess after using a hint.
-         *
-         * In both cases the player receives the
-         * normal +5 reward, but not the Super Hit bonus.
-         */
         showDlnFeedback(
-            `🎉 Well done! You found the number ${dlnGame.target}! +${DLN.BONUS} attempts.`,
+            `🎉 Well done! You found the number ${dlnGame.target}! +${DLN.getLevelReward()} attempts.`,
             "success"
         );
-
     }
 
+    /*
+     * Level milestone:
+     * Award extra attempts every LEVEL_MILESTONE levels.
+     */
+    if (level % DLN.LEVEL_MILESTONE === 0) {
+
+        const milestoneAttempts =
+            DLN.getLevelMilestoneAttempts(level);
+
+        dlnGame.attempts += milestoneAttempts;
+
+        setTimeout(() => {
+
+            showDlnFeedback(
+                `🎁 ${stage} milestone! Level ${level} completed! +${milestoneAttempts} extra attempts.`,
+                "record"
+            );
+
+            updateDlnStats();
+            saveDlnState();
+
+        }, 450);
+    }
 
     /*
-     * Score is calculated using the level that
-     * has just been completed.
+     * Preserve your original score calculation.
      */
     dlnGame.score =
         ((level - 1) * DLN.STEP) +
         (dlnGame.superHits * DLN.BONUS);
 
-
     /*
-     * Final level
+     * Final level.
      */
-    if (
-        level >= DLN.MAX_LEVEL
-    ) {
+    if (level >= DLN.MAX_LEVEL) {
 
-        dlnGame.level =
-            DLN.MAX_LEVEL;
+        dlnGame.level = DLN.MAX_LEVEL;
+        dlnGame.target = null;
 
-        dlnGame.target =
-            null;
+        if (dlnGame.score > window.dlnRecord) {
+
+            window.dlnRecord = dlnGame.score;
+
+            saveDlnRecord();
+            updateDlnRecord();
+        }
 
         updateDlnStats();
-
         saveDlnState();
 
-
-        setTimeout(
-            completeEntireDlnGame,
-            650
-        );
+        setTimeout(completeEntireDlnGame, 650);
 
         return;
     }
 
-
     /*
-     * Every 10 levels = +5 attempts.
-     *
-     * We deliberately use "level" here rather
-     * than dlnGame.level because "level" represents
-     * the level that was just completed.
+     * Update the record.
      */
-    if (
-        level % DLN.STEP === 0
-    ) {
+    if (dlnGame.score > window.dlnRecord) {
 
-        setTimeout(() => {
-
-            dlnGame.attempts +=
-                DLN.BONUS;
-
-
-            showDlnFeedback(
-                `🎁 Milestone bonus! Level ${level} passed! +${DLN.BONUS} extra attempts.`,
-                "record"
-            );
-
-
-            updateDlnStats();
-
-            saveDlnState();
-
-        }, 450);
-
-    }
-
-
-    /*
-     * Move to the next level logically, but do not
-     * generate its target yet.
-     *
-     * This lets the saved state represent exactly
-     * what is shown on the level-complete screen.
-     */
-    dlnGame.level++;
-
-    dlnGame.target =
-        null;
-
-    dlnGame.awaitingNextLevel =
-        true;
-
-
-    updateDlnStats();
-
-    saveDlnState();
-
-
-    /*
-     * Record
-     */
-
-    if (
-        dlnGame.score >
-        window.dlnRecord
-    ) {
-
-        window.dlnRecord =
-            dlnGame.score;
+        window.dlnRecord = dlnGame.score;
 
         saveDlnRecord();
-
         updateDlnRecord();
-
 
         setTimeout(() => {
 
@@ -1211,16 +1209,19 @@ function handleCorrectGuess() {
             );
 
         }, 450);
-
     }
 
+    /*
+     * Prepare the next level.
+     */
+    dlnGame.level++;
+    dlnGame.target = null;
+    dlnGame.awaitingNextLevel = true;
 
-    setTimeout(() => {
+    updateDlnStats();
+    saveDlnState();
 
-        showDlnLevelComplete();
-
-    }, 750);
-
+    setTimeout(showDlnLevelComplete, 750);
 }
 
 
