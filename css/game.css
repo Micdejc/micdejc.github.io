@@ -601,7 +601,7 @@ body.game-modal-open {
 /* Medal emoji */
 .dln-stage-emoji {
     display: inline-block;
-    font-size: 1.5rem;
+    font-size: 1.0rem;
     line-height: 1;
     flex-shrink: 0;
 }
