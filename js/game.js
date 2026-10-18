@@ -194,8 +194,8 @@ const DLN = {
         const stage = this.getStage(level);
 
         if (stage === "beginner") return this.BONUS;
-        if (stage === "intermediate") return this.BONUS;
-        if (stage === "advanced") return this.BONUS * 2;
+        if (stage === "intermediate") return this.BONUS * 2;
+        if (stage === "advanced") return this.BONUS * 3;
 
         return 0;
     }
