@@ -276,6 +276,9 @@ export function initDLN() {
         feedback:
             document.getElementById("dlnFeedback"),
 
+        numberLabel:
+            document.getElementById("dlnNumberLabel"),
+
         numberInput:
             document.getElementById("dlnNumber"),
 
@@ -813,6 +816,10 @@ function startDlnLevel(
 
     dlnElements.instruction.textContent =
         `Guess a number between 1 and ${maximum}.`;
+
+   
+    dlnElements.numberLabel.textContent =
+         `Your guess (1–${maximum})`;
 
 
     dlnElements.attempts.textContent =
