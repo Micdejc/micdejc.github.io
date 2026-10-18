@@ -125,17 +125,17 @@ const DLN = {
         BEGINNER: {
             MIN: 1,
             MAX: 20,
-            NAME: "beginner"
+            NAME: "Beginner"
         },
         INTERMEDIATE: {
             MIN: 21,
             MAX: 60,
-            NAME: "intermediate"
+            NAME: "Intermediate"
         },
         ADVANCED: {
             MIN: 61,
             MAX: 100,
-            NAME: "advanced"
+            NAME: "Advanced"
         }
     },
 
@@ -171,9 +171,9 @@ const DLN = {
     getSuperHitReward(level) {
         const stage = this.getStage(level);
 
-        if (stage === "beginner") return this.BONUS;
-        if (stage === "intermediate") return this.BONUS * 2;
-        if (stage === "advanced") return this.BONUS * 3;
+        if (stage === "Beginner") return this.BONUS;
+        if (stage === "Intermediate") return this.BONUS * 2;
+        if (stage === "Advanced") return this.BONUS * 3;
 
         return 0;
     },
@@ -182,9 +182,9 @@ const DLN = {
     getSuperHitMilestoneReward(level) {
         const stage = this.getStage(level);
 
-        if (stage === "beginner") return this.BONUS * 2;
-        if (stage === "intermediate") return this.BONUS * 3;
-        if (stage === "advanced") return this.BONUS * 5;
+        if (stage === "Beginner") return this.BONUS * 2;
+        if (stage === "Intermediate") return this.BONUS * 3;
+        if (stage === "Advanced") return this.BONUS * 5;
 
         return 0;
     },
@@ -193,9 +193,9 @@ const DLN = {
     getLevelMilestoneAttempts(level) {
         const stage = this.getStage(level);
 
-        if (stage === "beginner") return this.BONUS;
-        if (stage === "intermediate") return this.BONUS * 2;
-        if (stage === "advanced") return this.BONUS * 3;
+        if (stage === "Beginner") return this.BONUS;
+        if (stage === "Intermediate") return this.BONUS * 2;
+        if (stage === "Advanced") return this.BONUS * 3;
 
         return 0;
     }
@@ -1207,15 +1207,15 @@ function handleCorrectGuess() {
    const nextStage = DLN.getStage(nextLevel);
    
    const stageMessages = {
-       beginner: {
+       Beginner: {
            title: "🥉 Beginner Stage Unlocked!",
            message: "Your journey starts here! Work your way up to the next stage!"
        },
-       intermediate: {
+       Intermediate: {
            title: "🥈 Intermediate Stage Unlocked!",
            message: "You're making great progress! The challenges are getting harder. Stay focused!"
        },
-       advanced: {
+       Advanced: {
            title: "🥇 Advanced Stage Unlocked!",
            message: "Impressive achievement! You've reached the most challenging stage. Bring your A-game!"
        }
@@ -1627,15 +1627,15 @@ function updateDlnStageBadge() {
     const stage = DLN.getStage(dlnGame.level);
 
     const stageDetails = {
-        beginner: {
+        Beginner: {
             emoji: "🥉",
             label: "Beginner"
         },
-        intermediate: {
+        Intermediate: {
             emoji: "🥈",
             label: "Intermediate"
         },
-        advanced: {
+        Advanced: {
             emoji: "🥇",
             label: "Advanced"
         }
