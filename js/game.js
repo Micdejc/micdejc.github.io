@@ -1191,6 +1191,41 @@ function handleCorrectGuess() {
         return;
     }
 
+   /*
+     * Announce a change in difficulty stage.
+     */
+    const nextLevel = level + 1;
+    const nextStage = DLN.getStage(nextLevel);
+
+    if (nextStage !== stage && nextStage !== null) {
+
+        const stageMessages = {
+            beginner: {
+                 title: "🥉 Beginner Stage Unlocked!",
+                 message: "Your journey starts here! Work your way up to the next stage!"
+             },
+            intermediate: {
+                title: "🥈 Intermediate Stage Unlocked!",
+                message: "You're making great progress! The challenges are getting harder. Stay focused!"
+            },
+            advanced: {
+                title: "🥇 Advanced Stage Unlocked!",
+                message: "Impressive achievement! You've reached the most challenging stage. Bring your A-game!"
+            }
+        };
+
+        const transition = stageMessages[nextStage];
+
+        if (transition) {
+            setTimeout(() => {
+                showDlnFeedback(
+                    `${transition.title} ${transition.message}`,
+                    "record"
+                );
+            }, 850);
+        }
+    }
+
     /*
      * Update the record.
      */
