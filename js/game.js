@@ -1229,7 +1229,7 @@ function handleCorrectGuess() {
    if (shouldAnnounceBeginner || isStageTransition) {
    
        const announcedStage = shouldAnnounceBeginner
-           ? "beginner"
+           ? "Beginner"
            : nextStage;
    
        const transition = stageMessages[announcedStage];
