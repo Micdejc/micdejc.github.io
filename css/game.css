@@ -582,12 +582,21 @@ body.game-modal-open {
 
 
 /* Level number and stage badge */
-.dln-level-heading {
+.dln-level-label {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 8px;
     flex-wrap: wrap;
+}
+
+.dln-level-label > span:first-child {
+    font-weight: 700;
+    letter-spacing: 0.08em;
+}
+
+.dln-level-badge {
+    font-size: 0.72rem;
 }
 
 .dln-stage-badge {
