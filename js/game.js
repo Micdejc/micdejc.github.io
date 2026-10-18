@@ -17,7 +17,7 @@ const DLN_RECORD_KEY =
 
 /* Default number of attempts */
 const DEFAULT_ATTEMPTS =
-     7;
+     5;
 
 /*
  * Persistent record.
