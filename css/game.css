@@ -607,6 +607,15 @@ body.game-modal-open {
     white-space: nowrap;
 }
 
+.dln-stage-emoji {
+    font-size: 1.4rem;
+    line-height: 1;
+}
+
+.dln-stage-label {
+    font-size: 0.75rem;
+}
+
 /* Beginner: bronze */
 .dln-stage-badge.beginner {
     color: #8B4513;
