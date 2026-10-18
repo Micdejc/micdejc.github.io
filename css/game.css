@@ -608,12 +608,14 @@ body.game-modal-open {
 }
 
 .dln-stage-emoji {
-    font-size: 1.4rem;
+    font-size: 1.5rem;
     line-height: 1;
+    flex-shrink: 0;
 }
 
 .dln-stage-label {
     font-size: 0.75rem;
+    font-weight: 700;
 }
 
 /* Beginner: bronze */
