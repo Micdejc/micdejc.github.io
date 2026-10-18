@@ -1599,6 +1599,7 @@ function saveDlnRecord() {
    STAGE BADGE
    ========================================================= */
 
+
 function updateDlnStageBadge() {
     const badge = document.getElementById("dlnStageBadge");
 
@@ -1625,10 +1626,27 @@ function updateDlnStageBadge() {
 
     if (!details) return;
 
+    // Apply the appropriate stage styling.
     badge.className = `dln-stage-badge ${stage}`;
-    badge.textContent = `${details.emoji} ${details.label}`;
+
+    // Render the medal and label separately for independent styling.
+    badge.replaceChildren();
+
+    const emoji = document.createElement("span");
+    emoji.className = "dln-stage-emoji";
+    emoji.textContent = details.emoji;
+    emoji.setAttribute("aria-hidden", "true");
+
+    const label = document.createElement("span");
+    label.className = "dln-stage-label";
+    label.textContent = details.label;
+
+    badge.append(emoji, label);
+
+    // Keep the badge accessible to screen readers.
     badge.setAttribute("aria-label", `${details.label} stage`);
 }
+
 
 
 
