@@ -580,6 +580,51 @@ body.game-modal-open {
     font-weight: 600;
 }
 
+
+/* Level number and stage badge */
+.dln-level-heading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.dln-stage-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 9px;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    line-height: 1.4;
+    white-space: nowrap;
+}
+
+/* Beginner: bronze */
+.dln-stage-badge.beginner {
+    color: #8B4513;
+    background: #FBE9D7;
+    border-color: #D6A06B;
+}
+
+/* Intermediate: silver */
+.dln-stage-badge.intermediate {
+    color: #4B5563;
+    background: #E9EDF2;
+    border-color: #AEB8C5;
+}
+
+/* Advanced: gold */
+.dln-stage-badge.advanced {
+    color: #795500;
+    background: #FFF2BF;
+    border-color: #E0BD4F;
+}
+
+
 /*
 .dln-stats {
     display: grid;
