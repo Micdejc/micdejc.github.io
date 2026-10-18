@@ -1624,18 +1624,18 @@ function updateDlnStageBadge() {
 
     if (!badge) return;
 
-    const stage = DLN.getStage(dlnGame.level);
+    const stage = DLN.getStage(dlnGame.level).toLowerCase();
 
     const stageDetails = {
-        Beginner: {
+        beginner: {
             emoji: "🥉",
             label: "Beginner"
         },
-        Intermediate: {
+        intermediate: {
             emoji: "🥈",
             label: "Intermediate"
         },
-        Advanced: {
+        advanced: {
             emoji: "🥇",
             label: "Advanced"
         }
