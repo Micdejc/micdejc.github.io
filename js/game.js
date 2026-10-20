@@ -1040,19 +1040,37 @@ function validateDlnGuess() {
         guess < dlnGame.target
     ) {
 
+        /*
         showDlnFeedback(
             close
                 ? "↑ Too low, but you're close!"
                 : "↑ Too low. Keep going!",
             "low"
         );
+        */
+
+        showDlnFeedback(
+            close
+                ? `↑ ${guess} is too low, but you're close!`
+                : `↑ ${guess} is too low. Keep going!`,
+            "low"
+        );
 
     } else {
 
+        /*
         showDlnFeedback(
             close
                 ? "↓ Too high, but you're close!"
                 : "↓ Too high. Keep going!",
+            "high"
+        );
+        */
+       
+        showDlnFeedback(
+            close
+                ? `↓ ${guess} is too high, but you're close!`
+                : `↓ ${guess} is too high. Keep going!`,
             "high"
         );
 
