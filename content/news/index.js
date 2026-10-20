@@ -200,21 +200,30 @@ function updateFilterButtons() {
 
 function initialiseNewsControls() {
     const search = document.getElementById("newsSearch");
+    const clearSearch = document.getElementById("clearNewsSearch");
     const previous = document.getElementById("newsPrevious");
     const next = document.getElementById("newsNext");
 
     // Prevent duplicate listeners if loadNews() is called again.
     if (search && search.dataset.initialised !== "true") {
-        search.dataset.initialised = "true";
+    search.dataset.initialised = "true";
 
-        search.addEventListener("input", () => {
-            searchQuery = search.value
-                .trim()
-                .toLowerCase();
+    const updateSearch = () => {
+        searchQuery = search.value.trim().toLowerCase();
+        clearSearch.hidden = search.value.length === 0;
+        currentPage = 1;
+        renderNews();
+    };
 
-            currentPage = 1;
-            renderNews();
-        });
+    search.addEventListener("input", updateSearch);
+
+    clearSearch?.addEventListener("click", () => {
+        search.value = "";
+        updateSearch();
+        search.focus();
+    });
+
+    updateSearch();
     }
 
     if (previous && previous.dataset.initialised !== "true") {
