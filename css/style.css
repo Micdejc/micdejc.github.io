@@ -1217,6 +1217,7 @@
             justify-content: space-between;
             gap: 16px;
             margin-top: 26px;
+            padding-bottom: 26px;
         }
         
         .news-page-btn {
