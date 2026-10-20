@@ -224,12 +224,31 @@ function initialiseTheme() {
 
     const body = document.body;
     const label = toggle.querySelector("span");
+
+    const validThemes = ["light", "dark-light", "dark"];
     const savedTheme = localStorage.getItem("theme");
 
-    // Restore the saved theme.
-    body.classList.toggle("dark", savedTheme === "dark");
+    let currentTheme = validThemes.includes(savedTheme)
+        ? savedTheme
+        : "light";
 
-    // SVG icons.
+    // Apply the selected theme and remove conflicting classes.
+    function applyTheme(theme) {
+
+        currentTheme = theme;
+
+        body.classList.remove("dark", "dark-light");
+
+        if (theme === "dark") {
+            body.classList.add("dark");
+        } else if (theme === "dark-light") {
+            body.classList.add("dark-light");
+        }
+
+        localStorage.setItem("theme", theme);
+    }
+
+    // DARK ICON
     const darkIcon = `
         <svg
             class="utility-icon"
@@ -246,6 +265,7 @@ function initialiseTheme() {
         </svg>
     `;
 
+    // LIGHT ICON
     const lightIcon = `
         <svg
             class="utility-icon"
@@ -270,12 +290,31 @@ function initialiseTheme() {
         </svg>
     `;
 
+    // DARK-LIGHT ICON: half-filled circle
+    const darkLightIcon = `
+        <svg
+            class="utility-icon"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+        >
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="M12 3v18"></path>
+            <path d="M12 3a9 9 0 0 0 0 18Z"
+                fill="currentColor"
+                stroke="none"></path>
+            <path d="M12 3v18"></path>
+        </svg>
+    `;
+
     // Update the icon, label and accessibility attributes.
     function updateThemeToggle() {
 
-        const isDark = body.classList.contains("dark");
-
-        // Replace the icon while preserving the existing span.
         let icon = toggle.querySelector("svg.utility-icon");
 
         if (!icon) {
@@ -284,38 +323,62 @@ function initialiseTheme() {
             toggle.insertBefore(icon, label || null);
         }
 
-        icon.outerHTML = isDark ? lightIcon : darkIcon;
+        // Display the icon for the NEXT theme in the cycle.
+        const nextTheme = {
+            light: "dark-light",
+            "dark-light": "dark",
+            dark: "light"
+        }[currentTheme];
+
+        const icons = {
+            light: darkLightIcon,
+            "dark-light": darkIcon,
+            dark: lightIcon
+        };
+
+        icon.outerHTML = icons[nextTheme];
+
+        const labels = {
+            light: "Dark-Light mode",
+            "dark-light": "Dark mode",
+            dark: "Light mode"
+        };
+
+        const descriptions = {
+            light: "Switch to dark-light mode",
+            "dark-light": "Switch to dark mode",
+            dark: "Switch to light mode"
+        };
 
         if (label) {
-            label.textContent = isDark ? "Light mode" : "Dark mode";
+            label.textContent = labels[nextTheme];
         }
 
-        const description = isDark
-            ? "Switch to light mode"
-            : "Switch to dark mode";
-
-        toggle.title = description;
-        toggle.setAttribute("aria-label", description);
-        toggle.setAttribute("aria-pressed", String(isDark));
+        toggle.title = descriptions[currentTheme];
+        toggle.setAttribute("aria-label", descriptions[currentTheme]);
+        toggle.setAttribute(
+            "aria-pressed",
+            String(currentTheme !== "light")
+        );
     }
 
-    // Initialise the button on page load.
+    // Restore the saved theme on page load.
+    applyTheme(currentTheme);
     updateThemeToggle();
 
+    // Cycle through Light → Dark-Light → Dark → Light.
     toggle.addEventListener("click", () => {
 
-        // Theme switching is disabled while Terminal Mode is active.
+        // Keep theme switching disabled in Terminal Mode.
         if (body.classList.contains("terminal-mode")) return;
 
-        body.classList.toggle("dark");
+        const nextTheme = {
+            light: "dark-light",
+            "dark-light": "dark",
+            dark: "light"
+        }[currentTheme];
 
-        const isDark = body.classList.contains("dark");
-
-        localStorage.setItem(
-            "theme",
-            isDark ? "dark" : "light"
-        );
-
+        applyTheme(nextTheme);
         updateThemeToggle();
     });
 
