@@ -5,7 +5,10 @@ const newsFiles = [
     "uwe-engineering-showcase.html",
     "ukci-2025.html",
     "4th-cardiff-nlp-workshop.html",
-    "msc-uwe-graduation.html"
+    "msc-uwe-graduation.html",
+    "uwe-associate-lecturer.html",
+    "ukcsc-assessor.html",
+    "cambridge-press-reviewer.html"
 ];
 
 const NEWS_PER_PAGE = 5;
