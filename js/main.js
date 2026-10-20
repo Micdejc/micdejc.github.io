@@ -605,6 +605,7 @@ function initialiseCalendar() {
    TERMINAL MODE
 ========================================================= */
 
+
 function initialiseTerminalMode() {
 
     const toggle = document.getElementById("terminalToggle");
@@ -614,7 +615,16 @@ function initialiseTerminalMode() {
     const body = document.body;
     const label = toggle.querySelector("span");
 
-    // Terminal Enter: command prompt icon.
+    const THEME_KEY = "theme";
+    const TERMINAL_KEY = "terminalMode";
+    const PREVIOUS_THEME_KEY = "terminalPreviousTheme";
+
+    const VALID_THEMES = ["light", "dark-light", "dark"];
+
+    // ==========================================
+    // TERMINAL ENTER ICON
+    // ==========================================
+
     const terminalEnterIcon = `
         <svg
             class="utility-icon"
@@ -632,7 +642,10 @@ function initialiseTerminalMode() {
         </svg>
     `;
 
-    // Terminal Exit: arrow leaving a terminal window.
+    // ==========================================
+    // TERMINAL EXIT ICON
+    // ==========================================
+
     const terminalExitIcon = `
         <svg
             class="utility-icon"
@@ -651,12 +664,203 @@ function initialiseTerminalMode() {
         </svg>
     `;
 
+    // ==========================================
+    // THEME ICONS
+    // ==========================================
+
+    // Dark Mode: crescent moon.
+    const darkIcon = `
+        <svg
+            class="utility-icon"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+        >
+            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+        </svg>
+    `;
+
+    // Light Mode: sun.
+    const lightIcon = `
+        <svg
+            class="utility-icon"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+        >
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2"></path>
+            <path d="M12 20v2"></path>
+            <path d="m4.93 4.93 1.41 1.41"></path>
+            <path d="m17.66 17.66 1.41 1.41"></path>
+            <path d="M2 12h2"></path>
+            <path d="M20 12h2"></path>
+            <path d="m6.34 17.66-1.41 1.41"></path>
+            <path d="m19.07 4.93-1.41 1.41"></path>
+        </svg>
+    `;
+
+    // Dark-Light Mode: half-filled circle.
+    const darkLightIcon = `
+        <svg
+            class="utility-icon"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+        >
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="M12 3a9 9 0 0 0 0 18Z"
+                fill="currentColor"
+                stroke="none"></path>
+            <path d="M12 3v18"></path>
+        </svg>
+    `;
+
+    // ==========================================
+    // THEME HELPERS
+    // ==========================================
+
+    function getCurrentTheme() {
+
+        if (body.classList.contains("dark")) {
+            return "dark";
+        }
+
+        if (body.classList.contains("dark-light")) {
+            return "dark-light";
+        }
+
+        const savedTheme = localStorage.getItem(THEME_KEY);
+
+        return VALID_THEMES.includes(savedTheme)
+            ? savedTheme
+            : "light";
+    }
+
+    function applyTheme(theme) {
+
+        if (!VALID_THEMES.includes(theme)) {
+            theme = "light";
+        }
+
+        body.classList.remove("dark", "dark-light");
+
+        if (theme === "dark") {
+            body.classList.add("dark");
+        } else if (theme === "dark-light") {
+            body.classList.add("dark-light");
+        }
+
+        localStorage.setItem(THEME_KEY, theme);
+
+        updateThemeToggle();
+    }
+
+    // ==========================================
+    // UPDATE THEME TOGGLE
+    // ==========================================
+
+    function updateThemeToggle() {
+
+        const themeToggle =
+            document.getElementById("themeToggle");
+
+        if (!themeToggle) return;
+
+        const themeLabel = themeToggle.querySelector("span");
+        const currentTheme = getCurrentTheme();
+
+        // The button displays the next available theme.
+        const nextTheme = {
+            light: "dark-light",
+            "dark-light": "dark",
+            dark: "light"
+        }[currentTheme];
+
+        const icons = {
+            light: darkLightIcon,
+            "dark-light": darkIcon,
+            dark: lightIcon
+        };
+
+        const labels = {
+            light: "Dark-Light mode",
+            "dark-light": "Dark mode",
+            dark: "Light mode"
+        };
+
+        const descriptions = {
+            light: "Switch to Dark-Light mode",
+            "dark-light": "Switch to Dark mode",
+            dark: "Switch to Light mode"
+        };
+
+        const icon = themeToggle.querySelector(
+            "svg.utility-icon"
+        );
+
+        if (icon) {
+            icon.outerHTML = icons[currentTheme];
+        } else {
+            themeToggle.insertAdjacentHTML(
+                "afterbegin",
+                icons[currentTheme]
+            );
+        }
+
+        if (themeLabel) {
+            themeLabel.textContent = labels[currentTheme];
+        }
+
+        themeToggle.title = descriptions[currentTheme];
+        themeToggle.setAttribute(
+            "aria-label",
+            descriptions[currentTheme]
+        );
+
+        // Terminal Mode locks the theme to Dark Mode.
+        const isTerminal =
+            body.classList.contains("terminal-mode");
+
+        themeToggle.setAttribute(
+            "aria-pressed",
+            String(currentTheme !== "light")
+        );
+
+        themeToggle.setAttribute(
+            "aria-disabled",
+            String(isTerminal)
+        );
+    }
+
+    // ==========================================
+    // UPDATE TERMINAL TOGGLE
+    // ==========================================
+
     function updateTerminalToggle() {
 
-        const isTerminal = body.classList.contains("terminal-mode");
+        const isTerminal =
+            body.classList.contains("terminal-mode");
 
-        // Update the SVG icon while preserving the existing label.
-        const icon = toggle.querySelector("svg.utility-icon");
+        const icon = toggle.querySelector(
+            "svg.utility-icon"
+        );
+
         const iconHTML = isTerminal
             ? terminalExitIcon
             : terminalEnterIcon;
@@ -685,143 +889,94 @@ function initialiseTerminalMode() {
         toggle.setAttribute("aria-pressed", String(isTerminal));
     }
 
-    // SVG theme icons.
-    const darkIcon = `
-        <svg
-            class="utility-icon"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-        >
-            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
-        </svg>
-    `;
+    // ==========================================
+    // RESTORE SAVED TERMINAL MODE
+    // ==========================================
 
-    const lightIcon = `
-        <svg
-            class="utility-icon"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-        >
-            <circle cx="12" cy="12" r="4"></circle>
-            <path d="M12 2v2"></path>
-            <path d="M12 20v2"></path>
-            <path d="m4.93 4.93 1.41 1.41"></path>
-            <path d="m17.66 17.66 1.41 1.41"></path>
-            <path d="M2 12h2"></path>
-            <path d="M20 12h2"></path>
-            <path d="m6.34 17.66-1.41 1.41"></path>
-            <path d="m19.07 4.93-1.41 1.41"></path>
-        </svg>
-    `;
-
-    function updateThemeToggle() {
-
-        const themeToggle = document.getElementById("themeToggle");
-
-        if (!themeToggle) return;
-
-        const themeLabel = themeToggle.querySelector("span");
-        const isDark = body.classList.contains("dark");
-
-        // Show the action available to the user.
-        const iconHTML = isDark ? lightIcon : darkIcon;
-        const icon = themeToggle.querySelector("svg.utility-icon");
-
-        if (icon) {
-            icon.outerHTML = iconHTML;
-        } else {
-            themeToggle.insertAdjacentHTML(
-                "afterbegin",
-                iconHTML
-            );
-        }
-
-        if (themeLabel) {
-            themeLabel.textContent = isDark
-                ? "Light mode"
-                : "Dark mode";
-        }
-
-        const description = isDark
-            ? "Switch to light mode"
-            : "Switch to dark mode";
-
-        themeToggle.title = description;
-        themeToggle.setAttribute("aria-label", description);
-        themeToggle.setAttribute("aria-pressed", String(isDark));
-    }
-
-    function setTheme(isDark) {
-
-        body.classList.toggle("dark", isDark);
-
-        localStorage.setItem(
-            "theme",
-            isDark ? "dark" : "light"
-        );
-
-        updateThemeToggle();
-    }
-
-    // Restore the saved Terminal Mode preference.
-    const savedMode = localStorage.getItem("terminalMode");
+    const savedMode = localStorage.getItem(TERMINAL_KEY);
 
     if (savedMode === "on") {
 
         body.classList.add("terminal-mode");
 
-        // Terminal Mode requires Dark Mode.
-        setTheme(true);
+        // Terminal Mode always uses Dark Mode.
+        body.classList.remove("dark-light");
+        body.classList.add("dark");
 
-        // Start the animation after hero.html has loaded.
+        localStorage.setItem(THEME_KEY, "dark");
+
+        // Start the console animation after hero.html loads.
         setTimeout(startConsoleAnimation, 150);
+
+    } else {
+
+        // Restore the saved three-state theme.
+        const savedTheme = localStorage.getItem(THEME_KEY);
+
+        if (VALID_THEMES.includes(savedTheme)) {
+            applyTheme(savedTheme);
+        } else {
+            applyTheme("light");
+        }
     }
 
     updateTerminalToggle();
     updateThemeToggle();
+
+    // ==========================================
+    // TERMINAL MODE CLICK HANDLER
+    // ==========================================
 
     toggle.addEventListener("click", () => {
 
         const enableTerminal =
             !body.classList.contains("terminal-mode");
 
-        body.classList.toggle("terminal-mode", enableTerminal);
-
-        localStorage.setItem(
-            "terminalMode",
-            enableTerminal ? "on" : "off"
-        );
-
         if (enableTerminal) {
 
+            // Save the user's current theme before locking Dark Mode.
+            const currentTheme = getCurrentTheme();
+
+            localStorage.setItem(
+                PREVIOUS_THEME_KEY,
+                currentTheme
+            );
+
+            body.classList.add("terminal-mode");
+
+            localStorage.setItem(TERMINAL_KEY, "on");
+
             // Terminal Mode requires Dark Mode.
-            setTheme(true);
+            applyTheme("dark");
 
             // Start the console animation.
             setTimeout(startConsoleAnimation, 150);
 
         } else {
 
-            // Return to Light Mode.
-            setTheme(false);
+            body.classList.remove("terminal-mode");
+
+            localStorage.setItem(TERMINAL_KEY, "off");
+
+            // Restore the theme selected before entering Terminal Mode.
+            const previousTheme =
+                localStorage.getItem(PREVIOUS_THEME_KEY);
+
+            const restoredTheme =
+                VALID_THEMES.includes(previousTheme)
+                    ? previousTheme
+                    : "light";
+
+            applyTheme(restoredTheme);
+
+            localStorage.removeItem(PREVIOUS_THEME_KEY);
 
             // Stop the animation and restore the original text.
             stopConsoleAnimation();
         }
 
         updateTerminalToggle();
+        updateThemeToggle();
     });
 
 }
