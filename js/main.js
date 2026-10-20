@@ -551,11 +551,61 @@ function initialiseTerminalMode() {
     const body = document.body;
     const label = toggle.querySelector("span");
 
+    // Terminal Enter: command prompt icon.
+    const terminalEnterIcon = `
+        <svg
+            class="utility-icon"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+        >
+            <path d="m4 17 6-5-6-5"></path>
+            <path d="M12 19h8"></path>
+        </svg>
+    `;
+
+    // Terminal Exit: arrow leaving a terminal window.
+    const terminalExitIcon = `
+        <svg
+            class="utility-icon"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+        >
+            <path d="m10 17-6-5 6-5"></path>
+            <path d="M4 12h11"></path>
+            <path d="M15 5h5v14h-5"></path>
+        </svg>
+    `;
+
     function updateTerminalToggle() {
+
         const isTerminal = body.classList.contains("terminal-mode");
 
-        // Update the icon without removing the existing span.
-        toggle.firstChild.textContent = isTerminal ? "$_ " : ">_ ";
+        // Update the SVG icon while preserving the existing label.
+        const icon = toggle.querySelector("svg.utility-icon");
+        const iconHTML = isTerminal
+            ? terminalExitIcon
+            : terminalEnterIcon;
+
+        if (icon) {
+            icon.outerHTML = iconHTML;
+        } else {
+            toggle.insertAdjacentHTML(
+                "afterbegin",
+                iconHTML
+            );
+        }
 
         if (label) {
             label.textContent = isTerminal
@@ -563,21 +613,58 @@ function initialiseTerminalMode() {
                 : "Terminal mode";
         }
 
-        toggle.title = isTerminal
+        const description = isTerminal
             ? "Exit Linux terminal mode"
             : "Enable Linux terminal mode";
 
-        toggle.setAttribute(
-            "aria-label",
-            isTerminal
-                ? "Exit Linux terminal mode"
-                : "Enable Linux terminal mode"
-        );
-
+        toggle.title = description;
+        toggle.setAttribute("aria-label", description);
         toggle.setAttribute("aria-pressed", String(isTerminal));
     }
 
+    // SVG theme icons.
+    const darkIcon = `
+        <svg
+            class="utility-icon"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+        >
+            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+        </svg>
+    `;
+
+    const lightIcon = `
+        <svg
+            class="utility-icon"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+        >
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2"></path>
+            <path d="M12 20v2"></path>
+            <path d="m4.93 4.93 1.41 1.41"></path>
+            <path d="m17.66 17.66 1.41 1.41"></path>
+            <path d="M2 12h2"></path>
+            <path d="M20 12h2"></path>
+            <path d="m6.34 17.66-1.41 1.41"></path>
+            <path d="m19.07 4.93-1.41 1.41"></path>
+        </svg>
+    `;
+
     function updateThemeToggle() {
+
         const themeToggle = document.getElementById("themeToggle");
 
         if (!themeToggle) return;
@@ -585,26 +672,36 @@ function initialiseTerminalMode() {
         const themeLabel = themeToggle.querySelector("span");
         const isDark = body.classList.contains("dark");
 
-        // Preserve the existing HTML structure.
-        themeToggle.firstChild.textContent = isDark ? "☀ " : "☾ ";
+        // Show the action available to the user.
+        const iconHTML = isDark ? lightIcon : darkIcon;
+        const icon = themeToggle.querySelector("svg.utility-icon");
 
-        if (themeLabel) {
-            themeLabel.textContent = isDark ? "Light mode" : "Dark mode";
+        if (icon) {
+            icon.outerHTML = iconHTML;
+        } else {
+            themeToggle.insertAdjacentHTML(
+                "afterbegin",
+                iconHTML
+            );
         }
 
-        themeToggle.title = isDark
+        if (themeLabel) {
+            themeLabel.textContent = isDark
+                ? "Light mode"
+                : "Dark mode";
+        }
+
+        const description = isDark
             ? "Switch to light mode"
             : "Switch to dark mode";
 
-        themeToggle.setAttribute(
-            "aria-label",
-            isDark ? "Switch to light mode" : "Switch to dark mode"
-        );
-
+        themeToggle.title = description;
+        themeToggle.setAttribute("aria-label", description);
         themeToggle.setAttribute("aria-pressed", String(isDark));
     }
 
     function setTheme(isDark) {
+
         body.classList.toggle("dark", isDark);
 
         localStorage.setItem(
@@ -619,7 +716,10 @@ function initialiseTerminalMode() {
     const savedMode = localStorage.getItem("terminalMode");
 
     if (savedMode === "on") {
+
         body.classList.add("terminal-mode");
+
+        // Terminal Mode requires Dark Mode.
         setTheme(true);
 
         // Start the animation after hero.html has loaded.
@@ -630,6 +730,7 @@ function initialiseTerminalMode() {
     updateThemeToggle();
 
     toggle.addEventListener("click", () => {
+
         const enableTerminal =
             !body.classList.contains("terminal-mode");
 
@@ -641,11 +742,15 @@ function initialiseTerminalMode() {
         );
 
         if (enableTerminal) {
+
             // Terminal Mode requires Dark Mode.
             setTheme(true);
 
+            // Start the console animation.
             setTimeout(startConsoleAnimation, 150);
+
         } else {
+
             // Return to Light Mode.
             setTheme(false);
 
