@@ -20,22 +20,104 @@
         </div>
 
 
+        <!-- Featured latest story -->
         <div
-            class="news-grid"
-            id="news-list"
+            id="news-featured"
+            class="news-featured"
+            aria-live="polite"
         ></div>
 
+        <!-- Archive and search -->
+        <div class="news-archive">
 
-        <div class="news-pagination">
+            <div class="news-archive-header">
+                <div>
+                    <h3>Explore the archive</h3>
+                    <p>Browse the latest updates and previous activities.</p>
+                </div>
 
-            <button
-                id="loadMoreNews"
-                class="load-more-btn"
+                <label class="news-search">
+                    <span class="visually-hidden">Search news</span>
+                    <svg
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                    >
+                        <circle cx="11" cy="11" r="7"></circle>
+                        <path d="m16 16 5 5"></path>
+                    </svg>
+
+                    <input
+                        type="search"
+                        id="newsSearch"
+                        placeholder="Search news..."
+                        autocomplete="off"
+                    >
+                </label>
+            </div>
+
+            <!-- Generated dynamically from available categories -->
+            <div
+                id="news-filters"
+                class="news-filters"
+                aria-label="Filter news by category"
+            ></div>
+
+            <p
+                id="news-results-count"
+                class="news-results-count"
+                aria-live="polite"
+            ></p>
+
+            <!-- Archive entries -->
+            <div
+                id="news-list"
+                class="news-list"
+                aria-live="polite"
+            ></div>
+
+            <p
+                id="news-empty"
+                class="news-empty"
+                hidden
             >
-                Load more news →
-            </button>
+                No news items match your search.
+                Try a different keyword or category.
+            </p>
+
+            <!-- Pagination -->
+            <nav
+                id="news-pagination"
+                class="news-pagination"
+                aria-label="News archive pagination"
+                hidden
+            >
+                <button
+                    type="button"
+                    id="newsPrevious"
+                    class="news-page-btn"
+                >
+                    <span aria-hidden="true">←</span>
+                    Previous
+                </button>
+
+                <span
+                    id="newsPageStatus"
+                    class="news-page-status"
+                    aria-live="polite"
+                ></span>
+
+                <button
+                    type="button"
+                    id="newsNext"
+                    class="news-page-btn"
+                >
+                    Next
+                    <span aria-hidden="true">→</span>
+                </button>
+            </nav>
 
         </div>
+
 
     </div>
 
