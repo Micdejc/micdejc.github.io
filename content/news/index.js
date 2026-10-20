@@ -19,7 +19,6 @@ let searchQuery = "";
 let currentPage = 1;
 
 const CATEGORY_LABELS = {
-    research: "Research",
     publication: "Publications",
     conference: "Conferences",
     recognition: "Recognition",
