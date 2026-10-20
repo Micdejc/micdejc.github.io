@@ -7,7 +7,7 @@ const newsFiles = [
     "4th-cardiff-nlp-workshop.html"
 ];
 
-const NEWS_PER_PAGE = 5;
+const NEWS_PER_PAGE = 1;
 
 let allNews = [];
 let activeCategory = "all";
