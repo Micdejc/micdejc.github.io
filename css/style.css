@@ -1457,6 +1457,38 @@
             border-color: var(--primary);
             box-shadow: 0 18px 40px rgba(15, 23, 42, 0.11);
         }
+
+        /* ================= FEATURES LOAD MORE ================= */
+
+        .feature-card.hidden-feature {
+            display: none;
+        }
+        
+        .features-pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 35px;
+        }
+        
+        .load-more-btn {
+            padding: 11px 20px;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            background: var(--surface);
+            color: var(--text);
+            font-family: inherit;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .load-more-btn:hover {
+            color: var(--primary);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
         
         
         /* ---------------------------------------------------------
