@@ -22,7 +22,8 @@ const CATEGORY_LABELS = {
     award: "Awards",
     speaking: "Speaking",
     teaching: "Teaching",
-    professional: "Professional activities"
+    professional: "Professional activities",
+    academia: "Academic activities"
 };
 
 
