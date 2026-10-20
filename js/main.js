@@ -229,14 +229,62 @@ function initialiseTheme() {
     // Restore the saved theme.
     body.classList.toggle("dark", savedTheme === "dark");
 
+    // SVG icons.
+    const darkIcon = `
+        <svg
+            class="utility-icon"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+        >
+            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+        </svg>
+    `;
+
+    const lightIcon = `
+        <svg
+            class="utility-icon"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+        >
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2"></path>
+            <path d="M12 20v2"></path>
+            <path d="m4.93 4.93 1.41 1.41"></path>
+            <path d="m17.66 17.66 1.41 1.41"></path>
+            <path d="M2 12h2"></path>
+            <path d="M20 12h2"></path>
+            <path d="m6.34 17.66-1.41 1.41"></path>
+            <path d="m19.07 4.93-1.41 1.41"></path>
+        </svg>
+    `;
+
     // Update the icon, label and accessibility attributes.
     function updateThemeToggle() {
+
         const isDark = body.classList.contains("dark");
 
-        // Update the icon while preserving the existing span.
-        if (toggle.firstChild) {
-            toggle.firstChild.textContent = isDark ? "☀ " : "☾ ";
+        // Replace the icon while preserving the existing span.
+        let icon = toggle.querySelector("svg.utility-icon");
+
+        if (!icon) {
+            icon = document.createElement("span");
+            icon.className = "theme-icon";
+            toggle.insertBefore(icon, label || null);
         }
+
+        icon.outerHTML = isDark ? lightIcon : darkIcon;
 
         if (label) {
             label.textContent = isDark ? "Light mode" : "Dark mode";
@@ -255,6 +303,7 @@ function initialiseTheme() {
     updateThemeToggle();
 
     toggle.addEventListener("click", () => {
+
         // Theme switching is disabled while Terminal Mode is active.
         if (body.classList.contains("terminal-mode")) return;
 
