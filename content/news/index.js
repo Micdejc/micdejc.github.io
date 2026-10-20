@@ -4,7 +4,8 @@ const newsFiles = [
     "ieee-csr-2026.html",
     "uwe-engineering-showcase.html",
     "ukci-2025.html",
-    "4th-cardiff-nlp-workshop.html"
+    "4th-cardiff-nlp-workshop.html",
+    "msc-uwe-graduation.html"
 ];
 
 const NEWS_PER_PAGE = 5;
