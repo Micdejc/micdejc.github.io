@@ -367,6 +367,15 @@
         .utility-menu > button > span {
             flex: 1;
         }
+
+        .utility-icon {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            flex: 0 0 18px;
+            vertical-align: middle;
+            color: inherit;
+        }
         
         /* Keyboard accessibility */
         .utility-menu-toggle:focus-visible {
