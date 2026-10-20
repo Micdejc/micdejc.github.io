@@ -1276,6 +1276,12 @@
             outline-offset: 4px;
         }
 
+        #news .news-search input:focus,
+        #news .news-search input:focus-visible {
+            outline: none;
+            box-shadow: none;
+        }
+
         .news-search-clear {
             display: inline-flex;
             align-items: center;
