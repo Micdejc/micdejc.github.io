@@ -13,7 +13,9 @@ const newsFiles = [
     "ai-900.html",
     "sc-900.html",
     "uk-afhea.html",
-    "uk-ascp.html"
+    "uk-ascp.html",
+    "aires2027-pcm.html",
+    "thinkers360-thought-leaders.html"
 ];
 
 const NEWS_PER_PAGE = 5;
