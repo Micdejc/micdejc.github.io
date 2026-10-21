@@ -168,6 +168,16 @@
             font-size: 1rem;
         }
 
+        /* Reusable SVG arrows */
+        .arrow-icon {
+            width: 18px;
+            height: 18px;
+            display: inline-block;
+            flex-shrink: 0;
+            vertical-align: middle;
+            color: currentColor;
+        }
+
 
         /* ========================================
            Dropdown Navigation
