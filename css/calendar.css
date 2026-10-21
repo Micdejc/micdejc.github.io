@@ -354,6 +354,100 @@
 }
 
 
+
+/* =========================================================
+   CALENDAR SEARCH
+========================================================= */
+
+.calendar-search {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin: 18px 0 8px;
+    width: 100%;
+}
+
+.calendar-search-icon {
+    position: absolute;
+    left: 14px;
+    width: 18px;
+    height: 18px;
+    color: var(--text-secondary, #888);
+    pointer-events: none;
+}
+
+.calendar-search-input {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    padding: 12px 42px;
+    border: 1px solid var(--border-color, #dedede);
+    border-radius: 10px;
+    background: var(--card-background, transparent);
+    color: inherit;
+    font: inherit;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s ease,
+                box-shadow 0.2s ease;
+}
+
+.calendar-search-input::placeholder {
+    color: var(--text-secondary, #888);
+    opacity: 0.8;
+}
+
+.calendar-search-input:focus,
+.calendar-search-input:focus-visible {
+    outline: none;
+    border-color: var(--accent-color, #888);
+    box-shadow: 0 0 0 3px
+        color-mix(in srgb, var(--accent-color, #888) 12%, transparent);
+}
+
+.calendar-search-input::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.calendar-search-clear {
+    position: absolute;
+    right: 9px;
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border: 0;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--text-secondary, #888);
+    font-size: 23px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.calendar-search-clear:hover {
+    background: var(--hover-background, #eee);
+    color: inherit;
+}
+
+.calendar-search-clear[hidden],
+.calendar-search-status[hidden] {
+    display: none;
+}
+
+.calendar-search-status {
+    margin: 0 0 12px;
+    color: var(--text-secondary, #888);
+    font-size: 12px;
+}
+
+.calendar-event[hidden] {
+    display: none !important;
+}
+
+
 /* =========================================================
    CALENDAR GREETING
 ========================================================= */
