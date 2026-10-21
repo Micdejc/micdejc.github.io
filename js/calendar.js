@@ -2324,7 +2324,6 @@ function displayCalendarEvents() {
     const container = document.getElementById("calendarEvents");
     const searchInput = document.getElementById("calendarSearch");
     const clearButton = document.getElementById("calendarSearchClear");
-    const status = document.getElementById("calendarSearchStatus");
 
     if (!container) return;
 
@@ -2365,17 +2364,6 @@ function displayCalendarEvents() {
             </p>
         `;
         return;
-    }
-
-    if (status) {
-        if (query) {
-            status.textContent =
-                `${matchingEvents.length} of ${upcomingEvents.length} events found`;
-            status.hidden = false;
-        } else {
-            status.textContent = "";
-            status.hidden = true;
-        }
     }
 
     if (matchingEvents.length === 0) {
