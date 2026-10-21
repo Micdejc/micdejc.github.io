@@ -319,7 +319,10 @@ import {
                                         class="feature-contribution-arrow"
                                         aria-hidden="true"
                                     >
-                                        →
+                                        <!-- ↗ -->
+                                        <svg class="arrow-icon">
+                                            <use href="#icon-arrow-up-right"></use>
+                                        </svg>
                                     </span>
 
                                 </a>
