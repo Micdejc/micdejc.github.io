@@ -2359,21 +2359,21 @@ function displayCalendarEvents() {
         container.innerHTML = `
             <p class="${query ? "calendar-search-empty" : "calendar-empty"}">
                 ${query
-                    ? "No matching upcoming events."
-                    : "No more upcoming events."}
+                    ? "No events match your search."
+                    : "No more events to display."}
             </p>
         `;
         return;
     }
 
-    if (matchingEvents.length === 0) {
+    /* if (matchingEvents.length === 0) {
         container.innerHTML = `
             <p class="calendar-search-empty">
                 No events found. Try another search.
             </p>
         `;
         return;
-    }
+    }*/
 
     container.innerHTML = matchingEvents.map(event => {
         const eventDate = new Date(event.start);
