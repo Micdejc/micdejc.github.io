@@ -170,12 +170,23 @@
 
         /* Reusable SVG arrows */
         .arrow-icon {
-            width: 18px;
-            height: 18px;
+            width: 15px;
+            height: 15px;
             display: inline-block;
             flex-shrink: 0;
             vertical-align: middle;
             color: currentColor;
+            transition: transform 0.2s ease;
+        }
+        
+        /* Right arrow → moves slightly right */
+        a:hover .arrow-icon:has(use[href="#icon-arrow-right"]) {
+            transform: translateX(3px);
+        }
+        
+        /* Diagonal arrow ↗ moves slightly up and right */
+        a:hover .arrow-icon:has(use[href="#icon-arrow-up-right"]) {
+            transform: translate(2px, -2px);
         }
 
 
