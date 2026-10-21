@@ -2034,6 +2034,54 @@ function matchesCalendarSearch(event, query) {
 }
 
 
+/* =========================================================
+   STATUS SEARCH HELPER
+========================================================= */
+
+function updateCalendarSearchStatus(query) {
+    const status = document.getElementById("calendarSearchStatus");
+    const clearButton = document.getElementById("calendarSearchClear");
+
+    if (clearButton) {
+        clearButton.hidden = !query;
+    }
+
+    if (!status) return;
+
+    if (!query) {
+        status.textContent = "";
+        status.hidden = true;
+        return;
+    }
+
+    const nextEvents = getNextEvents();
+    const nextEventIds = new Set(nextEvents.map(event => event.id));
+
+    const matchingNextEvents = nextEvents.filter(event =>
+        matchesCalendarSearch(event, query)
+    );
+
+    const upcomingEvents = calendarEvents.filter(event =>
+        dateOnly(event.start) >= dateOnly(new Date()) &&
+        !nextEventIds.has(event.id)
+    );
+
+    const matchingUpcomingEvents = upcomingEvents.filter(event =>
+        matchesCalendarSearch(event, query)
+    );
+
+    const totalFound =
+        matchingNextEvents.length + matchingUpcomingEvents.length;
+
+    status.textContent = totalFound === 1
+        ? "1 event found"
+        : `${totalFound} events found`;
+
+    status.hidden = false;
+}
+
+
+
 
 /* =========================================================
    NEXT EVENT DISPLAY
@@ -2054,6 +2102,9 @@ function displayNextEvent(step = 0) {
     const query = (searchInput?.value || "")
         .trim()
         .toLocaleLowerCase("en-GB");
+   
+    //update the search status
+    updateCalendarSearchStatus(query);
     
     // Get the next events and filter them using the search query.
     const allNextEvents = getNextEvents();
@@ -2293,6 +2344,9 @@ function displayCalendarEvents() {
     const query = (searchInput?.value || "")
         .trim()
         .toLocaleLowerCase("en-GB");
+    
+    //update the search status
+    updateCalendarSearchStatus(query);
     
     const matchingEvents = upcomingEvents.filter(event =>
         matchesCalendarSearch(event, query)
