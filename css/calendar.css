@@ -377,16 +377,18 @@
     width: 38px;
     height: 38px;
     padding: 0;
-    border: none;
     border-radius: 50%;
-    background: transparent;
+    /* border: none;
+    background: transparent; */
+    background: var(--hover-bg, rgba(128, 128, 128, 0.12));
     color: inherit;
     cursor: pointer;
     transition: background-color 0.2s ease;
 }
 
 .calendar-search-toggle:hover {
-    background: var(--hover-bg, rgba(128, 128, 128, 0.12));
+    /*background: var(--hover-bg, rgba(128, 128, 128, 0.12));*/
+    background: rgba(59, 130, 246, 0.05);
 }
 
 .calendar-search-toggle:focus-visible,
@@ -421,7 +423,7 @@
 
 .calendar-search.is-open .calendar-search-field {
     /* width: 240px; */
-    width: 90%;
+    width: 100%;
     visibility: visible;
     opacity: 1;
     pointer-events: auto;
