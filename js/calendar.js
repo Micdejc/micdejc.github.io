@@ -2452,93 +2452,6 @@ function displayCalendarEvents() {
 }
 
 
-/* =========================================================
-   COLLAPSIBLE CALENDAR SEARCH
-========================================================= */
-
-const calendarSearchContainer = document.getElementById(
-    "calendarSearchContainer"
-);
-const calendarSearchToggle = document.getElementById(
-    "calendarSearchToggle"
-);
-const calendarSearchInput = document.getElementById(
-    "calendarSearch"
-);
-const calendarSearchClear = document.getElementById(
-    "calendarSearchClear"
-);
-
-function openCalendarSearch() {
-    if (!calendarSearchContainer || !calendarSearchInput) return;
-
-    calendarSearchContainer.classList.add("is-open");
-
-    if (calendarSearchToggle) {
-        calendarSearchToggle.setAttribute("aria-expanded", "true");
-        calendarSearchToggle.setAttribute("aria-label", "Close event search");
-    }
-
-    calendarSearchInput.tabIndex = 0;
-    calendarSearchInput.focus();
-}
-
-function closeCalendarSearch() {
-    if (!calendarSearchContainer || !calendarSearchInput) return;
-
-    calendarSearchInput.value = "";
-
-    calendarSearchContainer.classList.remove("is-open");
-
-    if (calendarSearchToggle) {
-        calendarSearchToggle.setAttribute("aria-expanded", "false");
-        calendarSearchToggle.setAttribute("aria-label", "Open event search");
-    }
-
-    calendarSearchInput.tabIndex = -1;
-
-    // Reset both event sections and the result status.
-    displayNextEvent();
-    displayCalendarEvents();
-    updateCalendarSearchStatus("");
-
-    if (calendarSearchToggle) {
-        calendarSearchToggle.focus();
-    }
-}
-
-// Toggle the search field open or closed.
-if (calendarSearchToggle) {
-    calendarSearchToggle.addEventListener("click", () => {
-        const isOpen = calendarSearchContainer?.classList.contains("is-open");
-
-        if (isOpen) {
-            closeCalendarSearch();
-        } else {
-            openCalendarSearch();
-        }
-    });
-}
-
-// Filter both event sections as the user types.
-if (calendarSearchInput) {
-    calendarSearchInput.addEventListener("input", () => {
-        const query = calendarSearchInput.value
-            .trim()
-            .toLocaleLowerCase("en-GB");
-
-        displayNextEvent();
-        displayCalendarEvents();
-        updateCalendarSearchStatus(query);
-    });
-}
-
-// Clear the query and collapse the search field.
-if (calendarSearchClear) {
-    calendarSearchClear.addEventListener("click", closeCalendarSearch);
-}
-
-
 
 /* =========================================================
    TODAY DISPLAY
@@ -2747,7 +2660,7 @@ function getCachedCalendarEvents() {
    CALENDAR SEARCH
    ========================================================= */
 
-
+/*
 function initialiseCalendarSearch() {
     const searchInput = document.getElementById("calendarSearch");
     const clearButton = document.getElementById("calendarSearchClear");
@@ -2768,6 +2681,66 @@ function initialiseCalendarSearch() {
         displayCalendarEvents();
         searchInput.focus();
     });
+}
+*/
+
+function initialiseCalendarSearch() {
+    const searchContainer = document.getElementById("calendarSearchContainer");
+    const searchInput = document.getElementById("calendarSearch");
+    const searchToggle = document.getElementById("calendarSearchToggle");
+    const clearButton = document.getElementById("calendarSearchClear");
+
+    if (!searchContainer || !searchInput || !searchToggle || !clearButton) {
+        return;
+    }
+
+    if (searchInput.dataset.searchInitialised === "true") return;
+
+    searchInput.dataset.searchInitialised = "true";
+
+    function getSearchQuery() {
+        return searchInput.value.trim().toLocaleLowerCase("en-GB");
+    }
+
+    function refreshSearchResults() {
+        const query = getSearchQuery();
+
+        displayNextEvent();
+        displayCalendarEvents();
+        updateCalendarSearchStatus(query);
+    }
+
+    function openSearch() {
+        searchContainer.classList.add("is-open");
+        searchToggle.setAttribute("aria-expanded", "true");
+        searchToggle.setAttribute("aria-label", "Close event search");
+        searchInput.tabIndex = 0;
+        searchInput.focus();
+    }
+
+    function closeSearch() {
+        searchInput.value = "";
+
+        searchContainer.classList.remove("is-open");
+        searchToggle.setAttribute("aria-expanded", "false");
+        searchToggle.setAttribute("aria-label", "Open event search");
+        searchInput.tabIndex = -1;
+
+        refreshSearchResults();
+        searchToggle.focus();
+    }
+
+    searchToggle.addEventListener("click", () => {
+        if (searchContainer.classList.contains("is-open")) {
+            closeSearch();
+        } else {
+            openSearch();
+        }
+    });
+
+    searchInput.addEventListener("input", refreshSearchResults);
+
+    clearButton.addEventListener("click", closeSearch);
 }
 
 
