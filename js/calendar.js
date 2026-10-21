@@ -2003,6 +2003,38 @@ const categoryLabels = {
     "Hindu observances": "Hindu"
 };
 
+
+/* =========================================================
+   SEARCH HELPER
+========================================================= */
+function matchesCalendarSearch(event, query) {
+    if (!query) return true;
+
+    const eventDate = new Date(event.start);
+
+    const searchableText = [
+        event.title,
+        event.category,
+        categoryLabels[event.category],
+        getHolidayDescription(event),
+        formatEventDate(event.start),
+        eventDate.getFullYear(),
+        eventDate.toLocaleDateString("en-GB", {
+            month: "long"
+        }),
+        eventDate.toLocaleDateString("en-GB", {
+            month: "short"
+        })
+    ]
+        .filter(Boolean)
+        .join(" ")
+        .toLocaleLowerCase("en-GB");
+
+    return searchableText.includes(query);
+}
+
+
+
 /* =========================================================
    NEXT EVENT DISPLAY
 ========================================================= */
@@ -2015,7 +2047,25 @@ function displayNextEvent(step = 0) {
     if (!container) return;
 
     // Get all upcoming events in chronological order.
-    const nextEvents = getNextEvents();
+    //const nextEvents = getNextEvents();
+
+    const searchInput = document.getElementById("calendarSearch");
+
+    const query = (searchInput?.value || "")
+        .trim()
+        .toLocaleLowerCase("en-GB");
+    
+    // Get the next events and filter them using the search query.
+    const allNextEvents = getNextEvents();
+    
+    const nextEvents = allNextEvents.filter(event =>
+        matchesCalendarSearch(event, query)
+    );
+    
+    // Reset the selected event when searching.
+    if (query && step === 0) {
+        nextEventIndex = 0;
+    }
 
     if (!nextEvents || nextEvents.length === 0) {
         container.innerHTML = `
@@ -2239,6 +2289,16 @@ function displayCalendarEvents() {
         !nextEventIds.has(event.id)
     );
 
+    const searchInput = document.getElementById("calendarSearch");
+
+    const query = (searchInput?.value || "")
+        .trim()
+        .toLocaleLowerCase("en-GB");
+    
+    const matchingEvents = upcomingEvents.filter(event =>
+        matchesCalendarSearch(event, query)
+    );
+
     // Preserve the current search when the list is re-rendered.
     const query = (searchInput?.value || "")
         .trim()
@@ -2248,18 +2308,14 @@ function displayCalendarEvents() {
         clearButton.hidden = query.length === 0;
     }
 
-    if (upcomingEvents.length === 0) {
+    if (matchingEvents.length === 0) {
         container.innerHTML = `
-            <p class="calendar-empty">
-                No more upcoming events.
+            <p class="${query ? "calendar-search-empty" : "calendar-empty"}">
+                ${query
+                    ? "No matching upcoming events."
+                    : "No more upcoming events."}
             </p>
         `;
-
-        if (status) {
-            status.hidden = true;
-            status.textContent = "";
-        }
-
         return;
     }
 
@@ -2591,16 +2647,18 @@ function initialiseCalendarSearch() {
     const clearButton = document.getElementById("calendarSearchClear");
 
     if (!searchInput || !clearButton) return;
-
-    // Prevent duplicate listeners if initialisation runs again.
     if (searchInput.dataset.searchInitialised === "true") return;
 
     searchInput.dataset.searchInitialised = "true";
 
-    searchInput.addEventListener("input", displayCalendarEvents);
+    searchInput.addEventListener("input", () => {
+        displayNextEvent();
+        displayCalendarEvents();
+    });
 
     clearButton.addEventListener("click", () => {
         searchInput.value = "";
+        displayNextEvent();
         displayCalendarEvents();
         searchInput.focus();
     });
