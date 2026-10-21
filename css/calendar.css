@@ -354,98 +354,151 @@
 }
 
 
-
 /* =========================================================
    CALENDAR SEARCH
 ========================================================= */
 
+/* Calendar search container */
 .calendar-search {
-    position: relative;
     display: flex;
     align-items: center;
-    margin: 18px 0 8px;
-    width: 100%;
+    justify-content: flex-end;
+    gap: 8px;
+    min-width: 0;
 }
 
+/* Search toggle button */
+.calendar-search-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 38px;
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.calendar-search-toggle:hover {
+    background: var(--hover-bg, rgba(128, 128, 128, 0.12));
+}
+
+.calendar-search-toggle:focus-visible,
+.calendar-search-clear:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+}
+
+/* Search icon */
 .calendar-search-icon {
-    position: absolute;
-    left: 14px;
-    width: 18px;
-    height: 18px;
-    color: var(--text-secondary, #888);
-    pointer-events: none;
+    display: block;
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
 }
 
+/* Collapsible search field */
+.calendar-search-field {
+    display: flex;
+    align-items: center;
+    width: 0;
+    min-width: 0;
+    overflow: hidden;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transition:
+        width 0.3s ease,
+        opacity 0.2s ease,
+        visibility 0.3s ease;
+}
+
+.calendar-search.is-open .calendar-search-field {
+    width: 240px;
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Search input */
 .calendar-search-input {
+    box-sizing: border-box;
     width: 100%;
     min-width: 0;
-    box-sizing: border-box;
-    padding: 12px 42px;
-    border: 1px solid var(--border-color, #dedede);
-    border-radius: 10px;
-    background: var(--card-background, transparent);
+    padding: 9px 12px;
+    border: 1px solid var(--border-color, #ccc);
+    border-radius: 8px;
+    background: var(--input-bg, transparent);
     color: inherit;
     font: inherit;
-    font-size: 14px;
     outline: none;
-    transition: border-color 0.2s ease,
-                box-shadow 0.2s ease;
-}
-
-.calendar-search-input::placeholder {
-    color: var(--text-secondary, #888);
-    opacity: 0.8;
+    box-shadow: none;
+    appearance: none;
 }
 
 .calendar-search-input:focus,
 .calendar-search-input:focus-visible {
     outline: none;
-    border-color: var(--accent-color, #888);
-    box-shadow: 0 0 0 3px
-        color-mix(in srgb, var(--accent-color, #888) 12%, transparent);
+    box-shadow: none;
+    border-color: var(--border-color, #ccc);
 }
 
-.calendar-search-input::-webkit-search-cancel-button {
-    -webkit-appearance: none;
-    appearance: none;
-}
-
+/* Clear / close button */
 .calendar-search-clear {
-    position: absolute;
-    right: 9px;
-    display: grid;
-    place-items: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 28px;
     width: 28px;
     height: 28px;
+    margin-left: 4px;
     padding: 0;
-    border: 0;
-    border-radius: 6px;
+    border: none;
+    border-radius: 50%;
     background: transparent;
-    color: var(--text-secondary, #888);
-    font-size: 23px;
+    color: inherit;
+    font-size: 22px;
     line-height: 1;
     cursor: pointer;
 }
 
 .calendar-search-clear:hover {
-    background: var(--hover-background, #eee);
-    color: inherit;
+    background: var(--hover-bg, rgba(128, 128, 128, 0.12));
 }
 
+/* Respect the HTML hidden attribute */
 .calendar-search-clear[hidden],
 .calendar-search-status[hidden] {
-    display: none;
-}
-
-.calendar-search-status {
-    margin: 0 0 12px;
-    color: var(--text-secondary, #888);
-    font-size: 12px;
-}
-
-.calendar-event[hidden] {
     display: none !important;
 }
+
+/* Search result status */
+.calendar-search-status {
+    margin: 8px 0 12px;
+    font-size: 0.875rem;
+    color: var(--text-muted, #777);
+}
+
+/* Responsive layout */
+@media (max-width: 480px) {
+    .calendar-search.is-open .calendar-search-field {
+        width: min(190px, calc(100vw - 110px));
+    }
+}
+
+/* Accessibility: reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .calendar-search-field,
+    .calendar-search-toggle {
+        transition: none;
+    }
+}
+
 
 
 /* =========================================================
