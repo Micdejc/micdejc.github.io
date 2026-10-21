@@ -2288,9 +2288,8 @@ function displayCalendarEvents() {
         dateOnly(event.start) >= today &&
         !nextEventIds.has(event.id)
     );
-
-    const searchInput = document.getElementById("calendarSearch");
-
+    
+    // Preserve the current search when the list is re-rendered.
     const query = (searchInput?.value || "")
         .trim()
         .toLocaleLowerCase("en-GB");
@@ -2298,11 +2297,6 @@ function displayCalendarEvents() {
     const matchingEvents = upcomingEvents.filter(event =>
         matchesCalendarSearch(event, query)
     );
-
-    // Preserve the current search when the list is re-rendered.
-    const query = (searchInput?.value || "")
-        .trim()
-        .toLocaleLowerCase("en-GB");
 
     if (clearButton) {
         clearButton.hidden = query.length === 0;
