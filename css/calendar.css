@@ -491,7 +491,8 @@
 /* Responsive layout */
 @media (max-width: 480px) {
     .calendar-search.is-open .calendar-search-field {
-        width: min(190px, calc(100vw - 110px));
+        /* width: min(190px, calc(100vw - 110px)); */
+           width: 100%;
     }
 }
 
