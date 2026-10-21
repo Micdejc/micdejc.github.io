@@ -2218,8 +2218,12 @@ function displayNextEvent(step = 0) {
    EVENT LIST
 ========================================================= */
 
+
 function displayCalendarEvents() {
     const container = document.getElementById("calendarEvents");
+    const searchInput = document.getElementById("calendarSearch");
+    const clearButton = document.getElementById("calendarSearchClear");
+    const status = document.getElementById("calendarSearchStatus");
 
     if (!container) return;
 
@@ -2227,17 +2231,22 @@ function displayCalendarEvents() {
     const nextEvents = getNextEvents();
 
     const nextEventIds = new Set(
-        nextEvents.map(function(event) {
-            return event.id;
-        })
+        nextEvents.map(event => event.id)
     );
 
-    const upcomingEvents = calendarEvents.filter(function(event) {
-        return (
-            dateOnly(event.start) >= today &&
-            !nextEventIds.has(event.id)
-        );
-    });
+    const upcomingEvents = calendarEvents.filter(event =>
+        dateOnly(event.start) >= today &&
+        !nextEventIds.has(event.id)
+    );
+
+    // Preserve the current search when the list is re-rendered.
+    const query = (searchInput?.value || "")
+        .trim()
+        .toLocaleLowerCase("en-GB");
+
+    if (clearButton) {
+        clearButton.hidden = query.length === 0;
+    }
 
     if (upcomingEvents.length === 0) {
         container.innerHTML = `
@@ -2245,10 +2254,54 @@ function displayCalendarEvents() {
                 No more upcoming events.
             </p>
         `;
+
+        if (status) {
+            status.hidden = true;
+            status.textContent = "";
+        }
+
         return;
     }
 
-    container.innerHTML = upcomingEvents.map(function(event) {
+    const matchingEvents = upcomingEvents.filter(event => {
+        const searchableText = [
+            event.title,
+            event.category,
+            getHolidayDescription(event),
+            formatEventDate(event.start),
+            event.start.getFullYear(),
+            event.start.toLocaleDateString("en-GB", {
+                month: "long"
+            }),
+            event.start.toLocaleDateString("en-GB", {
+                month: "short"
+            })
+        ].join(" ").toLocaleLowerCase("en-GB");
+
+        return searchableText.includes(query);
+    });
+
+    if (status) {
+        if (query) {
+            status.textContent =
+                `${matchingEvents.length} of ${upcomingEvents.length} events found`;
+            status.hidden = false;
+        } else {
+            status.textContent = "";
+            status.hidden = true;
+        }
+    }
+
+    if (matchingEvents.length === 0) {
+        container.innerHTML = `
+            <p class="calendar-search-empty">
+                No events found. Try another search.
+            </p>
+        `;
+        return;
+    }
+
+    container.innerHTML = matchingEvents.map(event => {
         const eventDate = new Date(event.start);
 
         const month = eventDate.toLocaleDateString("en-GB", {
@@ -2265,14 +2318,12 @@ function displayCalendarEvents() {
             || event.category
             || "Observance";
 
-        //const category = event.category || "Observance";
-
         return `
             <article class="calendar-event">
 
                 <div class="calendar-event-date-tile"
                      aria-label="${formatEventDate(event.start)}">
-                
+
                     <svg class="calendar-event-icon"
                          xmlns="http://www.w3.org/2000/svg"
                          width="17"
@@ -2287,11 +2338,11 @@ function displayCalendarEvents() {
                         <rect x="3" y="5" width="18" height="16" rx="2"/>
                         <path d="M16 3v4M8 3v4M3 11h18"/>
                     </svg>
-                
+
                     <span class="calendar-event-month">${month}</span>
-                
+
                     <strong class="calendar-event-day">${day}</strong>
-                
+
                 </div>
 
                 <div class="calendar-event-content">
@@ -2325,6 +2376,7 @@ function displayCalendarEvents() {
         `;
     }).join("");
 }
+
 
 /* =========================================================
    TODAY DISPLAY
@@ -2530,12 +2582,43 @@ function getCachedCalendarEvents() {
 }
 
 /* =========================================================
+   CALENDAR SEARCH
+   ========================================================= */
+
+
+function initialiseCalendarSearch() {
+    const searchInput = document.getElementById("calendarSearch");
+    const clearButton = document.getElementById("calendarSearchClear");
+
+    if (!searchInput || !clearButton) return;
+
+    // Prevent duplicate listeners if initialisation runs again.
+    if (searchInput.dataset.searchInitialised === "true") return;
+
+    searchInput.dataset.searchInitialised = "true";
+
+    searchInput.addEventListener("input", displayCalendarEvents);
+
+    clearButton.addEventListener("click", () => {
+        searchInput.value = "";
+        displayCalendarEvents();
+        searchInput.focus();
+    });
+}
+
+
+
+/* =========================================================
    CALENDAR UI
    ========================================================= */
 
 function initialiseCalendar() {
     /*
-     * Load the data first.
+     * Load the search input first
+     */
+    initialiseCalendarSearch();
+    /*
+     * Then load the data.
      *
      * This prevents a missing calendarToggle element
      * from stopping the entire calendar system.
