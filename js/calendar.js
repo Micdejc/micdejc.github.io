@@ -2313,24 +2313,6 @@ function displayCalendarEvents() {
         return;
     }
 
-    const matchingEvents = upcomingEvents.filter(event => {
-        const searchableText = [
-            event.title,
-            event.category,
-            getHolidayDescription(event),
-            formatEventDate(event.start),
-            event.start.getFullYear(),
-            event.start.toLocaleDateString("en-GB", {
-                month: "long"
-            }),
-            event.start.toLocaleDateString("en-GB", {
-                month: "short"
-            })
-        ].join(" ").toLocaleLowerCase("en-GB");
-
-        return searchableText.includes(query);
-    });
-
     if (status) {
         if (query) {
             status.textContent =
