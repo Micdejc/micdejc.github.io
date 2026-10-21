@@ -8,7 +8,12 @@ const newsFiles = [
     "msc-uwe-graduation.html",
     "uwe-associate-lecturer.html",
     "ukcsc-assessor.html",
-    "cambridge-press-reviewer.html"
+    "cambridge-press-reviewer.html",
+    "ms-900.html",
+    "ai-900.html",
+    "sc-900.html",
+    "uk-afhea.html",
+    "uk-ascp.html"
 ];
 
 const NEWS_PER_PAGE = 5;
@@ -19,14 +24,15 @@ let searchQuery = "";
 let currentPage = 1;
 
 const CATEGORY_LABELS = {
-    publication: "Publications",
+    publication: "Research publications",
     conference: "Conferences",
     recognition: "Recognition",
     award: "Awards",
     speaking: "Speaking",
     teaching: "Teaching",
     professional: "Professional activities",
-    academia: "Academic activities"
+    academia: "Academic activities",
+    certification: "Certifications",
 };
 
 
