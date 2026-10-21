@@ -300,8 +300,14 @@ function createPostCard(post) {
                     <span class="blog-read-more">
                         ${
                             post.type === "external"
-                                ? "Read article ↗"
-                                : "Read article →"
+                                ? `Read article <!-- ↗ -->
+                                   <svg class="arrow-icon" aria-hidden="true">
+                                       <use href="#icon-arrow-up-right"></use>
+                                   </svg>`
+                                : `Read article <!-- → -->
+                                   <svg class="arrow-icon" aria-hidden="true">
+                                       <use href="#icon-arrow-right"></use>
+                                   </svg>`
                         }
                     </span>
 
