@@ -53,6 +53,48 @@
             hidden
         ></div>
 
+
+         
+        <div class="calendar-search">
+
+              <svg
+                  class="calendar-search-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  aria-hidden="true"
+              >
+                  <circle cx="11" cy="11" r="7"></circle>
+                  <path d="m16 16 4 4" stroke-linecap="round"></path>
+              </svg>
+          
+              <input
+                  type="search"
+                  id="calendarSearch"
+                  class="calendar-search-input"
+                  placeholder="Search events..."
+                  aria-label="Search calendar events"
+                  autocomplete="off"
+              >
+          
+              <button
+                  type="button"
+                  id="calendarSearchClear"
+                  class="calendar-search-clear"
+                  aria-label="Clear search"
+                  hidden
+              >×</button>
+          
+          </div>
+          
+          <p
+              id="calendarSearchStatus"
+              class="calendar-search-status"
+              aria-live="polite"
+              hidden
+          ></p>
+
         <div
             class="calendar-next-event"
             id="calendarNextEvent"
