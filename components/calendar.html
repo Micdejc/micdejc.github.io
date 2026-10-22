@@ -1,3 +1,4 @@
+
 <!-- =========================================================
      CALENDAR MODAL
 ========================================================= -->
@@ -41,81 +42,108 @@
 
         <div class="calendar-header">
 
-            <div class="calendar-heading">
+            <!-- ROW 1: Eyebrow + Current date -->
+            <div class="calendar-meta-row">
 
-                <!-- Header eyebrow -->
                 <span class="calendar-eyebrow">
                     EVENTS &amp; HOLIDAYS
                 </span>
 
+                <div
+                    class="calendar-today"
+                    id="calendarToday"
+                ></div>
 
-                <!-- Calendar title and search button -->
-                <div class="calendar-title-row">
-
-                    <h2 id="calendarTitle">
-                        Calendar
-                    </h2>
+            </div>
 
 
-                    <!-- =====================================
-                         EXPANDABLE SEARCH
-                    ====================================== -->
-                    <div class="calendar-search" id="calendarSearchContainer">
-          
+            <!-- ROW 2: Title + Search -->
+            <div class="calendar-title-row">
+
+                <h2 id="calendarTitle">
+                    Calendar
+                </h2>
+
+
+                <!-- =========================================
+                     EXPANDABLE EVENT SEARCH
+                ========================================== -->
+
+                <div
+                    class="calendar-search"
+                    id="calendarSearchContainer"
+                >
+
+                    <!-- Search toggle button -->
+                    <button
+                        type="button"
+                        id="calendarSearchToggle"
+                        class="calendar-search-toggle"
+                        aria-label="Open event search"
+                        aria-expanded="false"
+                        aria-controls="calendarSearch"
+                        title="Search events"
+                    >
+
+                        <svg
+                            class="calendar-search-icon"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            aria-hidden="true"
+                        >
+                            <circle
+                                cx="11"
+                                cy="11"
+                                r="7"
+                            ></circle>
+
+                            <path
+                                d="m16 16 4 4"
+                            ></path>
+                        </svg>
+
+                    </button>
+
+
+                    <!-- Expanding search field -->
+                    <div
+                        class="calendar-search-field"
+                        id="calendarSearchField"
+                        aria-hidden="true"
+                        inert
+                    >
+
+                        <input
+                            type="search"
+                            id="calendarSearch"
+                            class="calendar-search-input"
+                            placeholder="Search events..."
+                            aria-label="Search calendar events"
+                            autocomplete="off"
+                            spellcheck="false"
+                            tabindex="-1"
+                        >
+
                         <button
                             type="button"
-                            id="calendarSearchToggle"
-                            class="calendar-search-toggle"
-                            aria-label="Open event search"
-                            aria-expanded="false"
-                            aria-controls="calendarSearch"
+                            id="calendarSearchClear"
+                            class="calendar-search-clear"
+                            aria-label="Clear search"
+                            title="Clear search"
+                            hidden
                         >
-                            <svg
-                                class="calendar-search-icon"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="1.8"
-                                aria-hidden="true"
-                            >
-                                <circle cx="11" cy="11" r="7"></circle>
-                                <path d="m16 16 4 4" stroke-linecap="round"></path>
-                            </svg>
+                            ×
                         </button>
-                    
-                        <div class="calendar-search-field" id="calendarSearchField">
-                            <input
-                                type="search"
-                                id="calendarSearch"
-                                class="calendar-search-input"
-                                placeholder="Search events..."
-                                aria-label="Search calendar events"
-                                autocomplete="off"
-                                tabindex="-1"
-                            >
-                    
-                            <button
-                                type="button"
-                                id="calendarSearchClear"
-                                class="calendar-search-clear"
-                                aria-label="Close search"
-                                hidden
-                            >×</button>
-                        </div>
-                    
+
                     </div>
-                      
 
                 </div>
 
             </div>
-
-             
-            <!-- Current date and time -->
-            <div
-                class="calendar-today"
-                id="calendarToday"
-            ></div>
 
         </div>
 
