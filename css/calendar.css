@@ -353,6 +353,25 @@
 
 }
 
+/* NEW: Places Calendar title and search button on one line */
+.calendar-title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    width: 100%;
+}
+
+.calendar-heading {
+    flex: 1;
+    min-width: 0;
+}
+
+/* UPDATE: Calendar title */
+.calendar-title-row h2 {
+    margin: 12px 0 0;
+    flex-shrink: 0;
+}
 
 /* =========================================================
    CALENDAR SEARCH
