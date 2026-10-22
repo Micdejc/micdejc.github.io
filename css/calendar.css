@@ -302,7 +302,6 @@
     align-items: stretch;
     gap: 0.45rem;
     width: 100%;
-    min-width: 0;
 }
 
 /* =========================================================
@@ -341,7 +340,6 @@
 ========================================================= */
 
 .calendar-title-row {
-    position: relative;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -359,31 +357,21 @@
 }
 
 /* =========================================================
-   CALENDAR SEARCH CONTAINER
+   CALENDAR SEARCH
 ========================================================= */
 
+/* Calendar search container */
 .calendar-search {
-    position: relative;
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    flex: 0 0 38px;
-    width: 38px;
-    min-width: 38px;
-    height: 58px;
-    margin: 0;
+    gap: 8px;
+    min-width: 0;
     padding: 10px;
-    box-sizing: content-box;
-    z-index: 3;
 }
 
-/* =========================================================
-   SEARCH TOGGLE BUTTON
-========================================================= */
-
+/* Search toggle button */
 .calendar-search-toggle {
-    position: relative;
-    z-index: 3;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -393,6 +381,7 @@
     padding: 0;
     border: none;
     border-radius: 50%;
+    /* background: transparent; */
     background: var(--hover-bg, rgba(128, 128, 128, 0.12));
     color: inherit;
     cursor: pointer;
@@ -400,7 +389,8 @@
 }
 
 .calendar-search-toggle:hover {
-    background: rgba(59, 130, 246, 0.08);
+    /*background: var(--hover-bg, rgba(128, 128, 128, 0.12));*/
+    background: rgba(59, 130, 246, 0.05);
 }
 
 .calendar-search-toggle:focus-visible,
@@ -409,10 +399,7 @@
     outline-offset: 3px;
 }
 
-/* =========================================================
-   SEARCH ICON
-========================================================= */
-
+/* Search icon */
 .calendar-search-icon {
     display: block;
     width: 20px;
@@ -420,72 +407,44 @@
     flex-shrink: 0;
 }
 
-/* =========================================================
-   COLLAPSIBLE SEARCH FIELD
-   Expands leftwards across the title row.
-========================================================= */
-
+/* Collapsible search field */
 .calendar-search-field {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    right: 58px;
-    z-index: 2;
-
     display: flex;
     align-items: center;
-
-    width: auto;
+    width: 0;
     min-width: 0;
     overflow: hidden;
-    box-sizing: border-box;
-
     visibility: hidden;
     opacity: 0;
     pointer-events: none;
-
-    transform: translateY(-50%);
-    transform-origin: right center;
-
     transition:
+        width 0.3s ease,
         opacity 0.2s ease,
-        visibility 0.2s ease;
+        visibility 0.3s ease;
 }
 
-/* Open state */
 .calendar-search.is-open .calendar-search-field {
+    /* width: 240px; */
+    width: 100%;
     visibility: visible;
     opacity: 1;
     pointer-events: auto;
 }
 
-/* =========================================================
-   SEARCH INPUT
-========================================================= */
-
+/* Search input */
 .calendar-search-input {
-    display: block;
     box-sizing: border-box;
-    flex: 1 1 auto;
     width: 100%;
     min-width: 0;
     padding: 9px 12px;
-
     border: 1px solid var(--border-color, #ccc);
     border-radius: 8px;
-
-    background: var(--input-bg, var(--modal-bg, transparent));
-    color: var(--text-color, inherit);
+    background: var(--input-bg, transparent);
+    color: inherit;
     font: inherit;
-
     outline: none;
     box-shadow: none;
     appearance: none;
-}
-
-.calendar-search-input::placeholder {
-    color: var(--text-muted, #777);
-    opacity: 0.8;
 }
 
 .calendar-search-input:focus,
@@ -495,10 +454,7 @@
     border-color: var(--border-color, #ccc);
 }
 
-/* =========================================================
-   CLEAR SEARCH BUTTON
-========================================================= */
-
+/* Clear / close button */
 .calendar-search-clear {
     display: inline-flex;
     align-items: center;
@@ -508,12 +464,10 @@
     height: 28px;
     margin-left: 4px;
     padding: 0;
-
     border: none;
     border-radius: 50%;
     background: transparent;
     color: inherit;
-
     font-size: 22px;
     line-height: 1;
     cursor: pointer;
@@ -529,74 +483,29 @@
     display: none !important;
 }
 
-/* =========================================================
-   SEARCH RESULT STATUS
-========================================================= */
-
+/* Search result status */
 .calendar-search-status {
     margin: 8px 0 12px;
     font-size: 0.875rem;
     color: var(--text-muted, #777);
 }
 
-/* =========================================================
-   RESPONSIVE LAYOUT
-========================================================= */
-
+/* Responsive layout */
 @media (max-width: 480px) {
-    .calendar-header {
-        gap: 0.5rem;
-    }
-
-    .calendar-meta-row {
-        gap: 0.5rem;
-    }
-
-    .calendar-eyebrow {
-        font-size: 0.65rem;
-    }
-
-    .calendar-today {
-        font-size: 0.75rem;
-    }
-
-    .calendar-title-row {
-        gap: 0.5rem;
-    }
-
-    .calendar-title-row h2,
-    .calendar-header h2 {
-        font-size: 1.6rem;
-    }
-
-    .calendar-search {
-        flex-basis: 34px;
-        width: 34px;
-        min-width: 34px;
-        height: 54px;
-    }
-
-    .calendar-search-toggle {
-        flex-basis: 34px;
-        width: 34px;
-        height: 34px;
-    }
-
-    .calendar-search-field {
-        right: 50px;
+    .calendar-search.is-open .calendar-search-field {
+        /* width: min(190px, calc(100vw - 110px)); */
+           width: 100%;
     }
 }
 
-/* =========================================================
-   ACCESSIBILITY: REDUCED MOTION
-========================================================= */
-
+/* Accessibility: reduced motion */
 @media (prefers-reduced-motion: reduce) {
     .calendar-search-field,
     .calendar-search-toggle {
         transition: none;
     }
 }
+
 
 
 
