@@ -497,6 +497,14 @@
         /* width: min(190px, calc(100vw - 110px)); */
            width: 100%;
     }
+    
+   .calendar-header {
+        gap: 0.5rem;
+    }
+
+    .calendar-meta-row {
+        gap: 0.5rem;
+    }
 
     .calendar-eyebrow {
         font-size: 0.65rem;
@@ -506,10 +514,16 @@
         font-size: 0.75rem;
     }
 
+    .calendar-title-row {
+        gap: 0.5rem;
+    }
+
     .calendar-title-row h2,
     .calendar-header h2 {
-        font-size: 1.4rem;
+        font-size: 1.5rem;
     }
+
+
 }
 
 /* Accessibility: reduced motion */
