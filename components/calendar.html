@@ -1,3 +1,4 @@
+
 <!-- =========================================================
      CALENDAR MODAL
 ========================================================= -->
@@ -8,11 +9,14 @@
     aria-hidden="true"
 >
 
+    <!-- Calendar overlay -->
     <div
         class="calendar-overlay"
         id="calendarOverlay"
     ></div>
 
+
+    <!-- Calendar panel -->
     <div
         class="calendar-panel"
         role="dialog"
@@ -20,24 +24,34 @@
         aria-labelledby="calendarTitle"
     >
 
+        <!-- Close calendar -->
         <button
+            type="button"
             class="calendar-close"
             id="calendarClose"
             aria-label="Close calendar"
+            title="Close calendar"
         >
             ×
         </button>
 
+
+        <!-- =================================================
+             CALENDAR HEADER
+        ================================================== -->
+
         <div class="calendar-header">
 
-            <div>
+            <div class="calendar-heading">
+
                 <span class="calendar-eyebrow">
-                    EVENTS & HOLIDAYS
+                    EVENTS &amp; HOLIDAYS
                 </span>
 
                 <h2 id="calendarTitle">
                     Calendar
                 </h2>
+
             </div>
 
             <div
@@ -47,6 +61,11 @@
 
         </div>
 
+
+        <!-- =================================================
+             CALENDAR GREETING
+        ================================================== -->
+
         <div
             class="calendar-greeting"
             id="calendarGreeting"
@@ -54,72 +73,156 @@
         ></div>
 
 
-          <div class="calendar-search" id="calendarSearchContainer">
-          
-              <button
-                  type="button"
-                  id="calendarSearchToggle"
-                  class="calendar-search-toggle"
-                  aria-label="Open event search"
-                  aria-expanded="false"
-                  aria-controls="calendarSearch"
-              >
-                  <svg
-                      class="calendar-search-icon"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="1.8"
-                      aria-hidden="true"
-                  >
-                      <circle cx="11" cy="11" r="7"></circle>
-                      <path d="m16 16 4 4" stroke-linecap="round"></path>
-                  </svg>
-              </button>
-          
-              <div class="calendar-search-field" id="calendarSearchField">
-                  <input
-                      type="search"
-                      id="calendarSearch"
-                      class="calendar-search-input"
-                      placeholder="Search events..."
-                      aria-label="Search calendar events"
-                      autocomplete="off"
-                      tabindex="-1"
-                  >
-          
-                  <button
-                      type="button"
-                      id="calendarSearchClear"
-                      class="calendar-search-clear"
-                      aria-label="Close search"
-                      hidden
-                  >×</button>
-              </div>
-          
-          </div>
-          
-          <p
-              id="calendarSearchStatus"
-              class="calendar-search-status"
-              aria-live="polite"
-              hidden
-          ></p>
+        <!-- =================================================
+             EXPANDABLE EVENT SEARCH
+        ================================================== -->
 
-         
+        <div
+            class="calendar-search"
+            id="calendarSearchContainer"
+        >
+
+            <!-- Search toggle: search icon / close icon -->
+            <button
+                type="button"
+                id="calendarSearchToggle"
+                class="calendar-search-toggle"
+                aria-label="Open event search"
+                aria-expanded="false"
+                aria-controls="calendarSearch"
+                title="Search events"
+            >
+
+                <!-- Search icon -->
+                <svg
+                    class="calendar-search-icon"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                >
+                    <circle cx="11" cy="11" r="7"></circle>
+                    <path d="m16 16 4 4"></path>
+                </svg>
+
+                <!-- Close icon -->
+                <svg
+                    class="calendar-search-close-icon"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    aria-hidden="true"
+                >
+                    <path d="m18 6-12 12"></path>
+                    <path d="m6 6 12 12"></path>
+                </svg>
+
+            </button>
+
+
+            <!-- Expandable search field -->
+            <div
+                class="calendar-search-field"
+                id="calendarSearchField"
+                aria-hidden="true"
+                inert
+            >
+
+                <!-- Search icon inside the field -->
+                <svg
+                    class="calendar-search-field-icon"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                >
+                    <circle cx="11" cy="11" r="7"></circle>
+                    <path d="m16 16 4 4"></path>
+                </svg>
+
+
+                <!-- Search input -->
+                <input
+                    type="search"
+                    id="calendarSearch"
+                    class="calendar-search-input"
+                    placeholder="Search events..."
+                    aria-label="Search calendar events"
+                    autocomplete="off"
+                    spellcheck="false"
+                    tabindex="-1"
+                >
+
+
+                <!-- Clear search query -->
+                <button
+                    type="button"
+                    id="calendarSearchClear"
+                    class="calendar-search-clear"
+                    aria-label="Clear search"
+                    title="Clear search"
+                    hidden
+                >
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        aria-hidden="true"
+                    >
+                        <path d="m18 6-12 12"></path>
+                        <path d="m6 6 12 12"></path>
+                    </svg>
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- Search results announcement -->
+        <p
+            id="calendarSearchStatus"
+            class="calendar-search-status"
+            aria-live="polite"
+            hidden
+        ></p>
+
+
+        <!-- =================================================
+             NEXT UPCOMING EVENT
+        ================================================== -->
 
         <div
             class="calendar-next-event"
             id="calendarNextEvent"
         ></div>
 
+
+        <!-- =================================================
+             CALENDAR EVENTS LIST
+        ================================================== -->
+
         <div
             class="calendar-events"
             id="calendarEvents"
         >
+
             <p class="calendar-loading">
                 Loading events...
             </p>
+
         </div>
 
     </div>
