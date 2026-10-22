@@ -15,7 +15,9 @@ const newsFiles = [
     "uk-afhea.html",
     "uk-ascp.html",
     "aires2027-pcm.html",
-    "thinkers360-thought-leaders.html"
+    "thinkers360-thought-leaders.html",
+    "bashfam-series.html",
+    "cyber-drama-series.html",
 ];
 
 const NEWS_PER_PAGE = 5;
@@ -35,6 +37,7 @@ const CATEGORY_LABELS = {
     professional: "Professional activities",
     academia: "Academic activities",
     certification: "Certifications",
+    series: "Content Series",
 };
 
 
