@@ -522,23 +522,6 @@
     .calendar-header h2 {
         font-size: 1.6rem;
     }
-
-    .calendar-search {
-        flex-basis: 34px;
-        width: 34px;
-        min-width: 34px;
-        height: 54px;
-    }
-
-    .calendar-search-toggle {
-        flex-basis: 34px;
-        width: 34px;
-        height: 34px;
-    }
-
-    .calendar-search-field {
-        right: 50px;
-    }
 }
 
 /* Accessibility: reduced motion */
