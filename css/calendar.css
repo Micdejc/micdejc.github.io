@@ -525,7 +525,7 @@
 
     .calendar-search {
         flex-basis: 34px;
-        width: 100%;
+        width: 34px;
         min-width: 34px;
         height: 54px;
     }
