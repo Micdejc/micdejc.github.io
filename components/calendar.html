@@ -1,4 +1,3 @@
-
 <!-- =========================================================
      CALENDAR MODAL
 ========================================================= -->
@@ -24,7 +23,7 @@
         aria-labelledby="calendarTitle"
     >
 
-        <!-- Close calendar -->
+        <!-- Close calendar modal -->
         <button
             type="button"
             class="calendar-close"
@@ -44,16 +43,168 @@
 
             <div class="calendar-heading">
 
+                <!-- Header eyebrow -->
                 <span class="calendar-eyebrow">
                     EVENTS &amp; HOLIDAYS
                 </span>
 
-                <h2 id="calendarTitle">
-                    Calendar
-                </h2>
+
+                <!-- Calendar title and search button -->
+                <div class="calendar-title-row">
+
+                    <h2 id="calendarTitle">
+                        Calendar
+                    </h2>
+
+
+                    <!-- =====================================
+                         EXPANDABLE SEARCH
+                    ====================================== -->
+
+                    <div
+                        class="calendar-search"
+                        id="calendarSearchContainer"
+                    >
+
+                        <!-- Search toggle -->
+                        <button
+                            type="button"
+                            id="calendarSearchToggle"
+                            class="calendar-search-toggle"
+                            aria-label="Open event search"
+                            aria-expanded="false"
+                            aria-controls="calendarSearch"
+                            title="Search events"
+                        >
+
+                            <!-- Search icon -->
+                            <svg
+                                class="calendar-search-icon"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                aria-hidden="true"
+                            >
+                                <circle
+                                    cx="11"
+                                    cy="11"
+                                    r="7"
+                                ></circle>
+
+                                <path
+                                    d="m16 16 4 4"
+                                ></path>
+                            </svg>
+
+
+                            <!-- Close icon -->
+                            <svg
+                                class="calendar-search-close-icon"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                                stroke-linecap="round"
+                                aria-hidden="true"
+                            >
+                                <path
+                                    d="m18 6-12 12"
+                                ></path>
+
+                                <path
+                                    d="m6 6 12 12"
+                                ></path>
+                            </svg>
+
+                        </button>
+
+
+                        <!-- Expanding search field -->
+                        <div
+                            class="calendar-search-field"
+                            id="calendarSearchField"
+                            aria-hidden="true"
+                            inert
+                        >
+
+                            <!-- Search icon inside input -->
+                            <svg
+                                class="calendar-search-field-icon"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                aria-hidden="true"
+                            >
+                                <circle
+                                    cx="11"
+                                    cy="11"
+                                    r="7"
+                                ></circle>
+
+                                <path
+                                    d="m16 16 4 4"
+                                ></path>
+                            </svg>
+
+
+                            <!-- Search input -->
+                            <input
+                                type="search"
+                                id="calendarSearch"
+                                class="calendar-search-input"
+                                placeholder="Search events..."
+                                aria-label="Search calendar events"
+                                autocomplete="off"
+                                spellcheck="false"
+                                tabindex="-1"
+                            >
+
+
+                            <!-- Clear search query -->
+                            <button
+                                type="button"
+                                id="calendarSearchClear"
+                                class="calendar-search-clear"
+                                aria-label="Clear search"
+                                title="Clear search"
+                                hidden
+                            >
+
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.8"
+                                    stroke-linecap="round"
+                                    aria-hidden="true"
+                                >
+                                    <path
+                                        d="m18 6-12 12"
+                                    ></path>
+
+                                    <path
+                                        d="m6 6 12 12"
+                                    ></path>
+                                </svg>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
 
             </div>
 
+
+            <!-- Current date and time -->
             <div
                 class="calendar-today"
                 id="calendarToday"
@@ -74,124 +225,9 @@
 
 
         <!-- =================================================
-             EXPANDABLE EVENT SEARCH
+             SEARCH RESULTS STATUS
         ================================================== -->
 
-        <div
-            class="calendar-search"
-            id="calendarSearchContainer"
-        >
-
-            <!-- Search toggle: search icon / close icon -->
-            <button
-                type="button"
-                id="calendarSearchToggle"
-                class="calendar-search-toggle"
-                aria-label="Open event search"
-                aria-expanded="false"
-                aria-controls="calendarSearch"
-                title="Search events"
-            >
-
-                <!-- Search icon -->
-                <svg
-                    class="calendar-search-icon"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    aria-hidden="true"
-                >
-                    <circle cx="11" cy="11" r="7"></circle>
-                    <path d="m16 16 4 4"></path>
-                </svg>
-
-                <!-- Close icon -->
-                <svg
-                    class="calendar-search-close-icon"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                    stroke-linecap="round"
-                    aria-hidden="true"
-                >
-                    <path d="m18 6-12 12"></path>
-                    <path d="m6 6 12 12"></path>
-                </svg>
-
-            </button>
-
-
-            <!-- Expandable search field -->
-            <div
-                class="calendar-search-field"
-                id="calendarSearchField"
-                aria-hidden="true"
-                inert
-            >
-
-                <!-- Search icon inside the field -->
-                <svg
-                    class="calendar-search-field-icon"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    aria-hidden="true"
-                >
-                    <circle cx="11" cy="11" r="7"></circle>
-                    <path d="m16 16 4 4"></path>
-                </svg>
-
-
-                <!-- Search input -->
-                <input
-                    type="search"
-                    id="calendarSearch"
-                    class="calendar-search-input"
-                    placeholder="Search events..."
-                    aria-label="Search calendar events"
-                    autocomplete="off"
-                    spellcheck="false"
-                    tabindex="-1"
-                >
-
-
-                <!-- Clear search query -->
-                <button
-                    type="button"
-                    id="calendarSearchClear"
-                    class="calendar-search-clear"
-                    aria-label="Clear search"
-                    title="Clear search"
-                    hidden
-                >
-
-                    <svg
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.8"
-                        stroke-linecap="round"
-                        aria-hidden="true"
-                    >
-                        <path d="m18 6-12 12"></path>
-                        <path d="m6 6 12 12"></path>
-                    </svg>
-
-                </button>
-
-            </div>
-
-        </div>
-
-
-        <!-- Search results announcement -->
         <p
             id="calendarSearchStatus"
             class="calendar-search-status"
@@ -211,7 +247,7 @@
 
 
         <!-- =================================================
-             CALENDAR EVENTS LIST
+             CALENDAR EVENTS
         ================================================== -->
 
         <div
