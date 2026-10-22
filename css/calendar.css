@@ -535,6 +535,10 @@
         width: 34px;
         height: 34px;
     }
+   
+   .calendar-search-field {
+    right: 80px;
+    }
 }
 
 /* Accessibility: reduced motion */
