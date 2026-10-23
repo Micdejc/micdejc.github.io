@@ -520,7 +520,17 @@
 
     .calendar-title-row h2,
     .calendar-header h2 {
-        font-size: 1.1rem;
+        font-size: 1.0rem;
+    }
+
+    .calendar-search-toggle {
+        flex: 0 0 30px;
+        width: 30px;
+        height: 30px;
+    }
+
+    .calendar-search-input{
+        padding: 4px 6px;
     }
 
 
