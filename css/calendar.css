@@ -1153,7 +1153,11 @@
     }
 
     .calendar-event-name {
-        font-size: 0.8rem;
+        font-size: 0.75rem;
+    }
+
+    .calendar-event-category{
+        font-size: 0.65rem;
     }
 }
 
