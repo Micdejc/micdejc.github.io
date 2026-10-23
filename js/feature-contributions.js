@@ -219,6 +219,47 @@ const featureContributions = {
         ]
     },
 
+    "transformer": {
+
+        title: "Transformer",
+
+        type: "Featured Analysis",
+
+        description:
+            "Expert analysis and commentary contributed to Transformer.",
+
+        contributions: [
+
+            {
+                title:
+                    "Expert Insights by Michael Tchuindjang",
+
+                description:
+                    "Expert analysis on the impact of transformative AI.",
+
+                url:
+                    "https://www.transformernews.ai/p/claude-jailbreak-election-manipulation",
+
+                type:
+                    "Expert Analysis"
+            }
+
+            /*
+             * Add more contributions here.
+             *
+             * Example:
+             *
+             * {
+             *     title: "Another Heads Talk Contribution",
+             *     description: "Short description.",
+             *     url: "https://example.com",
+             *     type: "Expert Analysis"
+             * }
+             */
+
+        ]
+    },
+
 
 /*
        "feature-contribution-name": {
