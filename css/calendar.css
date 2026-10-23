@@ -515,7 +515,7 @@
     }
 
     .calendar-title-row {
-        gap: 0.5rem;
+        gap: 0;
     }
 
     .calendar-title-row h2,
