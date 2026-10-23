@@ -226,7 +226,7 @@ const featureContributions = {
         type: "Featured Analysis",
 
         description:
-            "Expert analysis and commentary contributed to Transformer.",
+            "Expert analysis and an interview for journalist Chris Stokel-Walker’s coverage in Transformer.",
 
         contributions: [
 
