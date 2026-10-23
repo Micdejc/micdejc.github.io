@@ -520,7 +520,7 @@
 
     .calendar-title-row h2,
     .calendar-header h2 {
-        font-size: 1.5rem;
+        font-size: 1.1rem;
     }
 
 
@@ -894,11 +894,11 @@
     }
 
     .calendar-next-event .calendar-next-event-day {
-        font-size: 1.25rem;
+        font-size: 1.2rem;
     }
 
     .calendar-next-event-name {
-        font-size: 0.9rem;
+        font-size: 0.8rem;
     }
 
     .calendar-next-event-meta {
@@ -908,7 +908,7 @@
     }
 
     .calendar-next-event-description {
-        font-size: 0.82rem;
+        font-size: 0.7rem;
         line-height: 1.55;
     }
 
@@ -918,7 +918,15 @@
 
     .calendar-event-nav-button {
         padding: 0.5rem 0.65rem;
-        font-size: 0.78rem;
+        font-size: 0.75rem;
+    }
+
+    .calendar-next-event-heading {
+       font-size: 0.95rem;
+    }
+   
+    .calendar-next-event-full-date, .calendar-next-event-countdown {
+       font-size: 0.65rem;
     }
 }
 
@@ -1114,7 +1122,7 @@
     }
 
     .calendar-event-day {
-        font-size: 1.25rem;
+        font-size: 1.2rem;
     }
 
     .calendar-event-header {
@@ -1123,12 +1131,17 @@
     }
 
     .calendar-event-description {
-        font-size: 0.84rem;
+        font-size: 0.7rem;
     }
 
     .calendar-event-meta {
         flex-direction: column;
         align-items: flex-start;
+        font-size: 0.6rem;
+    }
+
+    .calendar-event-name {
+        font-size: 0.8rem;
     }
 }
 
