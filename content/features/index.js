@@ -10,7 +10,9 @@ const featureFiles = [
 
     "ai-and-partners.html",
    
-    "thinkers360.html"
+    "thinkers360.html",
+
+    "transformer.html",
 
 ];
 
