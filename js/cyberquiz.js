@@ -863,11 +863,11 @@ export function initCyberQuiz() {
     $('start').addEventListener('click', () => {
         startMission();
     });
-/*
+
     $('daily').addEventListener(
         'click',
         startDailyChallenge
-    );*/
+    );
 
     $('next').addEventListener(
         'click',
@@ -902,14 +902,6 @@ export function initCyberQuiz() {
     });
 
     $('reset').addEventListener('click', reset);
-
-    const dailyButton = $('daily');
-    
-    if (dailyButton) {
-        dailyButton.addEventListener('click', startDailyChallenge);
-    } else {
-        console.error('Daily Challenge button (#daily) not found.');
-    }
 
     /* =====================================================
        19. INITIALISE CYBERQUIZ
