@@ -72,6 +72,8 @@
     outline: none;
     scrollbar-width: thin;
     scrollbar-color: color-mix(in srgb, var(--text) 35%, transparent) transparent;
+    padding: 0;
+    margin: 0;
 }
 
 .cyberquiz-modal .cyberquiz-modal-close {
