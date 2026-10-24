@@ -6,7 +6,7 @@ import { loadFlagship } from "../content/flagship/index.js";
 import { loadTestimonials } from "../content/testimonials/index.js";
 import { initialiseBlog } from "./blog.js";
 import { initDLN } from "./game.js";
-import { initCyberQuiz } from "./cyberquiz.js";
+import { initCyberQuizApp } from "./cyberquiz.js";
 
 /* =========================================================
    HTML COMPONENT LOADER
