@@ -526,7 +526,7 @@ export function initCyberQuiz() {
         $('next').textContent =
             index === mission.length - 1
                 ? 'Finish mission ✓'
-                : 'Lock answer →';
+                : 'Lock answer <span class="pagination-arrow pagination-arrow-right" aria-hidden="true"></span>';
 
         $('hint-button').disabled = state.credits < 1;
 
@@ -757,7 +757,7 @@ export function initCyberQuiz() {
         $('continue').textContent =
             rankIndex() > mission[0].rank
                 ? 'Explore your new rank →'
-                : 'Continue journey →';
+                : 'Continue journey <span class="pagination-arrow pagination-arrow-right" aria-hidden="true"></span>';
 
         if (percentage >= 80) {
             confetti();
