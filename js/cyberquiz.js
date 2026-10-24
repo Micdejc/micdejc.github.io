@@ -835,19 +835,26 @@ export function initCyberQuiz() {
        17. DAILY CHALLENGE
        ===================================================== */
 
-    function startDailyChallenge() {
-        const today =
-            new Date().toISOString().slice(0, 10);
-
-        if (state.dailyDone === today) {
-            toast(
-                'You have already completed today’s challenge.'
-            );
-            return;
+        function startDailyChallenge() {
+            console.log('[CyberQuiz] Daily Challenge clicked');
+        
+            const today = new Date().toISOString().slice(0, 10);
+        
+            if (state.dailyDone === today) {
+                console.log('[CyberQuiz] Already completed today');
+                toast('You have already completed today’s challenge.');
+                return;
+            }
+        
+            console.log('[CyberQuiz] Starting mission', {
+                rank: rankIndex(),
+                questions: (window.CYBERQUIZ_QUESTIONS || []).length
+            });
+        
+            startMission(rankIndex(), true);
+        
+            console.log('[CyberQuiz] Mission start function returned');
         }
-
-        startMission(rankIndex(), true);
-    }
 
     /* =====================================================
        18. EVENT LISTENERS
