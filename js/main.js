@@ -216,7 +216,7 @@ async function loadPage() {
     initDLN();
 
     /* Initialization of the cyberQuiz modal */
-    initCyberQuiz();
+    initCyberQuizApp();
 
 }
 
