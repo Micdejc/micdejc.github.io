@@ -6,6 +6,7 @@ import { loadFlagship } from "../content/flagship/index.js";
 import { loadTestimonials } from "../content/testimonials/index.js";
 import { initialiseBlog } from "./blog.js";
 import { initDLN } from "./game.js";
+import { initCyberQuiz } from "./cyberquiz.js";
 
 /* =========================================================
    HTML COMPONENT LOADER
@@ -73,6 +74,11 @@ async function loadPage() {
         loadComponent(
             "gameContainer",
             "components/game.html"
+        ),
+
+        loadComponent(
+            "cyberquizContainer",
+            "components/cyberquiz.html"
         ),
 
         loadComponent(
@@ -208,6 +214,9 @@ async function loadPage() {
 
     /* Initialization of the game modal */
     initDLN();
+
+    /* Initialization of the cyberQuiz modal */
+    initCyberQuiz();
 
 }
 
