@@ -1,1 +1,390 @@
+<div class="cyberquiz-modal" id="cyberquizModal" aria-hidden="true">
+    <button
+        class="cyberquiz-backdrop"
+        id="cyberquizBackdrop"
+        type="button"
+        aria-label="Close CyberQuiz"
+        tabindex="-1"
+    ></button>
 
+    <section
+        class="cyberquiz-dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="cq-title"
+        tabindex="-1"
+    >
+        <button
+            type="button"
+            class="cyberquiz-modal-close"
+            id="cyberquizClose"
+            aria-label="Close CyberQuiz"
+            title="Close CyberQuiz"
+        >&times;</button>
+
+        <!-- Place your existing quiz content here -->
+        <main class="cyberquiz-root" id="cyberquiz-root">
+
+              <section class="cq-modal" aria-labelledby="cq-title">
+          
+                  <!-- Reset progress -->
+                  <button
+                      type="button"
+                      class="cq-close"
+                      id="reset"
+                      title="Reset progress"
+                      aria-label="Reset CyberQuiz progress"
+                  >
+                      &orarr;
+                  </button>
+          
+                  <!-- Header -->
+                  <header class="cq-header">
+                      <span class="cq-game-icon" aria-hidden="true">🛡️</span>
+          
+                      <div>
+                          <h1 id="cq-title">CyberQuiz</h1>
+                          <p>Test your skills. Build your cyber career.</p>
+                      </div>
+                  </header>
+          
+                  <!-- Welcome and progress overview -->
+                  <section class="cq-container">
+          
+                      <div class="cq-heading">
+                          <span class="cq-badge">CQ</span>
+          
+                          <div>
+                              <h2>Your Cybersecurity Journey</h2>
+                              <p>From security fundamentals to expert judgement.</p>
+                          </div>
+                      </div>
+          
+                      <div class="cq-intro">
+                          <p>
+                              Answer realistic security scenarios, earn XP and hint
+                              credits, and progress through five expertise badges.
+                              Questions become more challenging as your experience grows.
+                          </p>
+          
+                          <p class="cq-subtle">
+                              Your progress stays in this browser. These levels are
+                              learning milestones, not professional certifications.
+                          </p>
+                      </div>
+          
+                      <!-- Current rank and progress -->
+                      <section class="cq-welcome-grid" aria-label="Your progress">
+          
+                          <div class="cq-welcome-copy">
+                              <span class="cq-overline">YOUR CURRENT EXPERTISE</span>
+          
+                              <div class="cq-rank-title">
+                                  <!-- Required by cyberquiz.js -->
+                                  <span id="rank-symbol" aria-hidden="true">⬡</span>
+                                  <h2 id="rank-name">Associate</h2>
+                              </div>
+          
+                              <p id="rank-sub">
+                                  Level 1 &middot; Security fundamentals
+                              </p>
+          
+                              <div class="cq-progress-track">
+                                  <span id="rank-fill"></span>
+                              </div>
+          
+                              <div class="cq-progress-label">
+                                  <span id="rank-xp">0 XP</span>
+                                  <span id="rank-next">250 XP to next rank</span>
+                              </div>
+                          </div>
+          
+                          <!-- Player statistics -->
+                          <div class="cq-stats">
+                              <div class="cq-stat">
+                                  <span>✦ XP</span>
+                                  <strong id="xp">0</strong>
+                              </div>
+          
+                              <div class="cq-stat">
+                                  <span>💡 Hints</span>
+                                  <strong id="credits">3</strong>
+                              </div>
+          
+                              <div class="cq-stat">
+                                  <span>🔥 Streak</span>
+                                  <strong id="streak">0</strong>
+                              </div>
+                          </div>
+          
+                      </section>
+          
+                      <!-- Start actions -->
+                      <div class="cq-start-actions">
+                          <button class="cq-primary" id="start" type="button">
+                              ▶ Continue journey
+                          </button>
+          
+                          <button
+                              class="cq-primary cq-secondary-primary"
+                              id="daily"
+                              type="button"
+                          >
+                              ✦ Daily challenge
+                          </button>
+                      </div>
+          
+                      <!-- Overall statistics -->
+                      <div class="cq-overview-stats">
+                          <div>
+                              <strong id="hero-xp">0</strong>
+                              <span>Total XP</span>
+                          </div>
+          
+                          <div>
+                              <strong id="hero-done">0</strong>
+                              <span>Questions answered</span>
+                          </div>
+          
+                          <div>
+                              <strong id="hero-streak">0</strong>
+                              <span>Best streak</span>
+                          </div>
+                      </div>
+          
+                  </section>
+          
+                  <!-- Career progression -->
+                  <section class="cq-section" id="journey">
+          
+                      <div class="cq-section-head">
+                          <div>
+                              <span class="cq-overline">
+                                  ONE JOURNEY &middot; FIVE EXPERTISE BADGES
+                              </span>
+          
+                              <h2>Career progression</h2>
+          
+                              <p>
+                                  Choose an unlocked rank to practise its scenarios
+                                  and explore relevant career directions.
+                              </p>
+                          </div>
+                      </div>
+          
+                      <!-- Career rank cards are generated by JavaScript -->
+                      <section
+                          class="career-levels"
+                          id="levels"
+                          aria-label="Cybersecurity career progression"
+                      ></section>
+          
+                  </section>
+          
+                  <!-- Interactive quiz -->
+                  <section
+                      class="cq-container cq-quiz-panel hidden"
+                      id="quiz"
+                      aria-live="polite"
+                  >
+          
+                      <div class="cq-quiz-head">
+                          <button class="cq-text-button" id="exit" type="button">
+                              &larr; Back to journey
+                          </button>
+          
+                          <span class="cq-mission-tag" id="mission-title">
+                              ASSOCIATE &middot; MISSION
+                          </span>
+          
+                          <span class="cq-counter" id="counter">1 / 3</span>
+                      </div>
+          
+                      <!-- Question progress -->
+                      <div class="cq-progress-track cq-thin-track">
+                          <span id="quiz-fill"></span>
+                      </div>
+          
+                      <div id="question-view">
+          
+                          <div class="cq-pills">
+                              <span class="cq-topic" id="topic">
+                                  SECURITY FUNDAMENTALS
+                              </span>
+          
+                              <span class="cq-difficulty" id="difficulty">
+                                  BEGINNER
+                              </span>
+                          </div>
+          
+                          <h2 id="question">Loading question&hellip;</h2>
+          
+                          <!--
+                              Phishing email scenario container.
+                              JavaScript displays this element only when the current
+                              question contains an "email" field.
+                          -->
+                          <div
+                              class="cq-email-scenario hidden"
+                              id="email-scenario"
+                              aria-label="Example email"
+                          ></div>
+          
+                          <p class="cq-muted">
+                              Choose the best response. Think like the person
+                              responsible for protecting the organisation.
+                          </p>
+          
+                          <!-- Answer options are generated by JavaScript -->
+                          <div class="cq-answers" id="answers"></div>
+          
+                          <!-- Hint system -->
+                          <div class="cq-hint">
+                              <span class="cq-bulb" aria-hidden="true">💡</span>
+          
+                              <div class="cq-hint-copy">
+                                  <b>Need a hint?</b>
+          
+                                  <p id="hint-message">
+                                      Spend 1 credit to reveal a clue or remove
+                                      two incorrect options.
+                                  </p>
+                              </div>
+          
+                              <button class="cq-secondary" id="hint-button" type="button">
+                                  Use hint &middot; 1 credit
+                              </button>
+                          </div>
+          
+                          <!-- Answer feedback and navigation -->
+                          <div class="cq-quiz-foot">
+                              <span class="cq-muted" id="feedback">
+                                  Choose carefully. You can do this.
+                              </span>
+          
+                              <button
+                                  class="cq-primary"
+                                  id="next"
+                                  type="button"
+                                  disabled
+                              >
+                                  Lock answer &rarr;
+                              </button>
+                          </div>
+          
+                      </div>
+          
+                      <!-- Mission results -->
+                      <div class="cq-result hidden" id="result">
+          
+                          <div class="cq-result-icon" aria-hidden="true">✨</div>
+          
+                          <span class="cq-overline">MISSION REPORT</span>
+          
+                          <h2 id="result-title">Mission complete!</h2>
+          
+                          <p class="cq-muted" id="result-summary"></p>
+          
+                          <div class="cq-result-stats">
+                              <div>
+                                  <strong id="result-score">0%</strong>
+                                  <span>Accuracy</span>
+                              </div>
+          
+                              <div>
+                                  <strong id="result-xp">+0</strong>
+                                  <span>XP earned</span>
+                              </div>
+          
+                              <div>
+                                  <strong id="result-correct">0/0</strong>
+                                  <span>Correct</span>
+                              </div>
+                          </div>
+          
+                          <p class="cq-result-message" id="result-message"></p>
+          
+                          <button class="cq-primary" id="continue" type="button">
+                              Continue journey &rarr;
+                          </button>
+          
+                      </div>
+          
+                  </section>
+          
+                  <!-- Learning guidance and badges -->
+                  <section class="cq-bottom-grid">
+          
+                      <article class="cq-container">
+                          <div class="cq-panel-title">
+                              <span class="cq-tile-icon">▦</span>
+          
+                              <div>
+                                  <h3>How progression works</h3>
+                                  <p>Build skills one mission at a time.</p>
+                              </div>
+                          </div>
+          
+                          <ul class="cq-rules">
+                              <li>
+                                  <b>Answer correctly</b>
+                                  <span>Earn XP and build your streak.</span>
+                              </li>
+          
+                              <li>
+                                  <b>Use hints strategically</b>
+                                  <span>
+                                      Spend credits to reveal a clue and eliminate
+                                      two wrong options.
+                                  </span>
+                              </li>
+          
+                              <li>
+                                  <b>Unlock the next rank</b>
+                                  <span>
+                                      Scenarios become more complex as your
+                                      expertise grows.
+                                  </span>
+                              </li>
+                          </ul>
+          
+                          <p class="cq-note">
+                              Progress is saved locally on this device. No account,
+                              backend or external service is required.
+                          </p>
+                      </article>
+          
+                      <article class="cq-container" id="badges">
+                          <div class="cq-panel-title">
+                              <span class="cq-tile-icon cq-gold">♜</span>
+          
+                              <div>
+                                  <h3>The five expertise badges</h3>
+                                  <p>Five ranks. One learning journey.</p>
+                              </div>
+                          </div>
+          
+                          <!-- Badges are generated by JavaScript -->
+                          <div class="cq-badge-grid" id="badges-list"></div>
+                      </article>
+          
+                  </section>
+          
+                  <!-- Footer -->
+                  <footer class="cq-footer">
+                      <strong>CyberQuiz</strong>
+          
+                      <span>LEARN &middot; PRACTISE &middot; EARN &middot; LEVEL UP</span>
+                  </footer>
+          
+              </section>
+
+          
+        </main>
+
+        <!-- Keep these outside cyberquiz-root if your existing JS expects them
+             to be globally accessible, or place them inside the root too. -->
+        <div class="cq-toast" id="toast" role="status" aria-live="polite"></div>
+        <div class="cq-confetti" id="confetti" aria-hidden="true"></div>
+    </section>
+</div>
