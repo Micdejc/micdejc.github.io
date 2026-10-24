@@ -856,11 +856,11 @@ export function initCyberQuiz() {
     $('start').addEventListener('click', () => {
         startMission();
     });
-
+/*
     $('daily').addEventListener(
         'click',
         startDailyChallenge
-    );
+    );*/
 
     $('next').addEventListener(
         'click',
@@ -896,8 +896,8 @@ export function initCyberQuiz() {
 
     $('reset').addEventListener('click', reset);
 
-    const dailyButton = root.querySelector('#daily');
-
+    const dailyButton = $('daily');
+    
     if (dailyButton) {
         dailyButton.addEventListener('click', startDailyChallenge);
     } else {
