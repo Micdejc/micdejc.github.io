@@ -155,8 +155,8 @@ body.cyberquiz-modal-open {
 
 .cyberquiz-root .cq-close {
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: 12px;
+    right: 100px;
 
     width: 38px;
     height: 38px;
@@ -529,6 +529,7 @@ body.cyberquiz-modal-open {
 
 .cyberquiz-root .cq-section {
     margin: 30px 0 0;
+    padding: 0;
 }
 
 .cyberquiz-root .cq-section-head {
@@ -553,6 +554,7 @@ body.cyberquiz-modal-open {
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 11px;
+    padding: 0;
 }
 
 .cyberquiz-root .level-card {
@@ -1089,6 +1091,7 @@ body.cyberquiz-modal-open {
     gap: 14px;
 
     margin-top: 17px;
+    padding: 0;
 }
 
 .cyberquiz-root .cq-panel-title {
@@ -1238,6 +1241,7 @@ body.cyberquiz-modal-open {
 
     color: var(--muted);
     font-size: 0.75rem;
+    padding: 0;
 }
 
 .cyberquiz-root .cq-footer strong {
@@ -1394,7 +1398,7 @@ body.cyberquiz-modal-open {
 
     .cyberquiz-root .cq-close {
         top: 12px;
-        right: 12px;
+        right: 50px;
 
         width: 32px;
         height: 32px;
