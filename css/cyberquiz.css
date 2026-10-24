@@ -1,1 +1,1565 @@
 
+/*
+ * CyberQuiz
+ * Responsive styling for the cybersecurity career progression game.
+ * Designed to inherit the host website's theme variables where available.
+ */
+
+/*
+ * CyberQuiz
+ * Component stylesheet for the standalone CyberQuiz modal.
+ * Inherits typography and theme colours from the main website's style.css.
+ */
+
+.cyberquiz-root,
+.cyberquiz-root *,
+.cyberquiz-root *::before,
+.cyberquiz-root *::after {
+    box-sizing: border-box;
+}
+
+.cyberquiz-root {
+    width: 100%;
+    min-width: 0;
+    color: var(--text);
+    font-family: inherit;
+    line-height: inherit;
+    --cq-primary-contrast: #ffffff;
+}
+
+.cyberquiz-root button {
+    font: inherit;
+}
+
+.cyberquiz-root .hidden {
+    display: none !important;
+}
+
+/* The outer modal owns viewport sizing and scrolling. */
+.cyberquiz-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(8px, 2vw, 24px);
+}
+
+.cyberquiz-modal.is-open {
+    display: flex;
+}
+
+.cyberquiz-modal .cyberquiz-backdrop {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: rgba(2, 6, 23, 0.68);
+    cursor: default;
+}
+
+.cyberquiz-modal .cyberquiz-dialog {
+    position: relative;
+    z-index: 1;
+    width: min(1120px, 100%);
+    max-height: calc(100vh - 2 * clamp(8px, 2vw, 24px));
+    overflow: auto;
+    border-radius: 20px;
+    outline: none;
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in srgb, var(--text) 35%, transparent) transparent;
+}
+
+.cyberquiz-modal .cyberquiz-modal-close {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    z-index: 5;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    background: var(--surface);
+    color: var(--text);
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+    transition: background .2s ease, color .2s ease, border-color .2s ease;
+}
+
+.cyberquiz-modal .cyberquiz-modal-close:hover {
+    color: var(--primary);
+    border-color: var(--primary);
+    background: var(--surface-alt);
+}
+
+body.cyberquiz-modal-open {
+    overflow: hidden;
+}
+
+/* =========================================================
+   3. MAIN CONTAINER
+   ========================================================= */
+
+.cyberquiz-root {
+    width: 100%;
+    min-width: 0;
+}
+
+.cyberquiz-root .cq-modal {
+    position: relative;
+    width: 100%;
+    max-height: none;
+    overflow: visible;
+    padding: clamp(18px, 4vw, 36px);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    background: var(--surface);
+    color: var(--text);
+    box-shadow: none;
+}
+
+/* =========================================================
+   4. HEADER AND CLOSE BUTTON
+   ========================================================= */
+
+.cyberquiz-root .cq-close,
+.cyberquiz-root .cq-theme {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    color: var(--text);
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+
+    transition:
+        background 0.2s,
+        color 0.2s,
+        border-color 0.2s,
+        transform 0.2s;
+}
+
+.cyberquiz-root .cq-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+
+    width: 38px;
+    height: 38px;
+
+    font-size: 22px;
+}
+
+.cyberquiz-root .cq-close:hover {
+    color: var(--primary);
+    border-color: var(--primary);
+    transform: rotate(90deg);
+}
+
+.cyberquiz-root .cq-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    margin: 0 34px 28px 0;
+}
+
+.cyberquiz-root .cq-game-icon {
+    font-size: 2rem;
+    line-height: 1;
+}
+
+.cyberquiz-root .cq-header h1 {
+    margin: 0;
+
+    font-size: clamp(2rem, 5vw, 3.6rem);
+    font-weight: 800;
+    letter-spacing: -0.055em;
+    line-height: 1.1;
+}
+
+.cyberquiz-root .cq-header p {
+    margin: 8px 0 0;
+
+    color: var(--muted);
+    font-size: clamp(1rem, 2vw, 1.25rem);
+}
+
+.cyberquiz-root .cq-theme {
+    flex-shrink: 0;
+
+    width: 38px;
+    height: 38px;
+    margin-left: auto;
+
+    font-size: 19px;
+}
+
+.cyberquiz-root .cq-theme:hover {
+    color: var(--primary);
+    border-color: var(--primary);
+}
+
+/* =========================================================
+   5. SHARED CONTAINERS
+   ========================================================= */
+
+.cyberquiz-root .cq-container {
+    min-width: 0;
+
+    padding: clamp(17px, 3vw, 28px);
+
+    border: 1px solid var(--border);
+    border-radius: 20px;
+
+    background: color-mix(
+        in srgb,
+        var(--surface-alt) 45%,
+        var(--surface)
+    );
+
+    color: var(--text);
+}
+
+.cyberquiz-root .cq-heading {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    margin-bottom: 20px;
+}
+
+.cyberquiz-root .cq-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 70px;
+    height: 58px;
+    padding: 0 13px;
+
+    border-radius: 15px;
+
+    background: var(--primary);
+    color: var(--cq-primary-contrast);
+
+    font-size: 1.2rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+}
+
+.cyberquiz-root .cq-heading h2 {
+    margin: 0;
+
+    font-size: clamp(1.2rem, 2.7vw, 1.8rem);
+    line-height: 1.25;
+    letter-spacing: -0.025em;
+}
+
+.cyberquiz-root .cq-heading p {
+    margin: 4px 0 0;
+    color: var(--muted);
+}
+
+.cyberquiz-root .cq-intro {
+    margin-bottom: 22px;
+    font-size: 1rem;
+}
+
+.cyberquiz-root .cq-intro p {
+    margin: 0 0 7px;
+}
+
+.cyberquiz-root .cq-subtle,
+.cyberquiz-root .cq-muted {
+    color: var(--muted);
+}
+
+.cyberquiz-root .cq-subtle {
+    font-size: 0.91rem;
+}
+
+/* Small uppercase section labels */
+
+.cyberquiz-root .cq-overline {
+    display: block;
+
+    color: var(--muted);
+
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+}
+
+/* =========================================================
+   6. CURRENT RANK AND EXPERIENCE PROGRESS
+   ========================================================= */
+
+.cyberquiz-root .cq-welcome-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(230px, 0.8fr);
+    gap: 20px;
+
+    padding: 18px;
+
+    border: 1px solid var(--border);
+    border-radius: 15px;
+
+    background: var(--surface);
+}
+
+.cyberquiz-root .cq-rank-title {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    margin: 5px 0 0;
+}
+
+.cyberquiz-root .cq-rank-title span {
+    display: inline-grid;
+    place-items: center;
+
+    width: 30px;
+    height: 30px;
+
+    border-radius: 9px;
+
+    background: color-mix(in srgb, var(--primary) 8%, var(--surface));
+    color: var(--primary);
+
+    font-size: 1.2rem;
+}
+
+.cyberquiz-root .cq-welcome-copy h2 {
+    margin: 0;
+    font-size: 1.7rem;
+}
+
+.cyberquiz-root .cq-welcome-copy > p {
+    margin: 0 0 16px;
+
+    color: var(--muted);
+    font-size: 0.9rem;
+}
+
+.cyberquiz-root .cq-progress-track {
+    height: 9px;
+    overflow: hidden;
+
+    border-radius: 99px;
+
+    background: color-mix(
+        in srgb,
+        var(--text) 10%,
+        transparent
+    );
+}
+
+.cyberquiz-root .cq-progress-track span {
+    display: block;
+
+    width: 0;
+    height: 100%;
+
+    border-radius: 99px;
+    background: var(--primary);
+
+    transition: width 0.4s ease;
+}
+
+.cyberquiz-root .cq-progress-label {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+
+    margin-top: 7px;
+
+    color: var(--muted);
+    font-size: 0.75rem;
+}
+
+.cyberquiz-root .cq-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+
+    align-self: center;
+}
+
+.cyberquiz-root .cq-stat {
+    min-width: 0;
+    padding: 12px 6px;
+
+    border: 1px solid var(--border);
+    border-radius: 12px;
+
+    background: color-mix(in srgb, var(--primary) 8%, var(--surface));
+    text-align: center;
+}
+
+.cyberquiz-root .cq-stat span,
+.cyberquiz-root .cq-stat strong {
+    display: block;
+}
+
+.cyberquiz-root .cq-stat span {
+    color: var(--muted);
+    font-size: 0.74rem;
+}
+
+.cyberquiz-root .cq-stat strong {
+    margin-top: 4px;
+
+    font-size: 1.25rem;
+    font-variant-numeric: tabular-nums;
+}
+
+/* =========================================================
+   7. BUTTONS AND START ACTIONS
+   ========================================================= */
+
+.cyberquiz-root .cq-start-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+
+    margin-top: 16px;
+}
+
+.cyberquiz-root .cq-primary,
+.cyberquiz-root .cq-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    min-height: 48px;
+    padding: 12px 18px;
+
+    border: 1px solid var(--primary);
+    border-radius: 12px;
+
+    font: inherit;
+    font-weight: 750;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s,
+        box-shadow 0.2s,
+        background 0.2s,
+        border-color 0.2s,
+        opacity 0.2s;
+}
+
+.cyberquiz-root .cq-primary {
+    background: var(--primary);
+    color: var(--cq-primary-contrast);
+}
+
+.cyberquiz-root .cq-primary:hover:not(:disabled) {
+    transform: translateY(-2px);
+
+    box-shadow: 0 7px 18px color-mix(
+        in srgb,
+        var(--primary) 22%,
+        transparent
+    );
+}
+
+.cyberquiz-root .cq-secondary-primary {
+    background: var(--surface);
+    color: var(--primary);
+}
+
+.cyberquiz-root .cq-secondary-primary:hover:not(:disabled) {
+    background: color-mix(in srgb, var(--primary) 8%, var(--surface));
+}
+
+.cyberquiz-root .cq-primary:disabled,
+.cyberquiz-root .cq-secondary:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+
+    transform: none;
+    box-shadow: none;
+}
+
+/* Overall player statistics */
+
+.cyberquiz-root .cq-overview-stats {
+    display: flex;
+    gap: clamp(20px, 5vw, 48px);
+
+    margin: 19px 2px 0;
+}
+
+.cyberquiz-root .cq-overview-stats div {
+    display: flex;
+    flex-direction: column;
+}
+
+.cyberquiz-root .cq-overview-stats strong {
+    font-size: 1.15rem;
+}
+
+.cyberquiz-root .cq-overview-stats span {
+    color: var(--muted);
+    font-size: 0.78rem;
+}
+
+/* =========================================================
+   8. CAREER PROGRESSION
+   ========================================================= */
+
+.cyberquiz-root .cq-section {
+    margin: 30px 0 0;
+}
+
+.cyberquiz-root .cq-section-head {
+    margin-bottom: 14px;
+}
+
+.cyberquiz-root .cq-section-head h2 {
+    margin: 5px 0;
+
+    font-size: clamp(1.3rem, 2.6vw, 1.8rem);
+    letter-spacing: -0.03em;
+}
+
+.cyberquiz-root .cq-section-head p {
+    margin: 0;
+
+    color: var(--muted);
+    font-size: 0.92rem;
+}
+
+.cyberquiz-root .career-levels {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 11px;
+}
+
+.cyberquiz-root .level-card {
+    display: flex;
+    flex-direction: column;
+
+    min-width: 0;
+    padding: 15px;
+
+    border: 1px solid var(--border);
+    border-radius: 15px;
+
+    background: var(--surface);
+
+    transition:
+        transform 0.2s,
+        border-color 0.2s,
+        box-shadow 0.2s;
+}
+
+.cyberquiz-root .level-card.current {
+    border-color: var(--primary);
+
+    box-shadow: 0 0 0 2px color-mix(
+        in srgb,
+        var(--primary) 10%,
+        transparent
+    );
+}
+
+.cyberquiz-root .level-card.unlocked {
+    background: color-mix(
+        in srgb,
+        var(--primary) 3%,
+        var(--surface)
+    );
+}
+
+.cyberquiz-root .level-card.locked {
+    opacity: 0.66;
+}
+
+.cyberquiz-root .level-card:hover {
+    transform: translateY(-2px);
+}
+
+.cyberquiz-root .level-num {
+    color: var(--muted);
+
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.07em;
+}
+
+.cyberquiz-root .emblem {
+    display: grid;
+    place-items: center;
+
+    width: 49px;
+    height: 49px;
+    margin: 13px auto 9px;
+
+    border-radius: 14px;
+
+    color: #ffffff;
+    font-size: 1.35rem;
+
+    clip-path: none !important;
+}
+
+.cyberquiz-root .level-card h3 {
+    margin: 0;
+
+    font-size: 1rem;
+    text-align: center;
+}
+
+.cyberquiz-root .level-card .threshold {
+    margin: 5px 0 12px;
+
+    color: var(--primary);
+    font-size: 0.72rem;
+    font-weight: 750;
+    text-align: center;
+}
+
+.cyberquiz-root .career-label {
+    margin-top: auto;
+
+    color: var(--muted);
+
+    font-size: 0.66rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.cyberquiz-root .career-list {
+    margin: 6px 0 13px;
+    padding-left: 17px;
+
+    color: var(--text);
+
+    font-size: 0.76rem;
+    line-height: 1.5;
+}
+
+.cyberquiz-root .career-list li {
+    margin-bottom: 3px;
+}
+
+.cyberquiz-root .level-card button {
+    width: 100%;
+    margin-top: auto;
+    padding: 9px 8px;
+
+    border: 1px solid var(--border);
+    border-radius: 10px;
+
+    background: var(--surface);
+    color: var(--text);
+
+    font: inherit;
+    font-size: 0.75rem;
+    font-weight: 750;
+
+    cursor: pointer;
+}
+
+.cyberquiz-root .level-card button:hover:not(:disabled) {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.cyberquiz-root .level-card button:disabled {
+    cursor: not-allowed;
+}
+
+/* =========================================================
+   9. QUIZ PANEL AND QUESTION PROGRESS
+   ========================================================= */
+
+.cyberquiz-root .cq-quiz-panel {
+    margin-top: 20px;
+    scroll-margin-top: 18px;
+}
+
+.cyberquiz-root .cq-quiz-head {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+
+    margin-bottom: 13px;
+}
+
+.cyberquiz-root .cq-text-button {
+    padding: 6px 0;
+
+    border: 0;
+    background: transparent;
+    color: var(--muted);
+
+    font: inherit;
+    font-size: 0.82rem;
+
+    cursor: pointer;
+}
+
+.cyberquiz-root .cq-text-button:hover {
+    color: var(--primary);
+}
+
+.cyberquiz-root .cq-mission-tag {
+    padding: 6px 10px;
+
+    border: 1px solid var(--border);
+    border-radius: 99px;
+
+    background: color-mix(in srgb, var(--primary) 8%, var(--surface));
+    color: var(--primary);
+
+    font-size: 0.69rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+}
+
+.cyberquiz-root .cq-counter {
+    margin-left: auto;
+
+    color: var(--muted);
+    font-size: 0.8rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.cyberquiz-root .cq-thin-track {
+    height: 6px;
+    margin-bottom: 21px;
+}
+
+.cyberquiz-root .cq-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+.cyberquiz-root .cq-topic,
+.cyberquiz-root .cq-difficulty {
+    padding: 5px 9px;
+
+    border: 1px solid var(--border);
+    border-radius: 8px;
+
+    background: color-mix(in srgb, var(--primary) 8%, var(--surface));
+    color: var(--primary);
+
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+}
+
+.cyberquiz-root .cq-difficulty {
+    color: var(--muted);
+}
+
+.cyberquiz-root #question {
+    margin: 15px 0 7px;
+
+    font-size: clamp(1.2rem, 2.5vw, 1.7rem);
+    line-height: 1.4;
+    letter-spacing: -0.02em;
+
+    white-space: pre-line;
+}
+
+.cyberquiz-root .cq-muted {
+    font-size: 0.9rem;
+}
+
+/* =========================================================
+   10. PHISHING EMAIL SCENARIO
+   ========================================================= */
+
+/*
+ * JavaScript displays this card when a question contains an "email"
+ * property. The .hidden class keeps it out of other questions.
+ */
+
+.cyberquiz-root .cq-email-scenario {
+    margin: 14px 0 18px;
+    padding: 16px 18px;
+
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--primary);
+    border-radius: 12px;
+
+    background: var(--surface);
+    color: var(--text);
+
+    font-family:
+        ui-monospace,
+        SFMono-Regular,
+        Consolas,
+        monospace;
+
+    font-size: 0.84rem;
+    line-height: 1.7;
+
+    /* Preserve line breaks in the sample email. */
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.cyberquiz-root .cq-email-scenario::before {
+    content: "EMAIL EXAMPLE";
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: var(--primary);
+
+    font-family: system-ui, sans-serif;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+}
+
+/* =========================================================
+   11. ANSWER OPTIONS
+   ========================================================= */
+
+.cyberquiz-root .cq-answers {
+    display: grid;
+    gap: 9px;
+
+    margin-top: 18px;
+}
+
+.cyberquiz-root .cq-answers .answer {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    width: 100%;
+    padding: 13px 15px;
+
+    border: 1px solid var(--border);
+    border-radius: 12px;
+
+    background: var(--surface);
+    color: var(--text);
+
+    font: inherit;
+    font-size: 0.9rem;
+    line-height: 1.5;
+
+    text-align: left;
+    cursor: pointer;
+
+    transition:
+        transform 0.15s,
+        border-color 0.15s,
+        background 0.15s;
+}
+
+.cyberquiz-root .cq-answers .answer:hover:not(:disabled) {
+    border-color: var(--primary);
+    background: color-mix(in srgb, var(--primary) 8%, var(--surface));
+    transform: translateX(2px);
+}
+
+.cyberquiz-root .letter {
+    display: grid;
+    place-items: center;
+    flex: 0 0 30px;
+
+    width: 30px;
+    height: 30px;
+
+    border-radius: 9px;
+
+    background: color-mix(in srgb, var(--primary) 8%, var(--surface));
+    color: var(--primary);
+
+    font-size: 0.78rem;
+    font-weight: 800;
+}
+
+.cyberquiz-root .cq-answers .answer.correct {
+    border-color: #22a06b;
+
+    background: color-mix(
+        in srgb,
+        #22a06b 10%,
+        var(--surface)
+    );
+}
+
+.cyberquiz-root .cq-answers .answer.correct .letter {
+    background: #22a06b;
+    color: #ffffff;
+}
+
+.cyberquiz-root .cq-answers .answer.wrong {
+    border-color: #dc4545;
+
+    background: color-mix(
+        in srgb,
+        #dc4545 9%,
+        var(--surface)
+    );
+}
+
+.cyberquiz-root .cq-answers .answer.wrong .letter {
+    background: #dc4545;
+    color: #ffffff;
+}
+
+.cyberquiz-root .cq-answers .answer:disabled {
+    cursor: default;
+}
+
+.cyberquiz-root .cq-answers .answer.eliminated {
+    opacity: 0.35;
+    text-decoration: line-through;
+}
+
+/* =========================================================
+   12. HINT SYSTEM
+   ========================================================= */
+
+.cyberquiz-root .cq-hint {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    margin-top: 17px;
+    padding: 13px 15px;
+
+    border: 1px solid color-mix(
+        in srgb,
+        var(--primary) 28%,
+        var(--border)
+    );
+
+    border-radius: 13px;
+
+    background: color-mix(in srgb, var(--primary) 8%, var(--surface));
+}
+
+.cyberquiz-root .cq-bulb {
+    font-size: 1.4rem;
+}
+
+.cyberquiz-root .cq-hint-copy {
+    flex: 1;
+    min-width: 0;
+}
+
+.cyberquiz-root .cq-hint-copy b {
+    font-size: 0.9rem;
+}
+
+.cyberquiz-root .cq-hint-copy p {
+    margin: 3px 0 0;
+
+    color: var(--muted);
+    font-size: 0.82rem;
+}
+
+.cyberquiz-root .cq-secondary {
+    min-height: 40px;
+    padding: 9px 12px;
+
+    border-color: var(--border);
+
+    background: var(--surface);
+    color: var(--text);
+
+    font-size: 0.8rem;
+    white-space: nowrap;
+}
+
+.cyberquiz-root .cq-secondary:hover:not(:disabled) {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+/* =========================================================
+   13. QUIZ FOOTER AND FEEDBACK
+   ========================================================= */
+
+.cyberquiz-root .cq-quiz-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+
+    margin-top: 16px;
+}
+
+.cyberquiz-root .cq-quiz-foot .cq-muted {
+    flex: 1;
+    margin: 0;
+}
+
+/* =========================================================
+   14. MISSION RESULTS
+   ========================================================= */
+
+.cyberquiz-root .cq-result {
+    padding: 22px 8px 8px;
+
+    text-align: center;
+
+    animation: cqFadeUp 0.3s ease;
+}
+
+.cyberquiz-root .cq-result-icon {
+    margin-bottom: 4px;
+    font-size: 2.8rem;
+}
+
+.cyberquiz-root .cq-result h2 {
+    margin: 5px 0;
+    font-size: 1.8rem;
+}
+
+.cyberquiz-root .cq-result-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+
+    margin: 20px 0;
+}
+
+.cyberquiz-root .cq-result-stats div {
+    padding: 15px;
+
+    border: 1px solid var(--border);
+    border-radius: 13px;
+
+    background: var(--surface);
+}
+
+.cyberquiz-root .cq-result-stats strong,
+.cyberquiz-root .cq-result-stats span {
+    display: block;
+}
+
+.cyberquiz-root .cq-result-stats strong {
+    font-size: 1.45rem;
+}
+
+.cyberquiz-root .cq-result-stats span {
+    color: var(--muted);
+    font-size: 0.78rem;
+}
+
+.cyberquiz-root .cq-result-message {
+    max-width: 760px;
+    margin: 0 auto 20px;
+
+    line-height: 1.7;
+}
+
+/* =========================================================
+   15. LEARNING GUIDANCE AND BADGES
+   ========================================================= */
+
+.cyberquiz-root .cq-bottom-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+
+    margin-top: 17px;
+}
+
+.cyberquiz-root .cq-panel-title {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+
+    margin-bottom: 17px;
+}
+
+.cyberquiz-root .cq-tile-icon {
+    display: grid;
+    place-items: center;
+    flex: 0 0 40px;
+
+    width: 40px;
+    height: 40px;
+
+    border-radius: 12px;
+
+    background: color-mix(in srgb, var(--primary) 8%, var(--surface));
+    color: var(--primary);
+
+    font-size: 1.2rem;
+}
+
+.cyberquiz-root .cq-tile-icon.cq-gold {
+    color: #9b7510;
+}
+
+.cyberquiz-root .cq-panel-title h3 {
+    margin: 0;
+    font-size: 1rem;
+}
+
+.cyberquiz-root .cq-panel-title p {
+    margin: 2px 0 0;
+
+    color: var(--muted);
+    font-size: 0.82rem;
+}
+
+.cyberquiz-root .cq-rules {
+    display: grid;
+    gap: 13px;
+
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+}
+
+.cyberquiz-root .cq-rules li {
+    display: flex;
+    flex-direction: column;
+
+    padding-left: 13px;
+
+    border-left: 3px solid var(--primary);
+}
+
+.cyberquiz-root .cq-rules b {
+    font-size: 0.86rem;
+}
+
+.cyberquiz-root .cq-rules span {
+    color: var(--muted);
+    font-size: 0.8rem;
+}
+
+.cyberquiz-root .cq-note {
+    margin: 15px 0 0;
+
+    color: var(--muted);
+    font-size: 0.75rem;
+}
+
+/* Badge grid */
+
+.cyberquiz-root .cq-badge-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 7px;
+}
+
+.cyberquiz-root .badge {
+    min-width: 0;
+    padding: 10px 4px;
+
+    border: 1px solid var(--border);
+    border-radius: 12px;
+
+    background: var(--surface);
+
+    text-align: center;
+
+    opacity: 0.55;
+    filter: saturate(0.6);
+}
+
+.cyberquiz-root .badge.earned {
+    opacity: 1;
+    filter: none;
+
+    border-color: color-mix(
+        in srgb,
+        var(--primary) 45%,
+        var(--border)
+    );
+
+    background: color-mix(in srgb, var(--primary) 8%, var(--surface));
+}
+
+.cyberquiz-root .badge-icon {
+    font-size: 1.35rem;
+}
+
+.cyberquiz-root .badge b {
+    display: block;
+
+    font-size: 0.7rem;
+    overflow-wrap: anywhere;
+}
+
+.cyberquiz-root .badge small {
+    display: block;
+    margin-top: 4px;
+
+    color: var(--muted);
+    font-size: 0.62rem;
+}
+
+/* =========================================================
+   16. GAME FOOTER
+   ========================================================= */
+
+.cyberquiz-root .cq-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+
+    margin: 24px 2px 0;
+    padding-top: 16px;
+
+    border-top: 1px solid var(--border);
+
+    color: var(--muted);
+    font-size: 0.75rem;
+}
+
+.cyberquiz-root .cq-footer strong {
+    color: var(--text);
+    font-size: 1rem;
+}
+
+.cyberquiz-root .cq-footer span {
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+}
+
+/* =========================================================
+   17. TOAST NOTIFICATIONS AND CONFETTI
+   ========================================================= */
+
+.cyberquiz-root .cq-toast {
+    position: fixed;
+    z-index: 10002;
+
+    bottom: 22px;
+    left: 50%;
+
+    max-width: min(92vw, 540px);
+    padding: 12px 17px;
+
+    border: 1px solid var(--border);
+    border-radius: 12px;
+
+    background: var(--surface);
+    color: var(--text);
+
+    box-shadow: var(--shadow);
+
+    opacity: 0;
+    pointer-events: none;
+
+    transform: translate(-50%, 12px);
+
+    transition:
+        opacity 0.2s,
+        transform 0.2s;
+
+    font-size: 0.88rem;
+}
+
+.cyberquiz-root .cq-toast.show {
+    opacity: 1;
+    transform: translate(-50%, 0);
+}
+
+.cyberquiz-root .cq-confetti {
+    position: fixed;
+    inset: 0;
+    z-index: 10001;
+
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.cyberquiz-root .confetti-piece {
+    position: absolute;
+    top: -12px;
+
+    width: 8px;
+    height: 13px;
+
+    animation: cqConfetti 2.3s ease-in forwards;
+}
+
+/* =========================================================
+   18. KEYBOARD ACCESSIBILITY
+   ========================================================= */
+
+.cyberquiz-root .cq-modal .cq-primary:focus-visible,
+.cyberquiz-root .cq-modal .cq-secondary:focus-visible,
+.cyberquiz-root .cq-modal .answer:focus-visible,
+.cyberquiz-root .cq-modal .level-card button:focus-visible,
+.cyberquiz-root .cq-modal button:focus-visible {
+    outline: 3px solid color-mix(
+        in srgb,
+        var(--primary) 65%,
+        transparent
+    );
+
+    outline-offset: 3px;
+}
+
+/* =========================================================
+   19. ANIMATIONS
+   ========================================================= */
+
+@keyframes cqFadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes cqConfetti {
+    to {
+        transform: translateY(105vh) rotate(600deg);
+        opacity: 0;
+    }
+}
+
+/* =========================================================
+   20. TABLET RESPONSIVENESS
+   ========================================================= */
+
+@media (max-width: 900px) {
+    .cyberquiz-root .career-levels {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .cyberquiz-root .cq-welcome-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .cyberquiz-root .cq-stats {
+        width: 100%;
+        max-width: 440px;
+    }
+
+    .cyberquiz-root .cq-bottom-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =========================================================
+   21. MOBILE RESPONSIVENESS
+   ========================================================= */
+
+@media (max-width: 600px) {
+    .cyberquiz-modal {
+        padding: 8px;
+    }
+
+    .cyberquiz-modal .cyberquiz-dialog {
+        max-height: calc(100vh - 16px);
+        border-radius: 18px;
+    }
+
+    .cyberquiz-root .cq-modal {
+        padding: 18px 13px;
+        border-radius: 18px;
+    }
+
+    .cyberquiz-root .cq-close {
+        top: 12px;
+        right: 12px;
+
+        width: 32px;
+        height: 32px;
+    }
+
+    .cyberquiz-root .cq-header {
+        gap: 10px;
+        margin: 0 30px 20px 0;
+    }
+
+    .cyberquiz-root .cq-game-icon {
+        font-size: 1.5rem;
+    }
+
+    .cyberquiz-root .cq-header h1 {
+        font-size: 2rem;
+    }
+
+    .cyberquiz-root .cq-header p {
+        font-size: 0.9rem;
+    }
+
+    .cyberquiz-root .cq-theme {
+        width: 32px;
+        height: 32px;
+    }
+
+    .cyberquiz-root .cq-container {
+        padding: 15px;
+        border-radius: 15px;
+    }
+
+    .cyberquiz-root .cq-heading {
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .cyberquiz-root .cq-badge {
+        min-width: 48px;
+        height: 44px;
+        padding: 0 8px;
+
+        border-radius: 11px;
+
+        font-size: 0.95rem;
+    }
+
+    .cyberquiz-root .cq-heading h2 {
+        font-size: 1.15rem;
+    }
+
+    .cyberquiz-root .cq-heading p {
+        font-size: 0.8rem;
+    }
+
+    .cyberquiz-root .cq-intro {
+        font-size: 0.9rem;
+    }
+
+    .cyberquiz-root .cq-start-actions {
+        grid-template-columns: 1fr;
+    }
+
+    .cyberquiz-root .cq-overview-stats {
+        justify-content: space-between;
+        gap: 10px;
+    }
+
+    .cyberquiz-root .cq-overview-stats strong {
+        font-size: 1rem;
+    }
+
+    .cyberquiz-root .cq-overview-stats span {
+        font-size: 0.68rem;
+    }
+
+    .cyberquiz-root .career-levels {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+    }
+
+    .cyberquiz-root .level-card {
+        padding: 11px;
+    }
+
+    .cyberquiz-root .level-card:last-child {
+        grid-column: 1 / -1;
+    }
+
+    .cyberquiz-root .career-list {
+        font-size: 0.72rem;
+    }
+
+    .cyberquiz-root .cq-hint {
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .cyberquiz-root .cq-hint-copy {
+        flex-basis: calc(100% - 45px);
+    }
+
+    .cyberquiz-root .cq-hint .cq-secondary {
+        width: 100%;
+    }
+
+    .cyberquiz-root .cq-quiz-foot {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .cyberquiz-root .cq-quiz-foot .cq-primary {
+        width: 100%;
+    }
+
+    .cyberquiz-root .cq-result-stats {
+        gap: 6px;
+    }
+
+    .cyberquiz-root .cq-result-stats div {
+        padding: 10px 4px;
+    }
+
+    .cyberquiz-root .cq-result-stats strong {
+        font-size: 1.2rem;
+    }
+
+    .cyberquiz-root .cq-badge-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .cyberquiz-root .cq-footer {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .cyberquiz-root .cq-quiz-head {
+        gap: 7px;
+    }
+
+    .cyberquiz-root .cq-mission-tag {
+        font-size: 0.62rem;
+    }
+
+    .cyberquiz-root .cq-counter {
+        font-size: 0.72rem;
+    }
+
+    .cyberquiz-root .cq-email-scenario {
+        padding: 13px;
+        font-size: 0.78rem;
+    }
+}
+
+/* =========================================================
+   22. REDUCED MOTION ACCESSIBILITY
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    .cyberquiz-root *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
