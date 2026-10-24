@@ -896,6 +896,14 @@ export function initCyberQuiz() {
 
     $('reset').addEventListener('click', reset);
 
+    const dailyButton = root.querySelector('#daily');
+
+    if (dailyButton) {
+        dailyButton.addEventListener('click', startDailyChallenge);
+    } else {
+        console.error('Daily Challenge button (#daily) not found.');
+    }
+
     /* =====================================================
        19. INITIALISE CYBERQUIZ
        ===================================================== */
