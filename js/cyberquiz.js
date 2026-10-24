@@ -904,3 +904,56 @@ export function initCyberQuiz() {
 
 }
 
+
+export function initCyberQuizModal() {
+    const modal = document.getElementById('cyberquizModal');
+    const toggle = document.getElementById('cyberquizToggle');
+    const close = document.getElementById('cyberquizClose');
+    const backdrop = document.getElementById('cyberquizBackdrop');
+    const dialog = modal?.querySelector('.cyberquiz-dialog');
+
+    if (!modal || !toggle || !close || !backdrop || !dialog) {
+        console.warn('CyberQuiz modal elements were not found.');
+        return;
+    }
+
+    // Prevent duplicate event listeners.
+    if (modal.dataset.modalInitialised === 'true') return;
+    modal.dataset.modalInitialised = 'true';
+
+    let previousFocus = null;
+
+    function openModal() {
+        previousFocus = document.activeElement;
+
+        modal.classList.add('is-open');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('cyberquiz-modal-open');
+
+        dialog.focus();
+    }
+
+    function closeModal() {
+        modal.classList.remove('is-open');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('cyberquiz-modal-open');
+
+        previousFocus?.focus?.();
+    }
+
+    toggle.addEventListener('click', openModal);
+    close.addEventListener('click', closeModal);
+    backdrop.addEventListener('click', closeModal);
+
+    modal.addEventListener('keydown', event => {
+        if (event.key === 'Escape') {
+            closeModal();
+        }
+    });
+}
+
+export function initCyberQuizApp() {
+    initCyberQuiz();
+    initCyberQuizModal();
+}
+
