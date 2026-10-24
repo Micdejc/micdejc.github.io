@@ -470,6 +470,9 @@ body.cyberquiz-modal-open {
 .cyberquiz-root .cq-primary {
     background: var(--primary);
     color: var(--cq-primary-contrast);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
 }
 
 .cyberquiz-root .cq-primary:hover:not(:disabled) {
