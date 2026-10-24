@@ -523,10 +523,10 @@ export function initCyberQuiz() {
 
         $('next').disabled = true;
 
-        $('next').textContent =
+        $('next').innerHTML =
             index === mission.length - 1
                 ? 'Finish mission ✓'
-                : 'Lock answer <span class="pagination-arrow pagination-arrow-right" aria-hidden="true"></span>';
+                : 'Validate <span class="pagination-arrow pagination-arrow-right" aria-hidden="true"></span>';
 
         $('hint-button').disabled = state.credits < 1;
 
@@ -754,9 +754,9 @@ export function initCyberQuiz() {
             } ${rank().name} career directions: ${rank().roles.join(', ')}.`
             : `Review the feedback and try another mission. Suggested next career directions: ${rank().roles.join(', ')}.`;
 
-        $('continue').textContent =
+        $('continue').innerHTML =
             rankIndex() > mission[0].rank
-                ? 'Explore your new rank →'
+                ? 'Explore your new rank <span class="pagination-arrow pagination-arrow-right" aria-hidden="true"></span>'
                 : 'Continue journey <span class="pagination-arrow pagination-arrow-right" aria-hidden="true"></span>';
 
         if (percentage >= 80) {
