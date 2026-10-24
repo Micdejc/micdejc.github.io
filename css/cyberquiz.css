@@ -722,6 +722,9 @@ body.cyberquiz-modal-open {
     font-size: 0.82rem;
 
     cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
 }
 
 .cyberquiz-root .cq-text-button:hover {
