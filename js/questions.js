@@ -138,7 +138,7 @@ window.CYBERQUIZ_QUESTIONS = [
     hint: "A convincing caller is not proof of identity."
   },
   {
-    id: 17, rank: 0, topic: "MFA", difficulty: "BEGINNER",
+    id: 17, rank: 0, topic: "MFA Fatigue", difficulty: "BEGINNER",
     q: "You receive an MFA approval request you did not initiate. What is the safest response?",
     options: ["Approve it to stop the notifications","Send the code to the caller","Deny it and report the unexpected request","Ignore repeated requests indefinitely"],
     correct: 2, why: "Unexpected MFA prompts can indicate that someone has your password. Deny them and report the activity.",
