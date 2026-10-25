@@ -1303,7 +1303,7 @@ body.cyberquiz-modal-open {
 .cyberquiz-root .cq-confetti {
     position: fixed;
     inset: 0;
-    z-index: 10001;
+    z-index: 10003;
 
     overflow: hidden;
     pointer-events: none;
