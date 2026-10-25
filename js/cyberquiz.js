@@ -127,6 +127,9 @@ export function initCyberQuiz() {
             streak: 0,
             bestStreak: 0,
 
+            // Track ranks the player has started.
+            startedRanks: [],
+
             // Track question history independently per rank.
             seenByRank: {
                 0: [],
@@ -159,6 +162,18 @@ export function initCyberQuiz() {
                 ...defaults,
                 ...saved
             };
+
+            // Restore ranks the player has started.
+            loaded.startedRanks = Array.isArray(saved.startedRanks)
+                ? [...new Set(
+                    saved.startedRanks.filter(
+                        rank =>
+                            Number.isInteger(rank) &&
+                            rank >= 0 &&
+                            rank < RANKS.length
+                    )
+                )]
+                : [];
 
             const savedRankHistory =
                 saved.seenByRank &&
@@ -306,30 +321,41 @@ export function initCyberQuiz() {
     /* =====================================================
        6. CAREER PROGRESSION CARDS
        ===================================================== */
-
+    
     function renderLevels() {
         const host = $('levels');
-
+    
         host.className = 'career-levels';
-
+    
         host.innerHTML = RANKS.map((r, i) => {
             const unlocked = state.xp >= r.min;
             const current = rankIndex() === i;
-
+    
+            const hasStarted =
+                state.startedRanks?.includes(i) ?? false;
+    
             const progress = unlocked
                 ? (i === 4 ? 'MASTERED' : `${state.xp} XP`)
                 : `${r.min} XP required`;
-
+    
+            const buttonText = !unlocked
+                ? '🔒 Keep progressing'
+                : !current
+                    ? 'Practise This Level'
+                    : hasStarted
+                        ? 'Continue This Level'
+                        : 'Start Current Level';
+    
             return `
                 <article class="level-card
                     ${unlocked ? 'unlocked' : 'locked'}
                     ${current ? 'current' : ''}">
-
+    
                     <span class="level-num">
                         RANK 0${i + 1}
                         ${current ? '· CURRENT' : ''}
                     </span>
-
+    
                     <div
                         class="emblem"
                         style="background:linear-gradient(
@@ -337,38 +363,34 @@ export function initCyberQuiz() {
                         )">
                         ${r.icon}
                     </div>
-
+    
                     <h3>${r.name}</h3>
-
+    
                     <div class="threshold">
                         ${progress}
                     </div>
-
+    
                     <div class="career-label">
                         Career directions
                     </div>
-
+    
                     <ul class="career-list">
                         ${r.roles.map(role => `
                             <li>${role}</li>
                         `).join('')}
                     </ul>
-
+    
                     <button
                         data-rank="${i}"
                         ${unlocked ? '' : 'disabled'}>
-
-                        ${unlocked
-                            ? (current
-                                ? 'Start current level'
-                                : 'Practise this level')
-                            : '🔒 Keep progressing'}
+    
+                        ${buttonText}
                     </button>
-
+    
                 </article>
             `;
         }).join('');
-
+    
         host.querySelectorAll('button[data-rank]')
             .forEach(button => {
                 button.addEventListener('click', () => {
@@ -378,6 +400,7 @@ export function initCyberQuiz() {
                 });
             });
     }
+
 
     /* =====================================================
        7. EXPERTISE BADGES
@@ -483,9 +506,19 @@ export function initCyberQuiz() {
         rankNumber = rankIndex(),
         daily = false
     ) {
+        // Prevent access to locked ranks.
         if (rankNumber > rankIndex()) {
             toast('Unlock this rank by earning more XP.');
             return;
+        }
+
+        // Record that the player has started this career rank.
+        // Daily Challenges do not count as career-level starts.
+        if (!daily) {
+            if (!state.startedRanks.includes(rankNumber)) {
+                state.startedRanks.push(rankNumber);
+                saveState();
+            }
         }
 
         missionRank = rankNumber;
@@ -513,6 +546,14 @@ export function initCyberQuiz() {
                 seen.push(question.id);
             }
         });
+
+        if (!state.startedRanks) {
+            state.startedRanks = [];
+        }
+        
+        if (!state.startedRanks.includes(rankNumber)) {
+            state.startedRanks.push(rankNumber);
+        }
 
         saveState();
 
