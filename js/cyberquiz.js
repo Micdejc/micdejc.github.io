@@ -747,52 +747,50 @@ export function initCyberQuiz() {
        12. HINT SYSTEM
        ===================================================== */
 
+
     function useHint() {
         if (selected !== null || hintUsed) return;
-
+    
         if (state.credits < 1) {
             toast('You need a hint credit.');
             return;
         }
-
+    
+        const question = mission[index];
+        const answerButtons = [
+            ...$('answers').querySelectorAll('button')
+        ];
+    
+        const wrongAnswers = answerButtons
+            .map((button, i) => ({ button, index: i }))
+            .filter(item => item.index !== question.correct);
+    
+        if (wrongAnswers.length === 0) {
+            toast('No options available to eliminate.');
+            return;
+        }
+    
+        shuffle(wrongAnswers)
+            .slice(0, 2)
+            .forEach(({ button }) => {
+                button.classList.add('eliminated');
+                button.disabled = true;
+            });
+    
         state.credits--;
         hintUsed = true;
-
-        const question = mission[index];
-
+        eliminated = true;
+    
         $('hint-button').disabled = true;
         $('hint-button').textContent = 'Hint used';
-
-        if (!eliminated) {
-            const wrongAnswers = [
-                ...$('answers').querySelectorAll('button')
-            ]
-                .map((button, i) => ({
-                    button,
-                    index: i
-                }))
-                .filter(item =>
-                    item.index !== question.correct
-                );
-
-            shuffle(wrongAnswers)
-                .slice(0, 2)
-                .forEach(item => {
-                    item.button.classList.add('eliminated');
-                    item.button.disabled = true;
-                });
-
-            eliminated = true;
-
-            $('hint-message').textContent =
-                `${question.hint} Two options have been eliminated.`;
-        } else {
-            $('hint-message').textContent = question.hint;
-        }
-
+    
+        $('hint-message').textContent =
+            `${question.hint} Two options have been eliminated.`;
+    
         saveState();
         updateUI();
     }
+
 
     /* =====================================================
        13. MOVE TO THE NEXT QUESTION
