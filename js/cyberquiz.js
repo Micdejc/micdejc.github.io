@@ -679,7 +679,14 @@ export function initCyberQuiz() {
         state.answered++;
         answeredThis++;
 
-        state.seen.push(question.id);
+        // Track the answered question in the appropriate history.
+        const seen = mode === 'daily'
+            ? state.seenDaily
+            : state.seenByRank[question.rank];
+
+        if (!seen.includes(question.id)) {
+            seen.push(question.id);
+        }
 
         // Award one hint credit for every third consecutive correct answer.
         if (correct && state.streak % 3 === 0) {
