@@ -368,7 +368,13 @@ export function initCyberQuiz() {
                     : hasStarted
                         ? 'Continue this level'
                         : 'Start current level';
-    
+            
+            // Adapt the same button depending on the journey state
+            if (hasStarted) {
+               $('start').textContent = "Continue"
+            } else{
+               $('start').textContent = "Start"
+            }    
             return `
                 <article class="level-card
                     ${unlocked ? 'unlocked' : 'locked'}
