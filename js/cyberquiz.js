@@ -103,13 +103,36 @@ export function initCyberQuiz() {
         }
     ];
 
+    /*
+     * =====================================================
+     * CAREER PROGRESSION AND REWARD CONFIGURATION
+     * =====================================================
+     *
+     * Centralised settings for XP rewards, streak bonuses,
+     * mission accuracy thresholds and completion bonuses.
+     *
+     * Adjust these values to balance difficulty and reward
+     * progression without changing the core game logic.
+     */
     const PROGRESSION = {
-    correctXP: [20, 25, 30, 35, 40],
-    streakBonus: 5,
-    streakLength: 3,
-    perfectMissionBonus: 50,
-    strongMissionBonus: 25,
-    strongMissionAccuracy: 80
+        // Base XP awarded for each correct answer by rank.
+        // Index 0 = Associate, 1 = Professional,
+        // 2 = Practitioner, 3 = Architect, 4 = Expert.
+        correctXP: [20, 25, 30, 35, 40],
+    
+        // Extra XP awarded for a correct answer when the
+        // current correct-answer streak reaches this length.
+        streakBonus: 5,
+        streakLength: 3,
+    
+        // Minimum accuracy required for each mission outcome.
+        perfectAccuracy: 100,       // Perfect mission score.
+        strongMissionAccuracy: 80,  // Strong score and bonus.
+        completionAccuracy: 60,     // "Mission complete!" title.
+    
+        // One-off XP bonuses for reward-eligible missions.
+        perfectMissionBonus: 50,    // Awarded at perfect accuracy.
+        strongMissionBonus: 25      // Awarded at strong accuracy.
     };
 
     const STORE = 'CyberQuiz';
@@ -857,121 +880,109 @@ export function initCyberQuiz() {
         const percentage = Math.round(
             (sessionCorrect / mission.length) * 100
         );
-
+    
         const eligibleForRewards =
             missionRewardEligible &&
             mission.every(question =>
                 question.rank === missionRank
             );
-        
+    
+        const isPerfect =
+            percentage >= PROGRESSION.perfectAccuracy;
+    
+        const isStrong =
+            percentage >= PROGRESSION.strongMissionAccuracy;
+    
         const bonus = eligibleForRewards
-            ? percentage === 100
+            ? isPerfect
                 ? PROGRESSION.perfectMissionBonus
-                : percentage >= PROGRESSION.strongMissionAccuracy
+                : isStrong
                     ? PROGRESSION.strongMissionBonus
                     : 0
             : 0;
-        
+    
         state.xp += bonus;
         sessionXP += bonus;
         state.completedMissions++;
-
+    
         if (mode === 'daily') {
             state.dailyDone =
                 new Date().toISOString().slice(0, 10);
         }
-
+    
         saveState();
         updateUI();
-
+    
         $('question-view').classList.add('hidden');
         $('result').classList.remove('hidden');
-
+    
         $('quiz-fill').style.width = '100%';
-
+    
         $('result-title').textContent =
-            percentage === 100
+            isPerfect
                 ? 'Flawless mission!'
-                : percentage >= 60
+                : percentage >= PROGRESSION.completionAccuracy
                     ? 'Mission complete!'
                     : 'Keep training';
-        /*
-        $('result-summary').textContent =
-            `${rank().name} progression · ${
-                mode === 'daily'
-                    ? 'Daily challenge'
-                    : 'Career mission'
-            }`;
-        */
+    
         $('result-summary').textContent =
             `${RANKS[missionRank].name} ${
                 mode === 'daily'
                     ? 'Daily challenge'
                     : 'Career mission'
             }`;
-
+    
         $('result-score').textContent =
             `${percentage}%`;
-
+    
         $('result-xp').textContent =
             `+${sessionXP}`;
-
+    
         $('result-correct').textContent =
             `${sessionCorrect}/${mission.length}`;
-        /*
-        $('result-message').textContent = bonus
-            ? `Completion bonus: +${bonus} XP. ${
-                percentage === 100
-                    ? 'Perfect accuracy!'
-                    : 'Strong work.'
-            } ${rank().name} career directions: ${rank().roles.join(', ')}.`
-            : `Review the feedback and try another mission. Suggested next career directions: ${rank().roles.join(', ')}.`;
-        */
-
-        $('result-message').textContent = !missionRewardEligible
-            ? `Practice completed. No XP, streak rewards or completion bonus awarded. ${
-                RANKS[missionRank].name
-            } practice can help reinforce your knowledge.`
-            : bonus
-                ? `Completion bonus: +${bonus} XP. ${
-                    percentage === 100
-                        ? 'Perfect accuracy!'
-                        : 'Strong work.'
-                  } ${
-                    rank().name
-                  } career directions: ${rank().roles.join(', ')}.`
-                : `No completion bonus this time. Review the feedback and try another mission. Suggested career directions: ${
-                    rank().roles.join(', ')
-                  }.`;
-        /*
-        $('continue').innerHTML =
-            rankIndex() > mission[0].rank
-                ? 'Explore your new rank <span class="pagination-arrow pagination-arrow-right" aria-hidden="true"></span>'
-                : 'Continue journey <span class="pagination-arrow pagination-arrow-right" aria-hidden="true"></span>';
-       */
-
+    
+        $('result-message').textContent =
+            !eligibleForRewards
+                ? `Practice completed. No XP, streak rewards or completion bonus awarded. ${
+                    RANKS[missionRank].name
+                } practice can help reinforce your knowledge.`
+                : bonus
+                    ? `Completion bonus: +${bonus} XP. ${
+                        isPerfect
+                            ? 'Perfect accuracy!'
+                            : 'Strong work.'
+                      } ${
+                        rank().name
+                      } career directions: ${
+                        rank().roles.join(', ')
+                      }.`
+                    : `No completion bonus this time. Review the feedback and try another mission. Suggested career directions: ${
+                        rank().roles.join(', ')
+                      }.`;
+    
         $('continue').innerHTML =
             rankIndex() > missionRank
                 ? 'Explore your new rank <span class="pagination-arrow pagination-arrow-right" aria-hidden="true"></span>'
                 : 'Continue journey <span class="pagination-arrow pagination-arrow-right" aria-hidden="true"></span>';
-        
+    
         // Update the result icon according to the score.
         const resultIcon = $('result-icon');
-
+    
         if (resultIcon) {
             resultIcon.textContent =
-                percentage >= 80 ? '✨' : '🎯';
+                isStrong ? '✨' : '🎯';
         }
-
-        if (percentage >= 80) {
+    
+        if (isStrong) {
             confetti();
         }
-
+    
         $('result').scrollIntoView({
             behavior: 'smooth',
             block: 'center'
         });
     }
+
 
     /* =====================================================
        15. CONFETTI CELEBRATION
