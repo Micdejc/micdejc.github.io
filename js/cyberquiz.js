@@ -368,13 +368,13 @@ export function initCyberQuiz() {
                     : hasStarted
                         ? 'Continue this level'
                         : 'Start current level';
-            
+
             // Adapt the start button depending on the journey state
-            if (hasStarted) {
-                $('start').textContent = "▶ Continue journey";
-            } else {
-                $('start').textContent = "🚀 Start journey";
-            }
+            const startButtonText = hasStarted
+                ? '▶ Continue journey'
+                : '🚀 Start journey';
+            
+            $('start').textContent = startButtonText;
             
             return `
                 <article class="level-card
