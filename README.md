@@ -916,8 +916,8 @@ The game is integrated directly into the website through a responsive modal and 
 - 🥉 **Associate** – Build foundational cybersecurity knowledge.
 - 🥈 **Professional** – Apply security principles to everyday workplace scenarios.
 - 🥇 **Practitioner** – Analyse threats and make practical security decisions.
-- 🏆 **Architect** – Explore security architecture, risk management, and system design.
-- 🎓 **Expert** – Tackle advanced challenges involving security strategy, governance, and emerging threats.
+- 🎖️ **Architect** – Explore security architecture, risk management, and system design.
+- 🏆 **Expert** – Tackle advanced challenges involving security strategy, governance, and emerging threats.
 
 ## Key Features
 
