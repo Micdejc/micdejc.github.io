@@ -840,6 +840,15 @@ export function initCyberQuiz() {
                 ? 'Explore your new rank <span class="pagination-arrow pagination-arrow-right" aria-hidden="true"></span>'
                 : 'Continue journey <span class="pagination-arrow pagination-arrow-right" aria-hidden="true"></span>';
 
+        
+        // Update the result icon according to the score.
+        const resultIcon = $('result-icon');
+
+        if (resultIcon) {
+            resultIcon.textContent =
+                percentage >= 80 ? '✨' : '🎯';
+        }
+
         if (percentage >= 80) {
             confetti();
         }
