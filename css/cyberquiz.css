@@ -155,7 +155,7 @@ body.cyberquiz-modal-open {
 
 .cyberquiz-root .cq-close {
     position: absolute;
-    top: 12px;
+    top: 10px;
     right: 100px;
 
     width: 38px;
@@ -1403,7 +1403,7 @@ body.cyberquiz-modal-open {
     }
 
     .cyberquiz-root .cq-close {
-        top: 12px;
+        top: 10px;
         right: 55px;
 
         width: 32px;
