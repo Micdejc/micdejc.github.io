@@ -135,7 +135,7 @@ export function initCyberQuiz() {
         strongMissionBonus: 25      // Awarded at strong accuracy.
     };
 
-    const STORE = 'CyberQuiz';
+    const STORE = 'cyberQuiz';
 
 /* =====================================================
        2. PLAYER STATE AND PROGRESS STORAGE
