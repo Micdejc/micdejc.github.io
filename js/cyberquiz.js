@@ -242,6 +242,15 @@ export function initCyberQuiz() {
 
     let state = loadState();
 
+    // Update the main journey button based on saved progress.
+    function updateStartButton() {
+        const hasStarted = state.startedRanks?.includes(rankIndex()) ?? false;
+    
+        $('start').textContent = hasStarted
+            ? '▶ Continue journey'
+            : '🚀 Start journey';
+    }
+
     let mission = [];
     let index = 0;
     let selected = null;
@@ -339,6 +348,7 @@ export function initCyberQuiz() {
 
         renderLevels();
         renderBadges();
+        updateStartButton();
     }
 
     /* =====================================================
@@ -368,13 +378,6 @@ export function initCyberQuiz() {
                     : hasStarted
                         ? 'Continue this level'
                         : 'Start current level';
-
-            // Adapt the start button depending on the journey state
-            const startButtonText = hasStarted
-                ? '▶ Continue journey'
-                : '🚀 Start journey';
-            
-            $('start').textContent = startButtonText;
             
             return `
                 <article class="level-card
