@@ -103,11 +103,11 @@ export function initCyberQuiz() {
         }
     ];
 
-    const STORE = 'cyberquiz-progress-v1';
+    const STORE = 'CyberQuiz';
 
-    /* =====================================================
+/* =====================================================
        2. PLAYER STATE AND PROGRESS STORAGE
-       ===================================================== */
+   ===================================================== */
 
     function freshState() {
         return {
@@ -117,7 +117,19 @@ export function initCyberQuiz() {
             correct: 0,
             streak: 0,
             bestStreak: 0,
-            seen: [],
+
+            // Track question history independently per rank.
+            seenByRank: {
+                0: [],
+                1: [],
+                2: [],
+                3: [],
+                4: []
+            },
+
+            // Separate history for Daily Challenge.
+            seenDaily: [],
+
             completedMissions: 0,
             theme: 'dark',
             dailyDone: ''
@@ -130,10 +142,41 @@ export function initCyberQuiz() {
                 localStorage.getItem(STORE) || '{}'
             );
 
-            return {
-                ...freshState(),
+            const defaults = freshState();
+
+            // Preserve existing player progress and migrate
+            // legacy question history where possible.
+            const loaded = {
+                ...defaults,
                 ...saved
             };
+
+            const savedRankHistory =
+                saved.seenByRank &&
+                typeof saved.seenByRank === 'object'
+                    ? saved.seenByRank
+                    : {};
+
+            loaded.seenByRank = {};
+
+            for (let rank = 0; rank <= 4; rank++) {
+                loaded.seenByRank[rank] = Array.isArray(
+                    savedRankHistory[rank]
+                )
+                    ? savedRankHistory[rank]
+                    : [];
+            }
+
+            loaded.seenDaily = Array.isArray(saved.seenDaily)
+                ? saved.seenDaily
+                : [];
+
+            // Legacy state used one shared `seen` array.
+            // Do not assign it to every rank, as that would
+            // incorrectly mark questions as seen at all ranks.
+            delete loaded.seen;
+
+            return loaded;
         } catch {
             return freshState();
         }
@@ -372,36 +415,54 @@ export function initCyberQuiz() {
         return result;
     }
 
+
     function pickQuestions(rankNumber, daily = false) {
         const allQuestions = window.CYBERQUIZ_QUESTIONS || [];
 
-        let pool = allQuestions.filter(question =>
+        const pool = allQuestions.filter(question =>
             daily
                 ? question.rank <= rankNumber
                 : question.rank === rankNumber
         );
 
         if (!pool.length) {
-            pool = allQuestions;
+            return [];
         }
 
         const count = daily
             ? 5
             : Math.min(5, Math.max(3, 3 + rankNumber));
 
-        let unseen = pool.filter(question =>
-            !state.seen.includes(question.id)
+        const seen = daily
+            ? state.seenDaily
+            : state.seenByRank[rankNumber];
+
+        // Prioritise questions not previously selected
+        // for this rank or the Daily Challenge.
+        const unseen = pool.filter(question =>
+            !seen.includes(question.id)
         );
 
-        if (unseen.length < count) {
-            unseen = pool;
+        const selected = shuffle(unseen).slice(0, count);
+
+        // Repeat questions only if there are not enough unseen ones.
+        if (selected.length < count) {
+            const selectedIds = selected.map(question => question.id);
+
+            const remaining = shuffle(
+                pool.filter(question =>
+                    !selectedIds.includes(question.id)
+                )
+            );
+
+            selected.push(
+                ...remaining.slice(0, count - selected.length)
+            );
         }
 
-        return shuffle(unseen).slice(
-            0,
-            Math.min(count, unseen.length)
-        );
+        return selected;
     }
+
 
     /* =====================================================
        9. START A MISSION
@@ -424,6 +485,19 @@ export function initCyberQuiz() {
             toast('No questions are available yet.');
             return;
         }
+
+        // Record selected questions in the relevant history.
+        const seen = daily
+            ? state.seenDaily
+            : state.seenByRank[rankNumber];
+
+        mission.forEach(question => {
+            if (!seen.includes(question.id)) {
+                seen.push(question.id);
+            }
+        });
+
+        saveState();
 
         index = 0;
         selected = null;
