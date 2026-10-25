@@ -392,7 +392,7 @@ export function initCyberQuiz() {
                     <div class="threshold">
                         ${progress}
                     </div>
-    
+                    <!-- 
                     <div class="career-label">
                         Career directions
                     </div>
@@ -402,7 +402,7 @@ export function initCyberQuiz() {
                             <li>${role}</li>
                         `).join('')}
                     </ul>
-    
+                    -->
                     <button
                         data-rank="${i}"
                         ${unlocked ? '' : 'disabled'}>
