@@ -341,10 +341,10 @@ export function initCyberQuiz() {
             const buttonText = !unlocked
                 ? '🔒 Keep progressing'
                 : !current
-                    ? 'Practise This Level'
+                    ? 'Practise this level'
                     : hasStarted
-                        ? 'Continue This Level'
-                        : 'Start Current Level';
+                        ? 'Continue this level'
+                        : 'Start current level';
     
             return `
                 <article class="level-card
