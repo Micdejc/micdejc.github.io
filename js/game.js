@@ -605,7 +605,18 @@ function startDlnGame() {
         return;
     }
     */
-
+   
+      // Ask for confirmation before starting a new game
+      if (dlnGame.active) {
+          const confirmed = confirm(
+              'A game is currently in progress. ' +
+              'Are you sure you want to start a new game? ' +
+              'Your current progress may be lost.'
+          );
+      
+          if (!confirmed) return;
+      }   
+   
     /*
      * Starting a new game intentionally removes
      * the previous unfinished game.
