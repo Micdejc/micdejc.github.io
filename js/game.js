@@ -333,6 +333,18 @@ export function initDLN() {
     loadDlnState();
 
     bindDlnEvents();
+   
+    // Use the primary style when no game is active,
+    // and the secondary style when a game is in progress.
+    dlnElements.startButton.classList.toggle(
+       "dln-primary-button",
+       !dlnGame.active
+    );
+   
+    dlnElements.startButton.classList.toggle(
+       "dln-secondary-button",
+       dlnGame.active
+    );
 
     updateDlnRecord();
 
