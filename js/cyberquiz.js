@@ -1001,10 +1001,11 @@ export function initCyberQuiz() {
     
         // Update the result icon according to the score.
         const resultIcon = $('result-icon');
-    
+
         if (resultIcon) {
-            resultIcon.textContent =
-                isStrong ? '✨' : '📋';
+            resultIcon.textContent = isStrong
+                ? (Math.random() < 0.5 ? '🎯' : '✨')
+                : '📋';
         }
     
         if (isStrong) {
