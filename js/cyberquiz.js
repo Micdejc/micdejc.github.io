@@ -24,6 +24,7 @@ export function initCyberQuiz() {
     const $ = id => root.querySelector(`#${id}`);
   
 
+
     const RANKS = [
         {
             name: 'Associate',
@@ -32,10 +33,12 @@ export function initCyberQuiz() {
             sub: 'Security fundamentals',
             roles: [
                 'IT support technician',
-                'Junior security analyst'
+                'Junior security analyst',
+                'Junior GRC analyst',
+                'Information security compliance assistant'
             ],
             careers:
-                'Build safe digital habits and understand core security controls.',
+                'Build safe digital habits and understand core security controls, basic risk concepts and compliance requirements.',
             color: '#38c8ff',
             icon: '⬡'
         },
@@ -47,10 +50,13 @@ export function initCyberQuiz() {
             roles: [
                 'SOC analyst (Tier 1)',
                 'Junior incident responder',
-                'Vulnerability analyst'
+                'Vulnerability analyst',
+                'GRC analyst',
+                'IT risk analyst',
+                'Security compliance analyst'
             ],
             careers:
-                'Triage alerts, follow playbooks and help maintain secure systems.',
+                'Triage alerts, follow playbooks, assess operational risks and support security compliance activities.',
             color: '#43e5a4',
             icon: '◆'
         },
@@ -61,12 +67,16 @@ export function initCyberQuiz() {
             sub: 'Hands-on investigation',
             roles: [
                 'Threat hunter',
+                'SOC analyst (Tier 2)',
                 'Digital forensics analyst',
                 'Cloud security analyst',
-                'Penetration tester (junior)'
+                'Penetration tester',
+                'Cyber risk analyst',
+                'Third-party risk analyst',
+                'Security assurance analyst'
             ],
             careers:
-                'Investigate suspicious behaviour, validate weaknesses and apply technical controls.',
+                'Investigate threats, validate weaknesses, assess cyber risks and evaluate the effectiveness of security controls.',
             color: '#8b9cff',
             icon: '✦'
         },
@@ -78,10 +88,13 @@ export function initCyberQuiz() {
             roles: [
                 'Security architect (developing)',
                 'Security engineer',
-                'Cloud security engineer'
+                'Cloud security engineer',
+                'GRC consultant',
+                'Information security risk manager',
+                'Security governance architect'
             ],
             careers:
-                'Connect technical controls to system design, risk and business requirements.',
+                'Connect security architecture and technical controls with organisational risk, governance and regulatory requirements.',
             color: '#ffbf57',
             icon: '⬟'
         },
@@ -94,14 +107,18 @@ export function initCyberQuiz() {
                 'Security architect',
                 'Security consultant',
                 'Incident response lead',
-                'Security team lead'
+                'Security team lead',
+                'GRC manager',
+                'Head of information security governance',
+                'Chief Information Security Officer (CISO)'
             ],
             careers:
-                'Make complex risk decisions, guide incident strategy and shape security programmes.',
+                'Lead security strategy, oversee governance and compliance programmes, manage enterprise risk and guide strategic security decisions.',
             color: '#ff7da9',
             icon: '★'
         }
     ];
+
 
     /*
      * =====================================================
