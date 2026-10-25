@@ -22,101 +22,95 @@ export function initCyberQuiz() {
 
     // Find elements belonging to CyberQuiz only.
     const $ = id => root.querySelector(`#${id}`);
-  
 
-
+    
+    // For each rank, we have the most common job titles that the bank support.
     const RANKS = [
-        {
-            name: 'Associate',
-            min: 0,
-            max: 400,
-            sub: 'Security fundamentals',
-            roles: [
-                'IT support technician',
-                'Junior security analyst',
-                'Junior GRC analyst',
-                'Information security compliance assistant'
-            ],
-            careers:
-                'Build safe digital habits and understand core security controls, basic risk concepts and compliance requirements.',
-            color: '#38c8ff',
-            icon: '⬡'
-        },
-        {
-            name: 'Professional',
-            min: 400,
-            max: 1200,
-            sub: 'Operational security',
-            roles: [
-                'SOC analyst (Tier 1)',
-                'Junior incident responder',
-                'Vulnerability analyst',
-                'GRC analyst',
-                'IT risk analyst',
-                'Security compliance analyst'
-            ],
-            careers:
-                'Triage alerts, follow playbooks, assess operational risks and support security compliance activities.',
-            color: '#43e5a4',
-            icon: '◆'
-        },
-        {
-            name: 'Practitioner',
-            min: 1200,
-            max: 2900,
-            sub: 'Hands-on investigation',
-            roles: [
-                'Threat hunter',
-                'SOC analyst (Tier 2)',
-                'Digital forensics analyst',
-                'Cloud security analyst',
-                'Penetration tester',
-                'Cyber risk analyst',
-                'Third-party risk analyst',
-                'Security assurance analyst'
-            ],
-            careers:
-                'Investigate threats, validate weaknesses, assess cyber risks and evaluate the effectiveness of security controls.',
-            color: '#8b9cff',
-            icon: '✦'
-        },
-        {
-            name: 'Architect',
-            min: 2900,
-            max: 6200,
-            sub: 'Designing secure systems',
-            roles: [
-                'Security architect (developing)',
-                'Security engineer',
-                'Cloud security engineer',
-                'GRC consultant',
-                'Information security risk manager',
-                'Security governance architect'
-            ],
-            careers:
-                'Connect security architecture and technical controls with organisational risk, governance and regulatory requirements.',
-            color: '#ffbf57',
-            icon: '⬟'
-        },
-        {
-            name: 'Expert',
-            min: 6200,
-            max: Infinity,
-            sub: 'Strategic security judgement',
-            roles: [
-                'Security architect',
-                'Security consultant',
-                'Incident response lead',
-                'Security team lead',
-                'GRC manager',
-                'Head of information security governance',
-                'Chief Information Security Officer (CISO)'
-            ],
-            careers:
-                'Lead security strategy, oversee governance and compliance programmes, manage enterprise risk and guide strategic security decisions.',
-            color: '#ff7da9',
-            icon: '★'
-        }
+    {
+        name: 'Associate',
+        min: 0,
+        max: 400,
+        sub: 'Security fundamentals',
+        roles: [
+            'IT support technician',
+            'Junior security analyst',
+            'Junior GRC analyst',
+            'Information security compliance assistant'
+        ],
+        careers:
+            'Build safe digital habits and understand core security controls, basic risk concepts and compliance requirements.',
+        color: '#38c8ff',
+        icon: '⬡'
+    },
+    {
+        name: 'Professional',
+        min: 400,
+        max: 1200,
+        sub: 'Operational security',
+        roles: [
+            'SOC analyst (Tier 1)',
+            'Junior incident responder',
+            'Vulnerability analyst',
+            'GRC analyst',
+            'IT risk analyst'
+        ],
+        careers:
+            'Triage alerts, follow playbooks, assess operational risks and support security compliance activities.',
+        color: '#43e5a4',
+        icon: '◆'
+    },
+    {
+        name: 'Practitioner',
+        min: 1200,
+        max: 2900,
+        sub: 'Hands-on investigation',
+        roles: [
+            'SOC analyst (Tier 2)',
+            'Penetration tester',
+            'Cloud security analyst',
+            'Application security engineer',
+            'Cyber risk analyst'
+        ],
+        careers:
+            'Investigate incidents and malware, validate weaknesses, assess cyber risks and secure cloud, application and AI systems.',
+        color: '#8b9cff',
+        icon: '✦'
+    },
+    {
+        name: 'Architect',
+        min: 2900,
+        max: 6200,
+        sub: 'Designing secure systems',
+        roles: [
+            'Security architect (developing)',
+            'Security engineer',
+            'Cloud security engineer',
+            'DevSecOps engineer',
+            'GRC consultant'
+        ],
+        careers:
+            'Connect security architecture and technical controls with organisational risk, governance and regulatory requirements.',
+        color: '#ffbf57',
+        icon: '⬟'
+    },
+    {
+        name: 'Expert',
+        min: 6200,
+        max: Infinity,
+        sub: 'Strategic security judgement',
+        roles: [
+            'Security architect',
+            'Incident response lead',
+            'Security team lead',
+            'GRC manager',
+            'Chief Information Security Officer (CISO)'
+        ],
+        careers:
+            'Lead security strategy, oversee governance and compliance programmes, manage enterprise risk and guide strategic security decisions.',
+        color: '#ff7da9',
+        icon: '★'
+    }
+        
     ];
 
 
