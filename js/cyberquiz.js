@@ -28,7 +28,7 @@ export function initCyberQuiz() {
         {
             name: 'Associate',
             min: 0,
-            max: 250,
+            max: 400,
             sub: 'Security fundamentals',
             roles: [
                 'IT support technician',
@@ -41,8 +41,8 @@ export function initCyberQuiz() {
         },
         {
             name: 'Professional',
-            min: 250,
-            max: 650,
+            min: 400,
+            max: 1200,
             sub: 'Operational security',
             roles: [
                 'SOC analyst (Tier 1)',
@@ -56,8 +56,8 @@ export function initCyberQuiz() {
         },
         {
             name: 'Practitioner',
-            min: 650,
-            max: 1200,
+            min: 1200,
+            max: 2900,
             sub: 'Hands-on investigation',
             roles: [
                 'Threat hunter',
@@ -72,8 +72,8 @@ export function initCyberQuiz() {
         },
         {
             name: 'Architect',
-            min: 1200,
-            max: 2000,
+            min: 2900,
+            max: 6200,
             sub: 'Designing secure systems',
             roles: [
                 'Security architect (developing)',
@@ -87,7 +87,7 @@ export function initCyberQuiz() {
         },
         {
             name: 'Expert',
-            min: 2000,
+            min: 6200,
             max: Infinity,
             sub: 'Strategic security judgement',
             roles: [
