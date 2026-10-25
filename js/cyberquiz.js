@@ -207,6 +207,7 @@ export function initCyberQuiz() {
 
     let mode = 'rank';
     let toastTimer;
+    let missionRank = rankIndex();
 
     /* =====================================================
        3. RANK MANAGEMENT
@@ -477,6 +478,8 @@ export function initCyberQuiz() {
             return;
         }
 
+        missionRank = rankNumber;
+        
         mode = daily ? 'daily' : 'rank';
 
         mission = pickQuestions(rankNumber, daily);
@@ -647,34 +650,51 @@ export function initCyberQuiz() {
             }
         });
 
-        const correct = optionNumber === question.correct;
 
+        const correct = optionNumber === question.correct;
+        
+        // Rewards are available only when practising the
+        // player's current rank, not an already completed rank.
+        const eligibleForRewards =
+            missionRank === rankIndex() &&
+            question.rank === rankIndex();
+        
         if (correct) {
             sessionCorrect++;
             state.correct++;
-            state.streak++;
-
-            state.bestStreak = Math.max(
-                state.bestStreak,
-                state.streak
-            );
-
-            const earned =
-                20 +
-                rankIndex() * 10 +
-                (state.streak >= 3 ? 5 : 0);
-
-            state.xp += earned;
-            sessionXP += earned;
-
-            $('feedback').textContent =
-                `Correct! +${earned} XP · ${question.why}`;
+        
+            if (eligibleForRewards) {
+                state.streak++;
+        
+                state.bestStreak = Math.max(
+                    state.bestStreak,
+                    state.streak
+                );
+        
+                const earned =
+                    20 +
+                    rankIndex() * 10 +
+                    (state.streak >= 3 ? 5 : 0);
+        
+                state.xp += earned;
+                sessionXP += earned;
+        
+                $('feedback').textContent =
+                    `Correct! +${earned} XP · ${question.why}`;
+            } else {
+                $('feedback').textContent =
+                    `Correct! Practice only · No XP or streak rewards. ${question.why}`;
+            }
         } else {
-            state.streak = 0;
-
+            // Lower-rank practice must not affect reward streaks.
+            if (eligibleForRewards) {
+                state.streak = 0;
+            }
+        
             $('feedback').textContent =
                 `Not quite. ${question.why}`;
         }
+
 
         state.answered++;
         answeredThis++;
@@ -689,7 +709,12 @@ export function initCyberQuiz() {
         }
 
         // Award one hint credit for every third consecutive correct answer.
-        if (correct && state.streak % 3 === 0) {
+        if (
+            correct &&
+            eligibleForRewards &&
+            state.streak > 0 &&
+            state.streak % 3 === 0
+        ) {
             state.credits = Math.min(
                 9,
                 state.credits + 1
@@ -780,13 +805,18 @@ export function initCyberQuiz() {
             (sessionCorrect / mission.length) * 100
         );
 
-        const bonus =
-            percentage === 100
+        const eligibleForRewards =
+            missionRank === rankIndex() &&
+            mission.every(question => question.rank === missionRank);
+        
+        const bonus = eligibleForRewards
+            ? percentage === 100
                 ? 50
                 : percentage >= 80
                     ? 25
-                    : 0;
-
+                    : 0
+            : 0;
+        
         state.xp += bonus;
         sessionXP += bonus;
         state.completedMissions++;
