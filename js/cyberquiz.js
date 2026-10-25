@@ -24,7 +24,7 @@ export function initCyberQuiz() {
     const $ = id => root.querySelector(`#${id}`);
 
     
-    // For each rank, we have the most common job titles that the bank support.
+    // For each rank, we have the most common job titles that the data bank support.
     const RANKS = [
     {
         name: 'Associate',
