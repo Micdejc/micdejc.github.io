@@ -929,6 +929,8 @@ The game is integrated directly into the website through a responsive modal and 
 
 CyberQuiz aims to make cybersecurity learning practical, engaging, and accessible, helping users recognise threats, apply security principles, and make better-informed security decisions.
 
+**Disclaimer:** These levels are learning milestones, not professional certifications. 
+
 ---
 # Local Testing
 
