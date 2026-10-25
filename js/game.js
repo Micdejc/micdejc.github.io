@@ -39,9 +39,10 @@ window.dlnRecord =
    ========================================================= */
 
 const dlnGame = {
-
+    /*
     player:
         "Player",
+    */    
 
     level:
         1,
@@ -233,10 +234,10 @@ export function initDLN() {
 
         gameScreen:
             document.getElementById("dlnGameScreen"),
-
+        /*
         playerName:
             document.getElementById("dlnPlayerName"),
-
+        */
         startButton:
             document.getElementById("dlnStartButton"),
 
@@ -401,7 +402,7 @@ function bindDlnEvents() {
         restartDlnGame
     );
 
-
+    /*
     dlnElements.playerName?.addEventListener(
         "keydown",
         event => {
@@ -412,7 +413,7 @@ function bindDlnEvents() {
 
         }
     );
-
+    */
 
     dlnElements.numberInput?.addEventListener(
         "keydown",
@@ -471,7 +472,7 @@ function openGameModal() {
 
         if (!dlnGame.active) {
 
-            dlnElements.playerName?.focus();
+            //dlnElements.playerName?.focus();
 
         } else {
 
@@ -538,8 +539,8 @@ function updateDlnStartScreen() {
 
 
     dlnElements.savedGameTitle.textContent =
-        `👋 Welcome back, ${dlnGame.player}!`;
-
+        //`👋 Welcome back, ${dlnGame.player}!`;
+        `👋 Welcome back!`;
 
     dlnElements.savedGameInfo.textContent =
         `You're on level ${dlnGame.level} with ` +
@@ -555,27 +556,9 @@ function updateDlnStartScreen() {
    ========================================================= */
 
 function startDlnGame() {
-
+    /*
     const name =
         dlnElements.playerName.value.trim();
-
-
-    /*
-    if (
-        name.length > 0 &&
-        name.length < 3
-    ) {
-
-        showStartFeedback(
-            "Please enter at least 3 characters.",
-            "invalid"
-        );
-
-        shakeInput(dlnElements.playerName);
-
-        return;
-    }
-    */
 
 
     if (!name) {
@@ -621,7 +604,7 @@ function startDlnGame() {
 
         return;
     }
-
+    */
 
     /*
      * Starting a new game intentionally removes
@@ -631,10 +614,10 @@ function startDlnGame() {
      */
     clearDlnState();
 
-
+    /*
     dlnGame.player =
         name || "Player";
-
+   */
     dlnGame.level =
         1;
 
@@ -698,10 +681,10 @@ function continueSavedDlnGame() {
     dlnElements.result.hidden =
         true;
 
-
+    /*
     dlnElements.playerName.value =
         dlnGame.player;
-
+    */
 
     /*
      * If the player closed the page while the
@@ -1274,9 +1257,14 @@ function handleCorrectGuess() {
         updateDlnRecord();
 
         setTimeout(() => {
-
+            /*
             showDlnFeedback(
                 `🏅 NEW RECORD! ${dlnGame.player} set a new game record with ${dlnGame.score} points.`,
+                "record"
+            );
+            */
+            showDlnFeedback(
+                `🏅 NEW RECORD! You set a new game record with ${dlnGame.score} points.`,
                 "record"
             );
 
@@ -1314,8 +1302,8 @@ function showDlnLevelComplete() {
 
 
     dlnElements.resultTitle.textContent =
-        `Well done, ${dlnGame.player}!`;
-
+        //`Well done, ${dlnGame.player}!`;
+          `Well done!`;
 
     dlnElements.resultMessage.textContent =
         `You passed level ${dlnGame.level - 1}. Ready for level ${dlnGame.level}?`;
@@ -1428,8 +1416,8 @@ function endDlnGame() {
 
 
     dlnElements.resultMessage.textContent =
-        `${dlnGame.player}, your adventure ends at level ${dlnGame.level}. The number was ${dlnGame.target}.`;
-
+        //`${dlnGame.player}, your adventure ends at level ${dlnGame.level}. The number was ${dlnGame.target}.`;
+          `Your adventure ends at level ${dlnGame.level}. The number was ${dlnGame.target}.`;
 
     dlnElements.resultContinue.hidden =
         true;
@@ -1487,8 +1475,8 @@ function completeEntireDlnGame() {
 
 
     dlnElements.resultTitle.textContent =
-        `Congratulations, ${dlnGame.player}!`;
-
+        //`Congratulations, ${dlnGame.player}!`;
+          `Congratulations!`;
 
     dlnElements.resultMessage.textContent =
         `You completed all ${DLN.MAX_LEVEL} levels of DLN with a score of ${dlnGame.score}.`;
@@ -1536,10 +1524,10 @@ function restartDlnGame() {
     dlnElements.result.hidden =
         true;
 
-
+    /*
     dlnGame.player =
         dlnGame.player || "Player";
-
+   */
 
     dlnGame.level =
         1;
@@ -1699,10 +1687,10 @@ function saveDlnState() {
 
 
     const state = {
-
+        /*
         player:
             dlnGame.player,
-
+        */
         level:
             dlnGame.level,
 
@@ -1779,6 +1767,7 @@ function loadDlnState() {
         /*
          * Validate the essential saved values.
          */
+        /*
         if (
             typeof state.player !== "string" ||
             !state.player.trim()
@@ -1788,7 +1777,7 @@ function loadDlnState() {
 
             return false;
         }
-
+        */
 
         if (
             !Number.isInteger(state.level) ||
@@ -1910,9 +1899,10 @@ function loadDlnState() {
         /*
          * Restore the validated state.
          */
+        /*
         dlnGame.player =
             state.player;
-
+        */
         dlnGame.level =
             state.level;
 
@@ -2166,10 +2156,10 @@ export function resetDLN() {
 
     clearDlnState();
 
-
+    /*
     dlnGame.player =
         "Player";
-
+    */
 
     dlnGame.level =
         1;
