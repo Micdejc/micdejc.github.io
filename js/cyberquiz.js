@@ -247,8 +247,8 @@ export function initCyberQuiz() {
         const hasStarted = state.startedRanks?.includes(rankIndex()) ?? false;
     
         $('start').textContent = hasStarted
-            ? '▶ Continue journey'
-            : '🚀 Start journey';
+            ? '▶ Continue level'
+            : '🚀 Start level';
     }
 
     let mission = [];
