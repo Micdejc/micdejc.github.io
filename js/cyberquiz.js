@@ -1004,7 +1004,7 @@ export function initCyberQuiz() {
     
         if (resultIcon) {
             resultIcon.textContent =
-                isStrong ? '✨' : '🎯';
+                isStrong ? '✨' : '📋';
         }
     
         if (isStrong) {
