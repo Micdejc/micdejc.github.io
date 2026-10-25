@@ -1,5 +1,5 @@
 /*
- * CyberQuiz question bank
+ * CyberQuiz question bank (150 questions)
  *
  * Required properties:
  * id, rank, topic, difficulty, q, options,
@@ -8,15 +8,25 @@
  * Optional:
  * email (plain text)
  *
- * Rank levels:
- * 0 = Associate
- * 1 = Professional
- * 2 = Practitioner
- * 3 = Architect
- * 4 = Expert
+ * Rank levels and number of questions:
+ * 0 = Associate     (30 questions)
+ * 1 = Professional  (30 questions)
+ * 2 = Practitioner  (30 questions)
+ * 3 = Architect     (30 questions)
+ * 4 = Expert        (30 questions)
+ * Total: 150 questions
  *
- * Note: correct-answer positions are balanced across A/B/C/D
- * (25 each overall, 5 each per rank).
+ * Coverage: core security awareness, phishing and social engineering,
+ * identity, cloud, secure development, incident response, architecture,
+ * GRC, AI (LLM) security, malware analysis and penetration testing.
+ *
+ * Note: all 150 questions have been checked for uniqueness (ids 1-150,
+ * no duplicate or overlapping questions).
+ *
+ * Correct-answer positions are balanced across A/B/C/D:
+ * A=38, B=37, C=38, D=37 overall.
+ * Per rank (A/B/C/D): Associate 8/7/8/7, Professional 7/8/7/8,
+ * Practitioner 8/7/8/7, Architect 7/8/7/8, Expert 8/7/8/7.
  */
 
 window.CYBERQUIZ_QUESTIONS = [
@@ -724,5 +734,356 @@ window.CYBERQUIZ_QUESTIONS = [
     options: ["Maximise tool count regardless of need","Treat compliance as the only objective","Prioritise protection of critical services and information, define risk appetite and measure outcomes","Separate security decisions from business risk owners"],
     correct: 2, why: "Cyber strategy should protect business-critical outcomes and provide accountable, measurable risk reduction.",
     hint: "Start from business impact and critical services."
+  },
+  {
+    id: 101, rank: 0, topic: "GRC Fundamentals", difficulty: "BEGINNER",
+    q: "What is the main purpose of an information security policy?",
+    options: ["To list every employee's password","To replace the need for technical controls","To set out management's expectations and rules for protecting information","To guarantee the organisation will never be breached"],
+    correct: 2, why: "A security policy communicates management's intent and the rules people are expected to follow when handling information and systems.",
+    hint: "Think about who sets direction for how information is protected."
+  },
+  {
+    id: 102, rank: 0, topic: "Risk Management", difficulty: "BEGINNER",
+    q: "In cyber security, what does 'risk' describe?",
+    options: ["The potential for harm when a threat exploits a vulnerability","Any software that is out of date","A password that has expired","A guaranteed attack on a system"],
+    correct: 0, why: "Risk combines the likelihood of a threat exploiting a weakness with the impact if it happens.",
+    hint: "Risk is about possibility and consequence, not certainty."
+  },
+  {
+    id: 103, rank: 0, topic: "Compliance", difficulty: "BEGINNER",
+    q: "Why do organisations adopt standards such as ISO/IEC 27001?",
+    options: ["To avoid ever being audited","To remove all legal obligations","To make every system impossible to attack","To apply a recognised framework for managing information security"],
+    correct: 3, why: "Standards give organisations a structured, recognised approach to managing security and demonstrating good practice.",
+    hint: "Standards provide structure, not guarantees."
+  },
+  {
+    id: 104, rank: 0, topic: "AI Data Handling", difficulty: "BEGINNER",
+    q: "Why should you avoid pasting confidential company data into a public AI chatbot?",
+    options: ["Chatbots cannot read text","The data may be stored, reviewed or used in ways your organisation has not approved","It makes the chatbot respond more slowly","It permanently disables your account"],
+    correct: 1, why: "Public AI services may retain or process submitted data under terms the organisation has not assessed or approved.",
+    hint: "Consider where your input goes after you press send."
+  },
+  {
+    id: 105, rank: 0, topic: "AI Reliability", difficulty: "BEGINNER",
+    q: "What is an AI 'hallucination'?",
+    options: ["Output that sounds confident but is false or unsupported","A chatbot refusing to answer a question","An AI system shutting itself down","An AI encrypting its own responses"],
+    correct: 0, why: "Language models can generate plausible-sounding content that is inaccurate, so important outputs need verification.",
+    hint: "Fluent does not always mean factual."
+  },
+  {
+    id: 106, rank: 0, topic: "AI-Enabled Phishing", difficulty: "BEGINNER",
+    q: "How has generative AI affected the quality of phishing emails?",
+    options: ["Phishing emails have become easier to spot","AI cannot be used to write emails","They can be more convincing, with fewer spelling errors, so independent verification of requests matters even more","AI tools automatically block all phishing"],
+    correct: 2, why: "Generative AI can help attackers produce polished, personalised messages, so poor spelling is no longer a reliable warning sign.",
+    hint: "Do not rely on bad grammar to spot a scam."
+  },
+  {
+    id: 107, rank: 0, topic: "Malware Basics", difficulty: "BEGINNER",
+    q: "Which of the following is an example of malware?",
+    options: ["A firewall","A password manager","An update from an official vendor","A trojan disguised as a legitimate program"],
+    correct: 3, why: "A trojan appears to be useful or harmless software while performing malicious actions in the background.",
+    hint: "Look for software that pretends to be something it is not."
+  },
+  {
+    id: 108, rank: 0, topic: "Malware Types", difficulty: "BEGINNER",
+    q: "What is a key characteristic of a computer worm?",
+    options: ["It needs a user to open it every time it spreads","It can replicate itself across networks without attaching to a host file","It only affects printers","It is always harmless"],
+    correct: 1, why: "Worms are self-replicating and can spread between systems on their own, often by exploiting vulnerabilities or weak credentials.",
+    hint: "Think about malware that spreads without user action."
+  },
+  {
+    id: 109, rank: 0, topic: "Pentesting Basics", difficulty: "BEGINNER",
+    q: "What is penetration testing?",
+    options: ["Illegally accessing systems to find valuable data","Installing antivirus on all devices","An authorised, simulated attack used to find security weaknesses","Deleting unused accounts"],
+    correct: 2, why: "A penetration test is a controlled, authorised assessment that attempts to find and validate weaknesses before real attackers do.",
+    hint: "The key word is 'authorised'."
+  },
+  {
+    id: 110, rank: 0, topic: "Pentesting Ethics", difficulty: "BEGINNER",
+    q: "What must a penetration tester have before starting a test?",
+    options: ["Written authorisation that defines the scope","Verbal approval from any employee","The target's passwords","Nothing, if the aim is to help"],
+    correct: 0, why: "Testing without clear written permission and scope can be illegal and may cause harm to systems that were never meant to be tested.",
+    hint: "Good intentions do not replace permission."
+  },
+  {
+    id: 111, rank: 1, topic: "Risk Management", difficulty: "INTERMEDIATE",
+    q: "What is the main purpose of a risk register?",
+    options: ["To store user passwords","To record identified risks with their owners, ratings and treatment decisions","To list only technical vulnerabilities","To replace the incident response plan"],
+    correct: 1, why: "A risk register provides a single, maintained record of risks and who is accountable for managing them.",
+    hint: "It tracks ownership and decisions, not just findings."
+  },
+  {
+    id: 112, rank: 1, topic: "Risk Treatment", difficulty: "INTERMEDIATE",
+    q: "Which set lists the recognised ways to treat a risk?",
+    options: ["Hide it, delay it, delete it or ignore it","Document it only after an incident","Wait until it becomes an incident","Mitigate, transfer, avoid or accept it"],
+    correct: 3, why: "Common risk treatment options are reducing the risk, transferring it (for example by insurance or contract), avoiding the activity, or formally accepting it.",
+    hint: "Each option is a deliberate, documented decision."
+  },
+  {
+    id: 113, rank: 1, topic: "Policy Governance", difficulty: "INTERMEDIATE",
+    q: "What is the difference between a policy and a procedure?",
+    options: ["A policy states high-level intent and rules; a procedure describes the steps to follow","A policy is always technical; a procedure is always legal","They are identical documents","A procedure is mandatory and a policy is optional"],
+    correct: 0, why: "Policies set direction and requirements, while procedures explain how to carry them out in practice.",
+    hint: "One says what and why; the other says how."
+  },
+  {
+    id: 114, rank: 1, topic: "Prompt Injection", difficulty: "INTERMEDIATE",
+    q: "What is prompt injection in an LLM-based application?",
+    options: ["Adding more GPU memory to a server","Fine-tuning a model on public data","Crafting input that causes the model to follow attacker instructions instead of the intended ones","Compressing prompts to save tokens"],
+    correct: 2, why: "Prompt injection exploits the model's difficulty in separating trusted instructions from untrusted input.",
+    hint: "The attacker's text is treated as instructions."
+  },
+  {
+    id: 115, rank: 1, topic: "AI Data Poisoning", difficulty: "INTERMEDIATE",
+    q: "What is 'data poisoning' in machine learning security?",
+    options: ["Deleting a model after training","Manipulating training or fine-tuning data to corrupt or bias model behaviour","Encrypting model weights","Reducing the size of a dataset"],
+    correct: 1, why: "Poisoned data can cause a model to learn incorrect patterns or hidden behaviours, so data provenance and integrity matter.",
+    hint: "Think about what happens if the training data cannot be trusted."
+  },
+  {
+    id: 116, rank: 1, topic: "Static Analysis", difficulty: "INTERMEDIATE",
+    q: "What is static analysis of malware?",
+    options: ["Running the sample on a production server","Watching its network traffic live","Restoring files after infection","Examining a sample's code and properties without executing it"],
+    correct: 3, why: "Static analysis inspects strings, headers, imports and code without running the sample, which reduces execution risk.",
+    hint: "The sample is examined but never run."
+  },
+  {
+    id: 117, rank: 1, topic: "Dynamic Analysis", difficulty: "INTERMEDIATE",
+    q: "Why is dynamic malware analysis performed in an isolated sandbox or virtual machine?",
+    options: ["To observe behaviour while containing the risk of infection or spread","To make the malware run faster","To avoid recording its actions","To let the sample reach the corporate network"],
+    correct: 0, why: "Isolation lets analysts watch file, registry, process and network activity without endangering real systems.",
+    hint: "Containment comes before observation."
+  },
+  {
+    id: 118, rank: 1, topic: "Malicious Documents", difficulty: "INTERMEDIATE",
+    email: "FROM: Accounts <invoices@supplier-billing.example>\nSUBJECT: Overdue invoice\n\nPlease see the attached invoice. If the document appears blank, click 'Enable Content' to view it.",
+    q: "Why is the instruction to 'Enable Content' a warning sign?",
+    options: ["It is required to read every document safely","It only changes a document's appearance","Enabling content can let embedded macros run and download further malware","It automatically scans the file for threats"],
+    correct: 2, why: "Malicious documents often rely on macros or active content to execute code once the user enables it.",
+    hint: "Think about what active content in a document can do."
+  },
+  {
+    id: 119, rank: 1, topic: "Pentest Methodology", difficulty: "INTERMEDIATE",
+    q: "Which phase of a penetration test involves gathering information about the target?",
+    options: ["Reporting","Exploitation","Retesting","Reconnaissance"],
+    correct: 3, why: "Reconnaissance collects information about systems, people and services to understand the attack surface.",
+    hint: "It happens before any weakness is tested."
+  },
+  {
+    id: 120, rank: 1, topic: "Vulnerability Scanning", difficulty: "INTERMEDIATE",
+    q: "What is a key difference between a vulnerability scan and a penetration test?",
+    options: ["A scan exploits systems manually, while a pentest only lists software versions","A scan generally identifies potential weaknesses automatically, while a pentest involves testers validating and chaining them","They always produce identical results","A pentest never requires authorisation"],
+    correct: 1, why: "Scans find potential issues at scale; penetration tests add human judgement to validate impact and combine weaknesses.",
+    hint: "One is mostly automated discovery, the other is human-led validation."
+  },
+  {
+    id: 121, rank: 2, topic: "ISO 27001", difficulty: "ADVANCED",
+    q: "What does the Statement of Applicability in ISO/IEC 27001 document?",
+    options: ["Employee salary bands","Penetration test results","The incident log","Which controls apply, whether they are implemented, and the justification for including or excluding them"],
+    correct: 3, why: "The Statement of Applicability links the risk assessment to the selected controls and explains inclusions and exclusions.",
+    hint: "It connects risk decisions to controls."
+  },
+  {
+    id: 122, rank: 2, topic: "Segregation of Duties", difficulty: "ADVANCED",
+    q: "What does segregation of duties aim to achieve as a governance control?",
+    options: ["Dividing critical tasks between different people so no single person can complete and conceal a harmful action","Giving one administrator all rights for simplicity","Placing servers in separate rooms","Rotating every password each month"],
+    correct: 0, why: "Splitting responsibilities, such as requesting and approving a change, reduces the risk of error and abuse by a single individual.",
+    hint: "Think about requiring more than one person for sensitive actions."
+  },
+  {
+    id: 123, rank: 2, topic: "RAG Security", difficulty: "ADVANCED",
+    q: "An LLM chatbot retrieves documents from a knowledge base and sometimes returns content the user should not see. What is the most likely cause?",
+    options: ["The model has too many parameters","The temperature setting is too low","Access controls are not enforced on the retrieval layer","The tokenizer is outdated"],
+    correct: 2, why: "In retrieval-augmented generation, permissions must be enforced when documents are retrieved, since the model cannot be relied on to withhold data.",
+    hint: "Check who is allowed to retrieve what before the model sees it."
+  },
+  {
+    id: 124, rank: 2, topic: "Model Extraction", difficulty: "ADVANCED",
+    q: "What is a model extraction attack?",
+    options: ["Repeatedly querying a model's interface to reproduce its behaviour or steal its functionality","Deleting a model from a repository","Compressing a model to reduce its size","Encrypting a model's weights"],
+    correct: 0, why: "Attackers can use many crafted queries and responses to approximate a proprietary model, so access controls, rate limits and monitoring help protect it.",
+    hint: "Consider what an attacker can learn from many API responses."
+  },
+  {
+    id: 125, rank: 2, topic: "Insecure Output Handling", difficulty: "ADVANCED",
+    q: "An application passes LLM output directly to a database query or shell command. What is the best mitigation?",
+    options: ["Trust the output because the model is well trained","Treat output as untrusted and validate, encode or constrain it before downstream use","Increase the maximum token limit","Hide the system prompt"],
+    correct: 1, why: "Model output can be influenced by attackers, so it needs the same validation and safe handling as any untrusted input.",
+    hint: "Output from a model is not automatically safe."
+  },
+  {
+    id: 126, rank: 2, topic: "Malware Obfuscation", difficulty: "ADVANCED",
+    q: "Why do malware authors commonly pack or obfuscate their code?",
+    options: ["To make files smaller for legitimate users","To guarantee the code is digitally signed","To hinder static analysis and signature-based detection","To make execution faster on every system"],
+    correct: 2, why: "Packing and obfuscation conceal code and strings, making analysis and signature matching harder.",
+    hint: "The goal is to hide what the code really does."
+  },
+  {
+    id: 127, rank: 2, topic: "Indicators of Compromise", difficulty: "ADVANCED",
+    q: "What is an indicator of compromise (IOC)?",
+    options: ["A vendor's marketing claim","A user's performance metric","A password policy setting","An observable artefact, such as a file hash, domain or registry key, linked to malicious activity"],
+    correct: 3, why: "IOCs help defenders detect, hunt for and scope compromise, though they can change quickly and need context.",
+    hint: "It is evidence left behind by an attacker or malware."
+  },
+  {
+    id: 128, rank: 2, topic: "Misconfiguration Testing", difficulty: "ADVANCED",
+    q: "During an external test, a tester finds an administrative interface exposed to the internet that accepts default credentials. How should this finding be treated?",
+    options: ["Informational, because a login is required","High or critical risk, because default credentials on an exposed admin interface can give attackers control","Low risk, because the interface is rarely used","Not reportable if no data was viewed"],
+    correct: 1, why: "Default credentials on an exposed administrative interface are easily abused and can lead to full compromise, so they are usually rated severe.",
+    hint: "Consider how easy the weakness is to find and what access it gives."
+  },
+  {
+    id: 129, rank: 2, topic: "Rules of Engagement", difficulty: "ADVANCED",
+    q: "What is the purpose of a rules-of-engagement document in a penetration test?",
+    options: ["To list the vulnerabilities found","To describe the client's marketing plans","To define permitted targets, techniques, timing, contacts and data-handling expectations","To replace the legal contract"],
+    correct: 2, why: "Rules of engagement set safe, agreed boundaries and escalation routes so testing is controlled and accountable.",
+    hint: "It sets the boundaries before testing starts."
+  },
+  {
+    id: 130, rank: 2, topic: "Pentest Reporting", difficulty: "ADVANCED",
+    q: "Why should a penetration test report include risk ratings and remediation advice?",
+    options: ["So the client can prioritise and fix issues effectively","To make the report longer","To prove the tester was clever","To avoid the need for any retesting"],
+    correct: 0, why: "Findings are only useful if the client understands their impact and knows what to do about them.",
+    hint: "A report should drive action."
+  },
+  {
+    id: 131, rank: 3, topic: "Regulatory Mapping", difficulty: "EXPERT",
+    q: "An organisation operates in several jurisdictions with overlapping regulations. What is the most effective compliance approach?",
+    options: ["Comply only with the home country's rules","Build entirely separate control sets for every regulation","Wait for regulators to ask","Map requirements to a unified control framework and identify gaps and stricter obligations"],
+    correct: 3, why: "A common control set mapped to each requirement reduces duplication while ensuring the strictest applicable obligations are met.",
+    hint: "Consolidate controls, then map each regulation to them."
+  },
+  {
+    id: 132, rank: 3, topic: "Governance Models", difficulty: "EXPERT",
+    q: "What is the main purpose of the 'three lines' governance model?",
+    options: ["To define three tiers of network firewalls","To separate risk ownership, risk oversight and independent assurance","To require audits three times a year","To require three approvers for every change"],
+    correct: 1, why: "The model clarifies that management owns risk, oversight functions support and challenge it, and internal audit provides independent assurance.",
+    hint: "Think about who owns, who oversees and who independently checks."
+  },
+  {
+    id: 133, rank: 3, topic: "Risk Metrics", difficulty: "EXPERT",
+    q: "How does a key risk indicator (KRI) differ from a key performance indicator (KPI)?",
+    options: ["KRIs measure speed and KPIs measure danger","They are identical","KRIs signal changing exposure to risk, while KPIs measure how well a process or objective is performing","KRIs apply only to financial systems"],
+    correct: 2, why: "KRIs act as early warnings of rising risk, whereas KPIs track performance against goals.",
+    hint: "One looks forward at exposure; the other tracks performance."
+  },
+  {
+    id: 134, rank: 3, topic: "AI Supply Chain", difficulty: "EXPERT",
+    q: "Why should models downloaded from public hubs be treated as part of the software supply chain?",
+    options: ["They can contain malicious code or backdoors, so provenance, format safety and scanning matter","Models are always plain text and cannot execute code","Public hubs verify every upload","Models are immune to tampering"],
+    correct: 0, why: "Some model formats can execute code on load and third-party models may be tampered with, so they need the same scrutiny as other dependencies.",
+    hint: "A model file is an artefact from a third party."
+  },
+  {
+    id: 135, rank: 3, topic: "LLM Resource Abuse", difficulty: "EXPERT",
+    q: "A public LLM-powered API has no limits on request size, rate or cost per user. Which risk does this most directly increase?",
+    options: ["Training data poisoning","Improved model accuracy","Reduced hallucination","Resource exhaustion and runaway cost from unbounded consumption"],
+    correct: 3, why: "Without quotas, rate limits and monitoring, attackers or heavy users can degrade availability or generate large bills.",
+    hint: "Think about what happens when anyone can send unlimited expensive requests."
+  },
+  {
+    id: 136, rank: 3, topic: "Anti-Analysis Techniques", difficulty: "EXPERT",
+    q: "A malware sample exits when it detects virtual machine artefacts. How should an analyst respond?",
+    options: ["Mark the sample as harmless","Adjust the analysis environment to reduce detectable artefacts, or use alternative analysis methods","Run it on a production laptop instead","Disable all monitoring"],
+    correct: 1, why: "Analysts can harden the sandbox or combine static and other techniques to overcome environment checks, without sacrificing containment.",
+    hint: "Change how you observe the sample without losing isolation."
+  },
+  {
+    id: 137, rank: 3, topic: "Malware Detection Rules", difficulty: "EXPERT",
+    q: "What does YARA primarily help analysts do?",
+    options: ["Write rules that identify and classify malware based on patterns","Encrypt malware samples","Patch operating system vulnerabilities","Block phishing emails only"],
+    correct: 0, why: "YARA rules match strings, byte patterns and conditions so analysts can classify samples and hunt for related files.",
+    hint: "It is a pattern-matching rule language."
+  },
+  {
+    id: 138, rank: 3, topic: "Internal Network Testing", difficulty: "EXPERT",
+    q: "Why is analysing privilege escalation paths in a directory environment valuable to defenders?",
+    options: ["It is irrelevant to defenders","It helps attackers hide their activity","It shows how limited access could become broad compromise, guiding fixes to permissions and trust relationships","It only measures network bandwidth"],
+    correct: 2, why: "Mapping escalation paths reveals risky permissions and misconfigurations that can be corrected before attackers use them.",
+    hint: "Understand how small footholds can grow."
+  },
+  {
+    id: 139, rank: 3, topic: "Pentest Conduct", difficulty: "EXPERT",
+    q: "A tester accidentally accesses sensitive data outside the agreed scope. What is the best action?",
+    options: ["Keep a copy for the report","Continue exploring the system","Quietly delete any evidence","Stop, minimise handling of the data and notify the client contact under the rules of engagement"],
+    correct: 3, why: "Out-of-scope access should be halted and reported promptly so the client can manage the exposure appropriately.",
+    hint: "Stop first, then escalate through agreed channels."
+  },
+  {
+    id: 140, rank: 3, topic: "Business Logic Testing", difficulty: "EXPERT",
+    q: "Why should business logic flaws be tested manually rather than relying only on automated scanners?",
+    options: ["Automated scanners are illegal to use","Logic flaws depend on application-specific rules and workflows that automated tools generally do not understand","Business logic flaws cannot be exploited","Manual testing is always cheaper"],
+    correct: 1, why: "Issues such as skipping a payment step or abusing a discount rule need human understanding of how the application is meant to behave.",
+    hint: "A scanner does not know what the business process is supposed to do."
+  },
+  {
+    id: 141, rank: 4, topic: "Compliance vs Security", difficulty: "EXPERT",
+    q: "A board member asks whether being 'compliant' means the organisation is secure. How should a CISO respond?",
+    options: ["Explain that compliance shows defined requirements are met but does not guarantee security, so risk-based controls are still needed","Confirm that compliance always equals security","Say that compliance is irrelevant","Decline to discuss it"],
+    correct: 0, why: "Compliance is a baseline. It does not account for every threat or the organisation's specific risks.",
+    hint: "A baseline is not the same as a guarantee."
+  },
+  {
+    id: 142, rank: 4, topic: "M&A Due Diligence", difficulty: "EXPERT",
+    q: "During due diligence for an acquisition, what is the most appropriate cyber security approach?",
+    options: ["Ignore cyber risk until the deal closes","Rely solely on the seller's assurances","Assess the target's security posture, material risks and liabilities before close, and plan controlled integration","Connect the networks immediately to speed integration"],
+    correct: 2, why: "Acquisitions can import hidden breaches, weak controls and liabilities, so risk should be assessed before close and integration done in a controlled way.",
+    hint: "You inherit the target's risks along with its assets."
+  },
+  {
+    id: 143, rank: 4, topic: "AI Red Teaming", difficulty: "EXPERT",
+    q: "What is the purpose of an AI red-teaming programme?",
+    options: ["To prove a model is perfectly safe","To replace production monitoring","To support marketing claims","To probe models and applications for unsafe behaviour under adversarial conditions and feed findings into fixes and risk decisions"],
+    correct: 3, why: "Red teaming surfaces failure modes before and after deployment, but it does not prove complete safety.",
+    hint: "It finds weaknesses; it does not certify safety."
+  },
+  {
+    id: 144, rank: 4, topic: "AI Asset Inventory", difficulty: "EXPERT",
+    q: "Why should an organisation maintain an inventory of its AI systems, models and data sources?",
+    options: ["To increase model size","To understand where AI is used, with what data and dependencies, so risk, ownership and incidents can be managed","To avoid the need for governance","To replace testing"],
+    correct: 1, why: "You cannot govern, secure or respond to incidents involving AI you do not know about, including unapproved or shadow use.",
+    hint: "You cannot manage what you cannot see."
+  },
+  {
+    id: 145, rank: 4, topic: "AI Operations", difficulty: "EXPERT",
+    q: "Why is monitoring needed after an AI system is deployed?",
+    options: ["Behaviour, data and threats change over time, so monitoring detects degradation, abuse and emerging risks","Models never change after release","Monitoring replaces pre-deployment testing","Monitoring is only used for billing"],
+    correct: 0, why: "Drift, new attack techniques and changing usage can alter risk after launch, so continuous oversight is required.",
+    hint: "Deployment is the start of the risk lifecycle, not the end."
+  },
+  {
+    id: 146, rank: 4, topic: "C2 Infrastructure", difficulty: "EXPERT",
+    q: "A malware sample contacts many pseudo-random domain names. What technique does this suggest and why does it matter?",
+    options: ["Domain fronting, which encrypts email","DNS caching, which improves performance","A domain generation algorithm (DGA), which makes blocking fixed command-and-control domains harder","Port knocking, which hides open ports"],
+    correct: 2, why: "DGAs generate many candidate domains, so defenders need behavioural detection and algorithm-level analysis rather than a static blocklist.",
+    hint: "The malware does not rely on one fixed address."
+  },
+  {
+    id: 147, rank: 4, topic: "Memory Forensics", difficulty: "EXPERT",
+    q: "Which finding in a memory image most strongly suggests process injection?",
+    options: ["A legitimate process containing executable memory regions not backed by a file on disk","A process with a long name","A process that started at boot","A process using very little CPU"],
+    correct: 0, why: "Executable memory that is not mapped to a known file can indicate injected code, though it should be validated against other evidence.",
+    hint: "Look for code in memory that has no matching file."
+  },
+  {
+    id: 148, rank: 4, topic: "Malware Reporting", difficulty: "EXPERT",
+    q: "After analysing a ransomware sample, which output is most valuable to the defending organisation?",
+    options: ["A screenshot of the ransom note only","The ransom amount demanded","A list of suspected attacker names","Actionable IOCs, behavioural detections and mitigation guidance mapped to the organisation's environment"],
+    correct: 3, why: "Analysis is most useful when it produces detections and mitigations that defenders can apply in their own environment.",
+    hint: "Analysis should lead to defensive action."
+  },
+  {
+    id: 149, rank: 4, topic: "Remediation Verification", difficulty: "EXPERT",
+    q: "A client reports that a critical penetration test finding has been fixed. What should the tester do?",
+    options: ["Close the finding without checking","Retest to verify the fix is effective and has not introduced new weaknesses","Increase the finding's severity","Delete the original evidence"],
+    correct: 1, why: "Retesting confirms that the issue is actually resolved and that the change has not created new exposure.",
+    hint: "A fix is a claim until it is verified."
+  },
+  {
+    id: 150, rank: 4, topic: "Cloud Pentesting", difficulty: "EXPERT",
+    q: "What must be confirmed before penetration testing a cloud environment?",
+    options: ["Cloud testing never requires permission","Only the provider's own staff can test","The test complies with the provider's policies and the client's written authorisation, respecting the shared-responsibility boundary","Shared responsibility means the provider tests customers' workloads for them"],
+    correct: 2, why: "Cloud testing must stay within provider rules and the customer's authorised scope, since responsibilities are divided between provider and customer.",
+    hint: "Check both the provider's rules and your client's authorisation."
   }
 ];
