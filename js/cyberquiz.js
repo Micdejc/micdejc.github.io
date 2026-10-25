@@ -103,6 +103,15 @@ export function initCyberQuiz() {
         }
     ];
 
+    const PROGRESSION = {
+    correctXP: [20, 25, 30, 35, 40],
+    streakBonus: 5,
+    streakLength: 3,
+    perfectMissionBonus: 50,
+    strongMissionBonus: 25,
+    strongMissionAccuracy: 80
+    };
+
     const STORE = 'CyberQuiz';
 
 /* =====================================================
@@ -208,6 +217,7 @@ export function initCyberQuiz() {
     let mode = 'rank';
     let toastTimer;
     let missionRank = rankIndex();
+    let missionRewardEligible = false;
 
     /* =====================================================
        3. RANK MANAGEMENT
@@ -479,6 +489,10 @@ export function initCyberQuiz() {
         }
 
         missionRank = rankNumber;
+
+        // Only a mission at the player's current rank can
+        // generate progression rewards.
+        missionRewardEligible = rankNumber === rankIndex();
         
         mode = daily ? 'daily' : 'rank';
 
@@ -653,11 +667,12 @@ export function initCyberQuiz() {
 
         const correct = optionNumber === question.correct;
         
-        // Rewards are available only when practising the
-        // player's current rank, not an already completed rank.
+        // Eligibility is locked at mission start.
+        // Only questions belonging to that starting rank
+        // can generate answer rewards.
         const eligibleForRewards =
-            missionRank === rankIndex() &&
-            question.rank === rankIndex();
+            missionRewardEligible &&
+            question.rank === missionRank;
         
         if (correct) {
             sessionCorrect++;
@@ -672,9 +687,12 @@ export function initCyberQuiz() {
                 );
         
                 const earned =
-                    20 +
-                    rankIndex() * 10 +
-                    (state.streak >= 3 ? 5 : 0);
+                    PROGRESSION.correctXP[missionRank] +
+                    (
+                        state.streak >= PROGRESSION.streakLength
+                            ? PROGRESSION.streakBonus
+                            : 0
+                    );
         
                 state.xp += earned;
                 sessionXP += earned;
@@ -686,7 +704,6 @@ export function initCyberQuiz() {
                     `Correct! Practice only · No XP or streak rewards. ${question.why}`;
             }
         } else {
-            // Lower-rank practice must not affect reward streaks.
             if (eligibleForRewards) {
                 state.streak = 0;
             }
@@ -713,12 +730,9 @@ export function initCyberQuiz() {
             correct &&
             eligibleForRewards &&
             state.streak > 0 &&
-            state.streak % 3 === 0
+            state.streak % PROGRESSION.streakLength === 0
         ) {
-            state.credits = Math.min(
-                9,
-                state.credits + 1
-            );
+            state.credits = Math.min(9, state.credits + 1);
         }
 
         saveState();
@@ -806,14 +820,16 @@ export function initCyberQuiz() {
         );
 
         const eligibleForRewards =
-            missionRank === rankIndex() &&
-            mission.every(question => question.rank === missionRank);
+            missionRewardEligible &&
+            mission.every(question =>
+                question.rank === missionRank
+            );
         
         const bonus = eligibleForRewards
             ? percentage === 100
-                ? 50
-                : percentage >= 80
-                    ? 25
+                ? PROGRESSION.perfectMissionBonus
+                : percentage >= PROGRESSION.strongMissionAccuracy
+                    ? PROGRESSION.strongMissionBonus
                     : 0
             : 0;
         
@@ -840,9 +856,16 @@ export function initCyberQuiz() {
                 : percentage >= 60
                     ? 'Mission complete!'
                     : 'Keep training';
-
+        /*
         $('result-summary').textContent =
             `${rank().name} progression · ${
+                mode === 'daily'
+                    ? 'Daily challenge'
+                    : 'Career mission'
+            }`;
+        */
+        $('result-summary').textContent =
+            `${RANKS[missionRank].name} ${
                 mode === 'daily'
                     ? 'Daily challenge'
                     : 'Career mission'
@@ -856,7 +879,7 @@ export function initCyberQuiz() {
 
         $('result-correct').textContent =
             `${sessionCorrect}/${mission.length}`;
-
+        /*
         $('result-message').textContent = bonus
             ? `Completion bonus: +${bonus} XP. ${
                 percentage === 100
@@ -864,12 +887,34 @@ export function initCyberQuiz() {
                     : 'Strong work.'
             } ${rank().name} career directions: ${rank().roles.join(', ')}.`
             : `Review the feedback and try another mission. Suggested next career directions: ${rank().roles.join(', ')}.`;
+        */
 
+        $('result-message').textContent = !missionRewardEligible
+            ? `Practice completed. No XP, streak rewards or completion bonus awarded. ${
+                RANKS[missionRank].name
+            } practice can help reinforce your knowledge.`
+            : bonus
+                ? `Completion bonus: +${bonus} XP. ${
+                    percentage === 100
+                        ? 'Perfect accuracy!'
+                        : 'Strong work.'
+                  } ${
+                    rank().name
+                  } career directions: ${rank().roles.join(', ')}.`
+                : `No completion bonus this time. Review the feedback and try another mission. Suggested career directions: ${
+                    rank().roles.join(', ')
+                  }.`;
+        /*
         $('continue').innerHTML =
             rankIndex() > mission[0].rank
                 ? 'Explore your new rank <span class="pagination-arrow pagination-arrow-right" aria-hidden="true"></span>'
                 : 'Continue journey <span class="pagination-arrow pagination-arrow-right" aria-hidden="true"></span>';
+       */
 
+        $('continue').innerHTML =
+            rankIndex() > missionRank
+                ? 'Explore your new rank <span class="pagination-arrow pagination-arrow-right" aria-hidden="true"></span>'
+                : 'Continue journey <span class="pagination-arrow pagination-arrow-right" aria-hidden="true"></span>';
         
         // Update the result icon according to the score.
         const resultIcon = $('result-icon');
