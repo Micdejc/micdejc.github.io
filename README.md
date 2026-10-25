@@ -18,6 +18,7 @@ micdejc.github.io/
 │   ├── hero.html
 │   ├── calendar.html
 │   ├── game.html
+│   ├── cyberquiz.html
 │   └── footer.html
 │
 ├── sections/
@@ -59,6 +60,7 @@ micdejc.github.io/
 │   ├── feature-modal.css
 │   ├── blog.css
 │   ├── game.css
+│   ├── cyberquiz.css
 │   ├── testimonials.css
 │   └── search.css
 │
@@ -68,6 +70,8 @@ micdejc.github.io/
 │   ├── feature.js
 │   ├── blog.js
 │   ├── game.js
+│   ├── cyberquiz.js
+│   ├── question.js
 │   ├── blog-posts.js
 │   └── search.js
 │
@@ -902,6 +906,29 @@ The game runs entirely in the browser and does **not require a database or serve
 
 The game is integrated directly into the website through a responsive modal and automatically follows the site's light and dark themes.
 
+
+# CyberQuiz
+
+**CyberQuiz** is an interactive cybersecurity quiz available on my personal website, designed to test cybersecurity knowledge, strengthen security awareness, and develop practical skills through engaging, scenario-based questions.
+
+## Five Progressive Levels
+
+- 🥉 **Associate** – Build foundational cybersecurity knowledge.
+- 🥈 **Professional** – Apply security principles to everyday workplace scenarios.
+- 🥇 **Practitioner** – Analyse threats and make practical security decisions.
+- 🏆 **Architect** – Explore security architecture, risk management, and system design.
+- 🎓 **Expert** – Tackle advanced challenges involving security strategy, governance, and emerging threats.
+
+## Key Features
+
+- **Topic-based questions:** Explore phishing, password security, identity and access management, incident response, cloud security, AI security, and more.
+- **Explanations:** Learn why an answer is correct and reinforce key cybersecurity concepts.
+- **Hints:** Get guidance when you need help answering a question.
+- **Daily Challenge:** Put your knowledge to the test with a daily challenge.
+- **Interactive learning:** Strengthen your cybersecurity knowledge through practical scenarios and progressive difficulty levels.
+
+CyberQuiz aims to make cybersecurity learning practical, engaging, and accessible, helping users recognise threats, apply security principles, and make better-informed security decisions.
+
 ---
 # Local Testing
 
@@ -1047,6 +1074,8 @@ The website should remain:
 | Main JavaScript        | `js/main.js`             |
 | Calendar JavaScript    | `js/calendar.js`         |
 | Game JavaScript        | `js/game.js`             |
+| Cyber quiz JavaScript  | `js/cyberquiz.js`        |
+| Cyber quiz Database    | `js/question.js`         |
 | Blog JavaScript        | `js/blog.js`             |
 | Profile assets         | `assets/`                |
 | News images            | `assets/news/`           |
