@@ -630,6 +630,19 @@ export function initCyberQuiz() {
             behavior: 'smooth',
             block: 'start'
         });
+
+        // Reset the feedback panel when a new mission starts.
+        const feedback = $('feedback');
+        
+        // Display the default informational message.
+        feedback.textContent = 'Choose carefully. You can do this.';
+        
+        // Remove any previous correct or incorrect answer styling.
+        feedback.classList.remove('is-correct', 'is-wrong');
+        
+        // Apply the neutral informational style for the new mission.
+        feedback.classList.add('is-tip');
+        
     }
 
     /* =====================================================
@@ -782,9 +795,20 @@ export function initCyberQuiz() {
 
         const feedback = $('feedback');
         // Remove any previous result styles before applying the new one.
-        feedback.classList.remove('is-correct', 'is-wrong');
-        // Highlight the feedback panel according to whether the answer is correct or incorrect.
-        feedback.classList.add(correct ? 'is-correct' : 'is-wrong');
+        // Remove previous feedback styles before applying the new state.
+        feedback.classList.remove(
+            'is-correct',
+            'is-wrong',
+            'is-tip'
+        );
+        // Apply the appropriate style: correct, incorrect, or informational tip.
+        feedback.classList.add(
+            correct === true
+                ? 'is-correct'
+                : correct === false
+                    ? 'is-wrong'
+                    : 'is-tip'
+        );
         
         // Eligibility is locked at mission start.
         // Only questions belonging to that starting rank
