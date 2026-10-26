@@ -893,6 +893,58 @@ body.cyberquiz-modal-open {
     transform: translateX(2px);
 }
 
+
+/* Correct answer: subtle, rewarding bounce */
+@keyframes cq-correct-pop {
+    0% {
+        transform: scale(1);
+    }
+    35% {
+        transform: scale(1.04);
+    }
+    65% {
+        transform: scale(0.99);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Wrong answer: short horizontal shake */
+@keyframes cq-wrong-shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    20% {
+        transform: translateX(-5px);
+    }
+    40% {
+        transform: translateX(5px);
+    }
+    60% {
+        transform: translateX(-3px);
+    }
+    80% {
+        transform: translateX(3px);
+    }
+}
+
+.answer.answer-correct {
+    animation: cq-correct-pop 380ms ease-out;
+}
+
+.answer.answer-wrong {
+    animation: cq-wrong-shake 360ms ease-in-out;
+}
+
+/* Accessibility: respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    .answer.answer-correct,
+    .answer.answer-wrong {
+        animation: none;
+    }
+}
+
 .cyberquiz-root .letter {
     display: grid;
     place-items: center;
