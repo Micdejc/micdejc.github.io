@@ -779,6 +779,12 @@ export function initCyberQuiz() {
                 correct ? 'answer-correct' : 'answer-wrong'
             );
         }
+
+        const feedback = $('feedback');
+        // Remove any previous result styles before applying the new one.
+        feedback.classList.remove('is-correct', 'is-wrong');
+        // Highlight the feedback panel according to whether the answer is correct or incorrect.
+        feedback.classList.add(correct ? 'is-correct' : 'is-wrong');
         
         // Eligibility is locked at mission start.
         // Only questions belonging to that starting rank
