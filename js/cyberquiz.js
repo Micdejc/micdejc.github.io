@@ -719,7 +719,7 @@ export function initCyberQuiz() {
                         <circle cx="12" cy="12" r="10"/>
                         <path d="m9 12 2 2 4-4"/>
                    </svg>`
-                : 'Validate <span class="pagination-arrow pagination-arrow-right" aria-hidden="true"></span>';
+                : 'Next <span class="pagination-arrow pagination-arrow-right" aria-hidden="true"></span>';
 
         $('hint-button').disabled = state.credits < 1;
 
