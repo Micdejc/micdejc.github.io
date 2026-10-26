@@ -764,6 +764,17 @@ export function initCyberQuiz() {
 
 
         const correct = optionNumber === question.correct;
+
+        // Animate the selected answer according to its result.
+        const selectedButton = $('answers').querySelector(
+            `[data-option="${optionNumber}"]`
+        );
+        
+        if (selectedButton) {
+            selectedButton.classList.add(
+                correct ? 'answer-correct' : 'answer-wrong'
+            );
+        }
         
         // Eligibility is locked at mission start.
         // Only questions belonging to that starting rank
