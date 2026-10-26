@@ -820,20 +820,20 @@ body.cyberquiz-modal-open {
 /* Correct answer */
 .cq-feedback.is-correct {
     border-left-color: #16a34a;
-    background: color-mix(in srgb, #16a34a 9%, var(--surface));
+    /* background: color-mix(in srgb, #16a34a 9%, var(--surface)); */
 }
 
 /* Incorrect answer */
 .cq-feedback.is-wrong {
     border-left-color: #dc2626;
-    background: color-mix(in srgb, #dc2626 8%, var(--surface));
+    /* background: color-mix(in srgb, #dc2626 8%, var(--surface)); */
 }
 
 /* Informational tip: neutral guidance without implying success or failure. */
 .cq-feedback.is-tip {
     border-left-color: var(--primary);
-    background: var(--surface-alt);
-    color: var(--text);
+    /* background: var(--surface-alt); */
+    /* color: var(--text); */
 }
 
 /* =========================================================
