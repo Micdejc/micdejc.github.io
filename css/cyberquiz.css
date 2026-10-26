@@ -801,6 +801,34 @@ body.cyberquiz-modal-open {
     font-size: 0.9rem;
 }
 
+.cq-feedback {
+    flex: 1;
+    min-width: 0;
+    padding: 14px 18px;
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--primary);
+    border-radius: 12px;
+    background: var(--surface-alt);
+
+    color: var(--text);
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.65;
+    overflow-wrap: anywhere;
+}
+
+/* Correct answer */
+.cq-feedback.is-correct {
+    border-left-color: #16a34a;
+    background: color-mix(in srgb, #16a34a 9%, var(--surface));
+}
+
+/* Incorrect answer */
+.cq-feedback.is-wrong {
+    border-left-color: #dc2626;
+    background: color-mix(in srgb, #dc2626 8%, var(--surface));
+}
+
 /* =========================================================
    10. PHISHING EMAIL SCENARIO
    ========================================================= */
