@@ -829,6 +829,13 @@ body.cyberquiz-modal-open {
     background: color-mix(in srgb, #dc2626 8%, var(--surface));
 }
 
+/* Informational tip: neutral guidance without implying success or failure. */
+.cq-feedback.is-tip {
+    border-left-color: var(--primary);
+    background: var(--surface-alt);
+    color: var(--text);
+}
+
 /* =========================================================
    10. PHISHING EMAIL SCENARIO
    ========================================================= */
