@@ -394,10 +394,14 @@ export function initCyberQuiz() {
                 <article class="level-card
                     ${unlocked ? 'unlocked' : 'locked'}
                     ${current ? 'current' : ''}">
-    
+
                     <span class="level-num">
                         RANK 0${i + 1}
-                        ${current ? '· CURRENT' : ''}
+                        ${i < rankIndex()
+                            ? '· COMPLETED'
+                            : current
+                                ? '· CURRENT'
+                                : ''}
                     </span>
     
                     <div
