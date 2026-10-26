@@ -398,7 +398,7 @@ export function initCyberQuiz() {
                     <span class="level-num">
                         RANK 0${i + 1}
                         ${i < rankIndex()
-                            ? '· COMPLETED'
+                            ? '· DONE'
                             : current
                                 ? '· CURRENT'
                                 : ''}
