@@ -568,6 +568,18 @@ export function initCyberQuiz() {
             }
         }
 
+        // Reset the feedback panel when a new mission starts.
+        const feedback = $('feedback');
+        
+        // Display the default informational message.
+        feedback.textContent = 'Choose carefully. You can do this.';
+        
+        // Remove any previous correct or incorrect answer styling.
+        feedback.classList.remove('is-correct', 'is-wrong');
+        
+        // Apply the neutral informational style for the new mission.
+        feedback.classList.add('is-tip');
+
         missionRank = rankNumber;
 
         // Only a mission at the player's current rank can
@@ -629,19 +641,6 @@ export function initCyberQuiz() {
             behavior: 'smooth',
             block: 'start'
         });
-
-        // Reset the feedback panel when a new mission starts.
-        const feedback = $('feedback');
-        
-        // Display the default informational message.
-        feedback.textContent = 'Choose carefully. You can do this.';
-        
-        // Remove any previous correct or incorrect answer styling.
-        feedback.classList.remove('is-correct', 'is-wrong');
-        
-        // Apply the neutral informational style for the new mission.
-        feedback.classList.add('is-tip');
-        
     }
 
     /* =====================================================
