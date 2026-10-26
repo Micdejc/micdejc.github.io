@@ -6,7 +6,6 @@ export function initCyberQuiz() {
        1. CONFIGURATION
        ===================================================== */
 
-
     const root = document.getElementById('cyberquiz-root');
 
     if (!root) {
