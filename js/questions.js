@@ -1,5 +1,5 @@
 /*
- * CyberQuiz question bank (150 questions)
+ * CyberQuiz question bank (200 questions)
  *
  * Required properties:
  * id, rank, topic, difficulty, q, options,
@@ -11,23 +11,23 @@
  * Rank levels and number of questions:
  * 0 = Associate     (30 questions)
  * 1 = Professional  (30 questions)
- * 2 = Practitioner  (30 questions)
- * 3 = Architect     (30 questions)
- * 4 = Expert        (30 questions)
- * Total: 150 questions
+ * 2 = Practitioner  (40 questions)
+ * 3 = Architect     (45 questions)
+ * 4 = Expert        (55 questions)
+ * Total: 200 questions
  *
  * Coverage: core security awareness, phishing and social engineering,
  * identity, cloud, cryptography, secure development, incident response,
  * architecture, GRC, AI (LLM) security, malware analysis and
  * penetration testing.
  *
- * Note: all 150 questions have been checked for uniqueness (ids 1-150,
- * no duplicate or overlapping questions, 150 distinct topic labels).
+ * Note: all 200 questions have been checked for uniqueness (ids 1-200,
+ * no duplicate or overlapping questions, 200 distinct topic labels).
  *
  * Correct-answer positions are balanced across A/B/C/D:
- * A=38, B=37, C=38, D=37 overall.
+ * A=50, B=50, C=50, D=50 overall.
  * Per rank (A/B/C/D): Associate 8/7/8/7, Professional 7/8/7/8,
- * Practitioner 8/7/8/7, Architect 7/8/7/8, Expert 8/7/8/7.
+ * Practitioner 10/10/10/10, Architect 11/12/11/11, Expert 14/13/14/14.
  *
  * Answer-length balance: the correct option is the longest in about
  * a quarter of questions and no consistent length pattern identifies it.
@@ -1089,5 +1089,355 @@ window.CYBERQUIZ_QUESTIONS = [
     options: ["Cloud testing never requires permission from the provider or client","Only the provider's own staff are ever allowed to test the platform","The test follows the provider's policies and the client's written authorisation","Shared responsibility means the provider tests customers' workloads for them"],
     correct: 2, why: "Cloud testing must stay within provider rules and the customer's authorised scope, since responsibilities are divided between provider and customer.",
     hint: "Check both the provider's rules and your client's authorisation."
+  },
+  {
+    id: 151, rank: 2, topic: "Threat Hunting", difficulty: "ADVANCED",
+    q: "A threat hunter wants to look for signs of an intrusion that no existing alert has detected. What is the best starting point?",
+    options: ["Wait for the SIEM to raise a high-severity alert about the activity before starting","Form a hypothesis from known attacker behaviour and search telemetry for it","Re-run the latest vulnerability scan and review the results","Block all outbound traffic until the source is found"],
+    correct: 1, why: "Hunting is hypothesis-driven: analysts take a known attacker technique and look for evidence of it in telemetry, rather than waiting for alerts.",
+    hint: "Start with a question about attacker behaviour, not with an alert."
+  },
+  {
+    id: 152, rank: 2, topic: "Container Image Security", difficulty: "ADVANCED",
+    q: "A container image deployed to production contains a vulnerable library. Which control best prevents this from recurring?",
+    options: ["Scan running containers manually once each year during the audit","Let developers bypass scanning whenever delivery deadlines are tight","Rebuild images only after an incident has been reported by users","Scan images in the pipeline and block those that fail policy"],
+    correct: 3, why: "Scanning at build time and enforcing a policy gate stops known-vulnerable images before they reach production.",
+    hint: "Catch the problem before deployment, not after."
+  },
+  {
+    id: 153, rank: 2, topic: "Volatile Evidence", difficulty: "ADVANCED",
+    q: "Responders must collect evidence from a running compromised server. Which data should be captured first?",
+    options: ["Volatile data such as running processes, memory and active network connections","Archived files stored on the server's secondary drive","A disk image taken after the server has been rebooted","Backup logs from the previous financial year"],
+    correct: 0, why: "Volatile data is lost when a system is powered off or rebooted, so it should be collected before more persistent sources.",
+    hint: "Capture what disappears fastest first."
+  },
+  {
+    id: 154, rank: 2, topic: "Risk Scenarios", difficulty: "ADVANCED",
+    q: "A risk analyst is asked to describe a ransomware risk so business leaders can compare it with other risks. What is the best approach?",
+    options: ["List the names of every ransomware family observed across the sector this year","Give a single red, amber or green rating without any supporting explanation","Write a scenario covering the threat, asset, impact and existing controls","Describe the technical details of the encryption algorithm used"],
+    correct: 2, why: "A structured scenario links threat, asset, impact and controls, so leaders can compare risks on the same basis.",
+    hint: "Leaders need consequences and context, not technical trivia."
+  },
+  {
+    id: 155, rank: 2, topic: "SAST and DAST", difficulty: "ADVANCED",
+    q: "Which statement best describes the difference between SAST and DAST?",
+    options: ["SAST tests the running application from outside, while DAST analyses the source code directly","SAST analyses code without running it; DAST tests the running application","SAST is used only for networks, while DAST is used only for databases","They are identical tools that differ only in their licensing models"],
+    correct: 1, why: "Static testing inspects code without executing it, whereas dynamic testing probes a running application and can find runtime and configuration issues.",
+    hint: "One looks at the code; the other attacks the running system."
+  },
+  {
+    id: 156, rank: 2, topic: "Social Engineering Assessments", difficulty: "ADVANCED",
+    q: "A client asks for a phishing simulation as part of a security assessment. Which practice is most appropriate?",
+    options: ["Include the personal accounts and family members of executives to make the test realistic enough","Capture real passwords and store them in plain text so that they can be shown in the report","Run the exercise without telling the client sponsor or legal team that it is taking place","Agree scope, data handling and escalation rules first, and avoid keeping real passwords"],
+    correct: 3, why: "Social engineering tests need explicit scope, safe handling of any captured data and a sponsor who can intervene, or they can cause real harm.",
+    hint: "Realism never justifies ignoring scope or data protection."
+  },
+  {
+    id: 157, rank: 2, topic: "Cloud Audit Logging", difficulty: "ADVANCED",
+    q: "Which cloud log source is most useful for detecting a stolen access key being used to create new resources?",
+    options: ["Operating system logs collected from a single virtual machine in one region","Billing statements that the finance team reviews at the end of each year","Control-plane audit logs of API calls and the identities behind them","Application debug logs produced by the public web front end of the service"],
+    correct: 2, why: "Control-plane logs record who called which cloud API and when, which is exactly where stolen-key abuse becomes visible.",
+    hint: "Look where the cloud account itself is being managed."
+  },
+  {
+    id: 158, rank: 2, topic: "Alert Escalation", difficulty: "ADVANCED",
+    q: "A Tier 1 analyst escalates an alert showing a user signing in from two countries within ten minutes. What should the Tier 2 analyst check first?",
+    options: ["Whether the sign-ins are genuine, using device, session and VPN details","Whether the user's password meets the organisation's complexity policy requirements","Whether the user has completed the annual security awareness training course","Whether the sign-in times fall inside normal working hours"],
+    correct: 0, why: "Enriching the alert with device, session and VPN data quickly separates impossible travel from a legitimate or compromised sign-in.",
+    hint: "Enrich the alert before drawing conclusions."
+  },
+  {
+    id: 159, rank: 2, topic: "Interim Risk Controls", difficulty: "ADVANCED",
+    q: "A risk treatment plan proposes a control that will take six months to deploy. What should the analyst record in the meantime?",
+    options: ["Nothing at all, because the risk is only recorded once the control has been fully deployed","A statement that the risk is now permanently accepted by the business","The purchase cost of the control and the name of the supplier only","Interim compensating measures, the current residual risk and an owner for the delay"],
+    correct: 3, why: "Risk remains while a control is pending, so interim measures, the current residual risk and accountability should be documented.",
+    hint: "The risk exists today, not in six months."
+  },
+  {
+    id: 160, rank: 2, topic: "API Abuse Prevention", difficulty: "ADVANCED",
+    q: "An API endpoint for password resets is being abused to send thousands of emails. Which control best reduces the abuse?",
+    options: ["Increasing the capacity of the email server so that it can send more messages","Rate limiting by account and source, with monitoring and alerting","Making the API available only on weekdays during working hours","Hiding the API address from public documentation so nobody finds it"],
+    correct: 1, why: "Rate limits tied to identity and source, with monitoring, constrain automated abuse without relying on secrecy.",
+    hint: "Limit how often one source can trigger the action."
+  },
+  {
+    id: 161, rank: 3, topic: "Endpoint Detection Architecture", difficulty: "EXPERT",
+    q: "An architect is designing endpoint protection for a large estate. Which design best supports detection and response across thousands of devices?",
+    options: ["Signature-based antivirus updated monthly on each device","Local-only logs reviewed when a user reports a problem","Agents that send telemetry to a central platform, with automated isolation and a tested response workflow","A single administrator who inspects each device by hand every week"],
+    correct: 2, why: "Central telemetry with automated containment and a rehearsed workflow lets a small team detect and respond at scale.",
+    hint: "Think about visibility and response across thousands of devices."
+  },
+  {
+    id: 162, rank: 3, topic: "Secure Baselines", difficulty: "EXPERT",
+    q: "How should an organisation maintain hardened configurations across thousands of servers and workstations?",
+    options: ["Set secure baselines, deploy them through configuration management and detect drift","Harden each machine by hand when it is first installed and then never revisit the settings","Allow every team to choose its own settings and then document them some time afterwards","Rely on users reporting misconfigurations when they happen to notice them"],
+    correct: 0, why: "Defined baselines applied through automation, with drift detection, keep configurations consistent and verifiable.",
+    hint: "Automate the baseline and watch for drift."
+  },
+  {
+    id: 163, rank: 3, topic: "DNS Security", difficulty: "EXPERT",
+    q: "Which control best helps detect and block malware that uses DNS to reach attacker infrastructure?",
+    options: ["Allowing every device to choose any public DNS resolver that it prefers to use","Disabling DNS logging to reduce the volume of data that analysts must review","Blocking all outbound web traffic during working hours but allowing DNS freely","DNS filtering and logging that blocks and flags malicious domains"],
+    correct: 3, why: "Controlled resolvers with filtering and logging give visibility of suspicious lookups and a point at which to block them.",
+    hint: "Control and log where devices ask for names."
+  },
+  {
+    id: 164, rank: 3, topic: "Encrypted Traffic Analysis", difficulty: "EXPERT",
+    q: "Why might an architect deploy network detection that analyses metadata of encrypted traffic?",
+    options: ["It decrypts all traffic automatically and removes the need for any endpoint controls","It can reveal patterns such as beaconing without decrypting the content","It prevents users from visiting any external website at all","It replaces the need for firewall rules and segmentation"],
+    correct: 1, why: "Timing, volume and destination patterns can expose suspicious behaviour even when content is encrypted.",
+    hint: "You can learn a lot without reading the content."
+  },
+  {
+    id: 165, rank: 3, topic: "Kubernetes Security", difficulty: "EXPERT",
+    q: "Which measure best limits the impact of a compromised pod in a Kubernetes cluster?",
+    options: ["Network policies, least-privilege service accounts and restricted container privileges","Running every pod as root with host access so that it can reach any resource that it needs","Sharing a single cluster-admin credential between all of the application teams","Exposing the cluster API to the internet for the convenience of developers"],
+    correct: 0, why: "Restricting network paths, permissions and container privileges stops one compromised pod from becoming a cluster-wide compromise.",
+    hint: "Limit what a pod can reach and do."
+  },
+  {
+    id: 166, rank: 3, topic: "Data Residency Controls", difficulty: "EXPERT",
+    q: "A regulation requires customer data to remain within a specific region. Which architectural control best enforces this?",
+    options: ["A note in the policy document asking engineers to keep data local","Choosing a provider whose headquarters is in that region","Region restrictions through policy guardrails, with monitoring of replication and backup locations","Encrypting the data and storing it in any available region"],
+    correct: 2, why: "Preventive guardrails plus monitoring of replicas and backups make residency a technical control rather than a request.",
+    hint: "Enforce it in the platform, not just in a document."
+  },
+  {
+    id: 167, rank: 3, topic: "SIEM Architecture", difficulty: "EXPERT",
+    q: "An architect is designing a SIEM. Which design decision most improves detection quality?",
+    options: ["Collect every available log source at full verbosity without prioritising or normalising anything","Prioritise log sources, normalise their fields and map rules to attacker techniques","Disable all parsing so that the original text of each log is never changed in any way","Keep each team's logs in a separate tool so that no one can correlate events across them"],
+    correct: 1, why: "Prioritised, normalised data mapped to attacker behaviour produces detections that are accurate and maintainable.",
+    hint: "Quality of data matters more than volume."
+  },
+  {
+    id: 168, rank: 3, topic: "Detection as Code", difficulty: "EXPERT",
+    q: "Why do mature teams manage detection rules as code in version control?",
+    options: ["It makes rules impossible to change once they have been written and approved","It removes the need to test rules against real data","It guarantees that no false positives will ever occur in production alerts","It enables review, testing, rollback and consistent deployment"],
+    correct: 3, why: "Version control brings peer review, testing and rollback to detections, just as it does for software.",
+    hint: "Treat detections like software."
+  },
+  {
+    id: 169, rank: 3, topic: "Phishing-Resistant Authentication", difficulty: "EXPERT",
+    q: "What is a key security advantage of phishing-resistant authentication such as passkeys over one-time codes?",
+    options: ["The credential is bound to the genuine site and cannot be given to a fake page","It allows several staff members to share one credential across many different applications","It makes passwords longer and so harder for attackers to guess","It prevents any device from ever being lost or stolen"],
+    correct: 0, why: "Because the credential is tied to the real site, a lookalike page cannot capture something that can be replayed.",
+    hint: "The credential only works for the real site."
+  },
+  {
+    id: 170, rank: 3, topic: "Certificate Lifecycle", difficulty: "EXPERT",
+    q: "A critical internal service fails because a TLS certificate expired unexpectedly. Which practice best prevents this?",
+    options: ["Use certificates that have no expiry date","Ask users to report certificate warnings when they notice them","Maintain a certificate inventory with owners, expiry monitoring and automated renewal where possible","Disable certificate validation on internal services"],
+    correct: 2, why: "Knowing every certificate, who owns it and when it expires, with automation, prevents outages and avoids weakening validation.",
+    hint: "You cannot renew what you do not know about."
+  },
+  {
+    id: 171, rank: 3, topic: "Infrastructure as Code Security", difficulty: "EXPERT",
+    q: "How can a DevSecOps team stop insecure cloud configurations from reaching production?",
+    options: ["Review configurations by hand once they have been running in production for a full quarter","Scan infrastructure-as-code templates and enforce policy before deployment","Rely on developers remembering the security checklist each time they write a template","Allow changes outside the pipeline whenever a deadline is close"],
+    correct: 1, why: "Policy checks on templates in the pipeline block insecure settings before they are ever created.",
+    hint: "Check the template before it is deployed."
+  },
+  {
+    id: 172, rank: 3, topic: "Secure Paved Road", difficulty: "EXPERT",
+    q: "What is the main advantage of giving developers a secure 'paved road' platform?",
+    options: ["It allows teams to skip all security review for any change they choose to make","It forces every team to build its own security controls from scratch each time","It guarantees that no application built on the platform can be attacked","Secure choices become the easy default for every developer"],
+    correct: 3, why: "Approved, pre-secured building blocks make the safe way the easiest way, reducing reliance on individual vigilance.",
+    hint: "Make the secure option the easiest option."
+  },
+  {
+    id: 173, rank: 3, topic: "Continuous Audit Evidence", difficulty: "EXPERT",
+    q: "An architect wants to reduce the effort of providing audit evidence each year. What is the best approach?",
+    options: ["Automate evidence collection from systems so it is always current","Collect screenshots by hand during the final week before the audit begins","Ask each system owner to summarise the controls from memory","Delete older evidence to reduce what the auditors can review"],
+    correct: 0, why: "Automated, continuous collection gives auditors reliable, current evidence and spares teams a last-minute scramble.",
+    hint: "Collect evidence as controls operate."
+  },
+  {
+    id: 174, rank: 3, topic: "Third-Party Integration Review", difficulty: "EXPERT",
+    q: "Before integrating a third-party service that will process customer data, what should the architecture review confirm?",
+    options: ["Whether the supplier's website looks professional and modern","What data is shared, how it is protected and what the provider's security obligations are","Whether the service has more features than any competitor","Whether the contract is the cheapest option available"],
+    correct: 1, why: "The review should establish data flows, protections and contractual security responsibilities before any integration goes live.",
+    hint: "Follow the data and the obligations."
+  },
+  {
+    id: 175, rank: 3, topic: "Layered Phishing Defence", difficulty: "EXPERT",
+    q: "An architect is asked to reduce successful phishing across an organisation. Which combination is most effective?",
+    options: ["Annual training alone, delivered once a year with a short multiple-choice quiz","Blocking all external email so that nothing can reach staff","Email filtering and MFA together with training and easy reporting","Punishing every employee who clicks a link in a simulated phishing email"],
+    correct: 2, why: "No single control stops phishing, so filtering, strong authentication, awareness and easy reporting need to work together.",
+    hint: "Combine technical and human controls."
+  },
+  {
+    id: 176, rank: 4, topic: "Ransom Payment Decision", difficulty: "EXPERT",
+    q: "Executives are considering whether to pay a ransom after a ransomware attack. What should the incident lead ensure?",
+    options: ["Payment is made as quickly as possible so that the incident does not attract media attention","The decision is left to the IT help desk without wider involvement","Payment is treated as proof that all stolen data has been permanently deleted","The decision uses legal, regulatory and risk input and assumes recovery is not guaranteed"],
+    correct: 3, why: "Paying carries legal, ethical and practical risks and does not guarantee data recovery or deletion, so it needs informed, accountable decision-making.",
+    hint: "Payment does not guarantee the outcome the attacker promises."
+  },
+  {
+    id: 177, rank: 4, topic: "Awareness Effectiveness", difficulty: "EXPERT",
+    q: "Which measure best shows whether a security awareness programme is changing behaviour?",
+    options: ["Trends in reporting rates, repeat-clicker rates and time taken to report suspicious messages","The number of staff who attended the annual session","The length of the training video that staff were shown","The score on a quiz taken straight after the course"],
+    correct: 0, why: "Behavioural indicators show what people actually do, whereas attendance and quiz scores only show exposure to training.",
+    hint: "Measure what people do, not what they attended."
+  },
+  {
+    id: 178, rank: 4, topic: "Board Reporting", difficulty: "EXPERT",
+    q: "What should a CISO's board report focus on to support decision-making?",
+    options: ["A detailed list of every alert and blocked connection from the past quarter","Exposure, trends and the decisions needed from the board","Technical jargon and tool names so that the board is impressed by the detail","Only good news, so that the board remains confident in the security team"],
+    correct: 1, why: "Boards need a clear view of risk exposure and trends, and of the decisions or resources they are being asked to provide.",
+    hint: "The board needs to decide something, not read logs."
+  },
+  {
+    id: 179, rank: 4, topic: "Cloud Concentration Risk", difficulty: "EXPERT",
+    q: "A critical service runs entirely in one cloud region operated by a single provider. How should the organisation manage this concentration risk?",
+    options: ["Assume the provider's availability figures remove the need for any outage planning","Move every workload back on premises without first assessing the business impact","Assess outage impact, design proportionate failover and test it regularly","Add more users to the same region so the load is spread"],
+    correct: 2, why: "Concentration risk should be assessed against business impact, with proportionate and tested recovery or failover arrangements.",
+    hint: "Match the resilience to the impact of an outage."
+  },
+  {
+    id: 180, rank: 4, topic: "Post-Incident Review", difficulty: "EXPERT",
+    q: "After a major incident is resolved, what makes a post-incident review most valuable?",
+    options: ["Identifying the employee responsible so that they can be disciplined","Closing the ticket as quickly as possible","Writing a short summary for the regulator only","A blameless analysis of causes, detection and response gaps, with owned and tracked improvement actions"],
+    correct: 3, why: "Reviews drive improvement when they focus on systemic causes and produce actions that are owned and followed through.",
+    hint: "Learning needs actions, not blame."
+  },
+  {
+    id: 181, rank: 4, topic: "Disclosure Programme Governance", difficulty: "EXPERT",
+    q: "An organisation launches a vulnerability disclosure or bug bounty programme. What must be in place first?",
+    options: ["Clear scope, safe-harbour terms, triage capacity and a way to fix and verify reports","Public promises to fix every report within 24 hours regardless of its severity or complexity","A rule that forbids researchers from contacting the company at all","Permission to test any system, including systems that hold customer data"],
+    correct: 0, why: "A programme needs defined scope and protections for researchers, and the capacity to triage, remediate and verify what is reported.",
+    hint: "The programme is only as good as the process behind it."
+  },
+  {
+    id: 182, rank: 4, topic: "SOC Performance Metrics", difficulty: "EXPERT",
+    q: "A CISO wants to judge whether the SOC is improving. Which metrics are most meaningful?",
+    options: ["Total number of alerts generated and number of analysts on each shift","Number of dashboards built and rules deployed during the year","Time to detect and contain, tracked by severity","Volume of logs ingested and number of tools purchased"],
+    correct: 2, why: "Speed of detection and containment, by severity, reflects real outcomes rather than activity or spend.",
+    hint: "Measure outcomes, not activity."
+  },
+  {
+    id: 183, rank: 4, topic: "Key Compromise Response", difficulty: "EXPERT",
+    q: "A private signing key for the organisation's software releases is believed to be exposed. What should the response prioritise?",
+    options: ["Keep using the key until the next scheduled rotation date, then replace it quietly","Revoke and replace the key, review what was signed and notify affected users","Delete the public key so that nobody can verify any signature","Publish the private key openly so that outside researchers can review how it was used"],
+    correct: 1, why: "An exposed signing key lets attackers produce trusted software, so it must be revoked, replaced and its use reviewed, with users informed.",
+    hint: "Assume attackers can sign as you until the key is revoked."
+  },
+  {
+    id: 184, rank: 4, topic: "Dependency Compromise Response", difficulty: "EXPERT",
+    q: "A widely used open-source dependency is found to contain malicious code. What should the organisation do first?",
+    options: ["Wait until the maintainer publishes a full statement before checking any internal systems or builds","Delete the dependency from the SBOM so that it no longer appears","Upgrade every dependency across the whole estate immediately without testing","Identify where the component is used, assess exposure and contain affected builds and systems"],
+    correct: 3, why: "Responders first need to know where the component is used and whether it ran, so exposure can be contained and investigated.",
+    hint: "You cannot fix what you cannot locate."
+  },
+  {
+    id: 185, rank: 4, topic: "Application Risk Tiering", difficulty: "EXPERT",
+    q: "With hundreds of applications, how should a CISO decide how much security assurance each one receives?",
+    options: ["Tier applications by data sensitivity, exposure and business criticality, then match the depth of assurance","Apply identical testing to every application regardless of risk","Test only the applications that developers volunteer","Test only the applications built in the most recent year"],
+    correct: 0, why: "Risk-based tiering directs limited assurance effort to the applications where compromise would matter most.",
+    hint: "Spend assurance effort where the risk is."
+  },
+  {
+    id: 186, rank: 4, topic: "Insider Threat", difficulty: "EXPERT",
+    q: "Which approach best addresses malicious insider risk without damaging trust across the workforce?",
+    options: ["Monitor every employee's personal messages and private browsing continuously and without any notice","Least privilege, proportionate monitoring of sensitive data and a defined investigation process","Trust all long-serving staff completely and remove their access reviews entirely to save the team time","Publish individual employees' access logs on the intranet as a deterrent"],
+    correct: 1, why: "Limiting access, monitoring sensitive activity proportionately and having a fair, defined process addresses the risk lawfully and sustains trust.",
+    hint: "Be proportionate, targeted and fair."
+  },
+  {
+    id: 187, rank: 4, topic: "Access Review Effectiveness", difficulty: "EXPERT",
+    q: "Access reviews consistently approve everything without challenge. What is the most effective improvement?",
+    options: ["Increase the review frequency to every day for every user, application and permission","Let managers approve all access in bulk with a single click once each quarter","Give reviewers usage and risk context and automate removal of unused access","Remove the reviews altogether and rely on users to ask for their own access to be removed"],
+    correct: 2, why: "Reviewers decide better with usage and risk information, and automation can remove access that is clearly no longer used.",
+    hint: "Reviewers cannot challenge what they cannot see."
+  },
+  {
+    id: 188, rank: 4, topic: "Operational Technology Security", difficulty: "EXPERT",
+    q: "An organisation's industrial control systems cannot be patched frequently. Which approach best reduces risk?",
+    options: ["Connect the control systems directly to the internet so that vendors can patch them at any time","Patch the systems during production hours without testing them first","Ignore the systems because they are not normal business computers","Segment OT from IT, restrict and monitor remote access and apply compensating controls"],
+    correct: 3, why: "Where patching is constrained, isolation, controlled remote access and monitoring reduce exposure to attack.",
+    hint: "If you cannot patch, isolate and monitor."
+  },
+  {
+    id: 189, rank: 4, topic: "Data Loss Prevention", difficulty: "EXPERT",
+    q: "A CISO wants to reduce the risk of sensitive data leaving the organisation. Which programme design is most effective?",
+    options: ["Block all file transfers of every kind for every employee permanently","Classify data, apply controls tied to its risk and monitor with a defined response process","Rely on staff to remember not to send sensitive files","Monitor only email subject lines and ignore everything else"],
+    correct: 1, why: "Effective data protection starts with knowing what is sensitive, applying proportionate controls and having a process to act on alerts.",
+    hint: "You need to know what the sensitive data is first."
+  },
+  {
+    id: 190, rank: 4, topic: "Help Desk Impersonation", difficulty: "EXPERT",
+    q: "Attackers are impersonating employees to persuade the help desk to reset MFA. Which control is most effective?",
+    options: ["Strong identity verification, call-back to a known number and approval for privileged accounts","Allow resets after a verbal request from anyone who can state the employee's name and job title","Remove the verification step during busy periods so that the queue of open tickets closes faster","Send the new MFA enrolment link to whichever personal email address the caller says they would prefer"],
+    correct: 0, why: "Resets are a high-value attack path, so identity must be verified through channels the attacker does not control.",
+    hint: "The reset process is itself a target."
+  },
+  {
+    id: 191, rank: 4, topic: "Shadow AI Governance", difficulty: "EXPERT",
+    q: "Employees are using unapproved AI tools with company data. What is the most effective governance response?",
+    options: ["Ban every AI tool outright and assume that no employee will ever look for a workaround","Ignore the usage until a regulator complains about how the company data is being handled","Offer approved AI tools, set a clear usage policy and monitor for unapproved use","Allow every tool and ask staff to decide for themselves what data is safe"],
+    correct: 2, why: "Providing sanctioned options with clear rules and monitoring reduces risky workarounds better than bans or inaction.",
+    hint: "Give people a safe route as well as rules."
+  },
+  {
+    id: 192, rank: 4, topic: "AI Agent Incident Response", difficulty: "EXPERT",
+    q: "An internal AI agent sends confidential data to an external address after processing a malicious document. What should the incident response prioritise?",
+    options: ["Restart the agent and carry on operating as normal","Ask the agent to explain what happened and trust its answer","Delete the logs to prevent further leakage","Revoke the agent's credentials and tool access, preserve logs of its actions, assess data exposure and fix the control gap"],
+    correct: 3, why: "Containment means removing the agent's access, preserving evidence of what it did, assessing exposure and closing the weakness that allowed it.",
+    hint: "Treat the agent like a compromised privileged account."
+  },
+  {
+    id: 193, rank: 4, topic: "Supplier Offboarding", difficulty: "EXPERT",
+    q: "When a critical supplier contract ends, what should security ensure?",
+    options: ["The supplier's accounts remain active in case the relationship restarts later in the following year","Access is revoked, data is returned or destroyed with evidence and dependencies are moved","Only the final invoice is paid and filed","The supplier is asked to promise verbally that it will delete everything"],
+    correct: 1, why: "Offboarding should remove access, deal with data verifiably and transition dependencies so no hidden exposure remains.",
+    hint: "The relationship ends; the risk should not linger."
+  },
+  {
+    id: 194, rank: 4, topic: "Cyber Insurance", difficulty: "EXPERT",
+    q: "How should cyber insurance be positioned within a risk strategy?",
+    options: ["As one risk-transfer option that complements controls, subject to its exclusions","As a replacement for security controls, because any resulting losses will be paid back anyway","As a reason to stop reporting incidents to anyone outside the organisation or insurer","As proof that every risk has been accepted by the board"],
+    correct: 0, why: "Insurance transfers part of the financial impact but does not replace controls, and its conditions and exclusions must be understood.",
+    hint: "Insurance shifts some cost; it does not remove risk."
+  },
+  {
+    id: 195, rank: 4, topic: "Regulatory Change Management", difficulty: "EXPERT",
+    q: "A new regulation introduces stricter breach-notification deadlines. How should the CISO respond?",
+    options: ["Wait until the first fine is issued before changing any procedures at all","Assume the existing process already satisfies every possible deadline","Assess the change, update procedures and test the new timeline","Delegate the matter entirely to IT and take no further interest in it"],
+    correct: 2, why: "Changes in obligations need an assessment, updated procedures and tooling, and a test to prove the new timeline can be met.",
+    hint: "Prove the new deadline can actually be met."
+  },
+  {
+    id: 196, rank: 4, topic: "Contain or Observe", difficulty: "EXPERT",
+    q: "Responders find an attacker still active while data may be leaving the network. Executives want to keep watching to learn more. How should the incident lead weigh this?",
+    options: ["Always keep watching until the attacker has finished, whatever the damage turns out to be","Always contain immediately without considering evidence, scope or business impact","Let the attacker's activity decide when the incident team takes any action","Weigh continued harm against intelligence value and set clear limits for the decision"],
+    correct: 3, why: "Observation can improve scoping but allows continued harm, so the decision should be explicit, time-limited and made by accountable leaders.",
+    hint: "Continued harm has to be weighed against what you learn."
+  },
+  {
+    id: 197, rank: 4, topic: "AI Decision Oversight", difficulty: "EXPERT",
+    q: "An AI system makes recommendations that affect customers' access to services. Which governance control is most important?",
+    options: ["Full automation with no human review so that decisions are faster and cheaper","Human oversight, a route to appeal, and testing and monitoring of outcomes","Keeping the model's behaviour secret from the people who are affected by it","Relying on the vendor's statement that the model is fair and accurate"],
+    correct: 1, why: "Decisions affecting people need oversight, a way to challenge outcomes and ongoing testing for accuracy and bias.",
+    hint: "Someone must be able to check and challenge the outcome."
+  },
+  {
+    id: 198, rank: 4, topic: "Destructive Malware Response", difficulty: "EXPERT",
+    q: "Analysts identify destructive wiper malware spreading in the network. What should the incident lead prioritise?",
+    options: ["Rapid isolation of affected segments, protection of backups and identity systems, and preparation for rebuild","Waiting to see whether the malware stops on its own","Paying a ransom to receive a decryption key","Restoring data onto systems that are still connected to the infected network"],
+    correct: 0, why: "Wipers destroy data rather than seeking payment, so stopping spread, protecting backups and identity and planning rebuilds come first.",
+    hint: "There is no key to buy back; protect what survives."
+  },
+  {
+    id: 199, rank: 4, topic: "Detection Coverage", difficulty: "EXPERT",
+    q: "A CISO wants to know how well detections cover the techniques attackers are likely to use. What is the best approach?",
+    options: ["Count how many rules exist and assume more rules mean better coverage","Ask the vendor whether its product covers everything that attackers might do","Map detections to attacker techniques, test them and rank the gaps","Assume coverage is complete because no alerts were raised last month"],
+    correct: 2, why: "Mapping and testing detections against attacker techniques shows real coverage and highlights the gaps that matter most.",
+    hint: "Silence and rule counts do not prove coverage."
+  },
+  {
+    id: 200, rank: 4, topic: "Multi-Cloud Governance", difficulty: "EXPERT",
+    q: "An organisation uses several cloud providers, with different teams managing each. What is the most effective way to keep security consistent?",
+    options: ["Let every team apply whichever controls it prefers because each provider is different","Standardise on the weakest provider's features so that nothing differs between clouds","Avoid monitoring any cloud to prevent differences from being noticed by auditors or regulators","Common policies, central visibility and provider-specific guardrails owned by a platform team"],
+    correct: 3, why: "A shared policy and visibility layer, implemented through provider-specific guardrails, keeps controls consistent despite platform differences.",
+    hint: "Consistent outcomes need common policy, not identical tools."
   }
 ];
