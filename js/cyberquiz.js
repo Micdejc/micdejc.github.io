@@ -397,7 +397,7 @@ export function initCyberQuiz() {
                     <span class="level-num">
                         RANK 0${i + 1}
                         ${i < rankIndex()
-                            ? '· DONE'
+                            ? '· PASSED'
                             : current
                                 ? '· CURRENT'
                                 : ''}
@@ -471,7 +471,7 @@ export function initCyberQuiz() {
                     <b>${r.name}</b>
 
                     <small>
-                        ${earned ? 'UNLOCKED' : `${r.min} XP`}
+                        ${earned ? 'EARNED' : `${r.min} XP`}
                     </small>
 
                 </div>
