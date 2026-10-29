@@ -837,7 +837,7 @@ body.cyberquiz-modal-open {
 }
 
 /* =========================================================
-   10. EXHIBIT MESSAGE (INCLUDING PHISHING EMAIL) SCENARIO
+   10. EXHIBIT OUTPUT (INCLUDING PHISHING EMAIL) SCENARIO
    ========================================================= */
 
 /*
@@ -865,13 +865,13 @@ body.cyberquiz-modal-open {
     font-size: 0.84rem;
     line-height: 1.7;
 
-    /* Preserve line breaks in the sample message. */
+    /* Preserve line breaks in the sample output. */
     white-space: pre-wrap;
     overflow-wrap: anywhere;
 }
 
 .cyberquiz-root .cq-email-scenario::before {
-    content: "MESSAGE EXAMPLE";
+    content: "OUTPUT EXAMPLE";
     display: block;
 
     margin-bottom: 8px;
