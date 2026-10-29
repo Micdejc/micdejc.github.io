@@ -1113,8 +1113,13 @@ export function initCyberQuiz() {
 
         if (!confirmed) return;
 
+        // We reset everything for a new journey except the bestStreak for user challenge
+        const bestStreak = state.bestStreak || 0;
+        
         state = freshState();
-
+        
+        state.bestStreak = bestStreak;
+        
         saveState();
         updateUI();
 
