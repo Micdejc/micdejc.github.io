@@ -656,18 +656,18 @@ export function initCyberQuiz() {
         $('question').textContent = question.q;
 
         /*
-         * PHISHING EMAIL SCENARIOS
+         * EXHIBIT SCENARIOS INCLUDING PHISHING EMAILS
          *
-         * Questions may include an "email" property.
-         * Display the sample email when it exists.
+         * Questions may include an "exhibit" property.
+         * Display the sample exhibit including email when it exists.
          * Otherwise, hide the scenario container.
          */
 
         const emailBox = $('email-scenario');
 
         if (emailBox) {
-            if (question.email) {
-                emailBox.textContent = question.email;
+            if (question.exhibit) {
+                emailBox.textContent = question.exhibit;
                 emailBox.classList.remove('hidden');
             } else {
                 emailBox.textContent = '';
