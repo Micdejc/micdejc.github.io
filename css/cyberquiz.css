@@ -613,6 +613,7 @@ body.cyberquiz-modal-open {
     font-size: 0.65rem;
     font-weight: 800;
     letter-spacing: 0.07em;
+    text-align: center;
 }
 
 .cyberquiz-root .emblem {
