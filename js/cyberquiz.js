@@ -659,7 +659,7 @@ export function initCyberQuiz() {
          * EXHIBIT SCENARIOS INCLUDING PHISHING EMAILS
          *
          * Questions may include an "exhibit" property.
-         * Display the sample exhibit including email when it exists.
+         * Display the sample output including email when it exists.
          * Otherwise, hide the scenario container.
          */
 
