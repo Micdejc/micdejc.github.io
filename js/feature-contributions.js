@@ -260,6 +260,62 @@ const featureContributions = {
         ]
     },
 
+   "teachsomebody": {
+
+        title: "TeachSomebody",
+
+        type: "Featured Analysis",
+
+        description:
+            "Expert analysis contributed to TeachSomebody.",
+
+        contributions: [
+
+            {
+                title:
+                    "The Analysis bog with Michael Tchuindjang",
+
+                description:
+                    "Expert analysis on cybersecurity, ethics, and technological sovereignty .",
+
+                url:
+                    "https://www.teachsomebody.com/en/blog/view/mzcS-Xb4kc5__kLeY_4Il/responsible-ai-beyond-compliance:-a-conversation-on-cybersecurity,-ethics,-and-technological-soverei",
+
+                type:
+                    "Expert Analysis"
+            },
+
+            {
+                title:
+                    "Interview with Michael Tchuindjang",
+
+                description:
+                    "Interview on responsible AI beyond compliance.",
+
+                url:
+                    "https://www.youtube.com/watch?v=Zg1zPL7CVC0",
+
+                type:
+                    "Interview"
+            },
+           
+
+            /*
+             * Add more contributions here.
+             *
+             * Example:
+             *
+             * {
+             *     title: "Another Heads Talk Contribution",
+             *     description: "Short description.",
+             *     url: "https://example.com",
+             *     type: "Expert Analysis"
+             * }
+             */
+
+        ]
+    },
+
 
 /*
        "feature-contribution-name": {
