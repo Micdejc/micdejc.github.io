@@ -508,9 +508,11 @@ body.cyberquiz-modal-open {
 
 .cyberquiz-root .cq-overview-stats {
     display: flex;
-    gap: clamp(20px, 5vw, 48px);
+    gap: clamp(150px, 5vw, 48px);
 
     margin: 19px 2px 0;
+    justify-content: right;
+    text-align: center;
 }
 
 .cyberquiz-root .cq-overview-stats div {
