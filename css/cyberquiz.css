@@ -511,7 +511,7 @@ body.cyberquiz-modal-open {
     gap: clamp(150px, 5vw, 48px);
 
     margin: 19px 2px 0;
-    justify-content: right;
+    justify-content: center;
     text-align: center;
 }
 
