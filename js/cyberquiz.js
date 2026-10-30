@@ -381,7 +381,7 @@ export function initCyberQuiz() {
             const progress = unlocked
                 ? (i === 4 ? 'MASTERED' : `${state.xp} XP`)
                 : `${r.min} XP required`;
-    
+            /*
             const buttonText = !unlocked
                 ? '🔒 Keep progressing'
                 : !current
@@ -389,6 +389,17 @@ export function initCyberQuiz() {
                     : hasStarted
                         ? 'Continue this level'
                         : 'Start current level';
+            */
+            //Eensures that Expert always displays Practise this level.
+            const buttonText = !unlocked
+                ? '🔒 Keep progressing'
+                : i === 4
+                    ? 'Practise this level'
+                    : !current
+                        ? 'Practise this level'
+                        : hasStarted
+                            ? 'Continue this level'
+                            : 'Start current level';
             
             return `
                 <article class="level-card
@@ -1067,8 +1078,13 @@ export function initCyberQuiz() {
         const hasStarted = state.startedRanks?.includes(currentRankIndex) ?? false;
         
         if (currentRankIndex > missionRank && !hasStarted) {
-            toast(`Rank unlocked: ${rank().icon} ${rank().name}!`);
-            confettiPop();
+            if (rank().name === 'Expert') {
+                toast('★ EXPERT RANK ACHIEVED! You have mastered CyberQuiz!');
+                expertCelebration();
+            } else {
+                toast(`Rank unlocked: ${rank().icon} ${rank().name}!`);
+                confettiPop();
+            }
         }
     }
 
@@ -1170,7 +1186,67 @@ export function initCyberQuiz() {
             host.innerHTML = '';
         }, 2400);
     }
+
+    /* =====================================================
+       15.3 CONFETTI EXPERT CELEBRATION
+       ===================================================== */
+    function expertCelebration() {
+        const host = $('confetti');
+        if (!host) return;
     
+        const colours = [
+            '#FFD700',
+            '#FFC857',
+            '#FFFFFF',
+            '#43D9FF',
+            '#8B9CFF',
+            '#27E6A2',
+            '#FF6FA5'
+        ];
+    
+        const fireworks = 5;
+        const particlesPerFirework = 55;
+    
+        for (let f = 0; f < fireworks; f++) {
+            const centreX = 15 + Math.random() * 70;
+            const centreY = 15 + Math.random() * 45;
+    
+            const delay = f * 450;
+    
+            for (let i = 0; i < particlesPerFirework; i++) {
+                const piece = document.createElement('i');
+                piece.className = 'confetti-pop-piece';
+    
+                const angle = (Math.PI * 2 * i) / particlesPerFirework;
+                const distance = 100 + Math.random() * 180;
+    
+                const x = Math.cos(angle) * distance;
+                const y = Math.sin(angle) * distance;
+    
+                piece.style.left = `${centreX}%`;
+                piece.style.top = `${centreY}%`;
+    
+                piece.style.backgroundColor =
+                    colours[Math.floor(Math.random() * colours.length)];
+    
+                piece.style.setProperty('--burst-x', `${x}px`);
+                piece.style.setProperty('--burst-y', `${y}px`);
+    
+                piece.style.width = `${4 + Math.random() * 5}px`;
+                piece.style.height = `${4 + Math.random() * 5}px`;
+                piece.style.borderRadius = '50%';
+    
+                piece.style.animationDelay = `${delay}ms`;
+                piece.style.animationDuration = '1.5s';
+    
+                host.appendChild(piece);
+            }
+        }
+    
+        setTimeout(() => {
+            host.innerHTML = '';
+        }, 5500);
+    }
     /* =====================================================
        16. RESET PLAYER PROGRESS
        ===================================================== */
@@ -1259,12 +1335,12 @@ export function initCyberQuiz() {
         $('journey').scrollIntoView({
             behavior: 'smooth'
         });
-
+        /*
         if (rankIndex() >= 4) {
             toast(
-                'Expert rank reached. Keep practising to sharpen your judgement!'
+                '★ Expert rank reached. Keep practising to sharpen your judgement!'
             );
-        }
+        }*/
     });
 
     $('reset').addEventListener('click', reset);
