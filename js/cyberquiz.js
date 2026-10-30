@@ -1067,7 +1067,7 @@ export function initCyberQuiz() {
     
         if (isStrong) {
             //confetti();
-            expertCelebration();
+            confettiPop();
         }
     
         $('result').scrollIntoView({
