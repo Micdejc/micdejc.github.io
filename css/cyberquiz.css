@@ -1418,7 +1418,7 @@ body.cyberquiz-modal-open {
 
     opacity: 0;
 
-    animation: cqChampagnePop 1.6s ease-out forwards;
+    animation: cqChampagnePop 1.9s ease-out forwards;
 
     pointer-events: none;
     will-change: transform, opacity;
