@@ -1410,6 +1410,53 @@ body.cyberquiz-modal-open {
     animation: cqConfetti 2.3s ease-in forwards;
 }
 
+.cyberquiz-root .confetti-pop-piece {
+    position: absolute;
+
+    width: 8px;
+    height: 13px;
+
+    border-radius: 2px;
+
+    opacity: 0;
+
+    animation: cqChampagnePop 1.8s
+        cubic-bezier(.15, .65, .35, 1) forwards;
+
+    pointer-events: none;
+    will-change: transform, opacity;
+}
+
+@keyframes cqChampagnePop {
+
+    0% {
+        opacity: 1;
+        transform: translate(0, 0) rotate(0deg) scale(.5);
+    }
+
+    15% {
+        opacity: 1;
+    }
+
+    65% {
+        opacity: 1;
+
+        transform:
+            translate(var(--burst-x), var(--burst-y))
+            rotate(calc(var(--rotation) * .65))
+            scale(1);
+    }
+
+    100% {
+        opacity: 0;
+
+        transform:
+            translate(var(--end-x), var(--end-y))
+            rotate(var(--rotation))
+            scale(.7);
+    }
+}
+
 /* =========================================================
    18. KEYBOARD ACCESSIBILITY
    ========================================================= */
