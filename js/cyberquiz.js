@@ -1081,7 +1081,7 @@ export function initCyberQuiz() {
             '#8b9cff'
         ];
 
-        for (let i = 0; i < 45; i++) {
+        for (let i = 0; i < 100; i++) {
             const piece = document.createElement('i');
 
             piece.className = 'confetti-piece';
@@ -1121,7 +1121,7 @@ export function initCyberQuiz() {
             '#8b9cff'
         ];
     
-        for (let i = 0; i < 65; i++) {
+        for (let i = 0; i < 100; i++) {
             const piece = document.createElement('i');
     
             piece.className = 'confetti-pop-piece';
@@ -1132,13 +1132,12 @@ export function initCyberQuiz() {
             const x = (Math.random() - 0.5) * 500;
             
             // Initial upward burst
-            //const y = -(100 + Math.random() * 230);
-            const y = -(containerHeight * (0.7 + Math.random() * 0.3));
+            const y = -(500 + Math.random() * 650);
     
             // Final position after gravity takes effect
             const endX = x * (1.2 + Math.random() * 0.4);
-            //const endY = y + 100 + Math.random() * 180;
-            const endY = y + containerHeight * (0.2 + Math.random() * 0.3);
+            const endY = y + 300 + Math.random() * 400;
+            
     
             // Random rotation
             const rotation = (Math.random() - 0.5) * 1440;
