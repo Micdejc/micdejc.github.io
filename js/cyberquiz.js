@@ -1127,32 +1127,20 @@ export function initCyberQuiz() {
     
             piece.className = 'confetti-pop-piece';
 
-            const containerHeight = host.clientHeight;
-            
             // Random horizontal explosion
             const x = (Math.random() - 0.5) * 500;
             
-            // Initial upward burst
+            // Upward burst
             const y = -(300 + Math.random() * 500);
             //const y = -(500 + Math.random() * 650);
-    
-            // Final position after gravity takes effect
-            const endX = x * (1.2 + Math.random() * 0.4);
-            const endY = y + 150 + Math.random() * 300;
-            //const endY = y + 300 + Math.random() * 400;
             
-    
-            // Random rotation
-            const rotation = (Math.random() - 0.5) * 1440;
-    
+            // Starting position
             piece.style.left = '50%';
             piece.style.top = '75%';
-    
+            
+            // Explosion trajectory
             piece.style.setProperty('--burst-x', `${x}px`);
             piece.style.setProperty('--burst-y', `${y}px`);
-            piece.style.setProperty('--end-x', `${endX}px`);
-            piece.style.setProperty('--end-y', `${endY}px`);
-            piece.style.setProperty('--rotation', `${rotation}deg`);
     
             piece.style.background =
                 colours[i % colours.length];
