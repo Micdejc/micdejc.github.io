@@ -1215,7 +1215,7 @@ export function initCyberQuiz() {
     
             for (let i = 0; i < particlesPerFirework; i++) {
                 const piece = document.createElement('i');
-                piece.className = 'confetti-pop-piece';
+                piece.className = 'confetti-firework-piece';
     
                 const angle = (Math.PI * 2 * i) / particlesPerFirework;
                 const distance = 100 + Math.random() * 180;
