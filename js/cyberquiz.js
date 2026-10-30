@@ -1175,10 +1175,10 @@ export function initCyberQuiz() {
                 colours[i % colours.length];
     
             piece.style.animationDuration =
-                `${1.4 + Math.random() * 0.7}s`;
+                `${2.2 + Math.random() * 0.6}s`;
     
             piece.style.animationDelay =
-                `${Math.random() * 0.2}s`;
+                `${Math.random() * 0.15}s`;
     
             host.appendChild(piece);
         }
