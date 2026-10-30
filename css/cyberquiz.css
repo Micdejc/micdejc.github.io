@@ -1430,20 +1430,26 @@ body.cyberquiz-modal-open {
 @keyframes cqChampagnePop {
 
     0% {
-        opacity: 1;
-        transform: translate(0, 0) rotate(0deg) scale(.5);
+        opacity: 0;
+        transform:
+            translate(0, 0)
+            rotate(0deg)
+            scale(.5);
     }
 
-    15% {
+    10% {
         opacity: 1;
     }
 
-    65% {
+    75% {
         opacity: 1;
 
         transform:
-            translate(var(--burst-x), var(--burst-y))
-            rotate(calc(var(--rotation) * .65))
+            translate(
+                var(--burst-x),
+                var(--burst-y)
+            )
+            rotate(calc(var(--rotation) * .75))
             scale(1);
     }
 
@@ -1451,9 +1457,12 @@ body.cyberquiz-modal-open {
         opacity: 0;
 
         transform:
-            translate(var(--end-x), var(--end-y))
+            translate(
+                var(--end-x),
+                var(--end-y)
+            )
             rotate(var(--rotation))
-            scale(.7);
+            scale(.4);
     }
 }
 
