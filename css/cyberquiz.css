@@ -1412,57 +1412,29 @@ body.cyberquiz-modal-open {
 
 .cyberquiz-root .confetti-pop-piece {
     position: absolute;
-
     width: 8px;
     height: 13px;
-
     border-radius: 2px;
 
     opacity: 0;
 
-    animation: cqChampagnePop 1.8s
-        cubic-bezier(.15, .65, .35, 1) forwards;
+    animation: cqChampagnePop 1.5s ease-out forwards;
 
     pointer-events: none;
     will-change: transform, opacity;
 }
 
 @keyframes cqChampagnePop {
-
     0% {
-        opacity: 0;
-        transform:
-            translate(0, 0)
-            rotate(0deg)
-            scale(.5);
-    }
-
-    10% {
         opacity: 1;
-    }
-
-    75% {
-        opacity: 1;
-
-        transform:
-            translate(
-                var(--burst-x),
-                var(--burst-y)
-            )
-            rotate(calc(var(--rotation) * .75))
-            scale(1);
+        transform: translate(0, 0) scale(.5);
     }
 
     100% {
         opacity: 0;
-
         transform:
-            translate(
-                var(--end-x),
-                var(--end-y)
-            )
-            rotate(var(--rotation))
-            scale(.4);
+            translate(var(--burst-x), var(--burst-y))
+            scale(1);
     }
 }
 
