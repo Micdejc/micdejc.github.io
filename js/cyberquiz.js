@@ -879,7 +879,8 @@ export function initCyberQuiz() {
         updateUI();
 
         if (rankIndex() > question.rank) {
-            toast(`Rank unlocked: ${rank().name}!`);
+            //toast(`Rank unlocked: ${rank().name}!`);
+            toast(`Rank unlocked: ${rank().icon} ${rank().name}!`);
             confettiPop()
         }
     }
@@ -1081,7 +1082,7 @@ export function initCyberQuiz() {
             '#8b9cff'
         ];
 
-        for (let i = 0; i < 100; i++) {
+        for (let i = 0; i < 90; i++) {
             const piece = document.createElement('i');
 
             piece.className = 'confetti-piece';
@@ -1121,7 +1122,7 @@ export function initCyberQuiz() {
             '#8b9cff'
         ];
     
-        for (let i = 0; i < 100; i++) {
+        for (let i = 0; i < 120; i++) {
             const piece = document.createElement('i');
     
             piece.className = 'confetti-pop-piece';
@@ -1132,11 +1133,13 @@ export function initCyberQuiz() {
             const x = (Math.random() - 0.5) * 500;
             
             // Initial upward burst
-            const y = -(500 + Math.random() * 650);
+            const y = -(300 + Math.random() * 500);
+            //const y = -(500 + Math.random() * 650);
     
             // Final position after gravity takes effect
             const endX = x * (1.2 + Math.random() * 0.4);
-            const endY = y + 300 + Math.random() * 400;
+            const endY = y + 150 + Math.random() * 300;
+            //const endY = y + 300 + Math.random() * 400;
             
     
             // Random rotation
@@ -1165,7 +1168,7 @@ export function initCyberQuiz() {
     
         setTimeout(() => {
             host.innerHTML = '';
-        }, 3000);
+        }, 2600);
     }
     
     /* =====================================================
