@@ -1131,12 +1131,12 @@ export function initCyberQuiz() {
             const x = (Math.random() - 0.5) * 500;
             
             // Upward burst
-            const y = -(300 + Math.random() * 500);
-            //const y = -(500 + Math.random() * 650);
+            //const y = -(300 + Math.random() * 500);
+            const y = -(500 + Math.random() * 650);
             
             // Starting position
             piece.style.left = '50%';
-            piece.style.top = '75%';
+            piece.style.top = '90%';
             
             // Explosion trajectory
             piece.style.setProperty('--burst-x', `${x}px`);
