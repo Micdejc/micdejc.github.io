@@ -877,12 +877,14 @@ export function initCyberQuiz() {
 
         saveState();
         updateUI();
-
+        
+        /*
         if (rankIndex() > question.rank) {
             //toast(`Rank unlocked: ${rank().name}!`);
             toast(`Rank unlocked: ${rank().icon} ${rank().name}!`);
             confettiPop()
-        }
+        } */
+        
     }
 
     /* =====================================================
@@ -1060,6 +1062,12 @@ export function initCyberQuiz() {
             behavior: 'smooth',
             block: 'center'
         });
+
+        if (rankIndex() > missionRank) {
+            //toast(`Rank unlocked: ${rank().name}!`);
+            toast(`Rank unlocked: ${rank().icon} ${rank().name}!`);
+            confettiPop()
+        }
     }
 
 
