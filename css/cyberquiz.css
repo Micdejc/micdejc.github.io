@@ -1418,23 +1418,35 @@ body.cyberquiz-modal-open {
 
     opacity: 0;
 
-    animation: cqChampagnePop 1.5s ease-out forwards;
+    animation: cqChampagnePop 1.6s ease-out forwards;
 
     pointer-events: none;
     will-change: transform, opacity;
 }
 
 @keyframes cqChampagnePop {
+
     0% {
         opacity: 1;
         transform: translate(0, 0) scale(.5);
+    }
+
+    15% {
+        opacity: 1;
+    }
+
+    75% {
+        opacity: 1;
+        transform:
+            translate(var(--burst-x), var(--burst-y))
+            scale(1);
     }
 
     100% {
         opacity: 0;
         transform:
             translate(var(--burst-x), var(--burst-y))
-            scale(1);
+            scale(.7);
     }
 }
 
