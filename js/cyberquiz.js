@@ -1156,7 +1156,7 @@ export function initCyberQuiz() {
 
             // Random horizontal explosion
             //const x = (Math.random() - 0.5) * 500;
-            const x = (Math.random() - 0.5) * 800;
+            const x = (Math.random() - 0.5) * 1200;
             
             // Upward burst
             //const y = -(300 + Math.random() * 500);
