@@ -880,6 +880,7 @@ export function initCyberQuiz() {
 
         if (rankIndex() > question.rank) {
             toast(`Rank unlocked: ${rank().name}!`);
+            confettiPop()
         }
     }
 
@@ -1062,7 +1063,7 @@ export function initCyberQuiz() {
 
 
     /* =====================================================
-       15. CONFETTI CELEBRATION
+       15.1 CONFETTI CELEBRATION
        ===================================================== */
 
     function confetti() {
@@ -1102,6 +1103,68 @@ export function initCyberQuiz() {
         }, 2600);
     }
 
+    /* =====================================================
+       15.2 CONFETTI POP CELEBRATION
+       ===================================================== */
+    function confettiPop() {
+        const host = $('confetti');
+    
+        if (!host) return;
+    
+        host.innerHTML = '';
+    
+        const colours = [
+            '#27e6a2',
+            '#43d9ff',
+            '#ffc857',
+            '#ff6fa5',
+            '#8b9cff'
+        ];
+    
+        for (let i = 0; i < 65; i++) {
+            const piece = document.createElement('i');
+    
+            piece.className = 'confetti-pop-piece';
+    
+            // Random horizontal explosion
+            const x = (Math.random() - 0.5) * 500;
+    
+            // Initial upward burst
+            const y = -(100 + Math.random() * 230);
+    
+            // Final position after gravity takes effect
+            const endX = x * (1.2 + Math.random() * 0.4);
+            const endY = y + 100 + Math.random() * 180;
+    
+            // Random rotation
+            const rotation = (Math.random() - 0.5) * 1440;
+    
+            piece.style.left = '50%';
+            piece.style.top = '75%';
+    
+            piece.style.setProperty('--burst-x', `${x}px`);
+            piece.style.setProperty('--burst-y', `${y}px`);
+            piece.style.setProperty('--end-x', `${endX}px`);
+            piece.style.setProperty('--end-y', `${endY}px`);
+            piece.style.setProperty('--rotation', `${rotation}deg`);
+    
+            piece.style.background =
+                colours[i % colours.length];
+    
+            piece.style.animationDuration =
+                `${1.4 + Math.random() * 0.7}s`;
+    
+            piece.style.animationDelay =
+                `${Math.random() * 0.2}s`;
+    
+            host.appendChild(piece);
+        }
+    
+        setTimeout(() => {
+            host.innerHTML = '';
+        }, 2400);
+    }
+    
     /* =====================================================
        16. RESET PLAYER PROGRESS
        ===================================================== */
