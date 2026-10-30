@@ -1066,7 +1066,8 @@ export function initCyberQuiz() {
         }
     
         if (isStrong) {
-            confetti();
+            //confetti();
+            expertCelebration();
         }
     
         $('result').scrollIntoView({
