@@ -1136,6 +1136,7 @@ export function initCyberQuiz() {
             
             // Starting position
             piece.style.left = '50%';
+            //piece.style.top = '75%';
             piece.style.top = '90%';
             
             // Explosion trajectory
