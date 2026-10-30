@@ -1,5 +1,5 @@
 /*
- * CyberQuiz question bank (250 questions)
+ * CyberQuiz question bank (300 questions)
  *
  * Required properties:
  * id, rank, topic, difficulty, q, options,
@@ -11,12 +11,12 @@
  * question refers to; shown above or beside the question text)
  *
  * Rank levels and number of questions:
- * 0 = Associate     (34 questions)
- * 1 = Professional  (40 questions)
- * 2 = Practitioner  (52 questions)
- * 3 = Architect     (57 questions)
- * 4 = Expert        (67 questions)
- * Total: 250 questions
+ * 0 = Associate     (38 questions)
+ * 1 = Professional  (48 questions)
+ * 2 = Practitioner  (64 questions)
+ * 3 = Architect     (70 questions)
+ * 4 = Expert        (80 questions)
+ * Total: 300 questions
  *
  * Coverage: core security awareness, phishing and social engineering,
  * identity, cloud, cryptography, secure development, incident response,
@@ -24,16 +24,21 @@
  * penetration testing, including technical analysis of logs,
  * email headers, configurations, code and command output.
  *
- * Exhibits: questions 6-10, 118 and 201-250 include an exhibit
- * (56 questions in total).
+ * "Best answer" questions: questions 251-300 are scenario questions in
+ * which two options are defensible and only one is the BEST choice for
+ * the scenario described. The explanation (why) names the runner-up and
+ * says why it is weaker. These questions are marked with BEST in q.
  *
- * Note: all 250 questions have been checked for uniqueness (ids 1-250,
- * no duplicate or overlapping questions, 250 distinct topic labels).
+ * Exhibits: 85 questions include an exhibit (ids 6-10, 118, 201-250 and
+ * 29 of the questions 251-300).
+ *
+ * Note: all 300 questions have been checked for uniqueness (ids 1-300,
+ * no duplicate or overlapping questions, 300 distinct topic labels).
  *
  * Correct-answer positions are balanced across A/B/C/D:
- * A=63, B=62, C=63, D=62 overall.
- * Per rank (A/B/C/D): Associate 9/8/9/8, Professional 10/10/10/10,
- * Practitioner 13/13/13/13, Architect 14/14/14/15, Expert 17/17/17/16.
+ * A=75, B=75, C=75, D=75 overall.
+ * Per rank (A/B/C/D): Associate 10/9/10/9, Professional 12/12/12/12,
+ * Practitioner 16/16/16/16, Architect 17/17/18/18, Expert 20/21/19/20.
  *
  * Answer-length balance: the correct option is the longest in about
  * a quarter of questions and no consistent length pattern identifies it.
@@ -1845,5 +1850,384 @@ window.CYBERQUIZ_QUESTIONS = [
     options: ["Keep MD5 but add a longer password policy","Delete the hashes and ask every user to email their password","Wrap the existing hashes in a strong salted hash such as Argon2id, upgrade each user's hash at next login and force resets for high-risk accounts","Encrypt the MD5 values with a single key stored in the same database"],
     correct: 2, why: "Wrapping legacy hashes immediately improves protection, and re-hashing at login gradually removes the weak scheme while high-risk accounts are reset promptly.",
     hint: "Improve protection now without waiting for every user to return."
+  },
+  {
+    id: 251, rank: 0, topic: "Report or Delete Phishing", difficulty: "BEGINNER",
+    q: "You receive an email that you are sure is phishing, and you have not clicked anything. What is the BEST action?",
+    options: ["Delete it straight away and mention it to nobody","Reply and ask the sender to stop emailing you","Report it through the organisation's phishing process, then delete it","Forward it to all your colleagues so that everybody knows not to open the message"],
+    correct: 2, why: "Deleting it keeps you safe, but reporting it also lets the security team block the sender and warn others. Replying confirms your address is active, and forwarding spreads the risk.",
+    hint: "Safe for you is good; safe for everyone is better."
+  },
+  {
+    id: 252, rank: 0, topic: "Lost Device Response", difficulty: "BEGINNER",
+    q: "You left your encrypted, password-protected work laptop on a train. What is the BEST first step?",
+    options: ["Report the loss to IT straight away so that it can be locked or wiped","Wait until tomorrow to see whether it is handed in to lost property before telling anyone","Change your work password from another device before telling IT about the loss","Replace it with the same model and restore your files, then tell IT afterwards"],
+    correct: 0, why: "Encryption helps, but IT can only lock or wipe the device, revoke access and assess exposure if they know. Changing your password is sensible too, but it should follow reporting rather than replace it.",
+    hint: "Who needs to know first so that they can act?"
+  },
+  {
+    id: 253, rank: 0, topic: "Urgent Approval on Public Wi-Fi", difficulty: "BEGINNER",
+    q: "You must approve an urgent expense on your phone while at an airport that offers free Wi-Fi. What is the BEST way to proceed?",
+    options: ["Use the airport Wi-Fi because the network name looks official and the page loads quickly","Wait until you are back home to approve it, even though the approval is urgent","Turn off your phone's security settings so that the approval app loads faster","Use your mobile data connection, or the company VPN if you need Wi-Fi, and then approve it"],
+    correct: 3, why: "Waiting is safe but impractical for an urgent approval. Using mobile data or the company VPN lets you act quickly without trusting an unknown network.",
+    hint: "Look for a way to be both safe and timely."
+  },
+  {
+    id: 254, rank: 0, topic: "Access to an Absent Colleague's File", difficulty: "BEGINNER",
+    q: "A colleague is on leave and your manager asks you to log in to their account to retrieve a file. What is the BEST response?",
+    options: ["Ask the colleague to send you their password by text message so that you can log in","Ask IT to grant delegated access to the file through the approved process","Try likely passwords such as their birthday","Contact the colleague on leave and ask them to share the file through the normal sharing tools"],
+    correct: 1, why: "Asking the colleague to share the file is acceptable if they can be reached, but approved delegated access from IT works without disturbing them and keeps an audit trail. Passwords must never be shared or guessed.",
+    hint: "Use the route that is approved and always available."
+  },
+  {
+    id: 255, rank: 1, topic: "Ransomware Alert Containment", difficulty: "INTERMEDIATE",
+    exhibit: "EDR ALERT\nHOST: LAPTOP-052 (user travelling, offline hours)\nBEHAVIOUR: 1,900 files renamed in 90 seconds; shadow copy deletion attempted\nSTATUS: process still running",
+    q: "What is the BEST first action for this ransomware alert?",
+    options: ["Reimage the laptop straight away to remove any malware","Isolate the host with the EDR to stop any spread, then escalate with the alert details","Escalate the alert to Tier 2 and wait for their instructions","Close the alert as a false positive because the user is travelling"],
+    correct: 1, why: "Escalating is correct, but with an active encryption process it should follow immediate isolation so that the damage cannot spread while the escalation is processed. Reimaging would destroy evidence.",
+    hint: "The process is still running; stop it spreading first."
+  },
+  {
+    id: 256, rank: 1, topic: "Exposing RDP Request", difficulty: "INTERMEDIATE",
+    exhibit: "CHANGE REQUEST CR-3391\nREQUESTED BY: contractor lead\nRULE: allow TCP 3389 from the internet to FILESRV02\nREASON: 'faster than the VPN'",
+    q: "What is the BEST response to this change request?",
+    options: ["Open 3389 to any source address and rely on monitoring to detect misuse","Open 3389 but restrict the source to the user's current public IP address and log all connections","Block remote access to every server for everyone permanently","Provide access through a VPN or bastion host with MFA instead"],
+    correct: 3, why: "Restricting the source IP is better than opening the port to everyone, but RDP would still be exposed to the internet and the address can change or be spoofed. A VPN or bastion with MFA removes the direct exposure.",
+    hint: "Is there a way to give access without exposing the service at all?"
+  },
+  {
+    id: 257, rank: 1, topic: "Critical Patch Window", difficulty: "INTERMEDIATE",
+    exhibit: "ADVISORY\nSEVERITY: critical remote code execution in a web framework used by customer-portal (internet-facing)\nPATCH: available\nREGRESSION TESTING: needs 2 days\nEXPLOITATION: proof-of-concept code is public",
+    q: "What is the BEST approach while the patch is being tested?",
+    options: ["Apply a temporary mitigation, such as a WAF rule, now and patch once testing is complete","Apply the patch to production immediately without any regression testing","Wait for testing to finish and take no other action in the meantime","Take the application offline until the patched version has been fully tested and released"],
+    correct: 0, why: "Taking the application offline would also remove the exposure, but it is disproportionate when a mitigation can reduce the risk and keep the service running. Skipping testing or doing nothing are both poor choices.",
+    hint: "Reduce the risk without breaking the business."
+  },
+  {
+    id: 258, rank: 1, topic: "Impossible Travel Response", difficulty: "INTERMEDIATE",
+    exhibit: "IDENTITY LOG (user jdoe)\n08:02 sign-in success  London, UK   device=WIN-LAP-22 (managed)\n08:09 sign-in success  Lagos, NG   device=unknown\n08:10 MFA prompt approved from Lagos session",
+    q: "What is the BEST immediate action for this sign-in activity?",
+    options: ["Wait to see whether any further suspicious sign-ins occur before acting","Send the user a general reminder about good password hygiene and MFA use","Revoke sessions, reset credentials and review the Lagos activity","Contact the user to confirm whether the second sign-in was really theirs"],
+    correct: 2, why: "Contacting the user is a valid check, but an approved MFA prompt from an unknown device in another country already indicates compromise. Containment should come first, with verification afterwards.",
+    hint: "The MFA prompt was already approved."
+  },
+  {
+    id: 259, rank: 1, topic: "Policy Exemption Request", difficulty: "INTERMEDIATE",
+    q: "A department head asks for an exemption from the new password-manager policy because it 'slows the team down'. What is the BEST approach?",
+    options: ["Grant a permanent verbal exemption to keep relations good","Decline the request and explain clearly that the policy applies equally to every team in the organisation","Ignore the request until the next audit finds the problem","Assess the risk, offer help to comply and record any exception with an expiry date"],
+    correct: 3, why: "Declining is consistent with the policy, but it ignores the underlying problem and may drive workarounds. Assessing the risk, supporting compliance and recording any exception with an expiry date is more effective.",
+    hint: "Address the reason behind the request, not just the request."
+  },
+  {
+    id: 260, rank: 1, topic: "Exposed Bucket Containment", difficulty: "INTERMEDIATE",
+    exhibit: "ALERT: STORAGE BUCKET cust-reports-prod\nACCESS: public read (Principal *)\nCONTENTS: monthly customer statements (PDF)\nACCESS LOG: 3 requests from unknown IP addresses today",
+    q: "What is the BEST immediate action for this exposed bucket?",
+    options: ["Delete the bucket and everything inside it straight away","Block public access, preserve the access logs and assess what was exposed","Block public access and then notify the bucket owner by email","Add the issue to the risk register and fix it next quarter"],
+    correct: 1, why: "Blocking public access and telling the owner are both right, but preserving the logs and assessing exposure is what allows the organisation to judge whether data was taken and whether notification is needed.",
+    hint: "Stop the exposure, but keep the evidence."
+  },
+  {
+    id: 261, rank: 1, topic: "Delayed Execution Sample", difficulty: "INTERMEDIATE",
+    exhibit: "SANDBOX REPORT (attachment: Remittance_0921.xlsm)\n0-10 min: no network or file activity\n10-11 min: DNS query to cdn-statics.example, HTTPS POST to 203.0.113.140\nVERDICT: low confidence",
+    q: "What is the BEST conclusion and action for this sandbox report?",
+    options: ["Safe, because no malicious behaviour was observed in the first few minutes of analysis","Ignore the domain, as sandbox network traffic is unreliable","Treat it as evasive malware: block the domain and hunt for the file and domain","Block the domain and keep the file under review until the full analysis has finished completely"],
+    correct: 2, why: "Blocking the domain is right and keeping the file under review is reasonable, but the delayed network activity suggests deliberate sandbox evasion, so the better response is to treat it as malicious and hunt for it.",
+    hint: "Why would a sample wait ten minutes before acting?"
+  },
+  {
+    id: 262, rank: 1, topic: "Scan Impact During Testing", difficulty: "INTERMEDIATE",
+    q: "During an authorised test, a tester's scan makes a production service noticeably slower. The rules of engagement allow daytime testing. What is the BEST action?",
+    options: ["Pause, inform the client contact and agree a throttled or out-of-hours approach","Continue at the same speed because the rules of engagement permit daytime testing","Stop all testing permanently and send the client an invoice for the work done so far","Reduce the scan speed straight away and carry on, mentioning the slowdown only in the final report"],
+    correct: 0, why: "Slowing the scan is sensible, but the client has a production service at risk and must be told so that they can decide how to proceed. Permission to test does not remove the duty to avoid harm.",
+    hint: "Permission to test is not permission to cause harm."
+  },
+  {
+    id: 263, rank: 2, topic: "Service Account Misuse", difficulty: "ADVANCED",
+    exhibit: "SIEM ALERT\nACCOUNT: svc-backup (service account)\nEVENT: interactive logon (type 2) on WS-114 at 22:41\nNORMAL BEHAVIOUR: service logon (type 5) on BACKUP01 only",
+    q: "What is the BEST next step for this service account alert?",
+    options: ["Contain WS-114, rotate svc-backup credentials and check where else it was used","Reboot WS-114 and see whether the account logs on interactively again afterwards","Add svc-backup to the allowlist for interactive logons because it is a known account","Disable svc-backup now and leave the investigation until morning"],
+    correct: 0, why: "Disabling the account would stop further use, but it leaves the workstation and the scope of the compromise unexamined. Containing the host, rotating credentials and checking for other use addresses both.",
+    hint: "Stopping the account is not the same as scoping the incident."
+  },
+  {
+    id: 264, rank: 2, topic: "Temporary Production Access", difficulty: "ADVANCED",
+    q: "A developer needs temporary administrator access to a production account to fix an outage. Which approach is BEST?",
+    options: ["Share the existing administrator credentials with the developer","Grant the developer's own account permanent administrator rights","Use just-in-time elevation with approval, a time limit, session recording and automatic expiry","Let the developer assume a break-glass role, with alerting and a later review"],
+    correct: 2, why: "A break-glass role with alerting and review is acceptable in emergencies, but just-in-time elevation gives the same speed with approval, limited duration and an automatic end to the access.",
+    hint: "Both are time-limited, but one is controlled before it starts."
+  },
+  {
+    id: 265, rank: 2, topic: "Packed Sample Triage", difficulty: "ADVANCED",
+    exhibit: "ANALYSIS NOTE\nSAMPLE: invoice_viewer.exe (packed, high entropy)\nSANDBOX: process ends after 3 seconds, no network activity\nSTATIC: unsigned; mutex Global\\kx_upd_77; embedded domain cdn-sync-ops.example\nDEADLINE: decision to block needed within 30 minutes",
+    q: "What is the BEST approach to this packed sample?",
+    options: ["Declare the sample clean because a program that crashes during analysis cannot cause any harm","Run it on the analyst's own laptop outside the lab, in case it behaves differently on a real machine","Submit it to a second sandbox with a different configuration to see whether it will execute there","Pull indicators from static data and partial behaviour to block now, then keep unpacking"],
+    correct: 3, why: "A second sandbox may help, but it does not meet the 30-minute deadline if the sample keeps crashing. Blocking on the indicators already available while analysis continues gives protection now and detail later.",
+    hint: "Do what protects the business first, then keep analysing."
+  },
+  {
+    id: 266, rank: 2, topic: "Release Fix Prioritisation", difficulty: "ADVANCED",
+    exhibit: "SAST REPORT (excerpt)\nHIGH: SQL injection, OrderService.java line 88 (user input concatenated into query)\nMEDIUM: session cookie missing HttpOnly flag\nLOW: verbose error messages shown to users",
+    q: "The release is on Friday and the team has time to fix only two issues. What is the BEST choice?",
+    options: ["Fix the SQL injection and the verbose errors","Fix the SQL injection and the missing HttpOnly flag","Fix none of them and record all three as accepted risks for this release","Fix the two quickest items first"],
+    correct: 1, why: "The SQL injection must be fixed in either case. Of the other two, the missing HttpOnly flag on the session cookie carries more risk than verbose error messages, so it is the better second choice.",
+    hint: "Both good options include the worst flaw; compare the other issue."
+  },
+  {
+    id: 267, rank: 2, topic: "Unpatchable Legacy Application", difficulty: "ADVANCED",
+    q: "A legacy payment application cannot be patched for six months and is reachable from the whole corporate network. What is the BEST interim control?",
+    options: ["Increase the minimum password length for every user of the application to 20 characters","Move it onto the guest Wi-Fi network so that it is separated from staff devices","Segment it so that only required hosts can reach it, and monitor it closely","Put a virtual-patching WAF in front of it"],
+    correct: 2, why: "A virtual-patching WAF can help with web attacks, but segmentation limits who can reach every service on the application, so it removes far more exposure for the interim period.",
+    hint: "Reduce who can reach it before trying to filter what reaches it."
+  },
+  {
+    id: 268, rank: 2, topic: "Phishing Campaign Response", difficulty: "ADVANCED",
+    exhibit: "MAIL GATEWAY LOG (excerpt)\n09:12 delivered  from=hr-updates@benefit-portal.example  to=40 users  subject='Update your benefits'\n09:20 link clicks recorded: 6 users\n09:31 sign-ins from new IP addresses: 2 of the 6 users",
+    q: "What is the BEST sequence of actions for this phishing campaign?",
+    options: ["Purge, block the domain, reset the six clickers' credentials and sessions and hunt for misuse","Send a warning email to all 40 recipients and wait for replies","Purge the message and block the domain, then reset passwords only for the six users who clicked","Block the sender domain and take no further action"],
+    correct: 0, why: "Purging, blocking and resetting the clickers is good, but resetting passwords alone leaves active sessions open and does not look for misuse, which is what the two new-IP sign-ins suggest.",
+    hint: "Two sign-ins already look suspicious."
+  },
+  {
+    id: 269, rank: 2, topic: "Possibly Copied Private Key", difficulty: "ADVANCED",
+    exhibit: "CERTIFICATE\nSUBJECT: shop.company.example\nEXPIRES: in 5 months\nPRIVATE KEY STORE: shared by 6 administrators\nDLP ALERT: a departing administrator copied the key store archive to a personal device",
+    q: "What is the BEST action for this possibly copied private key?",
+    options: ["Continue using it until it expires, because theft of the key has not been proven","Reissue with a new key, revoke the old certificate and review key access","Reissue the certificate using the same private key to avoid any configuration changes","Restrict access to the key store now and replace the key at the scheduled renewal"],
+    correct: 1, why: "Tightening access is sensible, but the key may already be in someone else's hands, so waiting five months to replace it leaves an exposure. Replacing the key and revoking the certificate removes it.",
+    hint: "If the key is copied, restricting future access is too late."
+  },
+  {
+    id: 270, rank: 2, topic: "Chatbot Data Exposure", difficulty: "ADVANCED",
+    exhibit: "CHATBOT LOG\n14:02 user=cust_4471 prompt='Where is my order 99231?'\n14:02 retrieved_orders=[99231 (cust_4471), 88410 (cust_0925), 88411 (cust_0925)]\n14:02 reply includes details of order 88410\nCHANGE: prompt template updated at 13:45; retrieval filter on customer_id removed",
+    q: "What is the BEST first response to this chatbot behaviour?",
+    options: ["Add an instruction to the system prompt telling the model never to reveal other customers' data","Roll back the prompt change immediately and review the logs for exposure","Leave it running while the vendor investigates, because the change was small","Roll back, enforce per-customer filtering in the retrieval layer, review logs and assess notification duties"],
+    correct: 3, why: "Rolling back is a good immediate step, but the real flaw is that customer filtering was removed from retrieval. It needs to be enforced outside the model, and the exposure must be assessed.",
+    hint: "A prompt cannot replace an access control."
+  },
+  {
+    id: 271, rank: 2, topic: "Supplier Breach Notification", difficulty: "ADVANCED",
+    q: "A critical SaaS supplier tells you it has had a breach that 'may' involve your customers' data and gives few details. What is the BEST response?",
+    options: ["Wait until the supplier has completed its own investigation before doing anything","Tell all customers immediately that their data has been stolen by the supplier","Ask for details of the affected data and review what data you hold there","Start your incident process: assess exposure, legal clocks and communications"],
+    correct: 3, why: "Asking for details and reviewing your data is necessary, but a supplier breach can start notification deadlines and affect customers, so it should be handled within your own incident process.",
+    hint: "Your obligations start when you learn of the risk."
+  },
+  {
+    id: 272, rank: 2, topic: "Incomplete Fix Retest", difficulty: "ADVANCED",
+    exhibit: "RETEST RESULT\nFINDING: F-07 SQL injection in /search?q= (critical)\nRETEST 1: /search?q= payload blocked\nRETEST 2: same flaw still exploitable through /search?sort=\nFIX APPLIED: input filter on the q parameter only",
+    q: "What is the BEST action for the retest report?",
+    options: ["Mark it as fixed because the original request is now blocked","Mark it as not fully remediated, document the bypass and recommend a root-cause fix","Mark the original as partially remediated and raise the second parameter as a new finding","Close the finding and propose a new engagement"],
+    correct: 1, why: "Treating the bypass as a new finding is a reasonable way to record it, but it is the same flaw, so the finding should remain open with the bypass documented and a root-cause fix recommended.",
+    hint: "Same flaw, different parameter."
+  },
+  {
+    id: 273, rank: 2, topic: "Sudo Rule Audit", difficulty: "ADVANCED",
+    exhibit: "SUDOERS EXCERPT\nappadmin ALL=(ALL) NOPASSWD: ALL\nbackup   ALL=(root) NOPASSWD: /usr/bin/rsync",
+    q: "What is the BEST remediation for these sudo rules?",
+    options: ["Restrict appadmin to the specific commands it needs, require authentication and review who can use the account","Remove sudo from the backup account so that backups stop running as root","Require a password for appadmin's sudo commands but keep the broad permissions","Leave both rules, since both are service accounts"],
+    correct: 0, why: "Requiring a password helps a little, but the appadmin rule still allows every command as root. Limiting the commands removes the real risk, and a review of who can use the account addresses accountability.",
+    hint: "The rule is broad; narrow it, not just guard it."
+  },
+  {
+    id: 274, rank: 2, topic: "Wired Network Access Control", difficulty: "ADVANCED",
+    q: "An organisation wants to stop unauthorised devices from joining its wired office network. Which control is BEST?",
+    options: ["Place stickers on the wall ports saying that unauthorised devices are not allowed","Disable unused ports and apply MAC address filtering on all the remaining ports","Use 802.1X port authentication with device certificates","Ask staff to check one another's devices when they sit down at a desk"],
+    correct: 2, why: "Disabling unused ports is useful, but MAC addresses are easy to copy. 802.1X with certificates authenticates the device itself before it gets network access.",
+    hint: "Which control proves what the device is?"
+  },
+  {
+    id: 275, rank: 3, topic: "Multi-Tenant Isolation Design", difficulty: "EXPERT",
+    exhibit: "REQUIREMENTS\n- 3,000 small customers: low price point\n- 12 regulated customers: strong isolation, own encryption keys\n- Platform engineering team: 20 people",
+    q: "Which tenancy architecture is BEST for these requirements?",
+    options: ["Use a single shared database and filter by tenant in the application code only","Give every tenant, including the 3,000 small ones, its own separate database and encryption keys","Use a shared database and trust the tenant ID sent by the client","Tiered: row-level security for small tenants, dedicated databases for regulated tenants"],
+    correct: 3, why: "Dedicated databases for everyone would give strong isolation but would be costly and hard to run for 3,000 small tenants. A tiered model meets the regulated tenants' needs while keeping the platform economical.",
+    hint: "Match the isolation to the customer, not one design for all."
+  },
+  {
+    id: 276, rank: 3, topic: "Contractor Access Design", difficulty: "EXPERT",
+    exhibit: "REQUIREMENT\n250 external contractors on unmanaged devices\nACCESS NEEDED: three internal web applications (HR-Proj, Wiki, Ticketing)\nCURRENT STATE: no contractor access method",
+    q: "Which access design is BEST for the contractors?",
+    options: ["Give contractors VPN access limited to the application subnets, protected by MFA","Publish the apps through an identity-aware proxy with MFA and per-app access","Create one shared contractor account for the group, protected by a single long password","Open the three applications to the internet and rely on an IP address allowlist only"],
+    correct: 1, why: "A subnet-limited VPN with MFA is reasonable, but it places unmanaged devices on the network. An identity-aware proxy gives access to only the three applications, per user, without network connectivity.",
+    hint: "Is it the application or the network the contractors need?"
+  },
+  {
+    id: 277, rank: 3, topic: "Noisy Detection Rule Tuning", difficulty: "EXPERT",
+    exhibit: "DETECTION RULE R-212: new member added to privileged group\nFIRED: 1,400 times in 30 days\nTRUE POSITIVES: 3\nBULK SOURCE: 1,390 alerts from service account svc-hr-sync (nightly HR synchronisation)",
+    q: "What is the BEST tuning approach for this noisy rule?",
+    options: ["Disable the rule permanently because it is far too noisy to be of any use","Exclude the HR sync service account from this rule only","Add a scoped exclusion for svc-hr-sync with an owner and review date, and monitor the account itself","Raise the alert threshold so that the rule fires only once a week for any actor"],
+    correct: 2, why: "A narrow exclusion is correct, but an unreviewed exclusion for a privileged service account can become a blind spot. An owner, a review date and monitoring of the account itself keep the control honest.",
+    hint: "Exclusions need an owner and an expiry."
+  },
+  {
+    id: 278, rank: 3, topic: "Multi-Account Log Architecture", difficulty: "EXPERT",
+    q: "A SOC must monitor 12 cloud accounts run by different teams. Which log architecture is BEST?",
+    options: ["Centralise control-plane and key service logs in a write-protected logging account","Use the provider's native security service in each account and aggregate only the findings it produces","Forward only error-level logs from each account to the SIEM in order to keep storage costs low","Let each account team keep its own logs and review them once a month"],
+    correct: 0, why: "Aggregating findings is useful, but investigations need the underlying logs, and these must be kept where an attacker with account access cannot alter them.",
+    hint: "Findings are summaries; investigators need the logs."
+  },
+  {
+    id: 279, rank: 3, topic: "Legacy Application SSO", difficulty: "EXPERT",
+    q: "A legacy application supports only username and password login but must join the company's SSO and MFA. What is the BEST approach?",
+    options: ["Use a single shared service account to sign users in on their behalf","Rewrite the application so that it supports modern authentication natively before anyone may use it again","Put it behind an identity-aware proxy that performs SSO and MFA, and allow access only through it","Leave the application on passwords alone, since legacy systems cannot support MFA"],
+    correct: 2, why: "Rewriting the application would be a good long-term goal, but it could take months. A proxy delivers SSO and MFA now, provided the application can only be reached through it.",
+    hint: "Is there a way to add the control without changing the application?"
+  },
+  {
+    id: 280, rank: 3, topic: "Secure File Upload Design", difficulty: "EXPERT",
+    q: "A document-upload feature accepts user files that staff later open. Which design is BEST?",
+    options: ["Check the extension against an allowed list and store the file inside the web root for fast access later","Validate type by content, scan, store outside the web root in isolation and serve safely","Scan uploads for malware and validate the file type before storing them in the application's storage","Rely on antivirus on staff laptops"],
+    correct: 1, why: "Scanning and validating the type is good, but the design is stronger when files are also stored outside the web root, kept isolated from the application and served with safe headers.",
+    hint: "Think about where the file lives and how it is served."
+  },
+  {
+    id: 281, rank: 3, topic: "Analytics Data Access", difficulty: "EXPERT",
+    q: "A data science team wants a copy of production customer data in an analytics environment with fewer controls. What is the BEST architectural response?",
+    options: ["Refuse all analytics access to customer data, since any use of production data is a risk","Provide a pseudonymised extract limited to the fields the team requires, with full access logging","Allow a full copy of the production data once the team has signed an acceptable-use form","Default to de-identified or synthetic data; allow re-identification only by approval"],
+    correct: 3, why: "A limited pseudonymised extract is sensible, but de-identified or synthetic data by default avoids exposing real customers unless there is a specific, approved need to re-identify.",
+    hint: "Can the team do the work without real identities?"
+  },
+  {
+    id: 282, rank: 3, topic: "Mobile API Protection", difficulty: "EXPERT",
+    q: "Which approach is BEST for protecting the mobile banking app's API calls from interception on hostile networks?",
+    options: ["TLS with certificate pinning, a rotation plan with backup pins, and server-side checks that never trust the client","TLS with strict certificate validation and short-lived tokens","Obfuscate the API address inside the app","Use plain HTTP over a private mobile network"],
+    correct: 0, why: "Strict TLS validation and short-lived tokens are sound, but pinning adds protection against rogue certificates on hostile networks, provided there is a safe rotation plan.",
+    hint: "Think about a trusted CA that issues a certificate it should not."
+  },
+  {
+    id: 283, rank: 3, topic: "Card Data Protection", difficulty: "EXPERT",
+    exhibit: "DATABASE REVIEW\nTABLE: payments (card_number VARCHAR, expiry, customer_id)\nPROTECTION: storage-level (disk) encryption enabled\nAUDITOR NOTE: a compromised application account can read all card numbers in clear text",
+    q: "What is the BEST improvement to this database protection?",
+    options: ["Add a second layer of disk encryption on the database volume and rotate its key every month","Restrict database access with role-based permissions and monitor the queries that are run","Tokenise card numbers or use field-level encryption with keys held separately in a KMS","Move the database to a larger instance with more memory"],
+    correct: 2, why: "Tighter permissions and query monitoring help, but a compromised application account would still read clear card numbers. Tokenisation or field-level encryption protects the data itself.",
+    hint: "Disk encryption does not stop an authorised account reading data."
+  },
+  {
+    id: 284, rank: 3, topic: "Pipeline Gate Tuning", difficulty: "EXPERT",
+    exhibit: "PIPELINE SCAN SUMMARY (30 days)\nFINDINGS: 2,300 (High 140, Medium 900, Low 1,260)\nBUILDS BLOCKED BY SCANS: 61%\nDEVELOPER BYPASSES (skip-scan flag): 38 builds",
+    q: "Which improvement to this pipeline policy is BEST?",
+    options: ["Make every finding a blocking finding and remove the skip-scan flag so that nothing can be bypassed","Block on confirmed high-severity findings, backlog the rest with deadlines and tune the rules","Run the scans only once each quarter","Make the scans advisory with a weekly report so that developers are never blocked"],
+    correct: 1, why: "Advisory scanning avoids friction but gives no control. Blocking everything causes bypasses, as the data shows. Blocking on confirmed high-severity issues and managing the rest through deadlines keeps trust and control.",
+    hint: "Controls that people bypass do not protect anything."
+  },
+  {
+    id: 285, rank: 3, topic: "Threat Intelligence at Scale", difficulty: "EXPERT",
+    exhibit: "THREAT INTELLIGENCE FEEDS\nDAILY INDICATORS RECEIVED: 2,000,000\nSIEM MATCHING LATENCY: 40 minutes (was 2 minutes)\nHIT RATE: 0.01% (mostly stale or low-confidence indicators)",
+    q: "Which approach to these threat intelligence feeds is BEST?",
+    options: ["Score indicators, expire stale ones and match them where it matters most","Use only a vetted subset of indicators from trusted sector-sharing groups and closed communities","Load every indicator permanently, because more data always improves detection","Stop using threat intelligence feeds altogether because they are slowing the SIEM down"],
+    correct: 0, why: "A vetted subset reduces volume, but it discards useful indicators from other sources. Scoring, ageing and placing matching at the right control points keeps the value without the delay.",
+    hint: "Manage quality and age, not just volume."
+  },
+  {
+    id: 286, rank: 3, topic: "Deletion Requests and Backups", difficulty: "EXPERT",
+    q: "A privacy law requires a customer's data to be deleted on request, but backups keep it for 35 days. What is the BEST approach?",
+    options: ["Delete only from production and say nothing about the backups","Shorten the backup retention period where that is feasible and document the remaining period clearly","Delete from production, document the backup period and re-apply deletions on any restore","Stop making backups so that deleted data cannot be retained"],
+    correct: 2, why: "Shortening retention is useful, but it does not by itself prevent deleted data from returning after a restore. Documenting the period and re-applying deletions on restore addresses both transparency and compliance.",
+    hint: "What happens to the deleted record if you restore?"
+  },
+  {
+    id: 287, rank: 3, topic: "Outbound TLS Inspection", difficulty: "EXPERT",
+    q: "Security wants to decrypt and inspect outbound TLS traffic to detect exfiltration, but legal is concerned about banking and health sites. Which approach is BEST?",
+    options: ["Inspect all outbound traffic without exception, including banking and health sites","Inspect nothing and rely on endpoint antivirus alone","Use DNS and flow metadata only, without decrypting any traffic","Inspect with exemptions for sensitive categories, a clear policy, protected keys and logs, and metadata for exempt traffic"],
+    correct: 3, why: "Metadata alone is privacy-friendly but gives limited visibility. A policy-based approach with exemptions for sensitive sites, protected keys and logs, and metadata for exempt traffic balances detection with privacy.",
+    hint: "Balance detection with privacy, not one or the other."
+  },
+  {
+    id: 288, rank: 4, topic: "Legacy ERP Risk Options", difficulty: "EXPERT",
+    exhibit: "RISK: legacy ERP (end of life) with internet-facing portal. Likelihood: high. Impact: £4m.\nOPTION 1: replace ERP, £2.5m, 18 months\nOPTION 2: WAF, segmentation and monitoring, £300k, 3 months (likelihood falls to medium)\nOPTION 3: cyber insurance, £120k a year (excludes unpatched systems)",
+    q: "What is the BEST recommendation to the board?",
+    options: ["Accept the risk and wait until the replacement budget has been approved","Apply the interim controls now and fund the replacement on a roadmap","Fund the replacement as the single action and add interim controls only if it is delayed","Buy the insurance policy and treat the risk as fully transferred"],
+    correct: 1, why: "Replacing the ERP is the right long-term answer, but it leaves the exposure unaddressed for 18 months. Interim controls reduce likelihood now at modest cost. The insurance excludes unpatched systems, so it does not transfer this risk.",
+    hint: "Fix the long-term problem, but do not leave the short-term one open."
+  },
+  {
+    id: 289, rank: 4, topic: "Data Extortion Response", difficulty: "EXPERT",
+    exhibit: "FROM: Data Broker <x7q2@anon-mail.example>\nSUBJECT: Your customer database\n\nWe hold your customer database. Pay 20 BTC within 72 hours or we publish it. Proof attached: 50 records.\n\nATTACHMENT: sample_50.csv",
+    q: "What is the BEST first step after receiving this extortion email?",
+    options: ["Pay quickly to avoid publication of the data and the reputational damage that would follow","Ignore the message because it is probably a bluff","Verify the sample against your data and escalate to the crisis team and legal counsel","Start the incident process: verify the sample, preserve evidence, close the access path and involve legal and law enforcement"],
+    correct: 3, why: "Verifying the sample and escalating are both right, but the extortion claim implies an unknown access path that may still be open. The full incident process also preserves evidence and engages law enforcement.",
+    hint: "Verification is a step, not the whole response."
+  },
+  {
+    id: 290, rank: 4, topic: "Evidence for the Regulator", difficulty: "EXPERT",
+    q: "A regulator asks for evidence that the incident response plan was exercised in the last 12 months. The last scheduled exercise was 14 months ago, but a real incident 5 months ago triggered the plan and has a documented review. What is the BEST response?",
+    options: ["Offer the real-incident review as evidence, say no exercise was held, and schedule one","Provide the record of the exercise held 14 months ago, explain the gap and commit to a date for the next one","State that an exercise was held within the requested period without going into the exact dates involved","Run a quick tabletop exercise now and date the report so that it falls inside the requested period"],
+    correct: 0, why: "Providing the old record honestly is acceptable, but the real incident shows the plan working in practice. Being clear that no scheduled exercise occurred while offering that evidence and a date is accurate and the strongest response.",
+    hint: "Be accurate, and offer the strongest honest evidence you have."
+  },
+  {
+    id: 291, rank: 4, topic: "Secrets Sprawl Programme", difficulty: "EXPERT",
+    exhibit: "SECRET SCAN RESULTS\nREPOSITORIES SCANNED: 900\nSECRETS FOUND: 4,000 (cloud keys 310, database passwords 1,150, API tokens 2,540)\nFOUND IN GIT HISTORY ONLY: 1,700\nCONFIRMED ACTIVE: 640",
+    q: "What is the BEST programme response to these scan results?",
+    options: ["Delete the secrets from the latest commit of each repository","Rotate the highest-risk secrets first and enable pre-commit scanning in the main repositories","Rotate exposed secrets by risk, remove them, add scanning and move to a secrets manager","Rewrite the git history to remove the secrets and consider the matter closed"],
+    correct: 2, why: "Rotating the highest-risk secrets first and adding pre-commit scanning is sound, but it leaves the other secrets and the root cause. A complete programme rotates by risk, removes the secrets, adds scanning and moves them to a secrets manager.",
+    hint: "Treat the cause as well as the exposed secrets."
+  },
+  {
+    id: 292, rank: 4, topic: "Model Release Decision", difficulty: "EXPERT",
+    exhibit: "MODEL RELEASE REVIEW\nMODEL v2 vs v1: task accuracy +4%\nRED-TEAM JAILBREAK SUCCESS: 2% -> 11%\nPLANNED USE: customer support assistant with a refund tool\nRELEASE DATE: next week",
+    q: "What is the BEST release decision for model v2?",
+    options: ["Ship it as planned because the 4% accuracy improvement matters more than the red-team results","Hold the full rollout, strengthen filters and permissions, retest and set release criteria","Release it only to low-risk use cases, with close monitoring, while the weaknesses are being fixed","Cancel all use of AI across the organisation"],
+    correct: 1, why: "A limited release to low-risk uses with monitoring is a defensible compromise, but this model has a refund tool, and the jailbreak rate has risen more than fivefold. The risk should be reduced and retested before wider release.",
+    hint: "The planned use has a tool that can move money."
+  },
+  {
+    id: 293, rank: 4, topic: "Red Team Exercise Control", difficulty: "EXPERT",
+    q: "During a red team exercise, the blue team detects the activity on day 1 and starts containing it. The red team asks to carry on to test later phases. What is the BEST action for the exercise control group?",
+    options: ["Let the red team ignore the containment and carry on exactly as originally planned","Declare the exercise a failure for the red team and cancel the debrief with both teams","End the exercise and record the day-1 detection as a success, deferring the later phases","Honour the containment and restart later phases from an agreed foothold"],
+    correct: 3, why: "Ending the exercise and recording the detection is reasonable, but it loses the chance to test later detection and response. Honouring the real containment and resuming from an agreed foothold keeps the exercise valuable.",
+    hint: "The blue team's containment is real; the later phases can still be tested."
+  },
+  {
+    id: 294, rank: 4, topic: "Budget Reduction Planning", difficulty: "EXPERT",
+    q: "The CFO requires a 20% cut to the security budget. What is the BEST approach?",
+    options: ["Rank spend by risk reduction, protect critical controls and show the board the residual risk change","Cut every team's budget by the same percentage","Cut only penetration testing and awareness training","Consolidate overlapping tools and cut licences with low utilisation before touching any control, and report the savings"],
+    correct: 0, why: "Consolidating tools and cutting unused licences is sensible and should be part of the plan, but the board needs to understand how the cut changes residual risk so that it can make an informed decision.",
+    hint: "The board is deciding on risk, not just on cost."
+  },
+  {
+    id: 295, rank: 4, topic: "Encrypted DNS Visibility", difficulty: "EXPERT",
+    exhibit: "PROXY LOG SUMMARY (24 h)\n1,200 endpoints connecting to dns.public-resolver.example:443 (DNS over HTTPS)\nINTERNAL DNS QUERY VOLUME: down 38% since the browser update\nSIEM DNS DETECTIONS AFFECTED: 14 rules",
+    q: "What is the BEST way to restore DNS visibility?",
+    options: ["Block all HTTPS from endpoints until the problem is fixed","Block known public DoH endpoints at egress, run a logged internal resolver and enforce it by endpoint policy","Set browser policy to use the internal resolver and disable built-in DoH","Accept the loss of DNS visibility because the traffic is encrypted"],
+    correct: 1, why: "Browser policy is an effective step, but it only covers managed browsers. Blocking known public DoH endpoints, providing a logged internal resolver and enforcing it on endpoints covers the gaps.",
+    hint: "Policy covers the browsers you manage; what about the rest?"
+  },
+  {
+    id: 296, rank: 4, topic: "Regional Cloud Outage Decision", difficulty: "EXPERT",
+    exhibit: "CLOUD STATUS\nPRIMARY REGION: provider outage, estimated 6+ hours\nBUSINESS RTO: 4 hours; RPO: 15 minutes\nSECONDARY REGION: replication current (lag 2 minutes); failover never tested for this workload",
+    q: "What is the BEST action for the incident commander?",
+    options: ["Wait for the provider to restore the region because failover has never been tested for this workload","Fail over to the secondary region after checking that replication is current and stakeholders are told","Rebuild the whole service on premises using the last weekly backup of the data","Invoke the DR plan: fail over by runbook with business approval and clear communication"],
+    correct: 3, why: "Failing over after checking replication is a sound technical step, but it should be done under the DR plan, with business approval, a runbook and communication, particularly as the failover is untested.",
+    hint: "The technical action is right; what governs it?"
+  },
+  {
+    id: 297, rank: 4, topic: "Departing Administrator", difficulty: "EXPERT",
+    q: "A senior cloud administrator resigns and will work a two-week notice period. They hold break-glass access and know the service-account passwords. What is the BEST approach?",
+    options: ["Revoke all of their access immediately and escort them out of the building the same day","Leave their access unchanged until the final day of the notice period to avoid friction","Reduce access to their duties, rotate secrets they know, monitor, revoke on exit","Ask them to sign a written statement promising that they will not misuse any access they still hold"],
+    correct: 2, why: "Immediate revocation is justified if there are risk indicators, but a routine resignation calls for a proportionate approach: reduce access, rotate what they know, monitor, and revoke fully at exit.",
+    hint: "Be proportionate: the person is leaving, not under suspicion."
+  },
+  {
+    id: 298, rank: 4, topic: "Lateral Movement Response", difficulty: "EXPERT",
+    exhibit: "EDR TELEMETRY (2 hours)\nBINARY: updater.exe (unsigned, same hash on 7 hosts)\nPARENT PROCESS: wmiprvse.exe\nREMOTE EXECUTION SOURCE: admin workstation ADM-03\nTARGETS: 7 servers in the finance VLAN",
+    q: "What is the BEST response to this telemetry?",
+    options: ["Treat ADM-03 as the probable source: isolate it and the 7 hosts, preserve evidence, reset privileged credentials and hunt estate-wide","Isolate the seven servers and keep watching ADM-03 for further activity","Quarantine the binary on all hosts and close the alert","Wait for the antivirus vendor to release a signature for the file"],
+    correct: 0, why: "Isolating the seven servers is necessary, but the common remote execution source suggests that ADM-03 or its credentials are compromised and further hosts may be affected.",
+    hint: "Where did the execution come from?"
+  },
+  {
+    id: 299, rank: 4, topic: "Reachability-Based Patching", difficulty: "EXPERT",
+    exhibit: "SCAN SUMMARY\nVULNERABILITY: critical (CVSS 9.8) in library libparse 2.3\nSERVICES INCLUDING THE LIBRARY: 120\nREACHABILITY ANALYSIS: vulnerable function called by 4 services; 116 only include the library",
+    q: "What is the BEST remediation plan for this library vulnerability?",
+    options: ["Patch all 120 services immediately in one emergency change, whatever the disruption to the business","Fix the four reachable services first and upgrade the remaining services on the normal cadence","Ignore the finding because most of the services never call the vulnerable function","Remove the library from the SBOM so that it no longer appears in reports"],
+    correct: 1, why: "Patching all 120 services at once is safe from a security perspective but needlessly disruptive. Prioritising the four reachable services and tracking the rest balances risk and operational stability.",
+    hint: "Does every service face the same risk?"
+  },
+  {
+    id: 300, rank: 4, topic: "Launch Risk Decision", difficulty: "EXPERT",
+    exhibit: "PENETRATION TEST SUMMARY (new payments feature)\nHIGH: IDOR exposing other customers' invoices\nHIGH: missing rate limiting on the card-validation endpoint\nLAUNCH: next Friday (major customer demo)\nBUSINESS OWNER: wants to launch on time",
+    q: "What is the BEST course of action for the CISO regarding the launch?",
+    options: ["Block the launch outright because high-severity findings must never be shipped under any circumstances","Allow the launch and record nothing","Offer a limited release behind a feature flag with compensating controls in place","Present options and risks and get a documented decision from the accountable executive"],
+    correct: 3, why: "A limited release with compensating controls may be one of the options, but the decision to accept the risk belongs to the accountable business executive, so options and risks should be presented and the decision documented.",
+    hint: "Who owns the risk decision?"
   }
 ];
