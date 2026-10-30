@@ -1125,16 +1125,20 @@ export function initCyberQuiz() {
             const piece = document.createElement('i');
     
             piece.className = 'confetti-pop-piece';
-    
+
+            const containerHeight = host.clientHeight;
+            
             // Random horizontal explosion
             const x = (Math.random() - 0.5) * 500;
-    
+            
             // Initial upward burst
-            const y = -(100 + Math.random() * 230);
+            //const y = -(100 + Math.random() * 230);
+            const y = -(containerHeight * (0.7 + Math.random() * 0.3));
     
             // Final position after gravity takes effect
             const endX = x * (1.2 + Math.random() * 0.4);
-            const endY = y + 100 + Math.random() * 180;
+            //const endY = y + 100 + Math.random() * 180;
+            const endY = y + containerHeight * (0.2 + Math.random() * 0.3);
     
             // Random rotation
             const rotation = (Math.random() - 0.5) * 1440;
@@ -1162,7 +1166,7 @@ export function initCyberQuiz() {
     
         setTimeout(() => {
             host.innerHTML = '';
-        }, 2400);
+        }, 3000);
     }
     
     /* =====================================================
