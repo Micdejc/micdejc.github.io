@@ -1450,6 +1450,36 @@ body.cyberquiz-modal-open {
     }
 }
 
+/* Expert rank fireworks */
+.cyberquiz-root .confetti-firework-piece {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    will-change: transform, opacity;
+    animation: cqExpertCelebration 1.5s ease-out forwards;
+}
+
+@keyframes cqExpertCelebration {
+    0% {
+        opacity: 1;
+        transform: translate(0, 0) scale(1.5);
+    }
+
+    75% {
+        opacity: 1;
+        transform:
+            translate(var(--burst-x), var(--burst-y))
+            scale(1);
+    }
+
+    100% {
+        opacity: 0;
+        transform:
+            translate(var(--burst-x), var(--burst-y))
+            scale(.2);
+    }
+}
+
 /* =========================================================
    18. KEYBOARD ACCESSIBILITY
    ========================================================= */
