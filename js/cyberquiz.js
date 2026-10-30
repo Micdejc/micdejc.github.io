@@ -1063,10 +1063,12 @@ export function initCyberQuiz() {
             block: 'center'
         });
 
-        if (rankIndex() > missionRank) {
-            //toast(`Rank unlocked: ${rank().name}!`);
+        const currentRankIndex = rankIndex();
+        const hasStarted = state.startedRanks?.includes(currentRankIndex) ?? false;
+        
+        if (currentRankIndex > missionRank && !hasStarted) {
             toast(`Rank unlocked: ${rank().icon} ${rank().name}!`);
-            confettiPop()
+            confettiPop();
         }
     }
 
