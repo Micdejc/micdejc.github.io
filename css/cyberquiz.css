@@ -1431,11 +1431,11 @@ body.cyberquiz-modal-open {
         transform: translate(0, 0) scale(.5);
     }
 
-    15% {
+    10% {
         opacity: 1;
     }
 
-    75% {
+    55% {
         opacity: 1;
         transform:
             translate(var(--burst-x), var(--burst-y))
