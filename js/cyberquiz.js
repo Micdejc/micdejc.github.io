@@ -893,7 +893,7 @@ export function initCyberQuiz() {
         if (rankIndex() > question.rank) {
             //toast(`Rank unlocked: ${rank().name}!`);
             toast(`Rank unlocked: ${rank().icon} ${rank().name}!`);
-            confettiPop()
+            confettiExplosion()
         } */
         
     }
