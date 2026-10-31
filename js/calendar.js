@@ -1410,174 +1410,213 @@ function getRemainingDays(date) {
    GREETINGS
    ========================================================= */
 
+function getHolidayIcon(event) {
+    const title = event.title.toLowerCase();
+
+    if (title.includes("valentine")) return "❤️";
+    if (title.includes("mother")) return "🌷";
+    if (title.includes("father")) return "👔";
+    if (title.includes("st patrick")) return "☘️";
+    if (title.includes("halloween")) return "🎃";
+    if (title.includes("bonfire")) return "🔥";
+    if (title.includes("christmas eve")) return "🎄";
+    if (title.includes("christmas")) return "🎄";
+    if (title.includes("new year's day")) return "🎆";
+    if (title.includes("new year's eve")) return "🎆";
+    if (title.includes("easter")) return "🐣";
+    if (title.includes("boxing")) return "🎁";
+    if (title.includes("diwali")) return "🪔";
+    if (title.includes("holi")) return "🌈";
+    if (title.includes("hanukkah")) return "🕎";
+    if (title.includes("passover")) return "🍷";
+    if (title.includes("eid al-fitr")) return "🕋";
+    if (title.includes("eid al-adha")) return "🐑";
+    if (title.includes("ramadan")) return "🌙";
+    if (title.includes("ashura")) return "☪️";
+    if (title.includes("mawlid")) return "🌙";
+    if (title.includes("international women's day")) return "👩‍💼";
+    if (title.includes("international day of women and girls in science")) return "👩‍🔬";
+    if (title.includes("international women in tech day")) return "👩‍💻";
+    if (title.includes("cybersecurity awareness month")) return "🔐";
+    if (title.includes("stem day")) return "💻";
+    if (title.includes("bank holiday")) return "🇬🇧";
+
+    return "🎉";
+}
+
+
 function getHolidayGreeting(event) {
     const title =
         event.title.toLowerCase();
+    
+    //const icon = getHolidayIcon(event);
+
+    //if (title.includes("valentine")) return `${icon} Happy Valentine's Day!`;
 
     if (
         title.includes("valentine")
     ) {
-        return "❤️ Happy Valentine's Day!";
+        return "Happy Valentine's Day!";
     }
 
     if (
         title.includes("mother")
     ) {
-        return "🌷 Happy Mother's Day!";
+        return "Happy Mother's Day!";
     }
 
     if (
         title.includes("father")
     ) {
-        return "👔 Happy Father's Day!";
+        return "Happy Father's Day!";
     }
 
     if (
         title.includes("st patrick")
     ) {
-        return "☘️ Happy St. Patrick's Day!";
+        return "Happy St. Patrick's Day!";
     }
 
     if (
         title.includes("halloween")
     ) {
-        return "🎃 Happy Halloween!";
+        return "Happy Halloween!";
     }
 
     if (
         title.includes("bonfire")
     ) {
-        return "🔥 Happy Bonfire Night!";
+        return "Happy Bonfire Night!";
     }
 
     if (
         title.includes("christmas eve")
     ) {
-        return "🎄 Happy Christmas Eve!";
+        return "Happy Christmas Eve!";
     }
 
     if (
         title.includes("christmas")
     ) {
-        return "🎄 Merry Christmas!";
+        return "Merry Christmas!";
     }
 
     if (
         title.includes("new year's day")
     ) {
-        return "🎆 Happy New Year!";
+        return "Happy New Year!";
     }
 
     if (
         title.includes("new year's eve")
     ) {
-        return "🎆 Happy New Year's Eve!";
+        return "Happy New Year's Eve!";
     }
 
     if (
         title.includes("easter")
     ) {
-        return "🐣 Happy Easter!";
+        return "Happy Easter!";
     }
 
     if (
         title.includes("boxing")
     ) {
-        return "🎁 Happy Boxing Day!";
+        return "Happy Boxing Day!";
     }
 
     if (
         title.includes("diwali")
     ) {
-        return "🪔 Happy Diwali!";
+        return "Happy Diwali!";
     }
 
     if (
         title.includes("holi")
     ) {
-        return "🌈 Happy Holi!";
+        return "Happy Holi!";
     }
 
     if (
         title.includes("hanukkah")
     ) {
-        return "🕎 Happy Hanukkah!";
+        return "Happy Hanukkah!";
     }
 
     if (
         title.includes("passover")
     ) {
-        return "🍷 Happy Passover!";
+        return "Happy Passover!";
     }
 
     if (
         title.includes("eid al-fitr")
     ) {
-        return "🕋 Eid Mubarak!";
+        return "Eid Mubarak!";
     }
 
     if (
         title.includes("eid al-adha")
     ) {
-        return "🐑 Eid Mubarak!";
+        return "Eid Mubarak!";
     }
 
     if (
         title.includes("ramadan")
     ) {
-        return "🌙 Ramadan Mubarak!";
+        return "Ramadan Mubarak!";
     }
 
     if (
         title.includes("ashura")
     ) {
-        return "☪️ Ashura Mubarak!";
+        return "Ashura Mubarak!";
     }
 
     if (
         title.includes("mawlid")
     ) {
-        return "🌙 Mawlid Mubarak!";
+        return "Mawlid Mubarak!";
     }
 
     if (
         title.includes("international women's day")
     ) {
-        return "👩‍💼 Happy International Women's Day!";
+        return "Happy International Women's Day!";
     }
 
     if (
         title.includes("international day of women and girls in science")
     ) {
-        return "👩‍🔬 Happy Women & Girls in Science Day!";
+        return "Happy Women & Girls in Science Day!";
     }
 
     if (
         title.includes("international women in tech day")
     ) {
-        return "👩‍💻 Happy Women in Tech Day!";
+        return "Happy Women in Tech Day!";
     }
 
     if (
         title.includes("cybersecurity awareness month")
     ) {
-        return "🔐 Happy Cybersecurity Awareness Month!";
+        return "Happy Cybersecurity Awareness Month!";
     }
 
     if (
     title.includes("stem day")
     ) {
-        return "💻 Happy STEM Day!";
+        return "Happy STEM Day!";
     }
 
     if (
         title.includes("bank holiday")
     ) {
-        return "🇬🇧 Happy Bank Holiday!";
+        return "Happy Bank Holiday!";
     }
 
     return (
-        "🎉 Happy " +
+        "Happy " +
         event.title +
         "!"
     );
@@ -1790,7 +1829,7 @@ function showHolidayNotification(events) {
             </button>
 
             <div class="holiday-notification-icon">
-                ${getRandomHolidayIcon()}
+                ${getHolidayIcon(event)}
             </div>
 
             <div class="holiday-notification-content">
@@ -1798,11 +1837,13 @@ function showHolidayNotification(events) {
                 <strong>
                     ${getHolidayGreeting(event)}
                 </strong>
-
+                
+                <!--
                 <span>
                     ${event.title}
                 </span>
-
+                -->
+                
                 <p class="holiday-notification-description">
                     ${getHolidayDescription(event)}
                 </p>
@@ -2150,6 +2191,8 @@ function displayNextEvent(step = 0) {
 
     const description = getHolidayDescription(event);
 
+    //const icon = getHolidayIcon(event);
+
     container.innerHTML = `
         <div class="calendar-next-event-heading">
             <svg class="calendar-next-event-heading-icon"
@@ -2202,7 +2245,7 @@ function displayNextEvent(step = 0) {
 
                 <div class="calendar-next-event-item-title">
                     <span class="calendar-next-event-name">
-                        ${event.title}
+                        ${getRemainingDays(event.start) === 0 ? getHolidayIcon(event) + " " : ""}${event.title}
                     </span>
 
                     <span class="calendar-next-event-category">
