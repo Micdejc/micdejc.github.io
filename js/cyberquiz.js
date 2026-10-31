@@ -1116,16 +1116,15 @@ export function initCyberQuiz() {
             piece.style.left =
                 `${Math.random() * 100}%`;
 
-           
+           /*
             piece.style.animationDuration = 
-                '2.3s';
+                '2.3s';*/
 
-            /*
             piece.style.animationDelay =
-                `${Math.random() * 0.7}s`;*/
-            
+                `${Math.random() * 0.7}s`;
+            /*
             piece.style.animationDelay = 
-                `${Math.random() * 0.15}s`;
+                `${Math.random() * 0.15}s`;*/
 
             piece.style.background =
                 colours[i % colours.length];
@@ -1163,11 +1162,11 @@ export function initCyberQuiz() {
 
             // Wide horizontal fireworks burst
             //const x = (Math.random() - 0.5) * 500;
-            const x = (Math.random() - 0.5) * 1400;
+            const x = (Math.random() - 0.5) * 1200;
             
             // Burst near the upper part of the screen
             //const y = -(300 + Math.random() * 500);
-            const y = -(500 + Math.random() * 250);
+            const y = -(500 + Math.random() * 650);
             
             // Starting position
             piece.style.left = '50%';
@@ -1182,11 +1181,12 @@ export function initCyberQuiz() {
                 colours[i % colours.length];
 
             // Same pace as normal confetti
+            /*
             piece.style.animationDuration = 
-                '2.3s';
+                '2.3s';*/
             
             piece.style.animationDelay = 
-                `${Math.random() * 0.15}s`;
+                `${Math.random() * 0.7}s`;
     
             host.appendChild(piece);
         }
