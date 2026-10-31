@@ -1410,18 +1410,65 @@ body.cyberquiz-modal-open {
     animation: cqConfetti 2.3s ease-in forwards;
 }
 
-.cyberquiz-root .confetti-pop-piece {
+.cyberquiz-root .confetti-rocket {
     position: absolute;
-    width: 8px;
-    height: 13px;
-    border-radius: 2px;
+    width: 5px;
+    height: 14px;
+    background: #ffc857;
+    border-radius: 50%;
+    box-shadow: 0 0 12px #ffc857;
 
+    transform: translate(-50%, -50%);
+
+    animation: cqRocketLaunch .75s ease-out forwards;
+
+    pointer-events: none;
+}
+
+@keyframes cqRocketLaunch {
+    0% {
+        transform: translate(-50%, 0);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translate(-50%, -75vh);
+        opacity: 1;
+    }
+}
+
+.cyberquiz-root .confetti-explosion-piece {
+    position: absolute;
     opacity: 0;
-
-    animation: cqChampagnePop 2.3s ease-out forwards;
 
     pointer-events: none;
     will-change: transform, opacity;
+
+    animation: cqRocketExplosion 1.8s ease-out forwards;
+}
+
+@keyframes cqRocketExplosion {
+    0% {
+        opacity: 1;
+        transform: translate(0, 0) scale(1.5);
+    }
+
+    70% {
+        opacity: 1;
+        transform:
+            translate(var(--burst-x), var(--burst-y))
+            scale(1);
+    }
+
+    100% {
+        opacity: 0;
+        transform:
+            translate(
+                calc(var(--burst-x) * 1.15),
+                calc(var(--burst-y) * 1.15)
+            )
+            scale(.2);
+    }
 }
 
 @keyframes cqChampagnePop {
