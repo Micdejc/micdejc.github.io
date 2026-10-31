@@ -2245,7 +2245,7 @@ function displayNextEvent(step = 0) {
 
                 <div class="calendar-next-event-item-title">
                     <span class="calendar-next-event-name">
-                        ${getRemainingDays(event.start) === 0 ? getHolidayIcon(event) + " " : ""}${event.title}
+                        ${getRemainingDays(event.start) === "Today" ? getHolidayIcon(event) + " " : ""}${event.title}
                     </span>
 
                     <span class="calendar-next-event-category">
