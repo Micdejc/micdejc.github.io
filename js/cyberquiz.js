@@ -1155,45 +1155,55 @@ export function initCyberQuiz() {
             '#8b9cff'
         ];
     
-        for (let i = 0; i < 120; i++) {
-            const piece = document.createElement('i');
+        // Create the firework rocket
+        const rocket = document.createElement('i');
+        rocket.className = 'confetti-rocket';
     
-            piece.className = 'confetti-pop-piece';
-
-            // Wide horizontal fireworks burst
-            //const x = (Math.random() - 0.5) * 500;
-            const x = (Math.random() - 0.5) * 1200;
-            
-            // Burst near the upper part of the screen
-            //const y = -(300 + Math.random() * 500);
-            const y = -(500 + Math.random() * 650);
-            
-            // Starting position
-            piece.style.left = '50%';
-            //piece.style.top = '75%';
-            piece.style.top = '90%';
-            
-            // Explosion trajectory
-            piece.style.setProperty('--burst-x', `${x}px`);
-            piece.style.setProperty('--burst-y', `${y}px`);
+        rocket.style.left = '50%';
+        rocket.style.top = '90%';
     
-            piece.style.background =
-                colours[i % colours.length];
-
-            // Same pace as normal confetti
-            /*
-            piece.style.animationDuration = 
-                '2.3s';*/
-            
-            piece.style.animationDelay = 
-                `${Math.random() * 0.7}s`;
+        host.appendChild(rocket);
     
-            host.appendChild(piece);
-        }
-    
+        // Rocket reaches 75% screen height, then explodes
         setTimeout(() => {
-            host.innerHTML = '';
-        }, 2500);
+            rocket.remove();
+    
+            const particles = 100;
+            const centreX = 50;
+            const centreY = 15;
+    
+            for (let i = 0; i < particles; i++) {
+                const piece = document.createElement('i');
+    
+                piece.className = 'confetti-firework-piece';
+    
+                const angle = (Math.PI * 2 * i) / particles;
+                const distance = 100 + Math.random() * 180;
+    
+                const x = Math.cos(angle) * distance;
+                const y = Math.sin(angle) * distance;
+    
+                piece.style.left = `${centreX}%`;
+                piece.style.top = `${centreY}%`;
+    
+                piece.style.background =
+                    colours[Math.floor(Math.random() * colours.length)];
+    
+                piece.style.setProperty('--burst-x', `${x}px`);
+                piece.style.setProperty('--burst-y', `${y}px`);
+    
+                piece.style.width = `${4 + Math.random() * 5}px`;
+                piece.style.height = `${4 + Math.random() * 5}px`;
+                piece.style.borderRadius = '50%';
+    
+                host.appendChild(piece);
+            }
+    
+            setTimeout(() => {
+                host.innerHTML = '';
+            }, 1800);
+    
+        }, 750);
     }
 
     /* =====================================================
