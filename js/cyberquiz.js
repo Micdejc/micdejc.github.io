@@ -1168,7 +1168,7 @@ export function initCyberQuiz() {
         setTimeout(() => {
             rocket.remove();
     
-            const particles = 100;
+            const particles = 150;
             const centreX = 50;
             const centreY = 20;
     
@@ -1178,8 +1178,9 @@ export function initCyberQuiz() {
                 piece.className = 'confetti-explosion-piece';
     
                 const angle = (Math.PI * 2 * i) / particles;
-                const distance = 100 + Math.random() * 180;
-    
+                //const distance = 100 + Math.random() * 180;
+                const distance = 180 + Math.random() * 300;
+                
                 const x = Math.cos(angle) * distance;
                 const y = Math.sin(angle) * distance;
     
