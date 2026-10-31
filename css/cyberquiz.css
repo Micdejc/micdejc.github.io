@@ -1432,7 +1432,7 @@ body.cyberquiz-modal-open {
     }
 
     100% {
-        transform: translate(-50%, -75vh);
+        transform: translate(-50%, -70vh);
         opacity: 1;
     }
 }
