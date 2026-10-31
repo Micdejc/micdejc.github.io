@@ -1116,8 +1116,16 @@ export function initCyberQuiz() {
             piece.style.left =
                 `${Math.random() * 100}%`;
 
+           
+            piece.style.animationDuration = 
+                '2.3s';
+
+            /*
             piece.style.animationDelay =
-                `${Math.random() * 0.7}s`;
+                `${Math.random() * 0.7}s`;*/
+            
+            piece.style.animationDelay = 
+                `${Math.random() * 0.15}s`;
 
             piece.style.background =
                 colours[i % colours.length];
@@ -1127,7 +1135,7 @@ export function initCyberQuiz() {
 
         setTimeout(() => {
             host.innerHTML = '';
-        }, 2600);
+        }, 2500);
     }
 
     /* =====================================================
@@ -1153,13 +1161,13 @@ export function initCyberQuiz() {
     
             piece.className = 'confetti-pop-piece';
 
-            // Random horizontal explosion
+            // Wide horizontal fireworks burst
             //const x = (Math.random() - 0.5) * 500;
-            const x = (Math.random() - 0.5) * 1200;
+            const x = (Math.random() - 0.5) * 1400;
             
-            // Upward burst
+            // Burst near the upper part of the screen
             //const y = -(300 + Math.random() * 500);
-            const y = -(500 + Math.random() * 650);
+            const y = -(500 + Math.random() * 250);
             
             // Starting position
             piece.style.left = '50%';
@@ -1172,11 +1180,12 @@ export function initCyberQuiz() {
     
             piece.style.background =
                 colours[i % colours.length];
-    
-            piece.style.animationDuration =
-                `${2.2 + Math.random() * 0.6}s`;
-    
-            piece.style.animationDelay =
+
+            // Same pace as normal confetti
+            piece.style.animationDuration = 
+                '2.3s';
+            
+            piece.style.animationDelay = 
                 `${Math.random() * 0.15}s`;
     
             host.appendChild(piece);
@@ -1184,7 +1193,7 @@ export function initCyberQuiz() {
     
         setTimeout(() => {
             host.innerHTML = '';
-        }, 2400);
+        }, 2500);
     }
 
     /* =====================================================
