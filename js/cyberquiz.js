@@ -1164,13 +1164,13 @@ export function initCyberQuiz() {
     
         host.appendChild(rocket);
     
-        // Rocket reaches 75% screen height, then explodes
+        // Rocket reaches 70% screen height, then explodes
         setTimeout(() => {
             rocket.remove();
     
             const particles = 100;
             const centreX = 50;
-            const centreY = 15;
+            const centreY = 20;
     
             for (let i = 0; i < particles; i++) {
                 const piece = document.createElement('i');
