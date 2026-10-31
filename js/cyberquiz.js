@@ -1064,19 +1064,11 @@ export function initCyberQuiz() {
                 ? (Math.random() < 0.5 ? '🎯' : '✨')
                 : '📋';
         }
-    
-        if (isStrong) {
-            confetti();
-        }
-    
-        $('result').scrollIntoView({
-            behavior: 'smooth',
-            block: 'center'
-        });
-
+       
         const currentRankIndex = rankIndex();
         const hasStarted = state.startedRanks?.includes(currentRankIndex) ?? false;
-        
+
+        // Confetti celebration appears only when there is no rank celebration to avoid confetti overlap 
         if (currentRankIndex > missionRank && !hasStarted) {
             if (rank().name === 'Expert') {
                 toast('★ EXPERT RANK ACHIEVED! You have mastered CyberQuiz!');
@@ -1085,7 +1077,15 @@ export function initCyberQuiz() {
                 toast(`Rank unlocked: ${rank().icon} ${rank().name}!`);
                 confettiExplosion();
             }
+        } else if (isStrong) {
+            confetti();
         }
+
+        $('result').scrollIntoView({
+            behavior: 'smooth',
+            block: 'center'
+        });
+        
     }
 
 
