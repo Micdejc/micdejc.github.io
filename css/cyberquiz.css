@@ -1429,22 +1429,11 @@ body.cyberquiz-modal-open {
     /* Launch upwards */
     0% {
         opacity: 1;
-        transform: translate(0, 0) scale(.4);
+        transform: translate(0, 0) scale(.5);
     }
 
-    /* Reach the burst point and explode */
-    35% {
-        opacity: 1;
-        transform:
-            translate(
-                calc(var(--burst-x) * .15),
-                calc(var(--burst-y) * .15)
-            )
-            scale(1.2);
-    }
-
-    /* Fireworks spread across the screen */
-    60% {
+    /* Reach the burst point and spread across the screen */
+    40% {
         opacity: 1;
         transform:
             translate(var(--burst-x), var(--burst-y))
@@ -1452,7 +1441,7 @@ body.cyberquiz-modal-open {
     }
 
     /* Fade out */
-    75% {
+    85% {
         opacity: 0;
         transform:
             translate(var(--burst-x), var(--burst-y))
@@ -1463,7 +1452,7 @@ body.cyberquiz-modal-open {
         opacity: 0;
         transform:
             translate(var(--burst-x), var(--burst-y))
-            scale(.4);
+            scale(.2);
     }
 }
 
