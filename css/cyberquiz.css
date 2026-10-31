@@ -1435,7 +1435,7 @@ body.cyberquiz-modal-open {
         opacity: 1;
     }
 
-    60% {
+    40% {
         opacity: 1;
         transform:
             translate(var(--burst-x), var(--burst-y))
