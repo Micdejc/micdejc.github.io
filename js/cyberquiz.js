@@ -1083,7 +1083,7 @@ export function initCyberQuiz() {
                 expertCelebration();
             } else {
                 toast(`Rank unlocked: ${rank().icon} ${rank().name}!`);
-                confettiPop();
+                confettiExplosion();
             }
         }
     }
@@ -1138,9 +1138,9 @@ export function initCyberQuiz() {
     }
 
     /* =====================================================
-       15.2 CONFETTI POP CELEBRATION
+       15.2 CONFETTI EXPLOSION CELEBRATION
        ===================================================== */
-    function confettiPop() {
+    function confettiExplosion() {
         const host = $('confetti');
     
         if (!host) return;
@@ -1175,7 +1175,7 @@ export function initCyberQuiz() {
             for (let i = 0; i < particles; i++) {
                 const piece = document.createElement('i');
     
-                piece.className = 'confetti-firework-piece';
+                piece.className = 'confetti-explosion-piece';
     
                 const angle = (Math.PI * 2 * i) / particles;
                 const distance = 100 + Math.random() * 180;
