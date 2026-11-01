@@ -457,8 +457,8 @@
 
         /* Selected theme */
         .utility-menu .theme-option.active {
-            background: var(--accent-soft);
-            color: var(--accent);
+            background: var(--surface);
+            color: var(--primary);
             font-weight: 600;
         }
         
