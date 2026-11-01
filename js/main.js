@@ -193,7 +193,7 @@ async function loadPage() {
 
     initialiseTheme();
 
-    initialiseTerminalMode();
+    //initialiseTerminalMode();
 
     initialiseMobileMenu();
 
@@ -225,35 +225,65 @@ async function loadPage() {
    THEME
 ========================================================= */
 
-
 function initialiseTheme() {
 
-    const toggle = document.getElementById("themeToggle");
-
-    if (!toggle) return;
-
     const body = document.body;
-    const label = toggle.querySelector("span");
 
-    const validThemes = ["light", "dark-light", "dark"];
+    const themeButtons = document.querySelectorAll(".theme-option");
 
-    let currentTheme = localStorage.getItem("theme");
+    const terminalToggle = document.getElementById("terminalToggle");
 
-    if (!validThemes.includes(currentTheme)) {
-        currentTheme = "light";
-    }
+    if (!themeButtons.length || !terminalToggle) return;
+
+    const terminalLabel = terminalToggle.querySelector("span");
+
+    const THEME_KEY = "theme";
+    const TERMINAL_KEY = "terminalMode";
+    const PREVIOUS_THEME_KEY = "terminalPreviousTheme";
+
+    const VALID_THEMES = ["light", "dark-light", "dark"];
+
+    // ==========================================
+    // TERMINAL ICONS
+    // ==========================================
+
+    const terminalEnterIcon = `
+        <svg class="utility-icon" viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true" fill="none"
+            stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="m4 17 6-5-6-5"></path>
+            <path d="M12 19h8"></path>
+        </svg>
+    `;
+
+    const terminalExitIcon = `
+        <svg class="utility-icon" viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true" fill="none"
+            stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="m10 17-6-5 6-5"></path>
+            <path d="M4 12h11"></path>
+            <path d="M15 5h5v14h-5"></path>
+        </svg>
+    `;
 
     // ==========================================
     // APPLY THEME
     // ==========================================
 
-    function applyTheme(theme) {
+    function applyTheme(theme, save = true) {
 
-        if (!validThemes.includes(theme)) {
+        if (!VALID_THEMES.includes(theme)) {
             theme = "light";
         }
 
-        currentTheme = theme;
+        // Terminal Mode always requires Dark Mode.
+        if (body.classList.contains("terminal-mode")) {
+            theme = "dark";
+        }
 
         body.classList.remove("dark", "dark-light");
 
@@ -263,183 +293,59 @@ function initialiseTheme() {
             body.classList.add("dark-light");
         }
 
-        localStorage.setItem("theme", theme);
+        // Only save normal theme preferences.
+        // Do not overwrite them with Dark Mode in Terminal Mode.
+        if (save && !body.classList.contains("terminal-mode")) {
+            localStorage.setItem(THEME_KEY, theme);
+        }
+
+        updateThemeOptions();
     }
 
     // ==========================================
-    // DARK ICON: CRESCENT MOON
+    // UPDATE THEME OPTIONS
     // ==========================================
 
-    const darkIcon = `
-        <svg
-            class="utility-icon"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-        >
-            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
-        </svg>
-    `;
+    function updateThemeOptions() {
 
-    // ==========================================
-    // LIGHT ICON: SUN
-    // ==========================================
+        const isTerminal =
+            body.classList.contains("terminal-mode");
 
-    const lightIcon = `
-        <svg
-            class="utility-icon"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-        >
-            <circle cx="12" cy="12" r="4"></circle>
-            <path d="M12 2v2"></path>
-            <path d="M12 20v2"></path>
-            <path d="m4.93 4.93 1.41 1.41"></path>
-            <path d="m17.66 17.66 1.41 1.41"></path>
-            <path d="M2 12h2"></path>
-            <path d="M20 12h2"></path>
-            <path d="m6.34 17.66-1.41 1.41"></path>
-            <path d="m19.07 4.93-1.41 1.41"></path>
-        </svg>
-    `;
+        const currentTheme = isTerminal
+            ? null
+            : localStorage.getItem(THEME_KEY) || "light";
 
-    // ==========================================
-    // DARK-LIGHT ICON: HALF-FILLED CIRCLE
-    // ==========================================
+        themeButtons.forEach(button => {
 
-    const darkLightIcon = `
-        <svg
-            class="utility-icon"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-        >
-            <circle cx="12" cy="12" r="9"></circle>
-            <path
-                d="M12 3a9 9 0 0 0 0 18Z"
-                fill="currentColor"
-                stroke="none"
-            ></path>
-            <path d="M12 3v18"></path>
-        </svg>
-    `;
+            const theme = button.dataset.theme;
 
-    // ==========================================
-    // UPDATE THEME TOGGLE
-    // ==========================================
+            const isActive = theme === currentTheme;
 
-    function updateThemeToggle() {
+            // Disable all theme choices in Terminal Mode.
+            button.disabled = isTerminal;
 
-        // The icon represents the NEXT theme.
-        const nextTheme = {
-            light: "dark-light",
-            "dark-light": "dark",
-            dark: "light"
-        }[currentTheme];
+            button.classList.toggle("active", isActive);
 
-        const icons = {
-            light: darkLightIcon,
-            "dark-light": darkIcon,
-            dark: lightIcon
-        };
-
-        const labels = {
-            light: "Dark-Light mode",
-            "dark-light": "Dark mode",
-            dark: "Light mode"
-        };
-
-        const descriptions = {
-            light: "Switch to Dark-Light mode",
-            "dark-light": "Switch to Dark mode",
-            dark: "Switch to Light mode"
-        };
-
-        // Replace or insert the SVG safely.
-        const existingIcon = toggle.querySelector(
-            "svg.utility-icon"
-        );
-
-        if (existingIcon) {
-            existingIcon.outerHTML = icons[currentTheme];
-        } else {
-            toggle.insertAdjacentHTML(
-                "afterbegin",
-                icons[currentTheme]
+            button.setAttribute(
+                "aria-pressed",
+                String(isActive)
             );
-        }
 
-        if (label) {
-            label.textContent = labels[currentTheme];
-        }
+            button.setAttribute(
+                "aria-disabled",
+                String(isTerminal)
+            );
 
-        toggle.title = descriptions[currentTheme];
-        toggle.setAttribute(
-            "aria-label",
-            descriptions[currentTheme]
-        );
-
-        toggle.setAttribute(
-            "aria-pressed",
-            String(currentTheme !== "light")
-        );
-
-        // Keep the toggle marked as unavailable in Terminal Mode.
-        toggle.setAttribute(
-            "aria-disabled",
-            String(body.classList.contains("terminal-mode"))
-        );
+            if (isTerminal) {
+                button.title = "Exit Terminal Mode to change themes";
+            } else {
+                button.title = `Switch to ${theme === "dark-light"
+                    ? "Dark-Light"
+                    : theme.charAt(0).toUpperCase() + theme.slice(1)
+                } mode`;
+            }
+        });
     }
-
-    // ==========================================
-    // INITIALISE
-    // ==========================================
-
-    // Terminal Mode always takes priority and requires Dark Mode.
-    if (body.classList.contains("terminal-mode")) {
-        applyTheme("dark");
-    } else {
-        applyTheme(currentTheme);
-    }
-
-    updateThemeToggle();
-
-    // ==========================================
-    // CYCLE THROUGH THE THREE THEMES
-    // ==========================================
-
-    toggle.addEventListener("click", () => {
-
-        // Do not change themes while Terminal Mode is active.
-        if (body.classList.contains("terminal-mode")) return;
-
-        const nextTheme = {
-            light: "dark-light",
-            "dark-light": "dark",
-            dark: "light"
-        }[currentTheme];
-
-        applyTheme(nextTheme);
-        updateThemeToggle();
-    });
-
-}
 
 
 
@@ -663,258 +569,7 @@ function initialiseCalendar() {
    TERMINAL MODE
 ========================================================= */
 
-
-
-function initialiseTerminalMode() {
-
-    const toggle = document.getElementById("terminalToggle");
-
-    if (!toggle) return;
-
-    const body = document.body;
-    const label = toggle.querySelector("span");
-
-    const THEME_KEY = "theme";
-    const TERMINAL_KEY = "terminalMode";
-    const PREVIOUS_THEME_KEY = "terminalPreviousTheme";
-
-    const VALID_THEMES = ["light", "dark-light", "dark"];
-
-    // ==========================================
-    // TERMINAL ENTER ICON
-    // ==========================================
-
-    const terminalEnterIcon = `
-        <svg
-            class="utility-icon"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-        >
-            <path d="m4 17 6-5-6-5"></path>
-            <path d="M12 19h8"></path>
-        </svg>
-    `;
-
-    // ==========================================
-    // TERMINAL EXIT ICON
-    // ==========================================
-
-    const terminalExitIcon = `
-        <svg
-            class="utility-icon"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-        >
-            <path d="m10 17-6-5 6-5"></path>
-            <path d="M4 12h11"></path>
-            <path d="M15 5h5v14h-5"></path>
-        </svg>
-    `;
-
-    // ==========================================
-    // THEME ICONS
-    // ==========================================
-
-    const darkIcon = `
-        <svg
-            class="utility-icon"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-        >
-            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
-        </svg>
-    `;
-
-    const lightIcon = `
-        <svg
-            class="utility-icon"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-        >
-            <circle cx="12" cy="12" r="4"></circle>
-            <path d="M12 2v2"></path>
-            <path d="M12 20v2"></path>
-            <path d="m4.93 4.93 1.41 1.41"></path>
-            <path d="m17.66 17.66 1.41 1.41"></path>
-            <path d="M2 12h2"></path>
-            <path d="M20 12h2"></path>
-            <path d="m6.34 17.66-1.41 1.41"></path>
-            <path d="m19.07 4.93-1.41 1.41"></path>
-        </svg>
-    `;
-
-    const darkLightIcon = `
-        <svg
-            class="utility-icon"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-        >
-            <circle cx="12" cy="12" r="9"></circle>
-            <path
-                d="M12 3a9 9 0 0 0 0 18Z"
-                fill="currentColor"
-                stroke="none"
-            ></path>
-            <path d="M12 3v18"></path>
-        </svg>
-    `;
-
-    // ==========================================
-    // THEME HELPERS
-    // ==========================================
-
-    function getCurrentTheme() {
-
-        // Terminal Mode always uses Dark Mode.
-        if (body.classList.contains("terminal-mode")) {
-            return "dark";
-        }
-
-        // Read the active class first.
-        if (body.classList.contains("dark")) {
-            return "dark";
-        }
-
-        if (body.classList.contains("dark-light")) {
-            return "dark-light";
-        }
-
-        // Otherwise use the saved preference.
-        const savedTheme = localStorage.getItem(THEME_KEY);
-
-        return VALID_THEMES.includes(savedTheme)
-            ? savedTheme
-            : "light";
-    }
-
-    function applyTheme(theme) {
-
-        if (!VALID_THEMES.includes(theme)) {
-            theme = "light";
-        }
-
-        // Terminal Mode cannot use a non-dark theme.
-        if (body.classList.contains("terminal-mode")) {
-            theme = "dark";
-        }
-
-        body.classList.remove("dark", "dark-light");
-
-        if (theme === "dark") {
-            body.classList.add("dark");
-        } else if (theme === "dark-light") {
-            body.classList.add("dark-light");
-        }
-
-        localStorage.setItem(THEME_KEY, theme);
-
-        updateThemeToggle();
-    }
-
-    // ==========================================
-    // UPDATE THEME TOGGLE
-    // Consistent with initialiseTheme()
-    // ==========================================
-
-    function updateThemeToggle() {
-
-        const themeToggle =
-            document.getElementById("themeToggle");
-
-        if (!themeToggle) return;
-
-        const themeLabel = themeToggle.querySelector("span");
-        const currentTheme = getCurrentTheme();
-
-        const icons = {
-            light: darkLightIcon,
-            "dark-light": darkIcon,
-            dark: lightIcon
-        };
-
-        const labels = {
-            light: "Dark-Light mode",
-            "dark-light": "Dark mode",
-            dark: "Light mode"
-        };
-
-        const descriptions = {
-            light: "Switch to Dark-Light mode",
-            "dark-light": "Switch to Dark mode",
-            dark: "Switch to Light mode"
-        };
-
-        // The icon and label represent the next theme.
-        const existingIcon = themeToggle.querySelector(
-            "svg.utility-icon"
-        );
-
-        if (existingIcon) {
-            existingIcon.outerHTML = icons[currentTheme];
-        } else {
-            themeToggle.insertAdjacentHTML(
-                "afterbegin",
-                icons[currentTheme]
-            );
-        }
-
-        if (themeLabel) {
-            themeLabel.textContent = labels[currentTheme];
-        }
-
-        themeToggle.title = descriptions[currentTheme];
-
-        themeToggle.setAttribute(
-            "aria-label",
-            descriptions[currentTheme]
-        );
-
-        themeToggle.setAttribute(
-            "aria-pressed",
-            String(currentTheme !== "light")
-        );
-
-        themeToggle.setAttribute(
-            "aria-disabled",
-            String(body.classList.contains("terminal-mode"))
-        );
-    }
-
-    // ==========================================
-    // UPDATE TERMINAL TOGGLE
-    // ==========================================
-
-    function updateTerminalToggle() {
+   function updateTerminalToggle() {
 
         const isTerminal =
             body.classList.contains("terminal-mode");
@@ -923,21 +578,21 @@ function initialiseTerminalMode() {
             ? terminalExitIcon
             : terminalEnterIcon;
 
-        const existingIcon = toggle.querySelector(
+        const existingIcon = terminalToggle.querySelector(
             "svg.utility-icon"
         );
 
         if (existingIcon) {
             existingIcon.outerHTML = iconHTML;
         } else {
-            toggle.insertAdjacentHTML(
+            terminalToggle.insertAdjacentHTML(
                 "afterbegin",
                 iconHTML
             );
         }
 
-        if (label) {
-            label.textContent = isTerminal
+        if (terminalLabel) {
+            terminalLabel.textContent = isTerminal
                 ? "Exit Terminal"
                 : "Terminal mode";
         }
@@ -946,82 +601,119 @@ function initialiseTerminalMode() {
             ? "Exit Linux terminal mode"
             : "Enable Linux terminal mode";
 
-        toggle.title = description;
+        terminalToggle.title = description;
 
-        toggle.setAttribute(
+        terminalToggle.setAttribute(
             "aria-label",
             description
         );
 
-        toggle.setAttribute(
+        terminalToggle.setAttribute(
             "aria-pressed",
             String(isTerminal)
         );
     }
 
     // ==========================================
-    // RESTORE SAVED TERMINAL MODE
+    // INITIALISE SAVED THEME
     // ==========================================
 
-    const savedMode = localStorage.getItem(TERMINAL_KEY);
+    const savedTheme = localStorage.getItem(THEME_KEY);
 
-    if (savedMode === "on") {
+    const initialTheme = VALID_THEMES.includes(savedTheme)
+        ? savedTheme
+        : "light";
+
+    const savedTerminalMode =
+        localStorage.getItem(TERMINAL_KEY) === "on";
+
+    if (savedTerminalMode) {
+
+        // Preserve the theme that was selected before Terminal Mode.
+        const previousTheme =
+            localStorage.getItem(PREVIOUS_THEME_KEY);
+
+        if (!VALID_THEMES.includes(previousTheme)) {
+            localStorage.setItem(
+                PREVIOUS_THEME_KEY,
+                initialTheme
+            );
+        }
 
         body.classList.add("terminal-mode");
 
-        // Terminal Mode requires Dark Mode.
-        body.classList.remove("dark-light");
-        body.classList.add("dark");
+        // Apply Dark Mode without overwriting the saved preference.
+        applyTheme("dark", false);
 
-        localStorage.setItem(THEME_KEY, "dark");
-
-        // Start the console animation after hero.html loads.
         setTimeout(startConsoleAnimation, 150);
 
     } else {
 
         body.classList.remove("terminal-mode");
 
-        // Restore the saved three-state theme.
-        const savedTheme = localStorage.getItem(THEME_KEY);
+        localStorage.removeItem(PREVIOUS_THEME_KEY);
 
-        const restoredTheme = VALID_THEMES.includes(savedTheme)
-            ? savedTheme
-            : "light";
-
-        applyTheme(restoredTheme);
+        applyTheme(initialTheme);
     }
 
+    updateThemeOptions();
     updateTerminalToggle();
-    updateThemeToggle();
 
     // ==========================================
-    // TERMINAL MODE CLICK HANDLER
+    // DIRECT THEME SELECTION
     // ==========================================
 
-    toggle.addEventListener("click", () => {
+    themeButtons.forEach(button => {
+
+        button.addEventListener("click", () => {
+
+            // Ignore theme changes during Terminal Mode.
+            if (body.classList.contains("terminal-mode")) {
+                return;
+            }
+
+            const selectedTheme = button.dataset.theme;
+
+            if (!VALID_THEMES.includes(selectedTheme)) {
+                return;
+            }
+
+            applyTheme(selectedTheme);
+        });
+    });
+
+    // ==========================================
+    // TERMINAL MODE TOGGLE
+    // ==========================================
+
+    terminalToggle.addEventListener("click", () => {
 
         const enableTerminal =
             !body.classList.contains("terminal-mode");
 
         if (enableTerminal) {
 
-            // Save the selected theme before entering Terminal Mode.
-            const currentTheme = getCurrentTheme();
+            // Save the currently selected theme before entering.
+            const currentTheme =
+                localStorage.getItem(THEME_KEY);
+
+            const previousTheme = VALID_THEMES.includes(currentTheme)
+                ? currentTheme
+                : "light";
 
             localStorage.setItem(
                 PREVIOUS_THEME_KEY,
-                currentTheme
+                previousTheme
             );
 
             body.classList.add("terminal-mode");
 
             localStorage.setItem(TERMINAL_KEY, "on");
 
-            // Force Dark Mode.
-            applyTheme("dark");
+            // Force Dark Mode without changing the saved preference.
+            applyTheme("dark", false);
 
-            // Start the console animation.
+            // Start terminal animation.
             setTimeout(startConsoleAnimation, 150);
 
         } else {
@@ -1030,7 +722,7 @@ function initialiseTerminalMode() {
 
             localStorage.setItem(TERMINAL_KEY, "off");
 
-            // Restore the theme selected before entering Terminal Mode.
+            // Restore the previously selected theme.
             const previousTheme =
                 localStorage.getItem(PREVIOUS_THEME_KEY);
 
@@ -1042,17 +734,14 @@ function initialiseTerminalMode() {
 
             localStorage.removeItem(PREVIOUS_THEME_KEY);
 
-            // Stop the animation and restore the original text.
+            // Stop animation and restore original text.
             stopConsoleAnimation();
         }
 
+        updateThemeOptions();
         updateTerminalToggle();
-        updateThemeToggle();
     });
-
 }
-
-
 
 
 /* =========================================================
