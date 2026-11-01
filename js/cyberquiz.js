@@ -1133,7 +1133,7 @@ export function initCyberQuiz() {
                 `${1.0 + Math.random() * 0.7}s`;
 
             piece.style.animationDelay =
-                `${Math.random() * 0.7}s`;
+                `${Math.random() * 0.4}s`;
 
             piece.style.background =
                 colours[i % colours.length];
