@@ -1123,14 +1123,14 @@ export function initCyberQuiz() {
                 `${Math.random() * 100}%`;
             */
             
-            // Random falling speed
+            // Random falling speed between 2 to 3.5 seconds.
             /*
             piece.style.animationDuration =
                 `${2.0 + Math.random() * 1.5}s`;
             */
-            // faster
+            
             piece.style.animationDuration =
-                `${0.8 + Math.random() * 0.7}s`;
+                `${1.0 + Math.random() * 0.7}s`;
 
             piece.style.animationDelay =
                 `${Math.random() * 0.7}s`;
