@@ -1,15 +1,33 @@
-
-/*
- * CyberQuiz
- * Responsive styling for the cybersecurity career progression game.
- * Designed to inherit the host website's theme variables where available.
- */
-
 /*
  * CyberQuiz
  * Component stylesheet for the standalone CyberQuiz modal.
  * Inherits typography and theme colours from the main website's style.css.
  */
+
+
+.cyberquiz-toggle {
+    width: 40px;
+    height: 40px;
+
+    border: 1px solid var(--border);
+    border-radius: 50%;
+
+    background: var(--surface);
+    color: var(--text);
+
+    cursor: pointer;
+
+    font-size: 0.9rem;
+    font-weight: 800;
+
+    transition: all 0.2s ease;
+}
+
+.cyberquiz-toggle:hover {
+    color: var(--primary);
+    border-color: var(--primary);
+    transform: translateY(-2px);
+}
 
 .cyberquiz-root,
 .cyberquiz-root *,
