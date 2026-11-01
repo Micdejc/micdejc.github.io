@@ -1128,13 +1128,13 @@ export function initCyberQuiz() {
             piece.style.animationDuration =
                 `${2.0 + Math.random() * 1.5}s`;
             */
-            // Random falling speed: 1.4–2.2 seconds.
+            // Random falling speed: 1.0–2.5 seconds.
             piece.style.animationDuration =
-                `${1.4 + Math.random() * 0.8}s`;
+                `${1.0 + Math.random() * 1.5}s`;
 
-            // Stagger particle starts: 0–0.4 seconds.
+            // Stagger particle starts: 0–0.5 seconds.
             piece.style.animationDelay =
-                `${Math.random() * 0.4}s`;
+                `${Math.random() * 0.5}s`;
 
           
             // Random particle size.
