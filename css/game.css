@@ -1037,7 +1037,7 @@ body.game-modal-open {
 }
 
 .hint-button {
-  animation: hintPulse 10s ease-in-out infinite;
+  /*animation: hintPulse 10s ease-in-out infinite;*/
   background: color-mix( in srgb, var(--primary) 8%, var(--surface) );
   color: var(--text);
   border-color: color-mix( in srgb, var(--primary) 45%, var(--border) );
