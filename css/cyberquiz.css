@@ -1366,7 +1366,7 @@ body.cyberquiz-modal-open {
     max-width: min(92vw, 540px);
     padding: 12px 17px;
 
-    border: 1px solid var(--border);
+    border: 2px solid var(--border);
     border-radius: 12px;
 
     /*background: var(--surface);*/
