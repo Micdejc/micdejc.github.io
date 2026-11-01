@@ -454,6 +454,27 @@
             vertical-align: middle;
             color: inherit;
         }
+
+        /* Selected theme */
+        .utility-menu .theme-option.active {
+            background: var(--accent-soft);
+            color: var(--accent);
+            font-weight: 600;
+        }
+        
+        /* Disabled themes during Terminal Mode */
+        .utility-menu .theme-option:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+        
+        /* Optional divider */
+        .utility-menu-divider {
+            height: 1px;
+            margin: 6px 10px;
+            background: var(--border);
+        }
         
         /* Keyboard accessibility */
         .utility-menu-toggle:focus-visible {
