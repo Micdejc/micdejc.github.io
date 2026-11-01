@@ -1113,18 +1113,22 @@ export function initCyberQuiz() {
 
             piece.className = 'confetti-piece';
 
+            // Keep confetti within the central 80% of the screen
+            piece.style.left = 
+                `${10 + Math.random() * 80}%`;
+            
+            /*
+            //Keep confetti within whole the screen
             piece.style.left =
                 `${Math.random() * 100}%`;
-
-           /*
-            piece.style.animationDuration = 
-                '2.3s';*/
+            */
+            
+            // Random falling speed
+            piece.style.animationDuration =
+                `${2.0 + Math.random() * 1.5}s`;
 
             piece.style.animationDelay =
                 `${Math.random() * 0.7}s`;
-            /*
-            piece.style.animationDelay = 
-                `${Math.random() * 0.15}s`;*/
 
             piece.style.background =
                 colours[i % colours.length];
@@ -1134,7 +1138,7 @@ export function initCyberQuiz() {
 
         setTimeout(() => {
             host.innerHTML = '';
-        }, 2500);
+        }, 4500);
     }
 
     /* =====================================================
