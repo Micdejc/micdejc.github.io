@@ -1113,7 +1113,7 @@ export function initCyberQuiz() {
 
             piece.className = 'confetti-piece';
 
-            // Keep confetti within the central 80% of the screen
+            // Keep the particles within the central 80% of the screen.
             piece.style.left = 
                 `${10 + Math.random() * 80}%`;
             
@@ -1128,22 +1128,39 @@ export function initCyberQuiz() {
             piece.style.animationDuration =
                 `${2.0 + Math.random() * 1.5}s`;
             */
-            
+            // Random falling speed: 1.4–2.2 seconds.
             piece.style.animationDuration =
-                `${1.0 + Math.random() * 0.7}s`;
+                `${1.4 + Math.random() * 0.8}s`;
 
+            // Stagger particle starts: 0–0.4 seconds.
             piece.style.animationDelay =
                 `${Math.random() * 0.4}s`;
 
+            // Random horizontal movement: -240px to +240px.
+            piece.style.setProperty(
+                '--drift',
+                `${(Math.random() - 0.5) * 480}px`
+            );
+
+
+            // Random particle size.
+            const size = 6 + Math.random() * 6;
+            piece.style.width = `${size}px`;
+            piece.style.height = `${size * 1.5}px`;
+
+            /*
             piece.style.background =
-                colours[i % colours.length];
+                colours[i % colours.length]; */
+    
+            piece.style.background =
+                colours[Math.floor(Math.random() * colours.length)];
 
             host.appendChild(piece);
         }
 
         setTimeout(() => {
             host.innerHTML = '';
-        }, 4500);
+        }, 2800);
     }
 
     /* =====================================================
