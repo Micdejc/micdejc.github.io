@@ -1187,8 +1187,10 @@ export function initCyberQuiz() {
                 piece.className = 'confetti-explosion-piece';
     
                 const angle = (Math.PI * 2 * i) / particles;
+
+                // Random travel distance: 180–500px (each particle travels a random distance within this range).
                 //const distance = 100 + Math.random() * 180;
-                const distance = 180 + Math.random() * 300;
+                const distance = 180 + Math.random() * 320;
                 
                 const x = Math.cos(angle) * distance;
                 const y = Math.sin(angle) * distance;
@@ -1247,7 +1249,7 @@ export function initCyberQuiz() {
                 piece.className = 'confetti-firework-piece';
     
                 const angle = (Math.PI * 2 * i) / particlesPerFirework;
-                const distance = 100 + Math.random() * 280;
+                const distance = 100 + Math.random() * 300;
     
                 const x = Math.cos(angle) * distance;
                 const y = Math.sin(angle) * distance;
