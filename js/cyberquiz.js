@@ -1136,22 +1136,11 @@ export function initCyberQuiz() {
             piece.style.animationDelay =
                 `${Math.random() * 0.4}s`;
 
-            // Random horizontal movement: -240px to +240px.
-            piece.style.setProperty(
-                '--drift',
-                `${(Math.random() - 0.5) * 480}px`
-            );
-
-
+          
             // Random particle size.
-            const size = 6 + Math.random() * 6;
-            piece.style.width = `${size}px`;
-            piece.style.height = `${size * 1.5}px`;
+            piece.style.width = `${4 + Math.random() * 5}px`;
+            piece.style.height = `${4 + Math.random() * 5}px`;
 
-            /*
-            piece.style.background =
-                colours[i % colours.length]; */
-    
             piece.style.background =
                 colours[Math.floor(Math.random() * colours.length)];
 
