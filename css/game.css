@@ -1041,7 +1041,7 @@ body.game-modal-open {
   background: color-mix( in srgb, var(--primary) 8%, var(--surface) );
   color: var(--text);
   border-color: color-mix( in srgb, var(--primary) 45%, var(--border) );
-  border: 1px solid var(--border);
+  /* border: 1px solid var(--border); */
   /* color: var(--surface); */
 }
 
