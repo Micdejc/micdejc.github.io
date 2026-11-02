@@ -28,7 +28,7 @@ export function initCyberQuiz() {
     {
         name: 'Associate',
         min: 0,
-        max: 400,
+        max: 600,
         sub: 'Security fundamentals',
         roles: [
             'IT support technician',
@@ -38,13 +38,14 @@ export function initCyberQuiz() {
         ],
         careers:
             'Build safe digital habits and understand core security controls, basic risk concepts and compliance requirements.',
+        skill: 'learned the foundations and demonstrate basic security awareness.',
         color: '#38c8ff',
         icon: '⬡'
     },
     {
         name: 'Professional',
-        min: 400,
-        max: 1200,
+        min: 600,
+        max: 1800,
         sub: 'Operational security',
         roles: [
             'SOC analyst (Tier 1)',
@@ -55,13 +56,14 @@ export function initCyberQuiz() {
         ],
         careers:
             'Triage alerts, follow playbooks, assess operational risks and support security compliance activities.',
+        skill: 'developed operational knowledge and demonstrate the ability to handle routine security tasks.',
         color: '#43e5a4',
         icon: '◆'
     },
     {
         name: 'Practitioner',
-        min: 1200,
-        max: 2900,
+        min: 1800,
+        max: 4000,
         sub: 'Hands-on investigation',
         roles: [
             'SOC analyst (Tier 2)',
@@ -72,13 +74,14 @@ export function initCyberQuiz() {
         ],
         careers:
             'Investigate incidents and malware, validate weaknesses, assess cyber risks and secure cloud, application and AI systems.',
+        skill: 'demonstrated practical investigation, technical assessment and problem-solving skills.',
         color: '#8b9cff',
         icon: '✦'
     },
     {
         name: 'Architect',
-        min: 2900,
-        max: 6200,
+        min: 4000,
+        max: 7200,
         sub: 'Designing secure systems',
         roles: [
             'Security architect (developing)',
@@ -89,12 +92,13 @@ export function initCyberQuiz() {
         ],
         careers:
             'Connect security architecture and technical controls with organisational risk, governance and regulatory requirements.',
+        skill: 'demonstrated the ability to connect technical security controls with organisational risks and governance.',
         color: '#ffbf57',
         icon: '⬟'
     },
     {
         name: 'Expert',
-        min: 6200,
+        min: 7200,
         max: Infinity,
         sub: 'Strategic security judgement',
         roles: [
@@ -106,6 +110,7 @@ export function initCyberQuiz() {
         ],
         careers:
             'Lead security strategy, oversee governance and compliance programmes, manage enterprise risk and guide strategic security decisions.',
+        skill: 'reached the highest career rank through sustained performance and strategic security judgement.',
         color: '#ff7da9',
         icon: '★'
     }
@@ -137,7 +142,9 @@ export function initCyberQuiz() {
     
         // Minimum accuracy required for each mission outcome.
         perfectAccuracy: 100,       // Perfect mission score.
-        strongMissionAccuracy: 80,  // Strong score and bonus.
+        // 3 questions (2 correct = 66.7%),
+        // 4 questions (3 correct = 75%), 5 questions (4 correct = 80%).
+        strongMissionAccuracy: 66,  // Strong score and bonus.
         completionAccuracy: 60,     // "Mission complete!" title.
     
         // One-off XP bonuses for reward-eligible missions.
@@ -1031,28 +1038,39 @@ export function initCyberQuiz() {
     
         $('result-correct').textContent =
             `${sessionCorrect}/${mission.length}`;
-    
-        $('result-message').textContent =
+
+        const rankCompleted = rankIndex() > missionRank;
+
+        $('result-message').innerHTML =
             !eligibleForRewards
                 ? `Practice completed. No XP, streak rewards or completion bonus awarded. ${
                     RANKS[missionRank].name
-                } practice can help reinforce your knowledge.`
-                : bonus
-                    ? `Completion bonus: +${bonus} XP. ${
-                        isPerfect
-                            ? 'Perfect accuracy!'
-                            : 'Strong work.'
-                      } ${
-                        rank().name
-                      } career directions: ${
-                        rank().roles.join(', ')
-                      }.`
-                    : `No completion bonus this time. Review the feedback and try another mission. Suggested career directions: ${
-                        rank().roles.join(', ')
-                      }.`;
+                  } practice can help reinforce your knowledge.`
+        
+                : rankCompleted
+                    ? `🎉 You completed the <strong>${
+                        RANKS[missionRank].name
+                      }</strong> rank! You have ${
+                        RANKS[missionRank].skill
+                      }`
+        
+                    : bonus
+                        ? `Completion bonus: +${bonus} XP. ${
+                            isPerfect
+                                ? 'Perfect accuracy!'
+                                : 'Strong work.'
+                          } ${
+                            rank().name
+                          } career directions: <strong>${
+                            rank().roles.join(', ')
+                          }</strong>.`
+        
+                        : `No completion bonus this time. Review the feedback and try another mission. Suggested career directions: <strong>${
+                            rank().roles.join(', ')
+                          }</strong>.`;
     
         $('continue').innerHTML =
-            rankIndex() > missionRank
+            rankCompleted
                 ? 'Explore your new rank <span class="pagination-arrow pagination-arrow-right" aria-hidden="true"></span>'
                 : 'Continue journey <span class="pagination-arrow pagination-arrow-right" aria-hidden="true"></span>';
     
