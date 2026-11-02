@@ -1138,8 +1138,8 @@ export function initCyberQuiz() {
 
           
             // Random particle size.
-            piece.style.width = `${4 + Math.random() * 5}px`;
-            piece.style.height = `${4 + Math.random() * 5}px`;
+            //piece.style.width = `${4 + Math.random() * 5}px`;
+            //piece.style.height = `${4 + Math.random() * 5}px`;
 
             piece.style.background =
                 colours[Math.floor(Math.random() * colours.length)];
