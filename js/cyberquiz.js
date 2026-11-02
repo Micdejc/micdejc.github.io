@@ -38,7 +38,7 @@ export function initCyberQuiz() {
         ],
         careers:
             'Build safe digital habits and understand core security controls, basic risk concepts and compliance requirements.',
-        skill: 'learned the foundations and demonstrate basic security awareness.',
+        skill: 'learned the foundations and demonstrated basic security awareness.',
         color: '#38c8ff',
         icon: '⬡'
     },
@@ -56,7 +56,7 @@ export function initCyberQuiz() {
         ],
         careers:
             'Triage alerts, follow playbooks, assess operational risks and support security compliance activities.',
-        skill: 'developed operational knowledge and demonstrate the ability to handle routine security tasks.',
+        skill: 'developed operational knowledge and demonstrated the ability to handle routine security tasks.',
         color: '#43e5a4',
         icon: '◆'
     },
