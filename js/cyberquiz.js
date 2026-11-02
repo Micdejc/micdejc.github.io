@@ -1048,7 +1048,7 @@ export function initCyberQuiz() {
                   } practice can help reinforce your knowledge.`
         
                 : rankCompleted
-                    ? `🎉 You completed the <strong>${
+                    ? `You completed the <strong>${
                         RANKS[missionRank].name
                       }</strong> rank! You have ${
                         RANKS[missionRank].skill
