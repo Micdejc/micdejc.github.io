@@ -510,22 +510,28 @@
                 border-radius: 0;
                 box-shadow: none;
                 
-                max-height: 0;
+                display: grid;
+                grid-template-rows: 0fr;
+                
                 opacity: 0;
-                overflow: hidden;
                 transform: translateY(-8px);
                 
                 transition:
-                max-height 0.35s ease,
+                grid-template-rows 0.35s ease,
                 opacity 0.3s ease,
                 transform 0.35s ease;
             }
 
             .nav-dropdown details[open] > .nav-dropdown-menu {
-                    max-height: 400px;
-                    opacity: 1;
-                    transform: translateY(0);
+                grid-template-rows: 1fr;
+                opacity: 1;
+                transform: translateY(0);
              }
+             
+             .nav-dropdown-menu > li {
+                min-height: 0;
+                overflow: hidden;
+              }
             /*
             .nav-dropdown-menu a {
                 white-space: normal;
