@@ -825,7 +825,7 @@ function startDlnLevel(
 
    
     dlnElements.numberLabel.textContent =
-         `Your guess (1–${maximum})`;
+         `Your guess [1–${maximum}]`;
 
 
     dlnElements.attempts.textContent =
@@ -1164,7 +1164,7 @@ function handleCorrectGuess() {
             `🎉 Well done! You found the number ${dlnGame.target}! +${DLN.getLevelReward()} attempts.`,
             "success"
         );
-    }
+   
 
     /*
      * Level milestone:
@@ -1268,10 +1268,10 @@ function handleCorrectGuess() {
    }
 
    
-    /*
-     * Update the record.
-     */
-    if (dlnGame.score > window.dlnRecord) {
+   /*
+    * Update the record.
+    */
+   if (dlnGame.score > window.dlnRecord) {
 
         window.dlnRecord = dlnGame.score;
 
@@ -1623,8 +1623,14 @@ function updateDlnStats() {
     dlnElements.score.textContent =
         dlnGame.score;
 
+    /*
+     * Update the record according to the updated score.
+     */
+     if (dlnGame.score > window.dlnRecord) {
+        window.dlnRecord = dlnGame.score;
+     }
 
-    updateDlnRecord();
+     updateDlnRecord();
 
 }
 
