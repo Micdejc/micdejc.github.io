@@ -825,7 +825,7 @@ function startDlnLevel(
 
    
     dlnElements.numberLabel.textContent =
-         `Your guess (1–${maximum})`;
+         `Your guess [1–${maximum}]`;
 
 
     dlnElements.attempts.textContent =
