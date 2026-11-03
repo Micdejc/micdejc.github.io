@@ -1208,9 +1208,9 @@ function handleCorrectGuess() {
         if (dlnGame.score > window.dlnRecord) {
 
             window.dlnRecord = dlnGame.score;
-
-            updateDlnRecord();
             saveDlnRecord();
+            updateDlnRecord();
+            
         }
 
         updateDlnStats();
@@ -1275,8 +1275,8 @@ function handleCorrectGuess() {
 
         window.dlnRecord = dlnGame.score;
 
-        updateDlnRecord();
         saveDlnRecord();
+        updateDlnRecord();
     
         /*
         * Record notification interval.
