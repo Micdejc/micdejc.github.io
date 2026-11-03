@@ -236,8 +236,12 @@
             display: inline-block;
             width: 12px;
             height: 12px;
+            /*
             margin-left: 6px;
             vertical-align: middle;
+            */
+            margin-left: auto;
+            flex-shrink: 0;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
             background-position: center;
@@ -484,17 +488,69 @@
 
         /* Keep dropdowns within the mobile navigation */
         @media (max-width: 900px) {
-
+             /*
             .nav-dropdown-menu {
                 position: static;
                 min-width: 0;
                 margin: 6px 0 6px 12px;
                 box-shadow: none;
             }
-        
+            */
+            .nav-dropdown-menu {
+                    display: block;
+                    position: static;
+                    min-width: 0;
+                    margin: 0 0 0 12px;
+                    padding: 0 0 0 12px;
+                    background: transparent;
+                    border: none;
+                    border-radius: 0;
+                    box-shadow: none;
+                
+                    max-height: 0;
+                    opacity: 0;
+                    overflow: hidden;
+                    transform: translateY(-8px);
+                
+                    transition:
+                        max-height 0.35s ease,
+                        opacity 0.25s ease,
+                        transform 0.35s ease;
+            }
+
+            .nav-dropdown details[open] > .nav-dropdown-menu {
+                    max-height: 400px;
+                    opacity: 1;
+                    transform: translateY(0);
+                    margin-bottom: 8px;
+             }
+            /*
             .nav-dropdown-menu a {
                 white-space: normal;
             }
+            */
+            .nav-dropdown-menu a {
+                    white-space: normal;
+                    display: block;
+                    padding: 11px 12px;
+                    border-radius: 0;
+                    border-bottom: 1px solid var(--border);
+                    background: transparent;
+             }
+                
+            .nav-dropdown-menu li:last-child a {
+                    border-bottom: none;
+             }
+             .nav-links > li {
+                    width: 100%;
+              }
+                
+             .nav-dropdown details > summary,
+                .nav-links > li > a {
+                    width: 100%;
+                    box-sizing: border-box;
+                    min-height: 44px;
+              }
      
             .utility-menu-toggle {
                 padding: 8px 9px;
