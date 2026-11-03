@@ -486,6 +486,12 @@
             outline-offset: 3px;
         }
 
+        @supports (interpolate-size: allow-keywords) {
+            html {
+                interpolate-size: allow-keywords;
+            }
+        }
+
         /* Keep dropdowns within the mobile navigation */
         @media (max-width: 900px) {
              /*
@@ -496,37 +502,38 @@
                 box-shadow: none;
             }
             */
-           .nav-dropdown-menu {
-                display: block;
-                position: static;
-                width: 100%;
-                box-sizing: border-box;
-                
-                margin: 0;
-                padding: 0 12px;
-                
-                background: transparent;
-                border: none;
-                border-radius: 0;
-                box-shadow: none;
-                
-                display: grid;
-                grid-template-rows: 0fr;
-                
-                opacity: 0;
-                transform: translateY(-8px);
-                
-                transition:
-                grid-template-rows 0.35s ease,
+        .nav-dropdown-menu {
+            display: block;
+            position: static;
+        
+            width: 100%;
+            box-sizing: border-box;
+        
+            margin: 0;
+            padding: 0 12px;
+        
+            background: transparent;
+            border: none;
+            border-radius: 0;
+            box-shadow: none;
+        
+            height: 0;
+            overflow: hidden;
+        
+            opacity: 0;
+            transform: translateY(-12px);
+        
+            transition:
+                height 0.4s ease,
                 opacity 0.3s ease,
-                transform 0.35s ease;
-            }
-
-            .nav-dropdown details[open] > .nav-dropdown-menu {
-                grid-template-rows: 1fr;
-                opacity: 1;
-                transform: translateY(0);
-             }
+                transform 0.4s ease;
+        }
+        
+        .nav-dropdown details[open] > .nav-dropdown-menu {
+            height: auto;
+            opacity: 1;
+            transform: translateY(0);
+        }
              
              .nav-dropdown-menu > li {
                 min-height: 0;
