@@ -1626,7 +1626,7 @@ function updateDlnStats() {
     /*
      * Update the record according to the updated score.
      */
-     if (dlnGame.score > window.dlnRecord) {
+    if (dlnGame.score > window.dlnRecord) {
         window.dlnRecord = dlnGame.score;
      }
 
