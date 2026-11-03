@@ -538,6 +538,7 @@
         .nav-dropdown details::details-content {
             content-visibility: visible;
             height: 0;
+            overflow: clip;
             transition:
                 content-visibility 0.4s allow-discrete;
         }
