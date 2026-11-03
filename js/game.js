@@ -140,6 +140,20 @@ const DLN = {
         }
     },
 
+   /*
+     * Minimum percentage improvement required
+     * before displaying a new record notification.
+     *
+     * 0.25 = 25%
+     * 0.15 = 15%
+     * 0.10 = 10%
+     */
+    RECORD_NOTIFICATION_THRESHOLD: {
+        BEGINNER: 0.25,
+        INTERMEDIATE: 0.15,
+        ADVANCED: 0.1
+    },
+
     getStage(level) {
         for (const stage of Object.values(this.LEVEL_STAGES)) {
             if (level >= stage.MIN && level <= stage.MAX) {
@@ -148,6 +162,25 @@ const DLN = {
         }
 
         return null;
+    },
+
+    // Get record notification threshold by difficulty
+    getRecordNotificationThreshold(level) {
+        const stage = this.getStage(level);
+
+        if (stage === "Beginner") {
+            return this.RECORD_NOTIFICATION_THRESHOLD.BEGINNER;
+        }
+
+        if (stage === "Intermediate") {
+            return this.RECORD_NOTIFICATION_THRESHOLD.INTERMEDIATE;
+        }
+
+        if (stage === "Advanced") {
+            return this.RECORD_NOTIFICATION_THRESHOLD.ADVANCED;
+        }
+
+        return 1;
     },
 
     // Attempt economy
@@ -1274,24 +1307,46 @@ function handleCorrectGuess() {
      */
     if (dlnGame.score > window.dlnRecord) {
 
-        window.dlnRecord = dlnGame.score;
+        //window.dlnRecord = dlnGame.score;
+        const previousRecord = window.dlnRecord || 0;
+        const newRecord = dlnGame.score;
+   
+        // Always save the new record.
+        window.dlnRecord = newRecord;
 
         saveDlnRecord();
         updateDlnRecord();
 
-        setTimeout(() => {
-            /*
-            showDlnFeedback(
-                `🏅 NEW RECORD! ${dlnGame.player} set a new game record with ${dlnGame.score} points.`,
-                "record"
-            );
-            */
-            showDlnFeedback(
-                `🏅 NEW RECORD! You set a new game record with ${dlnGame.score} points.`,
-                "record"
-            );
-
-        }, 450);
+       /*
+        * Determine the minimum improvement required
+        * to display a new record notification.
+        */
+       const threshold =
+           DLN.getRecordNotificationThreshold(level);
+   
+       const improvement = previousRecord > 0
+           ? (newRecord - previousRecord) / previousRecord
+           : 1;
+   
+       /*
+        * Display notification only when the improvement
+        * meets or exceeds the difficulty threshold.
+        */
+       if (improvement >= threshold) {
+           setTimeout(() => {
+               /*
+               showDlnFeedback(
+                   `🏅 NEW RECORD! ${dlnGame.player} set a new game record with ${dlnGame.score} points.`,
+                   "record"
+               );
+               */
+               showDlnFeedback(
+                   `🏅 NEW RECORD! You set a new game record with ${dlnGame.score} points.`,
+                   "record"
+               );
+   
+           }, 450);
+       }
     }
 
     /*
