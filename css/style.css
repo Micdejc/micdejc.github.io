@@ -545,6 +545,10 @@
             content-visibility: visible;     
             height: auto;
         }
+        .nav-dropdown details {
+            position: relative;
+            isolation: isolate;
+        }
             /*
             .nav-dropdown-menu a {
                 white-space: normal;
