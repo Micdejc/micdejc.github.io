@@ -840,11 +840,6 @@ function startDlnLevel(
         dlnGame.score;
 
 
-    updateDlnRecord();
-
-    clearDlnFeedback();
-
-
     dlnElements.hintButton.hidden =
         dlnGame.attempts <= DLN.HINT_COST;
 
@@ -874,6 +869,10 @@ function startDlnLevel(
 
 
     saveDlnState();
+   
+    updateDlnRecord();
+    
+    clearDlnFeedback();
 
 
     setTimeout(() => {
