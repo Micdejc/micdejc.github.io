@@ -536,12 +536,13 @@
         }
 
         .nav-dropdown details::details-content {
-            content-visibility: visible;
+            content-visibility: hidden;
             height: 0;
             transition:
                 content-visibility 0.4s allow-discrete, height 0.4s ease;
         }
         .nav-dropdown details[open]::details-content {
+            content-visibility: visible;     
             height: auto;
         }
             /*
