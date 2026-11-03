@@ -144,14 +144,14 @@ const DLN = {
      * Minimum percentage improvement required
      * before displaying a new record notification.
      *
-     * 0.20 = 20%
-     * 0.12 = 12%
-     * 0.08 = 8%
+     * 0.40 = 40%
+     * 0.30 = 30%
+     * 0.25 = 25%
      */
     RECORD_NOTIFICATION_THRESHOLD: {
-        BEGINNER: 0.20,
-        INTERMEDIATE: 0.12,
-        ADVANCED: 0.08
+        BEGINNER: 0.40,
+        INTERMEDIATE: 0.30,
+        ADVANCED: 0.25
     },
 
     getStage(level) {
