@@ -140,20 +140,6 @@ const DLN = {
         }
     },
 
-   /*
-     * Minimum percentage improvement required
-     * before displaying a new record notification.
-     *
-     * 0.35 = 35%
-     * 0.25 = 25%
-     * 0.20 = 20%
-     */
-    RECORD_NOTIFICATION_THRESHOLD: {
-        BEGINNER: 0.35,
-        INTERMEDIATE: 0.25,
-        ADVANCED: 0.20
-    },
-
     getStage(level) {
         for (const stage of Object.values(this.LEVEL_STAGES)) {
             if (level >= stage.MIN && level <= stage.MAX) {
@@ -162,25 +148,6 @@ const DLN = {
         }
 
         return null;
-    },
-
-    // Get record notification threshold by difficulty
-    getRecordNotificationThreshold(level) {
-        const stage = this.getStage(level);
-
-        if (stage === "Beginner") {
-            return this.RECORD_NOTIFICATION_THRESHOLD.BEGINNER;
-        }
-
-        if (stage === "Intermediate") {
-            return this.RECORD_NOTIFICATION_THRESHOLD.INTERMEDIATE;
-        }
-
-        if (stage === "Advanced") {
-            return this.RECORD_NOTIFICATION_THRESHOLD.ADVANCED;
-        }
-
-        return 1;
     },
 
     // Attempt economy
@@ -378,14 +345,6 @@ export function initDLN() {
        "dln-secondary-button",
        dlnGame.active
     );
-   
-    /*
-     * Initialise record notification baseline.
-     * This is session-only and is not persisted.
-     */
-   if (window.dlnNotifiedRecord == null) {
-    window.dlnNotifiedRecord = window.dlnRecord || 0;
-   }
 
     updateDlnRecord();
 
@@ -1315,42 +1274,19 @@ function handleCorrectGuess() {
      */
     if (dlnGame.score > window.dlnRecord) {
 
-        //window.dlnRecord = dlnGame.score;
-        const newRecord = dlnGame.score;
-   
-        // Always save the new record.
-        window.dlnRecord = newRecord;
+        window.dlnRecord = dlnGame.score;
 
         saveDlnRecord();
         updateDlnRecord();
-
-       /*
-        * Determine the minimum improvement required
-        * to display a new record notification.
+    
+        /*
+        * Record notification interval.
+        * Notify at every DLN.STEP / 2 levels.
         */
-       const threshold =
-           DLN.getRecordNotificationThreshold(level);
-   
-       /*
-        * Calculate cumulative improvement since
-        * the last notification.
-        */
-       const baseline = window.dlnNotifiedRecord;
-   
-       const improvement = baseline > 0
-           ? (newRecord - baseline) / baseline
-           : 1;
-   
-       /*
-        * Notify only when the cumulative improvement
-        * reaches the required threshold.
-        */
-       if (improvement >= threshold) {
+        const RECORD_NOTIFICATION_INTERVAL = DLN.STEP / 2;
+       
+        if (level % RECORD_NOTIFICATION_INTERVAL === 0) {
            setTimeout(() => {
-
-               // Update notification baseline.
-               window.dlnNotifiedRecord = newRecord;
-              
                /*
                showDlnFeedback(
                    `🏅 NEW RECORD! ${dlnGame.player} set a new game record with ${dlnGame.score} points.`,
