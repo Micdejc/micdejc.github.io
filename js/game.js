@@ -1272,7 +1272,7 @@ function handleCorrectGuess() {
     /*
      * Update the record.
      */
-    if (dlnGame.score > window.dlnRecord) {
+    if (dlnGame.score >= window.dlnRecord) {
 
         window.dlnRecord = dlnGame.score;
 
@@ -1607,11 +1607,11 @@ function restartDlnGame() {
    ========================================================= */
 
 function updateDlnStats() {
-    /*
+    
     dlnGame.score =
         ((dlnGame.level - 1) * DLN.STEP) +
         (dlnGame.superHits * DLN.BONUS);
-   */
+   
 
     dlnElements.attempts.textContent =
         dlnGame.attempts;
@@ -1626,12 +1626,12 @@ function updateDlnStats() {
 
     /*
      * Update the record according to the updated score.
-     
-    if (dlnGame.score > window.dlnRecord) {
+    */ 
+    if (dlnGame.score >= window.dlnRecord) {
         window.dlnRecord = dlnGame.score;
      }
 
-    saveDlnRecord();*/
+    //saveDlnRecord();
     updateDlnRecord();
 
 }
