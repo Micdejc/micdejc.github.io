@@ -496,33 +496,35 @@
                 box-shadow: none;
             }
             */
-            .nav-dropdown-menu {
-                    display: block;
-                    position: static;
-                    min-width: 0;
-                    margin: 0 0 0 12px;
-                    padding: 0 0 0 12px;
-                    background: transparent;
-                    border: none;
-                    border-radius: 0;
-                    box-shadow: none;
+           .nav-dropdown-menu {
+                display: block;
+                position: static;
+                width: 100%;
+                box-sizing: border-box;
                 
-                    max-height: 0;
-                    opacity: 0;
-                    overflow: hidden;
-                    transform: translateY(-8px);
+                margin: 0;
+                padding: 0 12px;
                 
-                    transition:
-                        max-height 0.35s ease,
-                        opacity 0.25s ease,
-                        transform 0.35s ease;
+                background: transparent;
+                border: none;
+                border-radius: 0;
+                box-shadow: none;
+                
+                max-height: 0;
+                opacity: 0;
+                overflow: hidden;
+                transform: translateY(-8px);
+                
+                transition:
+                max-height 0.35s ease,
+                opacity 0.3s ease,
+                transform 0.35s ease;
             }
 
             .nav-dropdown details[open] > .nav-dropdown-menu {
                     max-height: 400px;
                     opacity: 1;
                     transform: translateY(0);
-                    margin-bottom: 8px;
              }
             /*
             .nav-dropdown-menu a {
@@ -530,11 +532,14 @@
             }
             */
             .nav-dropdown-menu a {
-                    white-space: normal;
                     display: block;
-                    padding: 11px 12px;
-                    border-radius: 0;
+                    padding: 12px 12px;
+                
+                    white-space: normal;
+                    border: none;
                     border-bottom: 1px solid var(--border);
+                    border-radius: 0;
+                
                     background: transparent;
              }
                 
