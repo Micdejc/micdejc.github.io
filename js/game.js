@@ -144,14 +144,14 @@ const DLN = {
      * Minimum percentage improvement required
      * before displaying a new record notification.
      *
-     * 0.40 = 40%
-     * 0.30 = 30%
+     * 0.35 = 35%
      * 0.25 = 25%
+     * 0.20 = 20%
      */
     RECORD_NOTIFICATION_THRESHOLD: {
-        BEGINNER: 0.40,
-        INTERMEDIATE: 0.30,
-        ADVANCED: 0.25
+        BEGINNER: 0.35,
+        INTERMEDIATE: 0.25,
+        ADVANCED: 0.20
     },
 
     getStage(level) {
@@ -378,6 +378,14 @@ export function initDLN() {
        "dln-secondary-button",
        dlnGame.active
     );
+   
+    /*
+     * Initialise record notification baseline.
+     * This is session-only and is not persisted.
+     */
+   if (window.dlnNotifiedRecord == null) {
+    window.dlnNotifiedRecord = window.dlnRecord || 0;
+   }
 
     updateDlnRecord();
 
@@ -1308,7 +1316,6 @@ function handleCorrectGuess() {
     if (dlnGame.score > window.dlnRecord) {
 
         //window.dlnRecord = dlnGame.score;
-        const previousRecord = window.dlnRecord || 0;
         const newRecord = dlnGame.score;
    
         // Always save the new record.
@@ -1324,16 +1331,26 @@ function handleCorrectGuess() {
        const threshold =
            DLN.getRecordNotificationThreshold(level);
    
-       const improvement = previousRecord > 0
-           ? (newRecord - previousRecord) / previousRecord
+       /*
+        * Calculate cumulative improvement since
+        * the last notification.
+        */
+       const baseline = window.dlnNotifiedRecord;
+   
+       const improvement = baseline > 0
+           ? (newRecord - baseline) / baseline
            : 1;
    
        /*
-        * Display notification only when the improvement
-        * meets or exceeds the difficulty threshold.
+        * Notify only when the cumulative improvement
+        * reaches the required threshold.
         */
        if (improvement >= threshold) {
            setTimeout(() => {
+
+               // Update notification baseline.
+               window.dlnNotifiedRecord = newRecord;
+              
                /*
                showDlnFeedback(
                    `🏅 NEW RECORD! ${dlnGame.player} set a new game record with ${dlnGame.score} points.`,
