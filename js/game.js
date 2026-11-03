@@ -1210,8 +1210,8 @@ function handleCorrectGuess() {
 
             window.dlnRecord = dlnGame.score;
 
-            saveDlnRecord();
             updateDlnRecord();
+            saveDlnRecord();
         }
 
         updateDlnStats();
@@ -1276,8 +1276,8 @@ function handleCorrectGuess() {
 
         window.dlnRecord = dlnGame.score;
 
-        saveDlnRecord();
         updateDlnRecord();
+        saveDlnRecord();
     
         /*
         * Record notification interval.
