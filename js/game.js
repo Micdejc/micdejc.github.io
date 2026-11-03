@@ -1631,7 +1631,7 @@ function updateDlnStats() {
         window.dlnRecord = dlnGame.score;
      }
 
-
+    saveDlnRecord();
     updateDlnRecord();
 
 }
