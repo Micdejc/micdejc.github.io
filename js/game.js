@@ -163,6 +163,14 @@ const DLN = {
         return this.BONUS * 2;
     },
 
+    /*
+     * Record notification interval.
+     * Notify at every DLN.STEP / 2 levels.
+    */
+    get RECORD_NOTIFICATION_INTERVAL() {
+        return this.STEP / 2;
+    },
+   
     // Points for completing a level
     getLevelReward() {
         return this.BONUS;
@@ -1279,13 +1287,7 @@ function handleCorrectGuess() {
         saveDlnRecord();
         updateDlnRecord();
 
-        /*
-        * Record notification interval.
-        * Notify at every DLN.STEP / 2 levels.
-        */
-        const RECORD_NOTIFICATION_INTERVAL = DLN.STEP / 2;
-       
-        if (level % RECORD_NOTIFICATION_INTERVAL === 0) {
+        if (level % DLN.RECORD_NOTIFICATION_INTERVAL === 0) {
            setTimeout(() => {
                /*
                showDlnFeedback(
