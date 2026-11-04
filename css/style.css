@@ -810,7 +810,8 @@
         /* ================= GENERAL SECTIONS ================= */
 
         section {
-            padding: 50px 0;
+            /*padding: 50px 0;*/
+            padding: 3% 0;
             scroll-margin-top: 70px;
         }
 
@@ -2168,7 +2169,8 @@
             }
 
             section {
-                padding: 75px 0;
+                /*padding: 75px 0;*/
+                padding: 7% 0;
             }
         }
 
