@@ -165,10 +165,10 @@ const DLN = {
 
     /*
      * Record notification interval.
-     * Notify at every DLN.STEP / 2 levels.
+     * Trigger a notification every (STEP / 2) + 2 levels.
     */
     get RECORD_NOTIFICATION_INTERVAL() {
-        return this.STEP / 2;
+        return (this.STEP / 2) + 2;
     },
    
     // Points for completing a level
