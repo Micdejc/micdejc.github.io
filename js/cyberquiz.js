@@ -153,6 +153,9 @@ export function initCyberQuiz() {
     };
 
     const STORE = 'cyberQuiz';
+    
+    //Notify only when the new best streak record improves by at least 5
+    const BEST_STREAK_NOTIFICATION_THRESHOLD = 5;
 
 /* =====================================================
        2. PLAYER STATE AND PROGRESS STORAGE
@@ -838,11 +841,23 @@ export function initCyberQuiz() {
         
             if (eligibleForRewards) {
                 state.streak++;
-        
+                /*
                 state.bestStreak = Math.max(
                     state.bestStreak,
                     state.streak
                 );
+                */
+                
+                //Notify when new record on best streak
+                const previousBestStreak = state.bestStreak || 0;
+
+                if (state.streak > previousBestStreak) {
+                    state.bestStreak = state.streak;
+                
+                    if (state.streak - previousBestStreak >= BEST_STREAK_NOTIFICATION_THRESHOLD) {
+                        toast(`🏆 New record! ${state.streak} consecutive correct answers!`);
+                    }
+                }
         
                 const earned =
                     PROGRESSION.correctXP[missionRank] +
