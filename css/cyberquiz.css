@@ -1429,6 +1429,7 @@ body.cyberquiz-modal-open {
     width: 8px;
     height: 13px;
 
+    /*animation: cqConfetti 3s ease-in forwards;*/
     animation: cqConfetti 2.3s ease-in forwards;
 }
 
@@ -1591,7 +1592,8 @@ body.cyberquiz-modal-open {
 
 @keyframes cqConfetti {
     to {
-        transform: translateY(105vh) rotate(600deg);
+        /*transform: translateY(105vh) rotate(600deg);*/
+        transform: translateY(120vh) rotate(600deg);
         opacity: 0;
     }
 }
