@@ -71,7 +71,8 @@
 }
 
 
-.testimonial blockquote {
+.testimonial blockquote, 
+.research-statement blockquote{
     margin: 0 0 25px;
 
     color: var(--text);
