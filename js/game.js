@@ -165,7 +165,8 @@ const DLN = {
 
     /*
      * Record notification interval.
-     * Trigger a notification every (STEP / 2) + 2 levels.
+     * Trigger a notification every (STEP / 2) + 2 levels 
+     * to avoid overlap with level milestones.
     */
     get RECORD_NOTIFICATION_INTERVAL() {
         return (this.STEP / 2) + 2;
