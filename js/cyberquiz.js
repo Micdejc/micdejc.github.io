@@ -154,8 +154,8 @@ export function initCyberQuiz() {
 
     const STORE = 'cyberQuiz';
     
-    //Notify only when the new best streak record improves by at least 5
-    const BEST_STREAK_NOTIFICATION_THRESHOLD = 5;
+    //Notify only when the new best streak record every 10 streaks
+    const BEST_STREAK_NOTIFICATION_THRESHOLD = 10;
 
 /* =====================================================
        2. PLAYER STATE AND PROGRESS STORAGE
@@ -853,9 +853,10 @@ export function initCyberQuiz() {
 
                 if (state.streak > previousBestStreak) {
                     state.bestStreak = state.streak;
-                
-                    if (state.streak - previousBestStreak >= BEST_STREAK_NOTIFICATION_THRESHOLD) {
-                        toast(`🏆 New record! ${state.streak} consecutive correct answers!`);
+                    
+                    //Notify every BEST_STREAK_NOTIFICATION_THRESHOLD streaks
+                    if (state.streak % BEST_STREAK_NOTIFICATION_THRESHOLD === 0) {
+                        toast(`🏆 Streak milestone! ${state.streak} consecutive correct answers!`);
                     }
                 }
         
