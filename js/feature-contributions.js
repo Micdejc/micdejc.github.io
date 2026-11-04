@@ -273,7 +273,7 @@ const featureContributions = {
 
             {
                 title:
-                    "The Analysis bog with Michael Tchuindjang",
+                    "The Analysis blog with Michael Tchuindjang",
 
                 description:
                     "Expert analysis on cybersecurity, ethics, and technological sovereignty .",
