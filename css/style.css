@@ -942,6 +942,15 @@
             color: var(--muted);
         }
 
+        .research-statement .opening-quote {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .research-statement .closing-quote {
+            margin-left: 20px;
+            margin-top: 15px;
+        }
 
         .research-statement p {
             max-width: 800px;
