@@ -943,13 +943,15 @@
         }
 
         .research-statement .opening-quote {
-            margin-left: 20px;
-            margin-bottom: 15px;
+            /*margin-left: 20px;*/
+            margin-bottom: -2%;
+            margin-top: 4%;
         }
         
         .research-statement .closing-quote {
-            margin-left: 20px;
-            margin-top: 15px;
+            /*margin-left: 20px;*/
+            margin-top: 2%;
+            margin-bottom: -4%;
         }
 
         .research-statement p {
