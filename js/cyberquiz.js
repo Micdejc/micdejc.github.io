@@ -322,7 +322,7 @@ export function initCyberQuiz() {
 
         toastTimer = setTimeout(() => {
             element.classList.remove('show');
-        }, 2500);
+        }, 5000);
     }
 
     /* =====================================================
