@@ -694,6 +694,12 @@
             box-shadow: var(--shadow);
         }
 
+        .btn-disabled {
+            pointer-events: none;
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
         .profile-card {
             background: var(--surface);
             border: 1px solid var(--border);
