@@ -849,7 +849,11 @@ function typeText(
  *
  * Type "whoami"
  *       ↓
- * Display consoleText1 and consoleText2 instantly
+ * Display consoleText1 instantly
+ *       ↓
+ * 800 ms pause
+ *       ↓
+ * Display consoleText2 instantly
  *       ↓
  * 4000 ms reading pause
  *       ↓
@@ -870,7 +874,8 @@ function typeText(
  * Repeat indefinitely
  *
  * Only terminal commands are animated.
- * Console output appears instantly.
+ * Console output appears instantly,
+ * with a delay between the two descriptions.
  */
 
 function startConsoleAnimation() {
@@ -925,52 +930,62 @@ function startConsoleAnimation() {
 
         if (!document.body.classList.contains("terminal-mode")) return;
 
-        // 2. DISPLAY BOTH DESCRIPTIONS.
+        // 2. DISPLAY FIRST DESCRIPTION.
         textElement1.innerHTML = originalHTML1;
-        textElement2.innerHTML = originalHTML2;
 
-        // 3. WAIT 4 SECONDS.
+        // 3. WAIT 800 MS BEFORE SECOND DESCRIPTION.
         animationDelayTimer = setTimeout(function () {
 
             if (!document.body.classList.contains("terminal-mode")) return;
 
-            // 4. CLEAR WHOAMI.
-            commandElement.textContent = "";
+            // 4. DISPLAY SECOND DESCRIPTION.
+            textElement2.innerHTML = originalHTML2;
 
-            // 5. WAIT 600 MS.
+            // 5. WAIT 4 SECONDS AFTER BOTH DESCRIPTIONS APPEAR.
             animationDelayTimer = setTimeout(function () {
 
                 if (!document.body.classList.contains("terminal-mode")) return;
 
-                // 6. TYPE CLEAR.
-                typeText(commandElement, "clear", 150, function () {
+                // 6. CLEAR WHOAMI.
+                commandElement.textContent = "";
+
+                // 7. WAIT 600 MS.
+                animationDelayTimer = setTimeout(function () {
 
                     if (!document.body.classList.contains("terminal-mode")) return;
 
-                    // 7. CLEAR BOTH DESCRIPTIONS.
-                    textElement1.innerHTML = "";
-                    textElement2.innerHTML = "";
-
-                    // 8. CLEAR CLEAR.
-                    commandElement.textContent = "";
-
-                    // 9. WAIT 1 SECOND.
-                    animationDelayTimer = setTimeout(function () {
+                    // 8. TYPE CLEAR.
+                    typeText(commandElement, "clear", 150, function () {
 
                         if (!document.body.classList.contains("terminal-mode")) return;
 
-                        // 10. RESTART.
-                        startConsoleAnimation();
+                        // 9. CLEAR BOTH DESCRIPTIONS.
+                        textElement1.innerHTML = "";
+                        textElement2.innerHTML = "";
 
-                    }, 1000);
+                        // 10. CLEAR CLEAR COMMAND.
+                        commandElement.textContent = "";
 
-                });
+                        // 11. WAIT 1 SECOND.
+                        animationDelayTimer = setTimeout(function () {
 
-            }, 600);
+                            if (!document.body.classList.contains("terminal-mode")) return;
 
-        }, 4000);
+                            // 12. RESTART ANIMATION.
+                            startConsoleAnimation();
+
+                        }, 1000);
+
+                    });
+
+                }, 600);
+
+            }, 4000);
+
+        }, 800);
 
     });
+
 
 }
 
