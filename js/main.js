@@ -857,11 +857,11 @@ function typeText(
  *       ↓
  * 600 ms pause
  *       ↓
- * Type "cls"
+ * Type "clear"
  *       ↓
  * Clear consoleText1 and consoleText2
  *       ↓
- * Clear "cls"
+ * Clear "clear"
  *       ↓
  * 1000 ms pause
  *       ↓
@@ -942,8 +942,8 @@ function startConsoleAnimation() {
 
                 if (!document.body.classList.contains("terminal-mode")) return;
 
-                // 6. TYPE CLS.
-                typeText(commandElement, "cls", 150, function () {
+                // 6. TYPE CLEAR.
+                typeText(commandElement, "clear", 150, function () {
 
                     if (!document.body.classList.contains("terminal-mode")) return;
 
@@ -951,7 +951,7 @@ function startConsoleAnimation() {
                     textElement1.innerHTML = "";
                     textElement2.innerHTML = "";
 
-                    // 8. CLEAR CLS.
+                    // 8. CLEAR CLEAR.
                     commandElement.textContent = "";
 
                     // 9. WAIT 1 SECOND.
