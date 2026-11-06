@@ -843,19 +843,34 @@ function typeText(
 
 
 /*
- * Start the console animation.
+ * Start the terminal animation.
  *
  * The animation runs continuously:
  *
- * Text 1 types
+ * Type "whoami"
+ *       ↓
+ * Display consoleText1 and consoleText2 instantly
+ *       ↓
+ * 4000 ms reading pause
+ *       ↓
+ * Clear "whoami"
  *       ↓
  * 600 ms pause
  *       ↓
- * Text 2 types
+ * Type "cls"
  *       ↓
- * 1200 ms pause
+ * Clear consoleText1 and consoleText2
  *       ↓
- * Animation starts again
+ * Clear "cls"
+ *       ↓
+ * 1000 ms pause
+ *       ↓
+ * Type "whoami" again
+ *       ↓
+ * Repeat indefinitely
+ *
+ * Only terminal commands are animated.
+ * Console output appears instantly.
  */
 
 function startConsoleAnimation() {
@@ -964,84 +979,59 @@ function startConsoleAnimation() {
  * Stop the console animation completely.
  */
 
+
 function stopConsoleAnimation() {
 
-    /*
-     * Cancel the character typing timer.
-     */
-
-    clearTimeout(
-        typingTimer
-    );
-
-
-    /*
-     * Cancel any animation delay timer.
-     */
-
-    clearTimeout(
-        animationDelayTimer
-    );
-
+    // Cancel all animation timers.
+    clearTimeout(typingTimer);
+    clearTimeout(animationDelayTimer);
 
     typingTimer = null;
-
     animationDelayTimer = null;
 
-
+    // Get terminal elements.
     const textElement1 =
-        document.getElementById(
-            "consoleText1"
-        );
+        document.getElementById("consoleText1");
 
     const textElement2 =
-        document.getElementById(
-            "consoleText2"
-        );
+        document.getElementById("consoleText2");
 
+    const commandLine =
+        document.getElementById("terminalCommandLine");
 
-    /*
-     * Restore the original first text.
-     */
+    const commandElement =
+        document.getElementById("terminalCommand");
 
+    // Restore original HTML for first description.
     if (textElement1) {
 
-        textElement1.textContent =
-            textElement1.dataset.originalText ||
-            "";
+        textElement1.innerHTML =
+            textElement1.dataset.originalHTML || "";
 
-        textElement1.classList.remove(
-            "typing-cursor"
-        );
-
+        textElement1.classList.remove("typing-cursor");
     }
 
-
-    /*
-     * Restore the original second text.
-     */
-
+    // Restore original HTML for second description.
     if (textElement2) {
 
-        textElement2.textContent =
-            textElement2.dataset.originalText ||
-            "";
+        textElement2.innerHTML =
+            textElement2.dataset.originalHTML || "";
 
-        textElement2.classList.remove(
-            "typing-cursor"
-        );
-
+        textElement2.classList.remove("typing-cursor");
     }
 
-   const commandLine = document.getElementById("terminalCommandLine");
-   const commandElement = document.getElementById("terminalCommand");
-   
-   if (commandLine) commandLine.style.display = "none";
-   
-   if (commandElement) {
-       commandElement.textContent = "";
-       commandElement.classList.remove("typing-cursor");
-   }
+    // Hide terminal command line.
+    if (commandLine) {
+        commandLine.style.display = "none";
+    }
+
+    // Clear terminal command.
+    if (commandElement) {
+
+        commandElement.textContent = "";
+
+        commandElement.classList.remove("typing-cursor");
+    }
 
 }
 
