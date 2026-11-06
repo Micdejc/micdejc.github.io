@@ -277,7 +277,7 @@ body:not(.terminal-mode) .console-intro span::after {
     margin-bottom: 12px;
     /*color: #3b82f6;*/
     color: #00FF41;
-    font-size: 1.12rem;
+    font-size: 1.25rem;
 }
 
 .terminal-prompt {
@@ -324,6 +324,7 @@ body.terminal-mode .terminal-command .terminal-prompt,
 body.terminal-mode .terminal-command #terminalCommand {
     color: #00FF41 !important;
     -webkit-text-fill-color: #00FF41 !important;
+    font-weight: bold;
 }
 
 /* Blinking terminal cursor */
