@@ -645,7 +645,8 @@ function initialiseCalendar() {
         // Apply Dark Mode without overwriting the saved preference.
         applyTheme("dark", false);
 
-        setTimeout(startConsoleAnimation, 150);
+        //setTimeout(startConsoleAnimation, 150);
+        animationDelayTimer = setTimeout(startConsoleAnimation, 150);
 
     } else {
 
@@ -714,7 +715,10 @@ function initialiseCalendar() {
             applyTheme("dark", false);
 
             // Start terminal animation.
-            setTimeout(startConsoleAnimation, 150);
+            //setTimeout(startConsoleAnimation, 150);
+            clearTimeout(typingTimer);
+            clearTimeout(animationDelayTimer);
+            animationDelayTimer = setTimeout(startConsoleAnimation, 150);
 
         } else {
 
@@ -869,190 +873,89 @@ function startConsoleAnimation() {
     );
 
 
-    const textElement1 =
-        document.getElementById(
-            "consoleText1"
-        );
-
-    const textElement2 =
-        document.getElementById(
-            "consoleText2"
-        );
-
-
-    /*
-     * Make sure both elements exist.
-     */
-
-    if (!textElement1 || !textElement2) {
-
-        return;
-
-    }
-
-
-    /*
-     * Save the original text once.
-     *
-     * This is important because the animation
-     * clears the text from the elements.
-     */
+    const commandLine = document.getElementById("terminalCommandLine");
+    const commandElement = document.getElementById("terminalCommand");
+    const textElement1 = document.getElementById("consoleText1");
+    const textElement2 = document.getElementById("consoleText2");
 
     if (
-        !textElement1.dataset.originalText
-    ) {
+        !commandLine ||
+        !commandElement ||
+        !textElement1 ||
+        !textElement2 ||
+        !document.body.classList.contains("terminal-mode")
+    ) return;
 
-        textElement1.dataset.originalText =
-            textElement1.textContent.trim();
-
+    // Save original HTML.
+    if (!textElement1.dataset.originalHTML) {
+        textElement1.dataset.originalHTML = textElement1.innerHTML;
     }
 
-
-    if (
-        !textElement2.dataset.originalText
-    ) {
-
-        textElement2.dataset.originalText =
-            textElement2.textContent.trim();
-
+    if (!textElement2.dataset.originalHTML) {
+        textElement2.dataset.originalHTML = textElement2.innerHTML;
     }
 
+    const originalHTML1 = textElement1.dataset.originalHTML;
+    const originalHTML2 = textElement2.dataset.originalHTML;
 
-    /*
-     * Get the original text.
-     */
+    // Reset terminal.
+    commandLine.style.display = "block";
+    commandElement.textContent = "";
 
-    const text1 =
-        textElement1.dataset.originalText;
+    textElement1.innerHTML = "";
+    textElement2.innerHTML = "";
 
-    const text2 =
-        textElement2.dataset.originalText;
+    // 1. TYPE WHOAMI.
+    typeText(commandElement, "whoami", 100, function () {
 
+        if (!document.body.classList.contains("terminal-mode")) return;
 
-    /*
-     * Clear the existing text.
-     */
+        // 2. DISPLAY BOTH DESCRIPTIONS.
+        textElement1.innerHTML = originalHTML1;
+        textElement2.innerHTML = originalHTML2;
 
-    textElement1.textContent = "";
+        // 3. WAIT 4 SECONDS.
+        animationDelayTimer = setTimeout(function () {
 
-    textElement2.textContent = "";
+            if (!document.body.classList.contains("terminal-mode")) return;
 
+            // 4. CLEAR WHOAMI.
+            commandElement.textContent = "";
 
-    /*
-     * Animate the first text.
-     */
+            // 5. WAIT 600 MS.
+            animationDelayTimer = setTimeout(function () {
 
-    typeText(
-        textElement1,
-        text1,
-        25,
-        function () {
+                if (!document.body.classList.contains("terminal-mode")) return;
 
-            /*
-             * Do not continue if Terminal Mode
-             * has already been disabled.
-             */
+                // 6. TYPE CLS.
+                typeText(commandElement, "cls", 150, function () {
 
-            if (
-                !document.body.classList.contains(
-                    "terminal-mode"
-                )
-            ) {
+                    if (!document.body.classList.contains("terminal-mode")) return;
 
-                return;
+                    // 7. CLEAR BOTH DESCRIPTIONS.
+                    textElement1.innerHTML = "";
+                    textElement2.innerHTML = "";
 
-            }
+                    // 8. CLEAR CLS.
+                    commandElement.textContent = "";
 
+                    // 9. WAIT 1 SECOND.
+                    animationDelayTimer = setTimeout(function () {
 
-            /*
-             * Wait 600 ms before starting
-             * the second text.
-             */
+                        if (!document.body.classList.contains("terminal-mode")) return;
 
-            animationDelayTimer =
-                setTimeout(
-                    function () {
+                        // 10. RESTART.
+                        startConsoleAnimation();
 
-                        /*
-                         * Check Terminal Mode again
-                         * after the delay.
-                         */
+                    }, 1000);
 
-                        if (
-                            !document.body.classList.contains(
-                                "terminal-mode"
-                            )
-                        ) {
+                });
 
-                            return;
+            }, 600);
 
-                        }
+        }, 4000);
 
-
-                        /*
-                         * Animate the second text.
-                         */
-
-                        typeText(
-                            textElement2,
-                            text2,
-                            25,
-                            function () {
-
-                                /*
-                                 * Do not restart if
-                                 * Terminal Mode is off.
-                                 */
-
-                                if (
-                                    !document.body.classList.contains(
-                                        "terminal-mode"
-                                    )
-                                ) {
-
-                                    return;
-
-                                }
-
-
-                                /*
-                                 * Wait 1200 ms after
-                                 * the second line has
-                                 * finished, then start
-                                 * the complete animation
-                                 * again.
-                                 */
-
-                                animationDelayTimer =
-                                    setTimeout(
-                                        function () {
-
-                                            if (
-                                                !document.body.classList.contains(
-                                                    "terminal-mode"
-                                                )
-                                            ) {
-
-                                                return;
-
-                                            }
-
-
-                                            startConsoleAnimation();
-
-                                        },
-                                        1200
-                                    );
-
-                            }
-                        );
-
-                    },
-                    600
-                );
-
-        }
-    );
+    });
 
 }
 
@@ -1129,6 +1032,16 @@ function stopConsoleAnimation() {
         );
 
     }
+
+   const commandLine = document.getElementById("terminalCommandLine");
+   const commandElement = document.getElementById("terminalCommand");
+   
+   if (commandLine) commandLine.style.display = "none";
+   
+   if (commandElement) {
+       commandElement.textContent = "";
+       commandElement.classList.remove("typing-cursor");
+   }
 
 }
 
