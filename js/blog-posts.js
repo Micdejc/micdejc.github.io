@@ -174,7 +174,7 @@ function getBlogPosts() {
 /**
  * Extract all blog posts from blog-data.txt.
  */
-function getBlogPosts() {
+async function getBlogPosts() {
 
     try {
 
