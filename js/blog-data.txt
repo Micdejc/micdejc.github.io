@@ -22,7 +22,7 @@
       "tags": ["Cybersecurity", "Social Engineering", "Human Risk"]
     }
   ],
-  "posts": [
+  "blogs": [
     {
       "title": "A Brief Introduction to My Story and Journey",
       "slug": "my-brief-introductory-story-article",
