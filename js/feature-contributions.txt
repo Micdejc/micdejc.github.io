@@ -1,5 +1,8 @@
 
 {
+
+
+
     "heads-talk": {
         "title": "Heads Talk",
         "type": "Featured Analysis",
@@ -126,11 +129,21 @@
         "description": "Feature contribution brief description.",
         "contributions": [
             {
-                "title": "Contribution Title",
+                "title": "Contribution Title 1",
+                "description": "Contribution brief description.",
+                "url": "https://example.com",
+                "type": "Contribution Type"
+            },
+            {
+                "title": "Contribution Title 2",
                 "description": "Contribution brief description.",
                 "url": "https://example.com",
                 "type": "Contribution Type"
             }
         ]
     }
+
+
+
+
 }
