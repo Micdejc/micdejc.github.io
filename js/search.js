@@ -738,7 +738,9 @@
                                     class="site-search-result-arrow"
                                     aria-hidden="true"
                                 >
-                                    →
+                                    <svg class="arrow-icon">
+                                        <use href="#icon-arrow-right"></use>
+                                    </svg>
                                 </span>
 
                             </button>
