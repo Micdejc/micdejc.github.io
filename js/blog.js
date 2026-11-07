@@ -1839,10 +1839,10 @@ function initialiseHistoryHandling() {
 
 /* ================= INITIALISE ================= */
 
-function initialiseBlog() {
+async function initialiseBlog() {
 
     allPosts =
-        getBlogPosts();
+        await getBlogPosts();
 
 
     populateCategories(
