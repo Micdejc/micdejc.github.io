@@ -174,18 +174,18 @@ function getBlogPosts() {
 /**
  * Extract all blog posts from blog-data.txt.
  */
-async function getBlogPosts() {
+function getBlogPosts() {
 
     try {
 
         const response = await fetch(
-            "./blog-data.txt"
+            new URL("./blog-data.txt", import.meta.url)
         );
 
         if (!response.ok) {
 
             throw new Error(
-                `Failed to fetch blog data: ${response.status}`
+                `Unable to load blog data: HTTP ${response.status}`
             );
 
         }
