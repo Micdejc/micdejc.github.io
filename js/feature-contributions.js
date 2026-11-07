@@ -5,22 +5,25 @@
    FEATURE CONTRIBUTIONS DATA
    ========================================= */
 
-const featureContributionsURL = new URL(
-    "./feature-contributions.txt",
-    import.meta.url
-);
-
 const featureContributions = await fetch(
-    featureContributionsURL
+    new URL("./feature-contributions.txt", import.meta.url)
 ).then(async response => {
 
     if (!response.ok) {
         throw new Error(
-            `Unable to load feature contributions: HTTP ${response.status} (${response.url})`
+            `Unable to load feature contributions: HTTP ${response.status}`
         );
     }
 
-    return response.json();
+    const data = await response.json();
+
+    // Exclude internal template properties
+    const {
+        _template,
+        ...features
+    } = data;
+
+    return features;
 
 });
 
