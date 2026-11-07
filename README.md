@@ -70,11 +70,13 @@ micdejc.github.io/
 │   ├── main.js
 │   ├── calendar.js
 │   ├── feature.js
+│   ├── feature-contributions.txt
 │   ├── blog.js
 │   ├── game.js
 │   ├── cyberquiz.js
 │   ├── question.js
 │   ├── blog-posts.js
+│   ├── blog-data.txt
 │   └── search.js
 │
 ├── assets/
@@ -347,7 +349,7 @@ content/features/index.js
 
 ## Adding a Feature Contribution
 
-Feature contributions are managed in `js/feature-contribution.js`. You can add a new feature contribution by creating an entry in the feature contributions object, using a unique identifier as the key.
+Feature contributions are managed in `js/feature-contribution.txt` (NEW) in replacement of management in `js/feature-contribution.js` (OLD). You can add a new feature contribution by creating an entry in the feature contributions object, using a unique identifier as the key.
 
 ### 1. Feature Contribution Structure
 
@@ -599,7 +601,12 @@ blog/posts/ai-security-governance.html
 3. Register the post in:
 
 ```text
-sections/blog.html
+js/blog-data.txt (NEW)
+```
+in replacement of
+
+```text
+sections/blog.html (OLD)
 ```
 Add the following inside `#blog-source`:
 ```html
@@ -911,7 +918,7 @@ The game is integrated directly into the website through a responsive modal and 
 
 # CyberQuiz
 
-**CyberQuiz** is an interactive cybersecurity quiz available on my personal website, designed to test cybersecurity knowledge, strengthen security awareness, and develop practical skills through engaging, scenario-based questions.
+**CyberQuiz** is an interactive cybersecurity quiz available on my personal website, developed by me, and designed to test cybersecurity knowledge, strengthen security awareness, and develop practical skills through engaging, scenario-based questions.
 
 ## Five Progressive Levels
 
@@ -929,7 +936,7 @@ The game is integrated directly into the website through a responsive modal and 
 - **Daily Challenge:** Put your knowledge to the test with a daily challenge.
 - **Interactive learning:** Strengthen your cybersecurity knowledge through practical scenarios and progressive difficulty levels.
 
-CyberQuiz aims to make cybersecurity learning practical, engaging, and accessible, helping users recognise threats, apply security principles, and make better-informed security decisions.
+CyberQuiz aims to make cybersecurity learning practical, engaging, and accessible, helping users recognise threats, apply security principles, and make better-informed security decisions. Game progress is saved locally in the browser using `localStorage`, ensuring persistence across page refreshes and browser sessions.
 
 **Disclaimer:** These levels are learning milestones, not professional certifications. 
 
