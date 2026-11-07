@@ -19,6 +19,7 @@ micdejc.github.io/
 │   ├── calendar.html
 │   ├── game.html
 │   ├── cyberquiz.html
+│   ├── cookie.html
 │   └── footer.html
 │
 ├── sections/
@@ -61,6 +62,7 @@ micdejc.github.io/
 │   ├── blog.css
 │   ├── game.css
 │   ├── cyberquiz.css
+│   ├── cookie.css
 │   ├── testimonials.css
 │   └── search.css
 │
@@ -1065,6 +1067,7 @@ The website should remain:
 | Navigation             | `components/nav.html`    |
 | Hero/profile           | `components/hero.html`   |
 | Footer                 | `components/footer.html` |
+| Cookie Notice          | `components/cookie.html` |
 | Major page sections    | `sections/`              |
 | Blogs                  | `blog/posts/`          |
 | Publications           | `content/publications/`  |
