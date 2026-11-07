@@ -1106,4 +1106,4 @@ The goal is to keep the website easy to maintain as the number of publications, 
 
 © Michael Tchuindjang. All rights reserved.
 
-Unless otherwise stated, all original content, website design, visual elements, branding, graphics, and source code contained in this repository are the intellectual property of Michael Tchuindjang.
+All original content, website design, visual elements, branding, graphics, and source code contained in this repository are the intellectual property of Michael Tchuindjang.
