@@ -105,6 +105,34 @@
     // Initialise DLN help independently of navigation dropdowns.
     initialiseDLNStatHelp();
 
+   /* ========================================
+       COOKIE BANNER NOTICE
+    ======================================== */
+
+    function initialiseCookieBanner() {
+        const banner = document.getElementById("goatcounter-cookie-banner");
+        const okBtn = document.getElementById("cookie-ok-btn");
+        const closeBtn = document.getElementById("cookie-close-btn");
+
+        if (!banner) return;
+
+        // Show banner only if the user hasn't seen it yet
+        if (!localStorage.getItem("goatcounterCookieNoticeDismissed")) {
+            banner.style.display = "block";
+        }
+
+        function dismissNotice() {
+            banner.style.display = "none";
+            localStorage.setItem("goatcounterCookieNoticeDismissed", "true");
+        }
+
+        if (okBtn) okBtn.addEventListener("click", dismissNotice);
+        if (closeBtn) closeBtn.addEventListener("click", dismissNotice);
+    }
+
+    // Initialise Cookie Banner
+    initialiseCookieBanner();
+
     /* ========================================
        CLICK HANDLING
     ======================================== */
