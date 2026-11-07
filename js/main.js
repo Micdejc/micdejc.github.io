@@ -218,7 +218,7 @@ async function loadPage() {
      * Blog HTML is now in the DOM,
      * so it is safe to initialise it.
      */
-    initialiseBlog();
+    await initialiseBlog();
 
     /* Initialization of the game modal */
     initDLN();
