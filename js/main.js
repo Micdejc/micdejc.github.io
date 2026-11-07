@@ -1281,9 +1281,28 @@ async function initialiseVisitorCount() {
 
 }
 
-/* ========================================
-       COOKIE BANNER NOTICE
-======================================== */
+
+/* =============================================
+       COOKIE BANNER NOTICE (Using Cookies)
+================================================ */
+
+ // Helper function to get a cookie value by name
+ function getCookie(name) {
+     const value = `; ${document.cookie}`;
+     const parts = value.split(`; ${name}=`);
+     if (parts.length === 2) return parts.pop().split(';').shift();
+ }
+
+ // Helper function to set a cookie
+ function setCookie(name, value, days) {
+     let expires = "";
+     if (days) {
+         const date = new Date();
+         date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+         expires = "; expires=" + date.toUTCString();
+     }
+     document.cookie = name + "=" + (value || "") + expires + "; path=/; SameSite=Lax";
+ }
 
 function initialiseCookieBanner() {
      const banner = document.getElementById("goatcounter-cookie-banner");
@@ -1293,13 +1312,21 @@ function initialiseCookieBanner() {
      if (!banner) return;
 
      // Show banner only if the user hasn't seen it yet
+     /*
      if (!localStorage.getItem("goatcounterCookieNoticeDismissed")) {
+         banner.style.display = "block";
+     }
+     */
+     // Show banner only if the cookie hasn't been set yet
+     if (!getCookie("goatcounterCookieNoticeDismissed")) {
          banner.style.display = "block";
      }
 
      function dismissNotice() {
          banner.style.display = "none";
-         localStorage.setItem("goatcounterCookieNoticeDismissed", "true");
+         //localStorage.setItem("goatcounterCookieNoticeDismissed", "true");
+         // Save cookie for 365 days
+         setCookie("goatcounterCookieNoticeDismissed", "true", 365);
      }
 
      if (okBtn) okBtn.addEventListener("click", dismissNotice);
