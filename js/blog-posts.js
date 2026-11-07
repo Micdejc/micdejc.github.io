@@ -192,10 +192,10 @@ function getBlogPosts() {
 
         const data = await response.json();
 
-        // Only active posts are rendered.
+        // Only active blogs are rendered.
         // Templates remain stored in the TXT file.
-        const entries = Array.isArray(data.posts)
-            ? data.posts
+        const entries = Array.isArray(data.blogs)
+            ? data.blogs
             : [];
 
         const posts = [];
