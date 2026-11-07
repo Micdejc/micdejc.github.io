@@ -82,6 +82,11 @@ async function loadPage() {
         ),
 
         loadComponent(
+            "cookieContainer",
+            "components/cookie.html"
+        ),
+
+        loadComponent(
             "about",
             "sections/about.html"
         ),
