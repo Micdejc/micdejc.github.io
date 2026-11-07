@@ -1100,3 +1100,10 @@ If it belongs to an existing category, add a new content item there.
 If it represents a genuinely new type of information, consider creating a new section and category.
 
 The goal is to keep the website easy to maintain as the number of publications, achievements, professional contributions, research activities, and other content grows.
+
+
+# Copyright and Intellectual Property
+
+© 2026 Michael Tchuindjang. All rights reserved.
+
+Unless otherwise stated, all original content, website design, visual elements, branding, graphics, and source code contained in this repository are the intellectual property of Michael Tchuindjang.
