@@ -80,7 +80,7 @@
       "date": "2026-05-01",
       "category": "Cybersecurity",
       "type": "external",
-      "url": "https://www.linkedin.com/posts/michael-tchuindjang-38829317b_%F0%9D%90%93%F0%9D%90%A1%F0%9D%90%9E-%F0%9D%90%81%F0%9D%90%A2%F0%9D%90%A5%F0%9D%90%A5%F0%9D%90%9B%F0%9D%90%A8%F0%9D%90%9A%F0%9D%90%AB%F0%9D%90%9D-%F0%9D%90%93%F0%9D%90%A1%F0%9D%90%9A%F0%9D%90%AD-%F0%9D%90%81%F0%9D%90%AB%F0%9D%90%A8-ugcPost-7445125399904210944-Mcxx/",
+      "url": "https://www.linkedin.com/posts/michael-tchuindjang-38829317b_%F0%9D%90%86%F0%9D%90%A8%F0%9D%90%A8%F0%9D%90%9D%F0%9D%90%96%F0%9D%90%A2%F0%9D%90%A5%F0%9D%90%A5-%F0%9D%90%91%F0%9D%90%9A%F0%9D%90%A7%F0%9D%90%AC%F0%9D%90%A8%F0%9D%90%A6%F0%9D%90%B0%F0%9D%90%9A%F0%9D%90%AB%F0%9D%90%9E-%F0%9D%90%93-ugcPost-7455980130574979072-LtAQ/",
       "description": "Goodwill ransomware group propagates very unusual demands in exchange for the decryption key. The Robin Hood-like group is forcing its Victims to donate to the poor and provides financial assistance to the patients in need.",
       "tags": ["Cybersecurity", "Hacking", "Drama", "LinkedIn"]
     },
@@ -120,7 +120,7 @@
       "date": "2026-09-01",
       "category": "Cybersecurity",
       "type": "external",
-      "url": "https://www.linkedin.com/posts/michael-tchuindjang-38829317b_%F0%9D%90%82%F0%9D%90%B2%F0%9D%90%9B%F0%9D%90%9E%F0%9D%90%AB-%F0%9D%90%83%F0%9D%90%AB%F0%9D%90%9A%F0%9D%90%A6%F0%9D%9F%96-%F0%9D%90%93%F0%9D%90%A1%F0%9D%90%9E-%F0%9D%90%95%F0%9D%90%A2%F0%9D%90%9C%F0%9D%90%AD%F0%9D%90%A2%F0%9D%90%A6-ugcPost-7500500365981798400-MaJS/",
+      "url": "https://www.linkedin.com/posts/michael-tchuindjang-38829317b_%F0%9D%90%82%F0%9D%90%B2%F0%9D%90%9B%F0%9D%90%9E%F0%9D%90%AB-%F0%9D%90%83%F0%9D%90%AB%F0%9D%90%9A%F0%9D%90%A6%F0%9D%90%9A-%F0%9D%9F%96-%F0%9D%90%93%F0%9D%90%A1%F0%9D%90%9E-%F0%9D%90%95%F0%9D%90%A2%F0%9D%90%9C%F0%9D%90%AD%F0%9D%90%A2%F0%9D%90%A6-ugcPost-7500500365981798400-MaJS/",
       "description": "As the Italian proverb says, 'revenge is a dish best served cold.' In 2019, after being extorted and paying some money to his ransomware attacker, a victim of the Muhstik Ransomware sought revenge by hacking into the attacker's command and control center and generating decryption keys for all the other victims who suffered the same attack.",
       "tags": ["Cybersecurity", "Hacking", "Drama", "LinkedIn"]
     },
@@ -130,7 +130,7 @@
       "date": "2026-10-01",
       "category": "Cybersecurity",
       "type": "external",
-      "url": "https://www.linkedin.com/posts/michael-tchuindjang-38829317b_%F0%9D%90%82%F0%9D%90%B2%F0%9D%90%9B%F0%9D%90%9E%F0%9D%90%AB-%F0%9D%90%83%F0%9D%90%AB%F0%9D%90%9A%F0%9D%90%A6%F0%9D%90%9A%F0%9D%9F%97-%F0%9D%90%87%F0%9D%90%A8%F0%9D%90%B0-%F0%9D%90%9A-%F0%9D%90%93-ugcPost-7511434277306265600-Kx0Q/",
+      "url": "https://www.linkedin.com/posts/michael-tchuindjang-38829317b_%F0%9D%90%82%F0%9D%90%B2%F0%9D%90%9B%F0%9D%90%9E%F0%9D%90%AB-%F0%9D%90%83%F0%9D%90%AB%F0%9D%90%9A%F0%9D%90%A6%F0%9D%90%9A%F0%9D%90%AC-%F0%9D%9F%97-%F0%9D%90%87%F0%9D%90%A8%F0%9D%90%B0-%F0%9D%90%9A-%F0%9D%90%93-ugcPost-7511434277306265600-Kx0Q/",
       "description": "In 1999, 15-year-old Jonathan James breached U.S. Department of Defense systems, installing a backdoor that allowed him to access sensitive communications. He later used that access to steal NASA software linked to the International Space Station, becoming one of the youngest hackers to target major government systems.",
       "tags": ["Cybersecurity", "Hacking", "Drama", "LinkedIn"]
     },
@@ -140,7 +140,7 @@
       "date": "2026-11-02",
       "category": "Cybersecurity",
       "type": "external",
-      "url": "https://www.linkedin.com/posts/michael-tchuindjang-38829317b_%F0%9D%90%82%F0%9D%90%B2%F0%9D%90%9B%F0%9D%90%9E%F0%9D%90%AB-%F0%9D%90%83%F0%9D%90%AB%F0%9D%90%9A%F0%9D%90%A6%F0%9D%90%9A%F0%9D%9F%8F%F0%9D%9F%8E-%F0%9D%90%96%F0%9D%90%A1%F0%9D%90%9E%F0%9D%90%A7-%F0%9D%90%9A-ugcPost-7522984504878243841-HWz9/",
+      "url": "https://www.linkedin.com/posts/michael-tchuindjang-38829317b_%F0%9D%90%82%F0%9D%90%B2%F0%9D%90%9B%F0%9D%90%9E%F0%9D%90%AB-%F0%9D%90%83%F0%9D%90%AB%F0%9D%90%9A%F0%9D%90%A6%F0%9D%90%9A%F0%9D%90%AC-%F0%9D%9F%8F%F0%9D%9F%8E-%F0%9D%90%96%F0%9D%90%A1%F0%9D%90%9E%F0%9D%90%A7-%F0%9D%90%9A-ugcPost-7522984504878243841-HWz9/",
       "description": "Ashley Madison specifically offers a dating service for cheating spouses. The group of hackers, known as Impact Team, said the website's Cybersecurity was almost non-existent. They also exposed the company for failing to delete users' data after charging them to do so.",
       "tags": ["Cybersecurity", "Hacking", "Drama", "LinkedIn"]
     }
