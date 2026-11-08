@@ -52,7 +52,7 @@
       "type": "internal",
       "url": "blog/posts/my-cyberquiz-blog.html",
       "description": "Discover CyberQuiz, an interactive cybersecurity learning experience that makes security education fun, practical and engaging. Test your knowledge, complete missions, earn XP, build streaks and progress through five challenging ranks while strengthening your cybersecurity skills.",
-      "tags": ["Cybersecurity", "Quiz", "Learning", "Game", "LinkedIn"]
+      "tags": ["Cybersecurity", "Quiz", "Learning", "Game", "Challenge"]
     },
     {
       "title": "Cyber Dama #1: When a Job Application Becomes a Cyber Attack",
