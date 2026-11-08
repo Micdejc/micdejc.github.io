@@ -1902,6 +1902,7 @@ function showHolidayNotification(events) {
                         notification._holidayEvents.length;
 
                     renderHoliday();
+                    startHolidayRotation();
                 }
             );
         }
@@ -1926,6 +1927,7 @@ function showHolidayNotification(events) {
                         notification._holidayEvents.length;
 
                     renderHoliday();
+                    startHolidayRotation();
                 }
             );
         }
@@ -1949,6 +1951,13 @@ function showHolidayNotification(events) {
                     notification._ringInterval =
                         null;
 
+                    clearInterval(
+                        notification._rotationInterval
+                    );
+
+                    notification._rotationInterval = 
+                        null;
+
                     notification.classList.remove(
                         "show"
                     );
@@ -1957,10 +1966,38 @@ function showHolidayNotification(events) {
         }
     }
 
+
+    /*
+     * Automatically rotate between holiday events every 7 seconds.
+     */
+    function startHolidayRotation() {
+    
+        clearInterval(notification._rotationInterval);
+    
+        if (notification._holidayEvents.length > 1) {
+    
+            notification._rotationInterval =
+                setInterval(function() {
+    
+                    notification._holidayIndex =
+                        (
+                            notification._holidayIndex + 1
+                        ) % notification._holidayEvents.length;
+    
+                    renderHoliday();
+    
+                }, 7000);
+        }
+    }
+
     /*
      * Render the first holiday.
      */
     renderHoliday();
+    /*
+     * Start holiday rotation.
+     */
+    startHolidayRotation();
 
     /*
      * Reset existing timers.
@@ -2022,6 +2059,14 @@ function showHolidayNotification(events) {
                 );
 
                 notification._ringInterval =
+                    null;
+
+                
+                clearInterval(
+                    notification._rotationInterval
+                );
+
+                notification._rotationInterval = 
                     null;
 
                 notification.classList.remove(
