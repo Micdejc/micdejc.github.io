@@ -9,9 +9,15 @@
         "description": "Expert analysis and commentary contributed to Heads Talk.",
         "contributions": [
             {
-                "title": "The Analysis: Michael Tchuindjang",
-                "description": "Expert analysis on artificial intelligence and cybersecurity.",
+                "title": "AI vs AI: Are Humans Becoming the Spare Wheel? My analysis",
+                "description": "An exploration of the evolving relationship between artificial intelligence and human relevance.",
                 "url": "https://podcasts.apple.com/gb/podcast/005-heads-talk-the-analysis-michael-tchuindjangs/id1896624173?i=1000772246065",
+                "type": "Podcast Analysis"
+            },
+            {
+                "title": "Who Really Owns the Future? Technology, Dependency and the Sovereignty Question: My analysis",
+                "description": "A thought-provoking analysis of technological dependency, corporate power and national sovereignty.",
+                "url": "https://podcasts.apple.com/gb/podcast/heads-talk-the-analysis/id1896624173?i=1000800718824",
                 "type": "Podcast Analysis"
             }
         ]
@@ -95,8 +101,8 @@
         "description": "Expert analysis and interview contributions to journalist Chris Stokel-Walker's coverage in Transformer.",
         "contributions": [
             {
-                "title": "Expert Insights by Michael Tchuindjang",
-                "description": "Expert analysis on the impact of transformative AI.",
+                "title": "AI Jailbreaks: When Chatbots Become Tools for Election Manipulation: My expert analysis.",
+                "description": "An examination of how AI jailbreaks can expose vulnerabilities that enable election interference and coordinated social media manipulation.",
                 "url": "https://www.transformernews.ai/p/claude-jailbreak-election-manipulation",
                 "type": "Expert Analysis"
             }
@@ -109,14 +115,14 @@
         "description": "Expert analysis and insights contributed to TeachSomebody.",
         "contributions": [
             {
-                "title": "The Analysis Blog with Michael Tchuindjang",
-                "description": "Expert analysis on cybersecurity, ethics, and technological sovereignty.",
+                "title": "Responsible AI: Beyond Compliance, Towards Security and Technological Sovereignty: My analysis",
+                "description": "An exploration of responsible AI beyond regulatory compliance, examining cybersecurity risks, ethical governance and technological sovereignty.",
                 "url": "https://www.teachsomebody.com/en/blog/view/mzcS-Xb4kc5__kLeY_4Il/responsible-ai-beyond-compliance:-a-conversation-on-cybersecurity,-ethics,-and-technological-soverei",
                 "type": "Expert Analysis"
             },
             {
-                "title": "Interview with Michael Tchuindjang",
-                "description": "Interview on responsible AI beyond compliance.",
+                "title": "Rethinking Responsible AI: Ethics, Cybersecurity and the Quest for Digital Sovereignty: My interview",
+                "description": "Responsible AI requires more than compliance; it demands a deeper commitment to cybersecurity, ethical accountability and technological independence.",
                 "url": "https://www.youtube.com/watch?v=Zg1zPL7CVC0",
                 "type": "Interview"
             }
