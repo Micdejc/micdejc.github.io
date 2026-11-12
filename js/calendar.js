@@ -482,7 +482,7 @@ function loadInternationalHolidays(year) {
         events,
         blackFriday,
         "Black Friday",
-        "Commercial"
+        "Cultural"
     );
 
     addEvent(
