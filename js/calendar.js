@@ -466,6 +466,25 @@ function loadInternationalHolidays(year) {
         "Cultural"
     );
 
+    /*
+     * Black Friday
+     * = Friday after the fourth Thursday of November.
+     */
+    const blackFriday =
+        getNthWeekdayOfMonth(
+            year,
+            10,  // November (0-based)
+            5,   // Friday
+            4    // Fourth occurrence
+        );
+    
+    addDateEvent(
+        events,
+        blackFriday,
+        "Black Friday",
+        "Commercial"
+    );
+
     addEvent(
         events,
         year,
@@ -558,6 +577,56 @@ function loadInternationalHolidays(year) {
         8,
         "STEM Day",
         "Technology"
+    );
+
+    // March 20 – International Day of Happiness
+    addEvent(
+        events,
+        year,
+        2,
+        20,
+        "International Day of Happiness",
+        "International"
+    );
+    
+    // June 5 – World Environment Day
+    addEvent(
+        events,
+        year,
+        5,
+        5,
+        "World Environment Day",
+        "International"
+    );
+    
+    // September 21 – International Day of Peace
+    addEvent(
+        events,
+        year,
+        8,
+        21,
+        "International Day of Peace",
+        "International"
+    );
+    
+    // October 10 – World Mental Health Day
+    addEvent(
+        events,
+        year,
+        9,
+        10,
+        "World Mental Health Day",
+        "International"
+    );
+    
+    // November 11 – Remembrance Day
+    addEvent(
+        events,
+        year,
+        10,
+        11,
+        "Remembrance Day",
+        "UK Cultural"
     );
 
     return events;
@@ -1420,9 +1489,9 @@ function getHolidayIcon(event) {
     if (title.includes("halloween")) return "🎃";
     if (title.includes("bonfire")) return "🔥";
     if (title.includes("christmas eve")) return "🎄";
-    if (title.includes("christmas")) return "🎄";
+    if (title.includes("christmas")) return "🎅";
     if (title.includes("new year's day")) return "🎆";
-    if (title.includes("new year's eve")) return "🎆";
+    if (title.includes("new year's eve")) return "🎇";
     if (title.includes("easter")) return "🐣";
     if (title.includes("boxing")) return "🎁";
     if (title.includes("diwali")) return "🪔";
@@ -1433,12 +1502,18 @@ function getHolidayIcon(event) {
     if (title.includes("eid al-adha")) return "🐑";
     if (title.includes("ramadan")) return "🌙";
     if (title.includes("ashura")) return "☪️";
-    if (title.includes("mawlid")) return "🌙";
+    if (title.includes("mawlid")) return "🕌";
     if (title.includes("international women's day")) return "👩‍💼";
     if (title.includes("international day of women and girls in science")) return "👩‍🔬";
     if (title.includes("international women in tech day")) return "👩‍💻";
     if (title.includes("cybersecurity awareness month")) return "🔐";
     if (title.includes("stem day")) return "💻";
+    if (title.includes("black friday")) return "🛒";
+    if (title.includes("remembrance day")) return "🌺";
+    if (title.includes("international day of happiness")) return "🌞";
+    if (title.includes("world mental health day")) return "🧘";
+    if (title.includes("world environment day")) return "🌳";
+    if (title.includes("international day of peace")) return "🕊️";
     if (title.includes("bank holiday")) return "🇬🇧";
 
     return "🎉";
@@ -1610,6 +1685,32 @@ function getHolidayGreeting(event) {
     }
 
     if (
+        title.includes("black friday")
+    ) {
+        return "Happy Black Friday!";
+    }
+
+    if (title.includes("remembrance day")) {
+    return "Happy Remembrance Day!";
+    }
+    
+    if (title.includes("international day of happiness")) {
+        return "Happy International Day of Happiness!";
+    }
+    
+    if (title.includes("world mental health day")) {
+        return "Happy World Mental Health Day!";
+    }
+    
+    if (title.includes("world environment day")) {
+        return "Happy World Environment Day!";
+    }
+    
+    if (title.includes("international day of peace")) {
+        return "Happy International Day of Peace!";
+    }
+
+    if (
         title.includes("bank holiday")
     ) {
         return "Happy Bank Holiday!";
@@ -1746,7 +1847,25 @@ function getHolidayDescription(event) {
     
         "cybersecurity awareness month":
             "Cybersecurity Awareness Month promotes cybersecurity awareness, safer digital practices, and collective action to protect people, organisations, and digital systems.",
-    
+
+        "black friday":
+            "Black Friday is a major annual shopping event featuring promotional offers and discounts across retailers, marking an important part of the Christmas shopping season.",
+
+        "remembrance day":
+            "Remembrance Day is observed on 11 November in the UK to honour members of the armed forces and civilians who lost their lives in conflicts.",
+        
+        "international day of happiness":
+            "The International Day of Happiness celebrates the importance of happiness and well-being as universal aspirations and encourages positive action for a happier world.",
+        
+        "world mental health day":
+            "World Mental Health Day raises awareness of mental health issues and promotes understanding, support, and access to mental health care worldwide.",
+        
+        "world environment day":
+            "World Environment Day encourages global awareness and action to protect the environment and address pressing environmental challenges.",
+        
+        "international day of peace":
+            "The International Day of Peace promotes peace, non-violence, and the strengthening of ideals of peace among nations and people.",
+        
         "stem day":
             "STEM Day celebrates science, technology, engineering, and mathematics and promotes education, innovation, and engagement in these fields."
     };
