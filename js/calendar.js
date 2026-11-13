@@ -1515,8 +1515,10 @@ function getHolidayIcon(event) {
     if (title.includes("world environment day")) return "🌳";
     if (title.includes("international day of peace")) return "🕊️";
     if (title.includes("bank holiday")) return "🇬🇧";
-
-    return "🎉";
+    
+    return getRandomHolidayIcon();
+    //return "🎉";
+    
 }
 
 
