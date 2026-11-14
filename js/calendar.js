@@ -1536,13 +1536,17 @@ function getHolidayIcon(event) {
     if (title.includes("mother")) return "🌷";
     if (title.includes("father")) return "👔";
     if (title.includes("st patrick")) return "☘️";
+    if (title.includes("april fools")) return "🤡";
     if (title.includes("halloween")) return "🎃";
-    if (title.includes("bonfire")) return "🔥";
+    if (title.includes("bonfire")) return "🧨";
     if (title.includes("christmas eve")) return "🎄";
     if (title.includes("christmas")) return "🎅";
     if (title.includes("new year's day")) return "🎆";
     if (title.includes("new year's eve")) return "🎇";
+    if (title.includes("good friday")) return "✝️";
     if (title.includes("easter")) return "🐣";
+    if (title.includes("ascension day")) return "☁️";
+    if (title.includes("pentecost")) return "🔥";
     if (title.includes("boxing")) return "🎁";
     if (title.includes("diwali")) return "🪔";
     if (title.includes("holi")) return "🌈";
@@ -1556,7 +1560,7 @@ function getHolidayIcon(event) {
     if (title.includes("international women's day")) return "👩‍💼";
     if (title.includes("international day of women and girls in science")) return "👩‍🔬";
     if (title.includes("international women in tech day")) return "👩‍💻";
-    if (title.includes("cybersecurity awareness month")) return "🔐";
+    if (title.includes("cybersecurity awareness month")) return "🛡️";
     if (title.includes("stem day")) return "💻";
     if (title.includes("black friday")) return "🛒";
     if (title.includes("remembrance day")) return "🌺";
