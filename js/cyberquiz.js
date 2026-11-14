@@ -370,6 +370,7 @@ export function initCyberQuiz() {
         renderLevels();
         renderBadges();
         updateStartButton();
+        updateDailyButton();
     }
 
     /* =====================================================
@@ -1115,7 +1116,7 @@ export function initCyberQuiz() {
             confetti();
         }
 
-        updateDailyButton();
+        //updateDailyButton();
 
         $('result').scrollIntoView({
             behavior: 'smooth',
