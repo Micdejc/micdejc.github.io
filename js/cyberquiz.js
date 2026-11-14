@@ -1381,8 +1381,6 @@ export function initCyberQuiz() {
     
         const completed = state.dailyDone === today;
     
-        dailyButton.prop('disabled', completed);
-    
         if (completed) {
             dailyButton
                 .addClass('disabled');
