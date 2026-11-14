@@ -34,8 +34,8 @@
  * Exhibits: 135 questions include an exhibit (emails, headers, logs,
  * configurations, code, command output, tables and reports).
  *
- * Note: all 500 questions have been checked for uniqueness (ids 1-500,
- * no duplicate or overlapping questions, 500 distinct topic labels).
+ * Note: all 500 questions are unique (no duplicate or overlapping questions,
+ * 500 distinct topic labels).
  *
  * Correct-answer positions are balanced across A/B/C/D:
  * A=125, B=125, C=125, D=125 overall, and 25 of each letter in every rank.
