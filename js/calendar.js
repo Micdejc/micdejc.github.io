@@ -629,6 +629,56 @@ function loadInternationalHolidays(year) {
         "UK Cultural"
     );
 
+    // September 8 – International Literacy Day
+    addEvent(
+        events,
+        year,
+        8,
+        8,
+        "International Literacy Day",
+        "International"
+    );
+    
+    // September 27 – World Tourism Day
+    addEvent(
+        events,
+        year,
+        8,
+        27,
+        "World Tourism Day",
+        "International"
+    );
+    
+    // October 5 – World Teachers' Day
+    addEvent(
+        events,
+        year,
+        9,
+        5,
+        "World Teachers' Day",
+        "International"
+    );
+    
+    // October 16 – World Food Day
+    addEvent(
+        events,
+        year,
+        9,
+        16,
+        "World Food Day",
+        "International"
+    );
+    
+    // December 5 – International Volunteer Day
+    addEvent(
+        events,
+        year,
+        11,
+        5,
+        "International Volunteer Day",
+        "International"
+    );
+
     return events;
 }
 
@@ -1514,6 +1564,11 @@ function getHolidayIcon(event) {
     if (title.includes("world mental health day")) return "🧘";
     if (title.includes("world environment day")) return "🌳";
     if (title.includes("international day of peace")) return "🕊️";
+    if (title.includes("world teachers")) return "👩‍🏫";
+    if (title.includes("world food")) return "🍎";
+    if (title.includes("international literacy")) return "📖";
+    if (title.includes("international volunteer")) return "🤝";
+    if (title.includes("world tourism")) return "✈️";
     if (title.includes("bank holiday")) return "🇬🇧";
     
     return getRandomHolidayIcon();
@@ -1712,6 +1767,26 @@ function getHolidayGreeting(event) {
         return "Happy International Day of Peace!";
     }
 
+    if (title.includes("world teachers")) {
+    return "Happy World Teachers' Day!";
+    }
+    
+    if (title.includes("world food")) {
+        return "Happy World Food Day!";
+    }
+    
+    if (title.includes("international literacy")) {
+        return "Happy International Literacy Day!";
+    }
+    
+    if (title.includes("international volunteer")) {
+        return "Happy International Volunteer Day!";
+    }
+    
+    if (title.includes("world tourism")) {
+        return "Happy World Tourism Day!";
+    }
+
     if (
         title.includes("bank holiday")
     ) {
@@ -1867,7 +1942,22 @@ function getHolidayDescription(event) {
         
         "international day of peace":
             "The International Day of Peace promotes peace, non-violence, and the strengthening of ideals of peace among nations and people.",
+
+        "world teachers' day":
+            "World Teachers' Day celebrates the dedication of teachers and their important role in educating, inspiring, and shaping future generations.",
         
+        "world food day":
+            "World Food Day raises awareness of global hunger, food security, and the importance of ensuring access to safe and nutritious food.",
+        
+        "international literacy day":
+            "International Literacy Day highlights the importance of literacy as a fundamental human right and its role in promoting education and lifelong learning.",
+        
+        "international volunteer day":
+            "International Volunteer Day celebrates the contributions of volunteers worldwide through community support, solidarity, and positive social change.",
+        
+        "world tourism day":
+            "World Tourism Day highlights the importance of tourism in connecting cultures, promoting understanding, and supporting economic and sustainable development.",
+                
         "stem day":
             "STEM Day celebrates science, technology, engineering, and mathematics and promotes education, innovation, and engagement in these fields."
     };
