@@ -1382,11 +1382,9 @@ export function initCyberQuiz() {
         const completed = state.dailyDone === today;
     
         if (completed) {
-            dailyButton
-                .addClass('disabled');
+            dailyButton.setAttribute('disabled', '');
         } else {
-            dailyButton
-                .removeClass('disabled');
+            dailyButton.removeAttribute('disabled');
         }
     }
     
