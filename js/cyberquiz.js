@@ -1115,6 +1115,8 @@ export function initCyberQuiz() {
             confetti();
         }
 
+        updateDailyButton();
+
         $('result').scrollIntoView({
             behavior: 'smooth',
             block: 'center'
@@ -1345,7 +1347,7 @@ export function initCyberQuiz() {
     }
 
     /* =====================================================
-       17. DAILY CHALLENGE
+       17.1 DAILY CHALLENGE
        ===================================================== */
 
         function startDailyChallenge() {
@@ -1369,6 +1371,27 @@ export function initCyberQuiz() {
             //console.log('[CyberQuiz] Mission start function returned');
         }
 
+    /* =====================================================
+       17.2 DAILY BUTTON UPDATE
+       ===================================================== */
+    function updateDailyButton() {
+        const today = new Date().toISOString().slice(0, 10);
+        const dailyButton = $('#daily');
+    
+        const completed = state.dailyDone === today;
+    
+        dailyButton.prop('disabled', completed);
+    
+        if (completed) {
+            dailyButton
+                .addClass('disabled');
+        } else {
+            dailyButton
+                .removeClass('disabled');
+        }
+    }
+    
+    
     /* =====================================================
        18. EVENT LISTENERS
        ===================================================== */
