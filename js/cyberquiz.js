@@ -545,6 +545,7 @@ export function initCyberQuiz() {
             return [];
         }
 
+        // 5 questions per daily challenge
         const count = daily
             ? 5
             : Math.min(5, Math.max(3, 3 + rankNumber));
@@ -937,6 +938,10 @@ export function initCyberQuiz() {
         // Save Daily Challenge progress for resuming later.
         if (mode === 'daily') {
             state.dailyProgress = index + 1;
+            // Mark the Daily Challenge completed after all 5 questions answered
+            if (state.dailyProgress >= mission.length) {
+                finishMission();
+            }
         }
 
         saveState();
