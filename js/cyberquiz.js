@@ -187,6 +187,7 @@ export function initCyberQuiz() {
 
             // Save unfinished Daily Challenge questions.
             dailyMission: null,
+            dailyProgress: 0,
 
             completedMissions: 0,
             theme: 'dark',
@@ -244,6 +245,10 @@ export function initCyberQuiz() {
             loaded.dailyMission = Array.isArray(saved.dailyMission)
                 ? saved.dailyMission
                 : null;
+
+            loaded.dailyProgress = Number.isInteger(saved.dailyProgress)
+                ? saved.dailyProgress
+                : 0;
 
             // Legacy state used one shared `seen` array.
             // Do not assign it to every rank, as that would
@@ -646,7 +651,10 @@ export function initCyberQuiz() {
 
         saveState();
 
-        index = 0;
+        //index = 0;
+        index = daily && state.dailyMission?.length
+            ? (state.dailyProgress || 0)
+            : 0;
         selected = null;
         hintUsed = false;
         eliminated = false;
@@ -926,6 +934,11 @@ export function initCyberQuiz() {
             state.credits = Math.min(9, state.credits + 1);
         }
 
+        // Save Daily Challenge progress for resuming later.
+        if (mode === 'daily') {
+            state.dailyProgress = index + 1;
+        }
+
         saveState();
         updateUI();
         
@@ -1043,6 +1056,9 @@ export function initCyberQuiz() {
             
             state.dailyMission = 
                 null;
+
+            state.dailyProgress =
+                0;
         }
         
         
