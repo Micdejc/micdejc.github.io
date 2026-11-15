@@ -941,6 +941,7 @@ export function initCyberQuiz() {
             // Mark the Daily Challenge completed after all 5 questions answered
             if (state.dailyProgress >= mission.length) {
                 finishMission();
+                return;
             }
         }
 
