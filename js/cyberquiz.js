@@ -1030,7 +1030,8 @@ export function initCyberQuiz() {
         const percentage = Math.round(
             (sessionCorrect / mission.length) * 100
         );
-    
+
+        // Daily challenges are not counted for bonus rewards add "mode === 'daily' || " to the condition if you want so.
         const eligibleForRewards =
             missionRewardEligible &&
             mission.every(question =>
