@@ -185,6 +185,9 @@ export function initCyberQuiz() {
             // Separate history for Daily Challenge.
             seenDaily: [],
 
+            // Save unfinished Daily Challenge questions.
+            dailyMission: null,
+
             completedMissions: 0,
             theme: 'dark',
             dailyDone: ''
@@ -237,6 +240,10 @@ export function initCyberQuiz() {
             loaded.seenDaily = Array.isArray(saved.seenDaily)
                 ? saved.seenDaily
                 : [];
+
+            loaded.dailyMission = Array.isArray(saved.dailyMission)
+                ? saved.dailyMission
+                : null;
 
             // Legacy state used one shared `seen` array.
             // Do not assign it to every rank, as that would
@@ -602,11 +609,20 @@ export function initCyberQuiz() {
         
         mode = daily ? 'daily' : 'rank';
 
-        mission = pickQuestions(rankNumber, daily);
+        //mission = pickQuestions(rankNumber, daily);
+
+        mission = daily && state.dailyMission?.length
+            ? state.dailyMission
+            : pickQuestions(rankNumber, daily);
 
         if (!mission.length) {
             toast('No questions are available yet.');
             return;
+        }
+
+        if (daily && !state.dailyMission?.length) {
+            state.dailyMission = mission;
+            saveState();
         }
 
         // Record selected questions in the relevant history.
@@ -1020,12 +1036,15 @@ export function initCyberQuiz() {
         sessionXP += bonus;
         state.completedMissions++;
         
-        /*
+        
         if (mode === 'daily') {
             state.dailyDone =
                 new Date().toISOString().slice(0, 10);
+            
+            state.dailyMission = 
+                null;
         }
-        */
+        
         
         saveState();
         updateUI();
@@ -1366,12 +1385,6 @@ export function initCyberQuiz() {
                 rank: rankIndex(),
                 questions: (window.CYBERQUIZ_QUESTIONS || []).length
             });*/
-
-            // A dialy challenge started is automatically flagged as completed and the button disabled
-            //to avoid user repetively starting daily challenge without completing them
-            state.dailyDone = today;
-            saveState();
-            updateUI();
         
             startMission(rankIndex(), true);
         
