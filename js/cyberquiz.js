@@ -188,6 +188,7 @@ export function initCyberQuiz() {
             // Save unfinished Daily Challenge questions.
             dailyMission: null,
             dailyProgress: 0,
+            dailyStartedDate: '',
 
             completedMissions: 0,
             theme: 'dark',
@@ -249,6 +250,8 @@ export function initCyberQuiz() {
             loaded.dailyProgress = Number.isInteger(saved.dailyProgress)
                 ? saved.dailyProgress
                 : 0;
+
+            loaded.dailyStartedDate = saved.dailyStartedDate || '';
 
             // Legacy state used one shared `seen` array.
             // Do not assign it to every rank, as that would
@@ -1066,6 +1069,9 @@ export function initCyberQuiz() {
 
             state.dailyProgress =
                 0;
+
+            state.dailyStartedDate = 
+                '';
         }
         
         
@@ -1408,6 +1414,14 @@ export function initCyberQuiz() {
                 rank: rankIndex(),
                 questions: (window.CYBERQUIZ_QUESTIONS || []).length
             });*/
+
+            // Discard previous day's unfinished challenge.
+            if (state.dailyStartedDate !== today) {
+                state.dailyMission = null;
+                state.dailyProgress = 0;
+                state.dailyStartedDate = today;
+                saveState();
+            }
         
             startMission(rankIndex(), true);
         
