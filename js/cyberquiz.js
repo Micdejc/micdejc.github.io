@@ -1019,12 +1019,14 @@ export function initCyberQuiz() {
         state.xp += bonus;
         sessionXP += bonus;
         state.completedMissions++;
-    
+        
+        /*
         if (mode === 'daily') {
             state.dailyDone =
                 new Date().toISOString().slice(0, 10);
         }
-    
+        */
+        
         saveState();
         updateUI();
     
@@ -1115,8 +1117,6 @@ export function initCyberQuiz() {
         } else if (isStrong) {
             confetti();
         }
-
-        //updateDailyButton();
 
         $('result').scrollIntoView({
             behavior: 'smooth',
@@ -1366,6 +1366,12 @@ export function initCyberQuiz() {
                 rank: rankIndex(),
                 questions: (window.CYBERQUIZ_QUESTIONS || []).length
             });*/
+
+            // A dialy challenge started is automatically flagged as completed 
+            //to avoid user repetively starting daily challenge without completing them
+            state.dailyDone = today;
+            saveState();
+            //updateUI();
         
             startMission(rankIndex(), true);
         
