@@ -1367,11 +1367,11 @@ export function initCyberQuiz() {
                 questions: (window.CYBERQUIZ_QUESTIONS || []).length
             });*/
 
-            // A dialy challenge started is automatically flagged as completed 
+            // A dialy challenge started is automatically flagged as completed and the button disabled
             //to avoid user repetively starting daily challenge without completing them
             state.dailyDone = today;
             saveState();
-            //updateUI();
+            updateUI();
         
             startMission(rankIndex(), true);
         
