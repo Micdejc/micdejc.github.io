@@ -679,6 +679,87 @@ function loadInternationalHolidays(year) {
         "International"
     );
 
+
+    // January 28 – Data Protection Day / Data Privacy Day
+    addEvent(
+        events,
+        year,
+        0,
+        28,
+        "Data Privacy Day",
+        "International"
+    );
+
+    // February 21 – International Mother Language Day
+    addEvent(
+        events,
+        year,
+        1,
+        21,
+        "International Mother Language Day",
+        "International"
+    );
+
+    // June 14 – World Blood Donor Day
+    addEvent(
+        events,
+        year,
+        5,
+        14,
+        "World Blood Donor Day",
+        "International"
+    );
+
+    // December 2 – International Day for the Abolition of Slavery
+    addEvent(
+        events,
+        year,
+        11,
+        2,
+        "International Day for the Abolition of Slavery",
+        "International"
+    );
+
+    // December 18 – International Migrants Day
+    addEvent(
+        events,
+        year,
+        11,
+        18,
+        "International Migrants Day",
+        "International"
+    );
+
+    // November 25 – International Day for the Elimination of Violence Against Women
+    addEvent(
+        events,
+        year,
+        10,
+        25,
+        "International Day for the Elimination of Violence Against Women",
+        "International"
+    );
+
+    // December 3 – International Day of Persons with Disabilities
+    addEvent(
+        events,
+        year,
+        11,
+        3,
+        "International Day of Persons with Disabilities",
+        "International"
+    );
+
+    // November 19 – International Men's Day
+    addEvent(
+        events,
+        year,
+        10,
+        19,
+        "International Men's Day",
+        "International"
+    );
+
     return events;
 }
 
@@ -1557,7 +1638,7 @@ function getHolidayIcon(event) {
     if (title.includes("ramadan")) return "🌙";
     if (title.includes("ashura")) return "☪️";
     if (title.includes("mawlid")) return "🕌";
-    if (title.includes("international women's day")) return "👩‍💼";
+    if (title.includes("international women's day")) return "♀️";
     if (title.includes("international day of women and girls in science")) return "👩‍🔬";
     if (title.includes("international women in tech day")) return "👩‍💻";
     if (title.includes("cybersecurity awareness month")) return "🛡️";
@@ -1573,6 +1654,14 @@ function getHolidayIcon(event) {
     if (title.includes("international literacy")) return "📖";
     if (title.includes("international volunteer")) return "🤝";
     if (title.includes("world tourism")) return "✈️";
+    if (title.includes("data privacy")) return "📵";
+    if (title.includes("mother language")) return "🗣️";
+    if (title.includes("blood donor")) return "🩸";
+    if (title.includes("abolition of slavery")) return "⛓️";
+    if (title.includes("migrants")) return "🚶";
+    if (title.includes("violence against women")) return "🙅‍♀️";
+    if (title.includes("persons with disabilities")) return "♿";
+    if (title.includes("men's day")) return "♂️";
     if (title.includes("bank holiday")) return "🇬🇧";
     
     return getRandomHolidayIcon();
@@ -1791,6 +1880,38 @@ function getHolidayGreeting(event) {
         return "Happy World Tourism Day!";
     }
 
+    if (title.includes("data privacy")) {
+    return "Happy Data Privacy Day!";
+    }
+    
+    if (title.includes("mother language")) {
+        return "Happy International Mother Language Day!";
+    }
+    
+    if (title.includes("blood donor")) {
+        return "Happy World Blood Donor Day!";
+    }
+    
+    if (title.includes("abolition of slavery")) {
+        return "Happy World Free from Slavery!";
+    }
+    
+    if (title.includes("migrants")) {
+        return "Happy International Migrants Day!";
+    }
+    
+    if (title.includes("violence against women")) {
+        return "Happy World Free from Violence Against Women!";
+    }
+    
+    if (title.includes("persons with disabilities")) {
+        return "Happy International Day of Diversity and Inclusion!";
+    }
+    
+    if (title.includes("men's day")) {
+        return "Happy International Men's Day!";
+    }
+
     if (
         title.includes("bank holiday")
     ) {
@@ -1961,6 +2082,30 @@ function getHolidayDescription(event) {
         
         "world tourism day":
             "World Tourism Day highlights the importance of tourism in connecting cultures, promoting understanding, and supporting economic and sustainable development.",
+
+        "data privacy day":
+            "Data Protection Day raises awareness of privacy rights, personal data protection, and the importance of handling personal information responsibly in an increasingly digital world.",
+        
+        "international mother language day":
+            "International Mother Language Day celebrates linguistic and cultural diversity, promoting multilingual education and the preservation of languages as an important part of cultural identity and heritage.",
+        
+        "world blood donor day":
+            "World Blood Donor Day recognises voluntary blood donors and raises awareness of the ongoing need for safe blood donations to support patients and strengthen healthcare systems worldwide.",
+        
+        "international day for the abolition of slavery":
+            "The International Day for the Abolition of Slavery raises awareness of modern forms of slavery, including human trafficking, forced labour, and exploitation, while promoting freedom and human dignity.",
+        
+        "international migrants day":
+            "International Migrants Day recognises the contributions of migrants to societies worldwide and promotes the protection of their human rights, dignity, inclusion, and equal opportunities.",
+        
+        "international day for the elimination of violence against women":
+            "The International Day for the Elimination of Violence Against Women raises awareness of gender-based violence and promotes global action to protect women and girls and advance equality.",
+        
+        "international day of persons with disabilities":
+            "The International Day of Persons with Disabilities promotes the rights, dignity, and inclusion of persons with disabilities while raising awareness of accessibility and equal opportunities for everyone.",
+        
+        "international men's day":
+            "International Men's Day recognises the positive contributions of men to society, promotes men's health and wellbeing, and raises awareness of issues affecting men and boys.",
                 
         "stem day":
             "STEM Day celebrates science, technology, engineering, and mathematics and promotes education, innovation, and engagement in these fields."
