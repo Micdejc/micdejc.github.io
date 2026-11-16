@@ -27,8 +27,10 @@ export function initCyberQuiz() {
     const RANKS = [
     {
         name: 'Associate',
+        //min: 0,
+        //max: 600,
         min: 0,
-        max: 600,
+        max: 1000,
         sub: 'Security fundamentals',
         roles: [
             'IT support technician',
@@ -44,8 +46,10 @@ export function initCyberQuiz() {
     },
     {
         name: 'Professional',
-        min: 600,
-        max: 1800,
+        //min: 600,
+        //max: 1800,
+        min: 1000,
+        max: 2500,
         sub: 'Operational security',
         roles: [
             'SOC analyst (Tier 1)',
@@ -62,8 +66,10 @@ export function initCyberQuiz() {
     },
     {
         name: 'Practitioner',
-        min: 1800,
-        max: 4000,
+        //min: 1800,
+        //max: 4000,
+        min: 2500,
+        max: 4500,
         sub: 'Hands-on investigation',
         roles: [
             'SOC analyst (Tier 2)',
@@ -80,8 +86,10 @@ export function initCyberQuiz() {
     },
     {
         name: 'Architect',
-        min: 4000,
-        max: 7200,
+        //min: 4000,
+        //max: 7200,
+        min: 4500,
+        max: 7500,
         sub: 'Designing secure systems',
         roles: [
             'Security architect (developing)',
@@ -98,7 +106,9 @@ export function initCyberQuiz() {
     },
     {
         name: 'Expert',
-        min: 7200,
+        //min: 7200,
+        //max: Infinity,
+        min: 7500,
         max: Infinity,
         sub: 'Strategic security judgement',
         roles: [
