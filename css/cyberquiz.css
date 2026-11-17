@@ -1029,6 +1029,18 @@ body.cyberquiz-modal-open {
     );
 }
 
+/* Correct answer: green tick */
+.cyberquiz-root .cq-answers .answer.correct::after {
+  content: "✔";
+  position: absolute;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #22a06b;
+  font-size: 22px;
+  font-weight: 900;
+}
+
 .cyberquiz-root .cq-answers .answer.correct .letter {
     background: #22a06b;
     color: #ffffff;
@@ -1042,6 +1054,18 @@ body.cyberquiz-modal-open {
         #dc4545 9%,
         var(--surface)
     );
+}
+
+/* Wrong answer: red cross */
+.cyberquiz-root .cq-answers .answer.wrong::after {
+  content: "✖";
+  position: absolute;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #dc4545;
+  font-size: 22px;
+  font-weight: 900;
 }
 
 .cyberquiz-root .cq-answers .answer.wrong .letter {
