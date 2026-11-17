@@ -1034,24 +1034,14 @@ body.cyberquiz-modal-open {
 
 /* Correct answer: green circular tick */
 .cyberquiz-root .cq-answers .answer.correct::after {
-    content: "✓";
+    content: "✔";
     position: absolute;
     right: 24px;
     top: 50%;
     transform: translateY(-50%);
-
-    display: grid;
-    place-items: center;
-
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-
-    background: #d9ff78;
-    color: #26321c;
-
-    font-size: 19px;
-    font-weight: 600;
+    color: #22a06b;
+    font-size: 22px;
+    font-weight: 900;
 
     z-index: 2;
     pointer-events: none;
@@ -1074,24 +1064,14 @@ body.cyberquiz-modal-open {
 
 /* Wrong answer: pink circular cross */
 .cyberquiz-root .cq-answers .answer.wrong::after {
-    content: "×";
+    content: "✖";
     position: absolute;
     right: 24px;
     top: 50%;
     transform: translateY(-50%);
-
-    display: grid;
-    place-items: center;
-
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-
-    background: #e879b7;
-    color: #342238;
-
-    font-size: 23px;
-    font-weight: 400;
+    color: #dc4545;
+    font-size: 22px;
+    font-weight: 900;
 
     z-index: 2;
     pointer-events: none;
