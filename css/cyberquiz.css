@@ -1040,7 +1040,8 @@ body.cyberquiz-modal-open {
     top: 50%;
     transform: translateY(-50%);
     color: #22a06b;
-    font-size: 22px;
+    /*font-size: 22px;*/
+    font-size: 0.78rem;
     font-weight: 900;
 
     z-index: 2;
@@ -1070,7 +1071,8 @@ body.cyberquiz-modal-open {
     top: 50%;
     transform: translateY(-50%);
     color: #dc4545;
-    font-size: 22px;
+    /*font-size: 22px;*/
+    font-size: 0.78rem;
     font-weight: 900;
 
     z-index: 2;
