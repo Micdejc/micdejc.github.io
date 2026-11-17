@@ -922,6 +922,9 @@ body.cyberquiz-modal-open {
     align-items: center;
     gap: 12px;
 
+    position: relative;
+    isolation: isolate;
+
     width: 100%;
     padding: 13px 15px;
 
@@ -1029,16 +1032,29 @@ body.cyberquiz-modal-open {
     );
 }
 
-/* Correct answer: green tick */
+/* Correct answer: green circular tick */
 .cyberquiz-root .cq-answers .answer.correct::after {
-  content: "✔";
-  position: absolute;
-  right: 24px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #22a06b;
-  font-size: 22px;
-  font-weight: 900;
+    content: "✓";
+    position: absolute;
+    right: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    display: grid;
+    place-items: center;
+
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+
+    background: #d9ff78;
+    color: #26321c;
+
+    font-size: 19px;
+    font-weight: 600;
+
+    z-index: 2;
+    pointer-events: none;
 }
 
 .cyberquiz-root .cq-answers .answer.correct .letter {
@@ -1056,16 +1072,29 @@ body.cyberquiz-modal-open {
     );
 }
 
-/* Wrong answer: red cross */
+/* Wrong answer: pink circular cross */
 .cyberquiz-root .cq-answers .answer.wrong::after {
-  content: "✖";
-  position: absolute;
-  right: 24px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #dc4545;
-  font-size: 22px;
-  font-weight: 900;
+    content: "×";
+    position: absolute;
+    right: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    display: grid;
+    place-items: center;
+
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+
+    background: #e879b7;
+    color: #342238;
+
+    font-size: 23px;
+    font-weight: 400;
+
+    z-index: 2;
+    pointer-events: none;
 }
 
 .cyberquiz-root .cq-answers .answer.wrong .letter {
