@@ -305,8 +305,7 @@ body.cyberquiz-modal-open {
 
 .cyberquiz-root .cq-subtle,
 .cyberquiz-root .cq-muted {
-    /*color: var(--muted);*/
-    color: black;
+    color: var(--muted);
 }
 
 .cyberquiz-root .cq-subtle {
