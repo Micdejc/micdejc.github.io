@@ -832,7 +832,7 @@ body.cyberquiz-modal-open {
     border-radius: 12px;
     background: var(--surface-alt);
 
-    color: var(--text);
+    color: var(--text) !important;
     font-size: 1rem;
     font-weight: 500;
     line-height: 1.65;
