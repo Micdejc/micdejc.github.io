@@ -9,7 +9,7 @@ export function initCyberQuiz() {
     const root = document.getElementById('cyberquiz-root');
 
     if (!root) {
-        console.warn('CyberQuiz root was not found.');
+        console.warn('CyberQuizzy root was not found.');
         return;
     }
 
@@ -19,7 +19,7 @@ export function initCyberQuiz() {
 
     root.dataset.initialised = 'true';
 
-    // Find elements belonging to CyberQuiz only.
+    // Find elements belonging to CyberQuizzy only.
     const $ = id => root.querySelector(`#${id}`);
 
     
@@ -1166,7 +1166,7 @@ export function initCyberQuiz() {
         // Confetti celebration appears only when there is no rank celebration to avoid confetti overlap 
         if (currentRankIndex > missionRank && !hasStarted) {
             if (rank().name === 'Expert') {
-                toast('★ EXPERT RANK ACHIEVED! You have mastered CyberQuiz!');
+                toast('★ EXPERT RANK ACHIEVED! You have mastered CyberQuizzy!');
                 expertCelebration();
             } else {
                 toast(`Rank unlocked: ${rank().icon} ${rank().name}!`);
@@ -1385,7 +1385,7 @@ export function initCyberQuiz() {
 
     function reset() {
         const confirmed = confirm(
-            'Reset all CyberQuiz progress, XP and hint credits?'
+            'Reset all CyberQuizzy progress, XP and hint credits?'
         );
 
         if (!confirmed) return;
@@ -1410,17 +1410,17 @@ export function initCyberQuiz() {
        ===================================================== */
 
         function startDailyChallenge() {
-            //console.log('[CyberQuiz] Daily Challenge clicked');
+            //console.log('[CyberQuizzy] Daily Challenge clicked');
         
             const today = new Date().toISOString().slice(0, 10);
         
             if (state.dailyDone === today) {
-                //console.log('[CyberQuiz] Already completed today');
+                //console.log('[CyberQuizzy] Already completed today');
                 toast('You have already completed today’s challenge.');
                 return;
             }
         
-            /*console.log('[CyberQuiz] Starting mission', {
+            /*console.log('[CyberQuizzy] Starting mission', {
                 rank: rankIndex(),
                 questions: (window.CYBERQUIZ_QUESTIONS || []).length
             });*/
@@ -1435,7 +1435,7 @@ export function initCyberQuiz() {
         
             startMission(rankIndex(), true);
         
-            //console.log('[CyberQuiz] Mission start function returned');
+            //console.log('[CyberQuizzy] Mission start function returned');
         }
 
     /* =====================================================
@@ -1519,7 +1519,7 @@ export function initCyberQuizModal() {
     const dialog = modal?.querySelector('.cyberquiz-dialog');
 
     if (!modal || !toggle || !close || !backdrop || !dialog) {
-        console.warn('CyberQuiz modal elements were not found.');
+        console.warn('CyberQuizzy modal elements were not found.');
         return;
     }
 
