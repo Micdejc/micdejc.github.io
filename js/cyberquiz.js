@@ -725,11 +725,42 @@ export function initCyberQuiz() {
          */
 
         const emailBox = $('email-scenario');
-
+        /*
         if (emailBox) {
             if (question.exhibit) {
                 emailBox.textContent = question.exhibit;
                 emailBox.classList.remove('hidden');
+            } else {
+                emailBox.textContent = '';
+                emailBox.classList.add('hidden');
+            }
+        }
+        */
+
+        if (emailBox) {
+            if (question.exhibit) {
+        
+                const escapeHTML = text => text.replace(/[&<>"']/g, char => ({
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    '"': '&quot;',
+                    "'": '&#39;'
+                })[char]);
+        
+                const lines = question.exhibit.split('\n');
+        
+                emailBox.innerHTML = `
+                    <div class="cq-code-output">
+                        <div class="cq-line-numbers">
+                            ${lines.map((_, i) => `<span>${i + 1}</span>`).join('')}
+                        </div>
+                        <pre class="cq-code-content">${escapeHTML(question.exhibit)}</pre>
+                    </div>
+                `;
+        
+                emailBox.classList.remove('hidden');
+        
             } else {
                 emailBox.textContent = '';
                 emailBox.classList.add('hidden');
