@@ -45,13 +45,13 @@
       "tags": ["Series", "Bash Scripting", "Linux", "Cybersecurity", "Education", "LinkedIn"]
     },
     {
-      "title": "Introducing CyberQuiz: Level up your cybersecurity knowledge",
+      "title": "Introducing CyberQuizzy: Level up your cybersecurity knowledge",
       "slug": "my-cyberquiz-blog",
       "date": "2026-11-08",
       "category": "Game",
       "type": "internal",
       "url": "blog/posts/my-cyberquiz-blog.html",
-      "description": "Discover CyberQuiz, an interactive cybersecurity learning experience that makes security education fun, practical and engaging. Test your knowledge, complete missions, earn XP, build streaks and progress through five challenging ranks while strengthening your cybersecurity skills.",
+      "description": "Discover CyberQuizzy, an interactive cybersecurity learning experience that makes security education fun, practical and engaging. Test your knowledge, complete missions, earn XP, build streaks and progress through five challenging ranks while strengthening your cybersecurity skills.",
       "tags": ["Cybersecurity", "Quiz", "Learning", "Game", "Challenge"]
     },
     {
