@@ -305,7 +305,8 @@ body.cyberquiz-modal-open {
 
 .cyberquiz-root .cq-subtle,
 .cyberquiz-root .cq-muted {
-    color: var(--muted);
+    /*color: var(--muted);*/
+    color: black;
 }
 
 .cyberquiz-root .cq-subtle {
@@ -847,7 +848,8 @@ body.cyberquiz-modal-open {
 
 /* Incorrect answer */
 .cq-feedback.is-wrong {
-    border-left-color: #dc2626;
+    /*border-left-color: #dc2626;*/
+    border-left: 6px solid #dc2626;
     /* background: color-mix(in srgb, #dc2626 8%, var(--surface)); */
 }
 
