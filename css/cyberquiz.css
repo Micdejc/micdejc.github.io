@@ -926,7 +926,8 @@ body.cyberquiz-modal-open {
     isolation: isolate;
 
     width: 100%;
-    padding: 13px 15px;
+    /*padding: 13px 15px;*/
+    padding: 13px 65px 13px 15px;
 
     border: 1px solid var(--border);
     border-radius: 12px;
