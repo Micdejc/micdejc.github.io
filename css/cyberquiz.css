@@ -1036,7 +1036,7 @@ body.cyberquiz-modal-open {
 .cyberquiz-root .cq-answers .answer.correct::after {
     content: "✔";
     position: absolute;
-    right: 1%;
+    right: 3%;
     top: 50%;
     transform: translateY(-50%);
     color: #22a06b;
@@ -1067,7 +1067,7 @@ body.cyberquiz-modal-open {
 .cyberquiz-root .cq-answers .answer.wrong::after {
     content: "✖";
     position: absolute;
-    right: 1%;
+    right: 3%;
     top: 50%;
     transform: translateY(-50%);
     color: #dc4545;
