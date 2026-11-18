@@ -1,5 +1,5 @@
 /*
- * CyberQuiz question bank (1000 questions)
+ * CyberQuizzy question bank (1000 questions)
  *
  * Required properties:
  * id, rank, topic, difficulty, q, options,
