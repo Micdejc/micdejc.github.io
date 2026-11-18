@@ -953,7 +953,7 @@ export function initCyberQuiz() {
             }
         
             $('feedback').textContent =
-                `Not quite. ${question.why}`;
+                `Incorrect. ${question.why}`;
         }
 
 
