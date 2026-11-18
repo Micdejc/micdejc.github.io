@@ -842,7 +842,8 @@ body.cyberquiz-modal-open {
 
 /* Correct answer */
 .cq-feedback.is-correct {
-    border-left-color: #16a34a;
+    /*border-left-color: #16a34a;*/
+    border-left: 6px solid #16a34a;
     /* background: color-mix(in srgb, #16a34a 9%, var(--surface)); */
 }
 
@@ -855,7 +856,8 @@ body.cyberquiz-modal-open {
 
 /* Informational tip: neutral guidance without implying success or failure. */
 .cq-feedback.is-tip {
-    border-left-color: var(--primary);
+    /*border-left-color: var(--primary);*/
+    border-left: 6px solid var(--primary);
     /* background: var(--surface-alt); */
     /* color: var(--text); */
 }
@@ -874,7 +876,8 @@ body.cyberquiz-modal-open {
     padding: 16px 18px;
 
     border: 1px solid var(--border);
-    border-left: 4px solid var(--primary);
+    /*border-left: 4px solid var(--primary);*/
+    border-left: 8px solid var(--primary);
     border-radius: 12px;
 
     background: var(--surface);
