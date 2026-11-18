@@ -888,14 +888,18 @@ body.cyberquiz-modal-open {
     line-height: 1.7;
 
     /* Preserve line breaks in the sample output. */
-    white-space: pre-wrap;
-    overflow-wrap: anywhere;
+    /*white-space: pre-wrap;
+    overflow-wrap: anywhere;*/
+    white-space: normal;
+    overflow-wrap: normal;
+    /* Code editor-style output */
+    overflow-x: auto;
 }
 
 .cyberquiz-root .cq-email-scenario::before {
     content: "OUTPUT EXAMPLE";
     display: block;
-    margin-bottom: 4px; /* Reduced from 8px */
+    margin-bottom: 10px;
     
     color: var(--primary);
 
@@ -903,11 +907,6 @@ body.cyberquiz-modal-open {
     font-size: 0.68rem;
     font-weight: 800;
     letter-spacing: 0.1em;
-}
-
-/* Code editor-style output */
-.cyberquiz-root .cq-email-scenario {
-    overflow-x: auto;
 }
 
 .cyberquiz-root .cq-code-output {
