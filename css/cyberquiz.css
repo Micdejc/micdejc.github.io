@@ -895,9 +895,8 @@ body.cyberquiz-modal-open {
 .cyberquiz-root .cq-email-scenario::before {
     content: "OUTPUT EXAMPLE";
     display: block;
-
-    margin-bottom: 8px;
-
+    margin-bottom: 4px; /* Reduced from 8px */
+    
     color: var(--primary);
 
     font-family: system-ui, sans-serif;
@@ -915,6 +914,8 @@ body.cyberquiz-modal-open {
     display: flex;
     align-items: stretch;
     min-width: 0;
+    margin: 0;
+    padding: 0;
     font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
     font-size: 0.84rem;
     line-height: 1.7;
@@ -942,8 +943,12 @@ body.cyberquiz-modal-open {
 .cyberquiz-root .cq-code-content {
     flex: 1;
     min-width: 0;
+    /*
     margin: 0;
     padding: 0;
+    */
+    margin: 0 !important;
+    padding: 0 !important;
     color: var(--text);
     font: inherit;
     line-height: inherit;
