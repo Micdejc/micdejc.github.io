@@ -955,8 +955,12 @@ body.cyberquiz-modal-open {
     color: var(--text);
     font: inherit;
     line-height: inherit;
+    /*
     white-space: pre-wrap;
     overflow-wrap: anywhere;
+    */
+    white-space: pre;
+    overflow-wrap: normal;
 }
 
 /* =========================================================
