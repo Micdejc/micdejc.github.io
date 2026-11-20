@@ -44,13 +44,25 @@ export function initCyberQuiz() {
         color: '#38c8ff',
         icon: '◈',
         svg: 
-        `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M12 2.5L21.5 12L12 21.5L2.5 12L12 2.5Z"
-                stroke="currentColor" stroke-width="1.8"
-                stroke-linejoin="round"/>
-            <path d="M12 7.5L16.5 12L12 16.5L7.5 12L12 7.5Z"
-                stroke="currentColor" stroke-width="1.8"
-                stroke-linejoin="round"/>
+        `
+        <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs>
+                <linearGradient id="associateBadge" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stop-color="#37d5ff"/>
+                    <stop offset="48%" stop-color="#0876df"/>
+                    <stop offset="100%" stop-color="#102e70"/>
+                </linearGradient>
+            </defs>
+            <path d="M40 3 L72 21 L72 59 L40 77 L8 59 L8 21 Z"
+                fill="#082d68" stroke="#0755a7" stroke-width="2"/>
+            <path d="M40 6 L69 23 L69 57 L40 74 L11 57 L11 23 Z"
+                fill="url(#associateBadge)" stroke="#70dfff" stroke-width="2.5"/>
+            <path d="M40 12 L63 26 L63 54 L40 68 L17 54 L17 26 Z"
+                fill="none" stroke="#b5efff" stroke-width="1.5" opacity=".85"/>
+            <path d="M40 22 L57 40 L40 58 L23 40 Z"
+                fill="none" stroke="#fff" stroke-width="4"/>
+            <path d="M40 31 L49 40 L40 49 L31 40 Z"
+                fill="none" stroke="#fff" stroke-width="3"/>
         </svg>`
     },
     {
@@ -73,14 +85,23 @@ export function initCyberQuiz() {
         color: '#43e5a4',
         icon: '⬢',
         svg:
-        `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M12 2.5L21.5 7.25V16.75L12 21.5L2.5 16.75V7.25L12 2.5Z"
-                fill="currentColor"
-                stroke="currentColor" stroke-width="1.2"
-                stroke-linejoin="round"/>
-            <path d="M12 7.5L16.5 12L12 16.5L7.5 12L12 7.5Z"
-                stroke="#173451" stroke-width="1.5"
-                stroke-linejoin="round"/>
+        `
+        <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs>
+                <linearGradient id="professionalBadge" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stop-color="#36f0b0"/>
+                    <stop offset="48%" stop-color="#009b72"/>
+                    <stop offset="100%" stop-color="#073d3b"/>
+                </linearGradient>
+            </defs>
+            <path d="M40 3 L72 21 L72 59 L40 77 L8 59 L8 21 Z"
+                fill="#06443e" stroke="#087e69" stroke-width="2"/>
+            <path d="M40 6 L69 23 L69 57 L40 74 L11 57 L11 23 Z"
+                fill="url(#professionalBadge)" stroke="#75ffd0" stroke-width="2.5"/>
+            <path d="M40 12 L63 26 L63 54 L40 68 L17 54 L17 26 Z"
+                fill="none" stroke="#b4ffe4" stroke-width="1.5" opacity=".8"/>
+            <path d="M40 23 L56 31.5 L56 48.5 L40 57 L24 48.5 L24 31.5 Z"
+                fill="#fff"/>
         </svg>`
     },
     {
@@ -103,20 +124,26 @@ export function initCyberQuiz() {
         color: '#8b9cff',
         icon: '✥',
         svg:
-        `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M12 2V7M12 17V22M2 12H7M17 12H22"
-                stroke="currentColor" stroke-width="2"
-                stroke-linecap="round"/>
-            <path d="M12 2L9.5 4.5M12 2L14.5 4.5
-                     M12 22L9.5 19.5M12 22L14.5 19.5
-                     M2 12L4.5 9.5M2 12L4.5 14.5
-                     M22 12L19.5 9.5M22 12L19.5 14.5"
-                stroke="currentColor" stroke-width="1.6"
-                stroke-linecap="round" stroke-linejoin="round"/>
-            <circle cx="12" cy="12" r="3.2"
-                fill="currentColor"/>
-            <circle cx="12" cy="12" r="1.1"
-                fill="#173451"/>
+        `
+        <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs>
+                <linearGradient id="practitionerBadge" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stop-color="#a9a5ff"/>
+                    <stop offset="48%" stop-color="#5145db"/>
+                    <stop offset="100%" stop-color="#211b78"/>
+                </linearGradient>
+            </defs>
+            <path d="M40 3 L72 21 L72 59 L40 77 L8 59 L8 21 Z"
+                fill="#29216e" stroke="#5145c5" stroke-width="2"/>
+            <path d="M40 6 L69 23 L69 57 L40 74 L11 57 L11 23 Z"
+                fill="url(#practitionerBadge)" stroke="#bcb8ff" stroke-width="2.5"/>
+            <path d="M40 12 L63 26 L63 54 L40 68 L17 54 L17 26 Z"
+                fill="none" stroke="#e1ddff" stroke-width="1.5" opacity=".8"/>
+            <circle cx="40" cy="40" r="14" fill="none"
+                stroke="#fff" stroke-width="3"/>
+            <path d="M40 17 V30 M40 50 V63 M17 40 H30 M50 40 H63"
+                stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="40" cy="40" r="4" fill="#fff"/>
         </svg>`
     },
     {
@@ -139,15 +166,25 @@ export function initCyberQuiz() {
         color: '#ffbf57',
         icon: '⛨',
         svg:
-        `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M12 2L21 5.5V11.5
-                     C21 16.5 17.5 20 12 22
-                     C6.5 20 3 16.5 3 11.5V5.5L12 2Z"
-                stroke="currentColor" stroke-width="1.8"
-                stroke-linejoin="round"/>
-            <path d="M12 7V16M7.5 11.5H16.5"
-                stroke="currentColor" stroke-width="2.2"
-                stroke-linecap="round"/>
+        `
+        <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs>
+                <linearGradient id="architectBadge" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stop-color="#ffe18a"/>
+                    <stop offset="48%" stop-color="#c58a16"/>
+                    <stop offset="100%" stop-color="#66370b"/>
+                </linearGradient>
+            </defs>
+            <path d="M40 3 L72 17 L72 48 Q70 64 40 77 Q10 64 8 48 L8 17 Z"
+                fill="#633c12" stroke="#a16a13" stroke-width="2"/>
+            <path d="M40 6 L69 19 L69 47 Q67 62 40 73 Q13 62 11 47 L11 19 Z"
+                fill="url(#architectBadge)" stroke="#ffe8a8" stroke-width="2.5"/>
+            <path d="M40 13 L62 23 L62 46 Q60 58 40 67 Q20 58 18 46 L18 23 Z"
+                fill="none" stroke="#fff0c8" stroke-width="1.5" opacity=".85"/>
+            <path d="M40 23 V53 M25 38 H55"
+                stroke="#fff" stroke-width="7" stroke-linecap="square"/>
+            <path d="M40 23 V53 M25 38 H55"
+                stroke="#fff" stroke-width="3" stroke-linecap="square"/>
         </svg>`
     },
     {
@@ -170,16 +207,23 @@ export function initCyberQuiz() {
         color: '#ff7da9',
         icon: '✪',
         svg:
-        `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <circle cx="12" cy="12" r="10"
-                stroke="currentColor" stroke-width="1.6"/>
-            <path d="M12 4.5L14.15 9.05L19.2 9.75
-                     L15.55 13.25L16.4 18.25
-                     L12 15.9L7.6 18.25
-                     L8.45 13.25L4.8 9.75
-                     L9.85 9.05L12 4.5Z"
-                fill="currentColor"
-                stroke="currentColor" stroke-width="0.8"
+        `
+        <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs>
+                <linearGradient id="expertBadge" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stop-color="#ff9ab9"/>
+                    <stop offset="48%" stop-color="#ed326b"/>
+                    <stop offset="100%" stop-color="#83153e"/>
+                </linearGradient>
+            </defs>
+            <circle cx="40" cy="40" r="37" fill="#79153e"
+                stroke="#a82050" stroke-width="2"/>
+            <circle cx="40" cy="38" r="34"
+                fill="url(#expertBadge)" stroke="#ffabc5" stroke-width="2.5"/>
+            <circle cx="40" cy="38" r="27"
+                fill="none" stroke="#ffd0df" stroke-width="1.5" opacity=".85"/>
+            <path d="M40 16 L46 32 H63 L49 42 L54 59 L40 49 L26 59 L31 42 L17 32 H34 Z"
+                fill="#fff" stroke="#fff" stroke-width="1"
                 stroke-linejoin="round"/>
         </svg>`
     }
