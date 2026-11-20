@@ -1607,26 +1607,6 @@ body.cyberquiz-modal-open {
         visibility 0.35s;
 }
 
-/* Full-screen dark background */
-.cyberquiz-root .cq-toast::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-
-    width: 100vw;
-    height: 100vh;
-    height: 100dvh;
-
-    background: rgba(0, 0, 0, 0.96);
-    backdrop-filter: blur(5px);
-
-    opacity: 0;
-    pointer-events: none;
-
-    transition: opacity 0.35s ease;
-    z-index: -1;
-}
-
 /* Illuminated appearance */
 .cyberquiz-root .cq-toast.show {
     opacity: 1;
