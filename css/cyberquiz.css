@@ -1529,7 +1529,7 @@ body.cyberquiz-modal-open {
 /* =========================================================
    17. TOAST NOTIFICATIONS AND CONFETTI
    ========================================================= */
-/*
+
 .cyberquiz-root .cq-toast {
     position: fixed;
     z-index: 10002;
@@ -1564,74 +1564,6 @@ body.cyberquiz-modal-open {
 .cyberquiz-root .cq-toast.show {
     opacity: 1;
     transform: translate(-50%, 0);
-}
-*/
-
-
-
-.cyberquiz-root .cq-toast {
-    position: fixed;
-    z-index: 10002;
-
-    top: 50%;
-    left: 50%;
-    bottom: auto;
-
-    max-width: min(92vw, 540px);
-    padding: 12px 17px;
-
-    border: 2px solid var(--border);
-    border-radius: 12px;
-
-    border-color: color-mix(in srgb, var(--primary) 45%, var(--border));
-    background: color-mix(in srgb, var(--primary) 8%, var(--surface));
-    color: var(--text);
-
-    box-shadow: var(--shadow);
-
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-
-    transform: translate(-50%, -50%) scale(0.85);
-
-    transition:
-        opacity 0.3s ease,
-        transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
-        visibility 0.3s ease;
-}
-
-/* Dark background outside the toast */
-.cyberquiz-root .cq-toast::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    width: 100vw;
-    height: 100vh;
-    height: 100dvh;
-
-    background: rgba(0, 0, 0, 0.88);
-    backdrop-filter: blur(3px);
-
-    opacity: 0;
-    pointer-events: none;
-
-    transition: opacity 0.35s ease;
-    z-index: -1;
-}
-
-/* Toast entrance */
-.cyberquiz-root .cq-toast.show {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-
-    transform: translate(-50%, -50%) scale(1);
-}
-
-/* Dark backdrop entrance */
-.cyberquiz-root .cq-toast.show::before {
-    opacity: 1;
 }
 
 
