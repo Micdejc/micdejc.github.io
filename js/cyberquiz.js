@@ -62,7 +62,7 @@ export function initCyberQuiz() {
             'Triage alerts, follow playbooks, assess operational risks and support security compliance activities.',
         skill: 'developed operational knowledge and demonstrated the ability to handle routine security tasks.',
         color: '#43e5a4',
-        icon: '◆'
+        icon: '⬢'
     },
     {
         name: 'Practitioner',
@@ -82,7 +82,7 @@ export function initCyberQuiz() {
             'Investigate incidents and malware, validate weaknesses, assess cyber risks and secure cloud, application and AI systems.',
         skill: 'demonstrated practical investigation, technical assessment and problem-solving skills.',
         color: '#8b9cff',
-        icon: '✦'
+        icon: '✥'
     },
     {
         name: 'Architect',
@@ -122,7 +122,7 @@ export function initCyberQuiz() {
             'Lead security strategy, oversee governance and compliance programmes, manage enterprise risk and guide strategic security decisions.',
         skill: 'reached the highest career rank through sustained performance and strategic security judgement.',
         color: '#ff7da9',
-        icon: '★'
+        icon: '✪'
     }
         
     ];
