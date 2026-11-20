@@ -523,6 +523,17 @@ body.cyberquiz-modal-open {
     box-shadow: none;
 }
 
+/* SVG icons */
+
+.cyberquiz-root .cq-btn-icon {
+    width: 19px;
+    height: 19px;
+
+    flex-shrink: 0;
+
+    display: block;
+}
+
 /* Overall player statistics */
 
 .cyberquiz-root .cq-overview-stats {
