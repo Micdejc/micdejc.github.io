@@ -393,10 +393,34 @@ export function initCyberQuiz() {
     // Update the main journey button based on saved progress.
     function updateStartButton() {
         const hasStarted = state.startedRanks?.includes(rankIndex()) ?? false;
-    
+        /*
         $('start').textContent = hasStarted
             ? '▶ Continue level'
             : '🚀 Start level';
+        */
+        const icon = hasStarted
+            ? `<svg class="cq-btn-icon" viewBox="0 0 24 24"
+                   fill="none" aria-hidden="true">
+                   <circle cx="12" cy="12" r="9"
+                       stroke="currentColor" stroke-width="1.8"/>
+                   <path d="M10 8L15 12L10 16"
+                       stroke="currentColor" stroke-width="2"
+                       stroke-linecap="round"
+                       stroke-linejoin="round"/>
+               </svg>`
+            : `<svg class="cq-btn-icon" viewBox="0 0 24 24"
+                   fill="none" aria-hidden="true">
+                   <path d="M7 4.75V19.25L19 12L7 4.75Z"
+                       fill="currentColor"
+                       stroke="currentColor"
+                       stroke-width="1.5"
+                       stroke-linejoin="round"/>
+               </svg>`;
+        
+        $('start').innerHTML = `
+            ${icon}
+            <span>${hasStarted ? 'Continue level' : 'Start level'}</span>
+        `;
     }
 
     let mission = [];
