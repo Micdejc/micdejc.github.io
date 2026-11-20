@@ -1043,6 +1043,7 @@ body.game-modal-open {
   border-color: color-mix( in srgb, var(--primary) 45%, var(--border) );
   /* border: 1px solid var(--border); */
   /* color: var(--surface); */
+  width: 100%;
 }
 
 /* =========================================================
