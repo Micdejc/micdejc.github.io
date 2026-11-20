@@ -42,7 +42,16 @@ export function initCyberQuiz() {
             'Build safe digital habits and understand core security controls, basic risk concepts and compliance requirements.',
         skill: 'learned the foundations and demonstrated basic security awareness.',
         color: '#38c8ff',
-        icon: '◈'
+        icon: '◈',
+        svg: 
+        `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 2.5L21.5 12L12 21.5L2.5 12L12 2.5Z"
+                stroke="currentColor" stroke-width="1.8"
+                stroke-linejoin="round"/>
+            <path d="M12 7.5L16.5 12L12 16.5L7.5 12L12 7.5Z"
+                stroke="currentColor" stroke-width="1.8"
+                stroke-linejoin="round"/>
+        </svg>`
     },
     {
         name: 'Professional',
@@ -62,7 +71,17 @@ export function initCyberQuiz() {
             'Triage alerts, follow playbooks, assess operational risks and support security compliance activities.',
         skill: 'developed operational knowledge and demonstrated the ability to handle routine security tasks.',
         color: '#43e5a4',
-        icon: '⬢'
+        icon: '⬢',
+        svg:
+        `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 2.5L21.5 7.25V16.75L12 21.5L2.5 16.75V7.25L12 2.5Z"
+                fill="currentColor"
+                stroke="currentColor" stroke-width="1.2"
+                stroke-linejoin="round"/>
+            <path d="M12 7.5L16.5 12L12 16.5L7.5 12L12 7.5Z"
+                stroke="#173451" stroke-width="1.5"
+                stroke-linejoin="round"/>
+        </svg>`
     },
     {
         name: 'Practitioner',
@@ -82,7 +101,23 @@ export function initCyberQuiz() {
             'Investigate incidents and malware, validate weaknesses, assess cyber risks and secure cloud, application and AI systems.',
         skill: 'demonstrated practical investigation, technical assessment and problem-solving skills.',
         color: '#8b9cff',
-        icon: '✥'
+        icon: '✥',
+        svg:
+        `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 2V7M12 17V22M2 12H7M17 12H22"
+                stroke="currentColor" stroke-width="2"
+                stroke-linecap="round"/>
+            <path d="M12 2L9.5 4.5M12 2L14.5 4.5
+                     M12 22L9.5 19.5M12 22L14.5 19.5
+                     M2 12L4.5 9.5M2 12L4.5 14.5
+                     M22 12L19.5 9.5M22 12L19.5 14.5"
+                stroke="currentColor" stroke-width="1.6"
+                stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="12" cy="12" r="3.2"
+                fill="currentColor"/>
+            <circle cx="12" cy="12" r="1.1"
+                fill="#173451"/>
+        </svg>`
     },
     {
         name: 'Architect',
@@ -102,7 +137,18 @@ export function initCyberQuiz() {
             'Connect security architecture and technical controls with organisational risk, governance and regulatory requirements.',
         skill: 'demonstrated the ability to connect technical security controls with organisational risks and governance.',
         color: '#ffbf57',
-        icon: '⛨'
+        icon: '⛨',
+        svg:
+        `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 2L21 5.5V11.5
+                     C21 16.5 17.5 20 12 22
+                     C6.5 20 3 16.5 3 11.5V5.5L12 2Z"
+                stroke="currentColor" stroke-width="1.8"
+                stroke-linejoin="round"/>
+            <path d="M12 7V16M7.5 11.5H16.5"
+                stroke="currentColor" stroke-width="2.2"
+                stroke-linecap="round"/>
+        </svg>`
     },
     {
         name: 'Expert',
@@ -122,7 +168,20 @@ export function initCyberQuiz() {
             'Lead security strategy, oversee governance and compliance programmes, manage enterprise risk and guide strategic security decisions.',
         skill: 'reached the highest career rank through sustained performance and strategic security judgement.',
         color: '#ff7da9',
-        icon: '✪'
+        icon: '✪',
+        svg:
+        `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"
+                stroke="currentColor" stroke-width="1.6"/>
+            <path d="M12 4.5L14.15 9.05L19.2 9.75
+                     L15.55 13.25L16.4 18.25
+                     L12 15.9L7.6 18.25
+                     L8.45 13.25L4.8 9.75
+                     L9.85 9.05L12 4.5Z"
+                fill="currentColor"
+                stroke="currentColor" stroke-width="0.8"
+                stroke-linejoin="round"/>
+        </svg>`
     }
         
     ];
@@ -451,14 +510,22 @@ export function initCyberQuiz() {
                                 : ''}
                     </span>
     
-                    <div
+                    <!-- <div
                         class="emblem"
                         style="background:linear-gradient(
                             145deg, ${r.color}, #173451
                         )">
                         ${r.icon}
                     </div>
-    
+                    -->
+                    
+                    <div 
+                        class="emblem rank-emblem rank-emblem-${i + 1}"
+                        style="--rank-color: ${r.color}"
+                        aria-label="${r.name} expertise badge">
+                        ${r.svg}
+                    </div>
+                    
                     <h3>${r.name}</h3>
     
                     <div class="threshold">
