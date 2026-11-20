@@ -1529,7 +1529,7 @@ body.cyberquiz-modal-open {
 /* =========================================================
    17. TOAST NOTIFICATIONS AND CONFETTI
    ========================================================= */
-
+/*
 .cyberquiz-root .cq-toast {
     position: fixed;
     z-index: 10002;
@@ -1543,7 +1543,6 @@ body.cyberquiz-modal-open {
     border: 2px solid var(--border);
     border-radius: 12px;
 
-    /*background: var(--surface);*/
     border-color: color-mix( in srgb, var(--primary) 45%, var(--border) );
     background: color-mix(in srgb, var(--primary) 8%, var(--surface));
     color: var(--text);
@@ -1565,6 +1564,80 @@ body.cyberquiz-modal-open {
 .cyberquiz-root .cq-toast.show {
     opacity: 1;
     transform: translate(-50%, 0);
+}
+*/
+
+
+.cyberquiz-root .cq-toast {
+    position: fixed;
+    z-index: 10002;
+
+    top: 50%;
+    left: 50%;
+    bottom: auto;
+
+    width: max-content;
+    max-width: min(90vw, 540px);
+    padding: 18px 24px;
+
+    border: 2px solid color-mix(in srgb, var(--primary) 65%, white);
+    border-radius: 16px;
+
+    background: color-mix(in srgb, var(--primary) 12%, #111);
+    color: #fff;
+
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 600;
+
+    box-shadow:
+        0 0 15px color-mix(in srgb, var(--primary) 65%, transparent),
+        0 0 40px color-mix(in srgb, var(--primary) 45%, transparent),
+        0 0 90px color-mix(in srgb, var(--primary) 25%, transparent);
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transform: translate(-50%, -45%) scale(0.85);
+
+    transition:
+        opacity 0.35s ease,
+        transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+        visibility 0.35s;
+}
+
+/* Full-screen dark background */
+.cyberquiz-root .cq-toast::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+
+    background: rgba(0, 0, 0, 0.96);
+    backdrop-filter: blur(5px);
+
+    opacity: 0;
+    pointer-events: none;
+
+    transition: opacity 0.35s ease;
+    z-index: -1;
+}
+
+/* Illuminated appearance */
+.cyberquiz-root .cq-toast.show {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.cyberquiz-root .cq-toast.show::before {
+    opacity: 1;
 }
 
 .cyberquiz-root .cq-confetti {
