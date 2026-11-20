@@ -42,7 +42,7 @@ export function initCyberQuiz() {
             'Build safe digital habits and understand core security controls, basic risk concepts and compliance requirements.',
         skill: 'learned the foundations and demonstrated basic security awareness.',
         color: '#38c8ff',
-        icon: '⬡'
+        icon: '◈'
     },
     {
         name: 'Professional',
@@ -102,7 +102,7 @@ export function initCyberQuiz() {
             'Connect security architecture and technical controls with organisational risk, governance and regulatory requirements.',
         skill: 'demonstrated the ability to connect technical security controls with organisational risks and governance.',
         color: '#ffbf57',
-        icon: '⬟'
+        icon: '⛨'
     },
     {
         name: 'Expert',
