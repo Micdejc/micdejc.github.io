@@ -652,9 +652,9 @@ body.cyberquiz-modal-open {
 }
 
 .cyberquiz-root .emblem.rank-emblem {
-    width: 76px;
-    height: 76px;
-    min-width: 76px;
+    width: 55px;
+    height: 55px;
+    min-width: 55px;
 
     display: flex;
     align-items: center;
