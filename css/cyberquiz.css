@@ -1568,6 +1568,7 @@ body.cyberquiz-modal-open {
 */
 
 
+
 .cyberquiz-root .cq-toast {
     position: fixed;
     z-index: 10002;
@@ -1576,38 +1577,50 @@ body.cyberquiz-modal-open {
     left: 50%;
     bottom: auto;
 
-    width: max-content;
-    max-width: min(90vw, 540px);
-    padding: 18px 24px;
+    max-width: min(92vw, 540px);
+    padding: 12px 17px;
 
-    border: 2px solid color-mix(in srgb, var(--primary) 65%, white);
-    border-radius: 16px;
+    border: 2px solid var(--border);
+    border-radius: 12px;
 
-    background: color-mix(in srgb, var(--primary) 12%, #111);
-    color: #fff;
+    border-color: color-mix(in srgb, var(--primary) 45%, var(--border));
+    background: color-mix(in srgb, var(--primary) 8%, var(--surface));
+    color: var(--text);
 
-    text-align: center;
-    font-size: 1rem;
-    font-weight: 600;
-
-    box-shadow:
-        0 0 15px color-mix(in srgb, var(--primary) 65%, transparent),
-        0 0 40px color-mix(in srgb, var(--primary) 45%, transparent),
-        0 0 90px color-mix(in srgb, var(--primary) 25%, transparent);
+    box-shadow: var(--shadow);
 
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
 
-    transform: translate(-50%, -45%) scale(0.85);
+    transform: translate(-50%, -50%) scale(0.85);
 
     transition:
-        opacity 0.35s ease,
+        opacity 0.3s ease,
         transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
-        visibility 0.35s;
+        visibility 0.3s ease;
 }
 
-/* Illuminated appearance */
+/* Dark background outside the toast */
+.cyberquiz-root .cq-toast::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+
+    background: rgba(0, 0, 0, 0.88);
+    backdrop-filter: blur(3px);
+
+    opacity: 0;
+    pointer-events: none;
+
+    transition: opacity 0.35s ease;
+    z-index: -1;
+}
+
+/* Toast entrance */
 .cyberquiz-root .cq-toast.show {
     opacity: 1;
     visibility: visible;
@@ -1616,9 +1629,11 @@ body.cyberquiz-modal-open {
     transform: translate(-50%, -50%) scale(1);
 }
 
+/* Dark backdrop entrance */
 .cyberquiz-root .cq-toast.show::before {
     opacity: 1;
 }
+
 
 .cyberquiz-root .cq-confetti {
     position: fixed;
