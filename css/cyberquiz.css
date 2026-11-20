@@ -1529,7 +1529,7 @@ body.cyberquiz-modal-open {
 /* =========================================================
    17. TOAST NOTIFICATIONS AND CONFETTI
    ========================================================= */
-
+/*
 .cyberquiz-root .cq-toast {
     position: fixed;
     z-index: 10002;
@@ -1564,6 +1564,70 @@ body.cyberquiz-modal-open {
 .cyberquiz-root .cq-toast.show {
     opacity: 1;
     transform: translate(-50%, 0);
+}
+*/
+
+
+.cyberquiz-root .cq-toast {
+    position: fixed;
+    z-index: 10002;
+
+    bottom: 28px;
+    left: 50%;
+
+    width: max-content;
+    max-width: min(92vw, 480px);
+    padding: 15px 21px;
+
+    border: 1px solid color-mix(in srgb, var(--primary) 65%, white);
+    border-radius: 14px;
+
+    background: color-mix(in srgb, var(--surface) 92%, #101827);
+    color: var(--text);
+
+    box-shadow:
+        0 8px 28px rgba(0, 0, 0, 0.28),
+        0 0 12px color-mix(in srgb, var(--primary) 35%, transparent),
+        0 0 32px color-mix(in srgb, var(--primary) 18%, transparent);
+
+    font-size: 0.92rem;
+    font-weight: 600;
+    line-height: 1.5;
+    text-align: center;
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transform: translate(-50%, 18px) scale(0.94);
+
+    transition:
+        opacity 0.3s ease,
+        transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+        visibility 0.3s;
+}
+
+.cyberquiz-root .cq-toast.show {
+    opacity: 1;
+    visibility: visible;
+
+    transform: translate(-50%, 0) scale(1);
+
+    box-shadow:
+        0 10px 35px rgba(0, 0, 0, 0.32),
+        0 0 18px color-mix(in srgb, var(--primary) 48%, transparent),
+        0 0 45px color-mix(in srgb, var(--primary) 22%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .cyberquiz-root .cq-toast {
+        transition: opacity 0.15s ease;
+        transform: translateX(-50%);
+    }
+
+    .cyberquiz-root .cq-toast.show {
+        transform: translateX(-50%);
+    }
 }
 
 
