@@ -18,6 +18,7 @@ const newsFiles = [
     "thinkers360-thought-leaders.html",
     "bashfam-series.html",
     "cyber-drama-series.html",
+    "cyberquizzy.html",
 ];
 
 const NEWS_PER_PAGE = 5;
@@ -38,6 +39,7 @@ const CATEGORY_LABELS = {
     academia: "Academic activities",
     certification: "Certifications",
     series: "Content Series",
+    quiz: "Quiz",
 };
 
 
