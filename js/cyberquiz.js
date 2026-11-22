@@ -1,3 +1,4 @@
+import { displayDailyTip } from './daily-tips.js';
 
 export function initCyberQuiz() {
     'use strict';
