@@ -107,7 +107,7 @@
       CYBERQUIZZY STATISTICS TOOLTIPS
       Centralised tooltip message container
    ======================================== */
-   
+
    function closeCyberQuizzyStatHelp() {
    
        const message = document.getElementById(
@@ -129,51 +129,76 @@
    
    function initialiseCyberQuizzyStatHelp() {
    
-       const message = document.getElementById(
-           "cqStatTooltipMessage"
-       );
-   
-       if (!message) {
-           console.warn("[CyberQuizzy] Tooltip container not found.");
-           return;
-       }
+       // Prevent duplicate event listeners.
+       if (window.cyberQuizzyTooltipInitialized) return;
+       window.cyberQuizzyTooltipInitialized = true;
    
        document.addEventListener("click", (event) => {
    
-           const button = event.target.closest(
+           // Find the clicked tooltip button.
+           const button = event.target.closest?.(
                ".cyberquiz-root .cq-tooltip-trigger"
            );
    
-           // Close when clicking outside a tooltip trigger.
+           // Clicking elsewhere closes the tooltip.
            if (!button) {
                closeCyberQuizzyStatHelp();
                return;
            }
    
+           // Find the centralised message container.
+           const message = document.getElementById(
+               "cqStatTooltipMessage"
+           );
+   
+           if (!message) {
+               console.error(
+                   "[CyberQuizzy] Centralised tooltip container not found."
+               );
+               return;
+           }
+   
+           // Check whether this button is already active.
            const wasExpanded =
                button.getAttribute("aria-expanded") === "true";
    
+           // Close any previously displayed tooltip.
            closeCyberQuizzyStatHelp();
    
+           // Clicking the active button closes it.
            if (wasExpanded) return;
    
+           // Find the selected statistic.
            const stat = button.closest(
                ".cq-overview-stats > div"
            );
    
-           if (!stat) return;
+           if (!stat) {
+               console.error(
+                   "[CyberQuizzy] Statistic container not found."
+               );
+               return;
+           }
    
-           // Display the explanation.
-           message.textContent = button.dataset.tooltip || "";
+           // Get the explanation.
+           const tooltipText = button.dataset.tooltip;
    
-           if (!message.textContent.trim()) return;
+           if (!tooltipText || !tooltipText.trim()) {
+               console.error(
+                   "[CyberQuizzy] Tooltip text is missing."
+               );
+               return;
+           }
    
+           // Display the centralised message.
+           message.textContent = tooltipText;
            message.hidden = false;
    
+           // Activate the selected button.
            button.classList.add("active");
            button.setAttribute("aria-expanded", "true");
    
-           // Position above the selected statistic.
+           // Position the tooltip above the selected statistic.
            const rect = stat.getBoundingClientRect();
    
            message.style.position = "fixed";
@@ -183,14 +208,20 @@
            message.style.top = `${rect.top - 10}px`;
        });
    
-       // Close when resizing or scrolling.
-       window.addEventListener("resize", closeCyberQuizzyStatHelp);
+       // Close when the viewport changes.
+       window.addEventListener(
+           "resize",
+           closeCyberQuizzyStatHelp
+       );
+   
+       // Close when scrolling.
        window.addEventListener(
            "scroll",
            closeCyberQuizzyStatHelp,
            true
        );
    }
+
 
     // Initialise DLN help independently of navigation dropdowns.
     initialiseDLNStatHelp();
