@@ -253,6 +253,12 @@ export function initCyberQuiz() {
         streakBonus: 5,
         streakLength: 3,
 
+        //Notify only when the new best streak record every 10 streaks
+        bestStreakLength: 10,
+
+        //Notify only when the new XP streak record every 5 missions
+        XPStreakLength: 5,
+
         //Extra XP awarded for daily challenges streak achieved 
         dailyStreakLength: 5,
         dailyStreakBonus: 50,
@@ -272,9 +278,6 @@ export function initCyberQuiz() {
     };
 
     const STORE = 'cyberQuiz';
-    
-    //Notify only when the new best streak record every 10 streaks
-    const BEST_STREAK_NOTIFICATION_THRESHOLD = 10;
 
 /* =====================================================
        2. PLAYER STATE AND PROGRESS STORAGE
@@ -287,7 +290,10 @@ export function initCyberQuiz() {
             answered: 0,
             correct: 0,
             streak: 0,
+            // Personal records.
             bestStreak: 0,
+            bestXP: 0,
+            bestDailyStreak: 0,
 
             // Track ranks the player has started.
             startedRanks: [],
@@ -519,10 +525,10 @@ export function initCyberQuiz() {
         $('streak').textContent = state.streak;
         $('daily').textContent = state.dailyStreak.count;
 
-        $('hero-xp').textContent = state.xp;
         $('hero-done').textContent = state.answered;
         $('hero-correct').textContent = state.correct;
-        $('hero-daily').textContent = state.dailyStreak.count;
+        $('hero-xp').textContent = state.bestXP;
+        $('hero-daily').textContent = state.bestDailyStreak;
         $('hero-streak').textContent = state.bestStreak;
 
         $('rank-name').textContent = currentRank.name;
@@ -1083,17 +1089,20 @@ export function initCyberQuiz() {
                 );
                 */
                 
-                //Notify when new record on best streak
-                const previousBestStreak = state.bestStreak || 0;
+                // Update the best streak record without an additional toast.
+                updatePersonalRecord(
+                    'bestStreak',
+                    state.streak
+                );
 
-                if (state.streak > previousBestStreak) {
-                    state.bestStreak = state.streak;
-                    
-                    //Notify every BEST_STREAK_NOTIFICATION_THRESHOLD streaks
-                    if (state.streak % BEST_STREAK_NOTIFICATION_THRESHOLD === 0) {
-                        toast(`🏆 Streak milestone! ${state.streak} consecutive correct answers!`);
-                    }
+                // Notify every PROGRESSION. streaks
+                if (
+                    state.streak > 0 &&
+                    state.streak % PROGRESSION.bestStreakLength === 0
+                ) {
+                    toast(`🔥 Streak milestone! ${state.streak} consecutive correct answers!`);
                 }
+
         
                 const earned =
                     PROGRESSION.correctXP[missionRank] +
@@ -1275,6 +1284,15 @@ export function initCyberQuiz() {
         state.xp += bonus;
         sessionXP += bonus;
         state.completedMissions++;
+
+        // Update and notify best XP record every PROGRESSION.XPStreakLength completed missions.
+        if (state.completedMissions > 0 && state.completedMissions % PROGRESSION.XPStreakLength === 0) {
+            updatePersonalRecord(
+                'bestXP',
+                state.xp,
+                `🏆 New XP record! Your total XP has reached ${state.xp}!`
+            );
+        }
         
         
         if (mode === 'daily') {
@@ -1603,12 +1621,16 @@ export function initCyberQuiz() {
 
         if (!confirmed) return;
 
-        // We reset everything for a new journey except the bestStreak for user challenge
+        // We reset everything for a new journey except the bestStreak, bestXP and bestDailyStreak for user challenge
         const bestStreak = state.bestStreak || 0;
+        const bestXP = state.bestXP || 0;
+        const bestDailyStreak = state.bestDailyStreak || 0;
         
         state = freshState();
         
         state.bestStreak = bestStreak;
+        state.bestXP = bestXP;
+        state.bestDailyStreak = bestDailyStreak;
         
         saveState();
         updateUI();
@@ -1713,6 +1735,12 @@ export function initCyberQuiz() {
 
         state.dailyStreak.date = today;
 
+        // Update the best consecutive-day personal record.
+        updatePersonalRecord(
+            'bestDailyStreak',
+            state.dailyStreak.count
+        );
+
         // Award bonus at each streak milestone.
         const milestone = PROGRESSION.dailyStreakLength;
     
@@ -1729,6 +1757,30 @@ export function initCyberQuiz() {
                 toast(`🏆 Daily streak milestone! ${state.dailyStreak.count} consecutive days completed!`);
             }
         }
+    }
+
+    /* ========================================
+       PERSONAL RECORDS UPDATE
+    ======================================== */
+    
+    function updatePersonalRecord(key, value, message = null) {
+    
+        const previousRecord = state[key] || 0;
+    
+        // Only update when the existing record is beaten.
+        if (value <= previousRecord) {
+            return false;
+        }
+    
+        // Update the personal record.
+        state[key] = value;
+    
+        // Display notification only when a message is provided.
+        if (message) {
+            toast(message);
+        }
+    
+        return true;
     }
     
     
