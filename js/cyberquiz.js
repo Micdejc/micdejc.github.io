@@ -405,6 +405,7 @@ export function initCyberQuiz() {
 
         careerScreen.hidden = true;
         quizScreen.hidden = false;
+        updateUI();
     }
 
     function initCareerSelection() {
