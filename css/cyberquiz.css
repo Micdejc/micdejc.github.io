@@ -610,21 +610,25 @@ body.cyberquiz-modal-open {
     z-index: 10;
 
     width: fit-content;
-    max-width: min(480px, 90%);
+    /*max-width: min(480px, 90%);*/
     margin: 12px auto 0;
     padding: 10px 14px;
 
-    background: var(--surface);
+    /*background: var(--surface);*/
+    background: color-mix( in srgb, var(--primary) 7%, var(--surface) );
     color: var(--text);
 
     border: 1px solid var(--border);
     border-radius: 8px;
 
-    font-size: 0.78rem;
+    font-size: 0.85rem;
     line-height: 1.5;
     text-align: center;
 
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    overflow-wrap: anywhere;
+    transform-origin: bottom;
+
+    /*box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);*/
 }
 
 /* Downward-pointing arrow */
