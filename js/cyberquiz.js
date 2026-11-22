@@ -1867,6 +1867,8 @@ export function initCyberQuiz() {
         $('quiz').classList.add('hidden');
 
         toast('Progress reset.');
+
+        showCareerSelection();
     }
 
     /* =====================================================
