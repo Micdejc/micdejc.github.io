@@ -227,7 +227,26 @@
       DAILY CYBER TIP
    ======================================== */
    
+ 
    function displayDailyTip() {
+   
+       console.log('[CyberQuizzy] Initialising Daily Cyber Tip...');
+   
+       const tipTitle = document.getElementById('cq-tip-text');
+       const tipDescription = document.getElementById('cq-tip-description');
+   
+       // Check whether the HTML elements exist.
+       if (!tipTitle || !tipDescription) {
+           console.error(
+               '[CyberQuizzy] Daily Cyber Tip initialisation failed.',
+               {
+                   tipTitleFound: !!tipTitle,
+                   tipDescriptionFound: !!tipDescription,
+                   documentReadyState: document.readyState
+               }
+           );
+           return;
+       }
    
        const tips = [
            {
@@ -264,11 +283,17 @@
            }
        ];
    
-       const tip = tips[Math.floor(Math.random() * tips.length)];
+       const randomIndex = Math.floor(Math.random() * tips.length);
+       const tip = tips[randomIndex];
    
-       document.getElementById('cq-tip-text').textContent = tip.title;
-       document.getElementById('cq-tip-description').textContent = tip.description;
+       console.log('[CyberQuizzy] Selected daily tip:', randomIndex + 1, tip);
+   
+       tipTitle.textContent = tip.title;
+       tipDescription.textContent = tip.description;
+   
+       console.log('[CyberQuizzy] Daily Cyber Tip displayed successfully.');
    }
+
 
 
 
