@@ -679,7 +679,7 @@ body.cyberquiz-modal-open {
     margin: 22px 0;
     padding: 20px 22px;
     border: 1px solid var(--border);
-    border-left: 4px solid var(--primary);
+    /*border-left: 4px solid var(--primary);*/
     border-radius: 16px;
 
     background: linear-gradient(
@@ -753,9 +753,9 @@ body.cyberquiz-modal-open {
 .cq-tip-label {
     margin-left: auto;
     padding: 5px 9px;
-    border: 1px solid var(--accent);
+    border: 1px solid var(--muted);
     border-radius: 20px;
-    color: var(--accent);
+    color: var(--muted);
     background: var(--surface);
     font-size: 0.62rem;
     font-weight: 700;
