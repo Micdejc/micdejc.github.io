@@ -105,27 +105,43 @@
 
    /* ========================================
       CYBERQUIZZY STATISTICS TOOLTIPS
+      Uses one centralised message container
    ======================================== */
    
    function closeCyberQuizzyStatHelp() {
+   
+       const message = document.getElementById(
+           "cqStatTooltipMessage"
+       );
+   
        document.querySelectorAll(
            ".cyberquiz-root .cq-tooltip-trigger"
        ).forEach((button) => {
            button.classList.remove("active");
            button.setAttribute("aria-expanded", "false");
        });
+   
+       if (message) {
+           message.hidden = true;
+           message.textContent = "";
+       }
    }
    
    function initialiseCyberQuizzyStatHelp() {
    
-       // Event delegation supports dynamically added content.
        document.addEventListener("click", (event) => {
    
            const button = event.target.closest(
                ".cyberquiz-root .cq-tooltip-trigger"
            );
    
-           // Clicking outside the tooltips closes them.
+           const message = document.getElementById(
+               "cqStatTooltipMessage"
+           );
+   
+           if (!message) return;
+   
+           // Clicking outside a tooltip button closes the message.
            if (!button) {
                closeCyberQuizzyStatHelp();
                return;
@@ -134,15 +150,18 @@
            const wasExpanded =
                button.getAttribute("aria-expanded") === "true";
    
-           // Close all other statistic tooltips.
+           // Close any currently displayed message.
            closeCyberQuizzyStatHelp();
    
-           // Clicking the active button closes its tooltip.
+           // Clicking the active button closes its message.
            if (wasExpanded) return;
    
-           // Open the selected tooltip.
+           // Display the selected explanation centrally.
            button.classList.add("active");
            button.setAttribute("aria-expanded", "true");
+   
+           message.textContent = button.dataset.tooltip || "";
+           message.hidden = false;
        });
    }
 
