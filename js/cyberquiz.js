@@ -517,6 +517,7 @@ export function initCyberQuiz() {
         $('xp').textContent = state.xp;
         $('credits').textContent = state.credits;
         $('streak').textContent = state.streak;
+        $('daily').textContent = state.dailyStreak.count;
 
         $('hero-xp').textContent = state.xp;
         $('hero-done').textContent = state.answered;
