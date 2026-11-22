@@ -607,9 +607,10 @@ body.cyberquiz-modal-open {
 ======================================== */
 
 .cyberquiz-root .cq-stat-tooltip-message {
-    width: fit-content;
-    max-width: min(90%, 480px);
-    margin: 12px auto 0;
+    position: absolute;
+    z-index: 100;
+    width: max-content;
+    max-width: min(280px, 85vw);
     padding: 10px 14px;
 
     background: var(--surface);
@@ -622,7 +623,23 @@ body.cyberquiz-modal-open {
     text-align: center;
 
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+
+    transform: translate(-50%, -100%);
     animation: cq-tooltip-fade 0.2s ease;
+}
+
+/* Downward-pointing arrow */
+.cyberquiz-root .cq-stat-tooltip-message::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    border-width: 7px 7px 0;
+    border-style: solid;
+    border-color: var(--card) transparent transparent;
 }
 
 .cyberquiz-root .cq-stat-tooltip-message[hidden] {
@@ -632,12 +649,12 @@ body.cyberquiz-modal-open {
 @keyframes cq-tooltip-fade {
     from {
         opacity: 0;
-        transform: translateY(-4px);
+        transform: translate(-50%, calc(-100% + 4px));
     }
 
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translate(-50%, -100%);
     }
 }
 
