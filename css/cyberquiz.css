@@ -668,6 +668,208 @@ body.cyberquiz-modal-open {
     display: none !important;
 }
 
+
+/* ========================================
+   DAILY CYBER TIP
+======================================== */
+
+.cq-daily-tip {
+    position: relative;
+    overflow: hidden;
+    margin: 22px 0;
+    padding: 20px 22px;
+    border: 1px solid rgba(91, 164, 221, 0.25);
+    border-radius: 16px;
+    background:
+        linear-gradient(120deg,
+            rgba(27, 55, 83, 0.96),
+            rgba(19, 37, 60, 0.98));
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.13);
+    animation: cq-tip-enter 0.65s ease both;
+}
+
+/* Subtle decorative glow */
+.cq-daily-tip::before {
+    content: "";
+    position: absolute;
+    top: -55px;
+    right: -45px;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: rgba(80, 164, 225, 0.10);
+    filter: blur(28px);
+    pointer-events: none;
+}
+
+.cq-tip-header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.cq-tip-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: rgba(255, 207, 102, 0.13);
+    border: 1px solid rgba(255, 207, 102, 0.22);
+    animation: cq-tip-glow 3s ease-in-out infinite;
+}
+
+.cq-tip-icon span {
+    font-size: 21px;
+}
+
+.cq-tip-heading h3 {
+    margin: 0;
+    color: #f4c96b;
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+}
+
+.cq-tip-heading p {
+    margin: 4px 0 0;
+    color: #b6c9dc;
+    font-size: 0.76rem;
+}
+
+.cq-tip-label {
+    margin-left: auto;
+    padding: 5px 9px;
+    border: 1px solid rgba(91, 190, 151, 0.3);
+    border-radius: 20px;
+    color: #8de0b8;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.7px;
+    white-space: nowrap;
+}
+
+.cq-tip-content {
+    position: relative;
+    margin-top: 19px;
+}
+
+.cq-tip-content h4 {
+    margin: 0 0 7px;
+    color: #ffffff;
+    font-size: 1.08rem;
+    font-weight: 750;
+    line-height: 1.4;
+}
+
+.cq-tip-content p {
+    margin: 0;
+    max-width: 650px;
+    color: #d0ddea;
+    font-size: 0.88rem;
+    line-height: 1.65;
+}
+
+.cq-tip-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 17px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+.cq-tip-footer > span:first-child {
+    color: #91abc4;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.cq-tip-footer > span:first-child span {
+    color: #f4c96b;
+    margin: 0 3px;
+}
+
+.cq-tip-sparkle {
+    color: #f4c96b;
+    font-size: 18px;
+    animation: cq-tip-sparkle 2.5s ease-in-out infinite;
+}
+
+/* Entrance animation */
+@keyframes cq-tip-enter {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Gentle icon glow */
+@keyframes cq-tip-glow {
+    0%, 100% {
+        box-shadow: 0 0 0 rgba(255, 207, 102, 0);
+    }
+
+    50% {
+        box-shadow: 0 0 15px rgba(255, 207, 102, 0.18);
+    }
+}
+
+/* Sparkle animation */
+@keyframes cq-tip-sparkle {
+    0%, 100% {
+        opacity: 0.65;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+}
+
+/* Mobile adjustments */
+@media (max-width: 480px) {
+    .cq-daily-tip {
+        padding: 16px;
+        margin: 17px 0;
+    }
+
+    .cq-tip-label {
+        display: none;
+    }
+
+    .cq-tip-content h4 {
+        font-size: 1rem;
+    }
+
+    .cq-tip-content p {
+        font-size: 0.83rem;
+    }
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    .cq-daily-tip,
+    .cq-tip-icon,
+    .cq-tip-sparkle {
+        animation: none !important;
+    }
+}
+
+/* ========================================
+   END DAILY CYBER TIP
+======================================== */
+
 /* =========================================================
    8. CAREER PROGRESSION
    ========================================================= */
