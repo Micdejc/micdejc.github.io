@@ -1095,7 +1095,7 @@ export function initCyberQuiz() {
                     state.streak
                 );
 
-                // Notify every PROGRESSION. streaks
+                // Notify every PROGRESSION.bestStreakLength streaks
                 if (
                     state.streak > 0 &&
                     state.streak % PROGRESSION.bestStreakLength === 0
@@ -1284,14 +1284,17 @@ export function initCyberQuiz() {
         state.xp += bonus;
         sessionXP += bonus;
         state.completedMissions++;
-
-        // Update and notify best XP record every PROGRESSION.XPStreakLength completed missions.
-        if (state.completedMissions > 0 && state.completedMissions % PROGRESSION.XPStreakLength === 0) {
-            updatePersonalRecord(
+        
+        //Update best XP record without an additional toast.
+        updatePersonalRecord(
                 'bestXP',
-                state.xp,
-                `🏆 New XP record! Your total XP has reached ${state.xp}!`
+                state.xp
             );
+
+        // Notify best XP record every PROGRESSION.XPStreakLength completed missions.
+        if (state.completedMissions > 0 && 
+            state.completedMissions % PROGRESSION.XPStreakLength === 0) {
+                toast(`🏆 New XP record! Your total XP has reached ${state.xp}!`);
         }
         
         
@@ -1735,7 +1738,7 @@ export function initCyberQuiz() {
 
         state.dailyStreak.date = today;
 
-        // Update the best consecutive-day personal record.
+        // Update the best consecutive-day personal record without an additional toast.
         updatePersonalRecord(
             'bestDailyStreak',
             state.dailyStreak.count
