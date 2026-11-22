@@ -35,7 +35,8 @@ export function initCyberQuiz() {
         'cloud-security'
     ];
 
-    const ROLE = CAREER_ROLES[0]
+    //const ROLE = CAREER_ROLES[0];
+    const ROLE = null;
     
     // For each rank, we have the most common job titles that the data bank support.
     const RANKS = [
@@ -566,6 +567,18 @@ export function initCyberQuiz() {
 
     let state = loadState();
 
+    // Retrieve the career title for a specific role at a given rank.
+    // Return null if the rank or selected role is invalid or empty.
+    function getCareerTitle(rankNumber, selectedRole) {
+        const rank = RANKS[rankNumber];
+    
+        if (!rank || !selectedRole) return null;
+    
+        return rank.careerPaths.find(
+            career => career.role === selectedRole
+        )?.title || null;
+    }
+
     // Update the main journey button based on saved progress.
     function updateStartButton() {
         const hasStarted = state.startedRanks?.includes(rankIndex()) ?? false;
@@ -673,7 +686,12 @@ export function initCyberQuiz() {
         $('hero-daily').textContent = state.bestDailyStreak;
         $('hero-streak').textContent = state.bestStreak;
 
-        $('rank-name').textContent = currentRank.name;
+        //$('rank-name').textContent = currentRank.name;
+
+        const careerTitle = getCareerTitle(currentIndex, ROLE);
+
+        $('rank-name').textContent =
+            `${currentRank.name}${careerTitle ? ` (${careerTitle})` : ''}`;
 
         // The rank symbol is included in index.html.
         $('rank-symbol').textContent = currentRank.icon;
