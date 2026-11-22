@@ -25,6 +25,59 @@
         <!-- Place your existing quiz content here -->
         <main class="cyberquiz-root" id="cyberquiz-root">
 
+         <!-- Header -->
+          <header class="cq-header">
+              <span class="cq-game-icon" aria-hidden="true">🛡️</span>
+    
+              <div>
+                  <h1 id="cq-title">CyberQuizzy</h1>
+                  <p>Test your skills. Build your cyber career.</p>
+              </div>
+          </header>
+
+        <!-- ========================================
+            SCREEN1:  CAREER PATHWAY SELECTION SCREEN
+        ======================================== -->
+        
+        <section class="cq-career-screen" id="cq-career-screen">
+        
+            <div class="cq-career-heading">
+                <span class="cq-career-icon">🎯</span>
+        
+                <div>
+                    <h2>Choose Your Career Pathway</h2>
+                    <p>Select your cybersecurity specialisation to begin your journey.</p>
+                </div>
+            </div>
+        
+            <div class="cq-career-select-wrapper">
+                <label for="cq-career-role">Select your specialisation</label>
+        
+                <select id="cq-career-role" required>
+                    <option value="" selected disabled>Select a career pathway</option>
+                    <option value="soc">Security Operations (SOC)</option>
+                    <option value="pentest">Penetration Testing</option>
+                    <option value="grc">Governance, Risk and Compliance (GRC)</option>
+                    <option value="security-engineering">Security Engineering</option>
+                    <option value="cloud-security">Cloud Security</option>
+                </select>
+            </div>
+        
+            <div class="cq-career-description" id="cq-career-description">
+                <span>💡</span>
+                <p id="cq-career-description-text">
+                    Choose a pathway to discover the career opportunities and skills you will develop.
+                </p>
+            </div>
+        
+            <button type="button" class="cq-career-start" id="cq-career-start" disabled>
+                Start Journey <span>→</span>
+            </button>
+        
+        </section>
+
+        <!-- SCREEN 2: Existing quiz interface -->
+        <div id="cq-quiz-screen" hidden>
               <section class="cq-modal" aria-labelledby="cq-title">
           
                   <!-- Reset progress -->
@@ -52,16 +105,7 @@
                         </svg>
                   </button>
                   -->
-                  <!-- Header -->
-                  <header class="cq-header">
-                      <span class="cq-game-icon" aria-hidden="true">🛡️</span>
-          
-                      <div>
-                          <h1 id="cq-title">CyberQuizzy</h1>
-                          <p>Test your skills. Build your cyber career.</p>
-                      </div>
-                  </header>
-          
+
                   <!-- Welcome and progress overview -->
                   <section class="cq-container">
           
@@ -576,7 +620,7 @@
           
               </section>
 
-
+        </div>
                     <!-- Keep these outside cyberquiz-root if your existing JS expects them
              to be globally accessible, or place them inside the root too. -->
         <div class="cq-toast" id="toast" role="status" aria-live="polite"></div>
