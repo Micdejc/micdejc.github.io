@@ -722,8 +722,11 @@ body.cyberquiz-modal-open {
     animation: cq-tip-glow 3s ease-in-out infinite;
 }
 
+/* Lightbulb animation */
 .cq-tip-icon span {
+    display: inline-block;
     font-size: 21px;
+    animation: cq-tip-sparkle 2.5s ease-in-out infinite;
 }
 
 .cq-tip-heading h3 {
