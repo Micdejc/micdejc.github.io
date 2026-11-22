@@ -643,8 +643,7 @@ body.cyberquiz-modal-open {
 
     border-width: 7px 7px 0;
     border-style: solid;
-    border-color: var(--surface) transparent transparent;
-    background: color-mix( in srgb, var(--primary) 7%, var(--surface) );
+    border-color: var(--primary) transparent transparent;
 }
 
 /* Hide tooltip */
