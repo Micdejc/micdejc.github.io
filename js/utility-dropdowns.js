@@ -183,18 +183,19 @@
                */
                return;
            }
-
-            /*
+          
            // Get the explanation.
            const tooltipText = button.dataset.tooltip;
    
            if (!tooltipText || !tooltipText.trim()) {
+               /*
                console.error(
                    "[CyberQuizzy] Tooltip text is missing."
                );
+               */
                return;
            }
-           */
+           
    
            // Display the centralised message.
            message.textContent = tooltipText;
