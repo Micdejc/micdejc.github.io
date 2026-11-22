@@ -942,13 +942,24 @@ export function initCyberQuiz() {
     }
 
 
-    function pickQuestions(rankNumber, daily = false) {
+    function pickQuestions(rankNumber, daily = false, selectedRole = null) {
         const allQuestions = window.CYBERQUIZ_QUESTIONS || [];
-
+        /*
         const pool = allQuestions.filter(question =>
             daily
                 ? question.rank <= rankNumber
                 : question.rank === rankNumber
+        );
+        */
+        const pool = allQuestions.filter(question =>
+            (
+                daily
+                    ? question.rank <= rankNumber
+                    : question.rank === rankNumber
+            ) &&
+            (
+                !selectedRole || question.role === selectedRole
+            )
         );
 
         if (!pool.length) {
@@ -1866,7 +1877,7 @@ export function initCyberQuiz() {
 
         $('quiz').classList.add('hidden');
 
-        toast('Progress reset.');
+        //toast('Progress reset.');
 
         showCareerSelection();
     }
