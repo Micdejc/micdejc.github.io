@@ -1088,12 +1088,13 @@ export function initCyberQuiz() {
         $('quiz').classList.remove('hidden');
         $('question-view').classList.remove('hidden');
         $('result').classList.add('hidden');
+        
 
         $('mission-title').textContent =
             `${daily
                 ? 'DAILY CHALLENGE'
                 : RANKS[rankNumber].name.toUpperCase()
-            } · MISSION`;
+            } · ${ROLE.toUpperCase()} MISSION`;
 
         renderQuestion();
 
