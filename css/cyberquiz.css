@@ -1941,6 +1941,7 @@ body.cyberquiz-modal-open {
     .cyberquiz-root .cq-stats {
         width: 100%;
         max-width: 440px;
+        gap: 0px;
     }
 
     .cyberquiz-root .cq-bottom-grid {
@@ -2123,6 +2124,10 @@ body.cyberquiz-modal-open {
     .cyberquiz-root .cq-email-scenario {
         padding: 13px;
         font-size: 0.78rem;
+    }
+
+    .cyberquiz-root .cq-stats {
+        gap: 0px;
     }
 }
 
