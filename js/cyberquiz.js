@@ -1036,11 +1036,11 @@ export function initCyberQuiz() {
         
         mode = daily ? 'daily' : 'rank';
 
-        //mission = pickQuestions(rankNumber, daily);
+        //mission = pickQuestions(rankNumber, daily, ROLE);
 
         mission = daily && state.dailyMission?.length
             ? state.dailyMission
-            : pickQuestions(rankNumber, daily);
+            : pickQuestions(rankNumber, daily, ROLE);
 
         if (!mission.length) {
             toast('No questions are available yet.');
