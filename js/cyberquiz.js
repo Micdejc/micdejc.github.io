@@ -252,6 +252,12 @@ export function initCyberQuiz() {
         // current correct-answer streak reaches this length.
         streakBonus: 5,
         streakLength: 3,
+
+        //Extra XP awarded for daily challenges streak achieved 
+        dailyStreakLength: 5,
+        dailyStreakBonus: 50,
+        //Number of questions per daily challenge
+        dailyChallengeCount: 10,
     
         // Minimum accuracy required for each mission outcome.
         perfectAccuracy: 100,       // Perfect mission score.
@@ -302,6 +308,10 @@ export function initCyberQuiz() {
             dailyMission: null,
             dailyProgress: 0,
             dailyStartedDate: '',
+            dailyStreak: {
+                count: 0,
+                date: null
+            },
 
             completedMissions: 0,
             theme: 'dark',
@@ -365,6 +375,24 @@ export function initCyberQuiz() {
                 : 0;
 
             loaded.dailyStartedDate = saved.dailyStartedDate || '';
+
+            // Restore and validate Daily Challenge streak.
+            const savedDailyStreak = saved.dailyStreak;
+            
+            loaded.dailyStreak = {
+                count:
+                    Number.isInteger(savedDailyStreak?.count) &&
+                    savedDailyStreak.count >= 0
+                        ? savedDailyStreak.count
+                        : 0,
+            
+                date:
+                    typeof savedDailyStreak?.date === 'string' &&
+                    /^\d{4}-\d{2}-\d{2}$/.test(savedDailyStreak.date) &&
+                    !Number.isNaN(Date.parse(savedDailyStreak.date))
+                        ? savedDailyStreak.date
+                        : null
+            };
 
             // Legacy state used one shared `seen` array.
             // Do not assign it to every rank, as that would
@@ -693,9 +721,9 @@ export function initCyberQuiz() {
             return [];
         }
 
-        // 5 questions per daily challenge
+        // 10 questions per daily challenge
         const count = daily
-            ? 5
+            ? PROGRESSION.dailyChallengeCount
             : Math.min(5, Math.max(3, 3 + rankNumber));
 
         const seen = daily
@@ -1117,7 +1145,7 @@ export function initCyberQuiz() {
         // Save Daily Challenge progress for resuming later.
         if (mode === 'daily') {
             state.dailyProgress = index + 1;
-            // Mark the Daily Challenge completed after all 5 questions answered
+            // Mark the Daily Challenge completed after all 10 questions answered
             if (state.dailyProgress >= mission.length) {
                 finishMission();
                 return;
@@ -1210,13 +1238,24 @@ export function initCyberQuiz() {
             (sessionCorrect / mission.length) * 100
         );
 
+        /*
         // Daily challenges are not counted for bonus rewards add "mode === 'daily' || " to the condition if you want so.
         const eligibleForRewards =
             missionRewardEligible &&
             mission.every(question =>
                 question.rank === missionRank
             );
-    
+        */
+
+        const eligibleForRewards =
+            mode === 'daily' ||
+            (
+                missionRewardEligible &&
+                mission.every(question =>
+                    question.rank === missionRank
+                )
+            );
+        
         const isPerfect =
             percentage >= PROGRESSION.perfectAccuracy;
     
@@ -1237,8 +1276,13 @@ export function initCyberQuiz() {
         
         
         if (mode === 'daily') {
+
+            const day = new Date().toISOString().slice(0, 10);
+            
+            updateDailyStreak(day)
+            
             state.dailyDone =
-                new Date().toISOString().slice(0, 10);
+                day;
             
             state.dailyMission = 
                 null;
@@ -1248,6 +1292,7 @@ export function initCyberQuiz() {
 
             state.dailyStartedDate = 
                 '';
+
         }
         
         
@@ -1617,6 +1662,70 @@ export function initCyberQuiz() {
             dailyButton.setAttribute('disabled', '');
         } else {
             dailyButton.removeAttribute('disabled');
+        }
+    }
+
+    /* =====================================================
+       17.2 DAILY STREAK UPDATE
+       ===================================================== */
+    function updateDailyStreak(today) {
+
+        // Validate existing streak data.
+        if (
+            !state.dailyStreak ||
+            !Number.isInteger(state.dailyStreak.count) ||
+            state.dailyStreak.count < 0
+        ) {
+            state.dailyStreak = {
+                count: 0,
+                date: null
+            };
+        }
+    
+        const previousDate = state.dailyStreak.date;
+    
+        // Prevent duplicate updates on the same day.
+        if (previousDate === today) {
+            return 0;
+        }
+    
+        const todayUTC = Date.parse(`${today}T00:00:00Z`);
+    
+        const previousUTC = previousDate
+            ? Date.parse(`${previousDate}T00:00:00Z`)
+            : NaN;
+    
+        const oneDay = 24 * 60 * 60 * 1000;
+    
+        if (
+            previousDate &&
+            Number.isFinite(previousUTC) &&
+            todayUTC - previousUTC === oneDay
+        ) {
+            // Consecutive daily completion.
+            state.dailyStreak.count++;
+        } else {
+            // First completion or a missed day.
+            state.dailyStreak.count = 1;
+        }
+
+        state.dailyStreak.date = today;
+
+        // Award bonus at each streak milestone.
+        const milestone = PROGRESSION.dailyStreakLength;
+    
+        if (
+            Number.isInteger(milestone) &&
+            milestone > 0 &&
+            state.dailyStreak.count % milestone === 0
+        ) {
+            const reward = PROGRESSION.dailyStreakBonus;
+    
+            if (Number.isFinite(reward) && reward > 0) {
+                state.xp += reward;
+                sessionXP += reward;
+                toast(`🏆 Daily streak milestone! ${state.dailyStreak.count} consecutive days completed!`);
+            }
         }
     }
     
