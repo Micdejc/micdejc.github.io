@@ -176,7 +176,7 @@
            message.style.top =
                `${rect.top + window.scrollY - 10}px`;
        });
-   
+
        // Reposition the tooltip when the page moves.
        window.addEventListener("resize", closeCyberQuizzyStatHelp);
        window.addEventListener("scroll", closeCyberQuizzyStatHelp, true);
