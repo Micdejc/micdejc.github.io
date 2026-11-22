@@ -855,6 +855,131 @@ body.cyberquiz-modal-open {
    END DAILY CYBER TIP
 ======================================== */
 
+
+/* ========================================
+   CAREER AND QUIZ SCREENS
+======================================== */
+
+.cq-career-screen {
+    padding: 24px;
+    animation: cq-screen-enter .35s ease;
+}
+
+#cq-quiz-screen[hidden],
+.cq-career-screen[hidden] {
+    display: none !important;
+}
+
+.cq-career-heading {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 24px;
+}
+
+.cq-career-icon {
+    font-size: 30px;
+}
+
+.cq-career-heading h2 {
+    margin: 0 0 6px;
+    color: var(--text);
+    font-size: 1.2rem;
+}
+
+.cq-career-heading p {
+    margin: 0;
+    color: var(--muted);
+    font-size: .85rem;
+    line-height: 1.5;
+}
+
+.cq-career-select-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.cq-career-select-wrapper label {
+    color: var(--text);
+    font-size: .85rem;
+    font-weight: 650;
+}
+
+.cq-career-select-wrapper select {
+    width: 100%;
+    padding: 13px;
+    color: var(--text);
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font: inherit;
+    cursor: pointer;
+}
+
+.cq-career-select-wrapper select:focus {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+.cq-career-description {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-top: 18px;
+    padding: 15px;
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+}
+
+.cq-career-description p {
+    margin: 0;
+    color: var(--muted);
+    font-size: .85rem;
+    line-height: 1.6;
+}
+
+.cq-career-start {
+    width: 100%;
+    margin-top: 24px;
+    padding: 14px;
+    color: #fff;
+    background: var(--primary);
+    border: none;
+    border-radius: 10px;
+    font-size: .95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background .2s ease, transform .2s ease;
+}
+
+.cq-career-start:hover:not(:disabled) {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+}
+
+.cq-career-start:disabled {
+    opacity: .45;
+    cursor: not-allowed;
+}
+
+@keyframes cq-screen-enter {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========================================
+   END CAREER AND QUIZ SCREENS
+======================================== */
+
 /* =========================================================
    8. CAREER PROGRESSION
    ========================================================= */
