@@ -602,56 +602,43 @@ body.cyberquiz-modal-open {
     color: var(--text);
 }
 
-/* Tooltip bubble */
-.cyberquiz-root .cq-tooltip-trigger::after {
-    content: attr(data-tooltip);
+/* ========================================
+   CENTRALISED STATISTICS TOOLTIP
+======================================== */
 
-    position: absolute;
-    bottom: calc(100% + 10px);
-    left: 50%;
-    transform: translateX(-50%) translateY(5px);
-
-    width: 190px;
-    padding: 10px 12px;
+.cyberquiz-root .cq-stat-tooltip-message {
+    width: fit-content;
+    max-width: min(90%, 480px);
+    margin: 12px auto 0;
+    padding: 10px 14px;
 
     background: var(--surface);
     color: var(--text);
-    border: 1px solid var(--primary);
+    border: 1px solid var(--border);
     border-radius: 8px;
 
-    font-size: 0.75rem;
-    font-weight: 400;
+    font-size: 0.78rem;
     line-height: 1.5;
     text-align: center;
 
-    white-space: normal;
-    overflow-wrap: break-word;
-
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
-
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-
-    transition: opacity 0.2s ease, transform 0.2s ease;
-    z-index: 100;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    animation: cq-tooltip-fade 0.2s ease;
 }
 
-/* Tooltip arrow */
-.cyberquiz-root .cq-tooltip-trigger::before {
-    content: "";
+.cyberquiz-root .cq-stat-tooltip-message[hidden] {
+    display: none;
+}
 
-    position: absolute;
-    bottom: calc(100% + 4px);
-    left: 50%;
-    transform: translateX(-50%);
+@keyframes cq-tooltip-fade {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
 
-    border: 6px solid transparent;
-    border-top-color: var(--surface);
-
-    opacity: 0;
-    visibility: hidden;
-    z-index: 101;
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Show tooltip when clicked */
