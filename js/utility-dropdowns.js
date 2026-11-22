@@ -142,7 +142,7 @@
    
            // Clicking elsewhere closes the tooltip.
            if (!button) {
-               closeCyberQuizzyStatHelp();
+               //closeCyberQuizzyStatHelp();
                return;
            }
    
