@@ -1068,7 +1068,7 @@ body.cyberquiz-modal-open {
 }
 
 .cyberquiz-root .cq-email-scenario::before {
-    content: "OUTPUT EXAMPLE";
+    content: "OUTPUT SAMPLE";
     display: block;
     margin-bottom: 10px;
     
