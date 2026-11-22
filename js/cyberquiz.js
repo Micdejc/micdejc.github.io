@@ -521,6 +521,7 @@ export function initCyberQuiz() {
         $('hero-xp').textContent = state.xp;
         $('hero-done').textContent = state.answered;
         $('hero-correct').textContent = state.correct;
+        $('hero-daily').textContent = state.dailyStreak.count;
         $('hero-streak').textContent = state.bestStreak;
 
         $('rank-name').textContent = currentRank.name;
