@@ -429,12 +429,21 @@ export function initCyberQuiz() {
         careerStart.addEventListener('click', () => {
             if (!ROLE) return;
 
+            state.role = ROLE;
+            saveState();
             showQuizInterface();
 
             // Your existing quiz-start logic goes here.
         });
 
-        showCareerSelection();
+        //showCareerSelection();
+        // Restore an existing game or request career selection.
+        if (state.hasPlayed && state.role && CAREER_ROLES.includes(state.role)) {
+            ROLE = state.role;
+            showQuizInterface();
+        } else {
+            showCareerSelection();
+        }
     }
 
     initCareerSelection();
@@ -494,6 +503,9 @@ export function initCyberQuiz() {
 
     function freshState() {
         return {
+
+            role: null,
+            hasPlayed: false,
             xp: 0,
             credits: 3,
             answered: 0,
@@ -608,6 +620,25 @@ export function initCyberQuiz() {
                         ? savedDailyStreak.date
                         : null
             };
+
+            // Restore and validate the selected career pathway.
+            loaded.role = CAREER_ROLES.includes(saved.role)
+                ? saved.role
+                : null;
+            
+            // Restore whether the player has actually started playing.
+            loaded.hasPlayed =
+                saved.hasPlayed === true ||
+                (
+                    CAREER_ROLES.includes(saved.role) &&
+                    (
+                        (saved.xp || 0) > 0 ||
+                        (saved.answered || 0) > 0 ||
+                        (saved.completedMissions || 0) > 0 ||
+                        (Array.isArray(saved.startedRanks) &&
+                            saved.startedRanks.length > 0)
+                    )
+                );
 
             // Legacy state used one shared `seen` array.
             // Do not assign it to every rank, as that would
@@ -1554,6 +1585,10 @@ export function initCyberQuiz() {
             state.dailyStartedDate = 
                 '';
 
+        }
+
+        if (!state.hasPlayed) {
+            state.hasPlayed = true;
         }
         
         
