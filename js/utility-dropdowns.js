@@ -152,9 +152,11 @@
            );
    
            if (!message) {
+              /*
                console.error(
                    "[CyberQuizzy] Centralised tooltip container not found."
                );
+               */
                return;
            }
    
@@ -174,12 +176,15 @@
            );
    
            if (!stat) {
+              /*
                console.error(
                    "[CyberQuizzy] Statistic container not found."
                );
+               */
                return;
            }
-   
+
+            /*
            // Get the explanation.
            const tooltipText = button.dataset.tooltip;
    
@@ -189,6 +194,7 @@
                );
                return;
            }
+           */
    
            // Display the centralised message.
            message.textContent = tooltipText;
