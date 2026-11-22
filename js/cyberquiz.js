@@ -23,6 +23,19 @@ export function initCyberQuiz() {
     // Find elements belonging to CyberQuizzy only.
     const $ = id => root.querySelector(`#${id}`);
 
+    // ========================================
+    // AVAILABLE CAREER ROLES
+    // ========================================
+    
+    const CAREER_ROLES = [
+        'soc',
+        'pentest',
+        'grc',
+        'security-engineering',
+        'cloud-security'
+    ];
+
+    const ROLE = CAREER_ROLES[0]
     
     // For each rank, we have the most common job titles that the data bank support.
     const RANKS = [
@@ -33,14 +46,6 @@ export function initCyberQuiz() {
         min: 0,
         max: 1000,
         sub: 'Security fundamentals',
-        roles: [
-            'IT support technician',
-            'Junior security analyst',
-            'Junior GRC analyst',
-            'Information security compliance assistant'
-        ],
-        careers:
-            'Build safe digital habits and understand core security controls, basic risk concepts and compliance requirements.',
         skill: 'learned the foundations and demonstrated basic security awareness.',
         color: '#38c8ff',
         icon: '◈',
@@ -64,7 +69,41 @@ export function initCyberQuiz() {
                 fill="none" stroke="#fff" stroke-width="4"/>
             <path d="M40 31 L49 40 L40 49 L31 40 Z"
                 fill="none" stroke="#fff" stroke-width="3"/>
-        </svg>`
+        </svg>`,
+        careerOverview: 'Build foundational cybersecurity knowledge and develop the awareness needed to support security operations, testing, risk management, engineering and cloud protection.',
+
+        careerPaths: [
+            {
+                role: 'soc',
+                name: 'Security Operations',
+                title: 'Junior SOC Analyst',
+                description: 'Identify basic security alerts, recognise suspicious activity and understand fundamental incident reporting.'
+            },
+            {
+                role: 'pentest',
+                name: 'Penetration Testing',
+                title: 'Junior Penetration Tester',
+                description: 'Understand basic vulnerability concepts, security testing principles and responsible testing practices.'
+            },
+            {
+                role: 'grc',
+                name: 'Governance, Risk and Compliance',
+                title: 'Junior GRC Analyst',
+                description: 'Understand security policies, basic risk concepts, compliance requirements and information security controls.'
+            },
+            {
+                role: 'security-engineering',
+                name: 'Security Engineering',
+                title: 'Junior Security Engineer',
+                description: 'Understand fundamental security controls, system hardening, access management and secure configuration.'
+            },
+            {
+                role: 'cloud-security',
+                name: 'Cloud Security',
+                title: 'Junior Cloud Security Analyst',
+                description: 'Understand cloud security fundamentals, shared responsibility, identity management and basic cloud risks.'
+            }
+        ]
     },
     {
         name: 'Professional',
@@ -73,15 +112,6 @@ export function initCyberQuiz() {
         min: 1000,
         max: 2500,
         sub: 'Operational security',
-        roles: [
-            'SOC analyst (Tier 1)',
-            'Junior incident responder',
-            'Vulnerability analyst',
-            'GRC analyst',
-            'IT risk analyst'
-        ],
-        careers:
-            'Triage alerts, follow playbooks, assess operational risks and support security compliance activities.',
         skill: 'developed operational knowledge and demonstrated the ability to handle routine security tasks.',
         color: '#43e5a4',
         icon: '⬢',
@@ -103,7 +133,42 @@ export function initCyberQuiz() {
                 fill="none" stroke="#b4ffe4" stroke-width="1.5" opacity=".8"/>
             <path d="M40 23 L56 31.5 L56 48.5 L40 57 L24 48.5 L24 31.5 Z"
                 fill="#fff"/>
-        </svg>`
+        </svg>`,
+
+        careerOverview: 'Apply security knowledge to routine operational tasks, investigate common threats and support technical security and compliance activities.',
+
+        careerPaths: [
+            {
+                role: 'soc',
+                name: 'Security Operations',
+                title: 'SOC Analyst (Tier 1)',
+                description: 'Triage security alerts, investigate suspicious events, analyse basic logs and follow incident response playbooks.'
+            },
+            {
+                role: 'pentest',
+                name: 'Penetration Testing',
+                title: 'Penetration Tester',
+                description: 'Perform authorised vulnerability assessments, use common testing tools and document security weaknesses.'
+            },
+            {
+                role: 'grc',
+                name: 'Governance, Risk and Compliance',
+                title: 'GRC Analyst',
+                description: 'Conduct basic risk assessments, support audits, review security controls and assess compliance requirements.'
+            },
+            {
+                role: 'security-engineering',
+                name: 'Security Engineering',
+                title: 'Security Engineer',
+                description: 'Implement security controls, investigate technical issues and support endpoint, network and application security.'
+            },
+            {
+                role: 'cloud-security',
+                name: 'Cloud Security',
+                title: 'Cloud Security Engineer',
+                description: 'Configure cloud security controls, review permissions, monitor cloud environments and address common misconfigurations.'
+            }
+        ]
     },
     {
         name: 'Practitioner',
@@ -112,15 +177,6 @@ export function initCyberQuiz() {
         min: 2500,
         max: 4500,
         sub: 'Hands-on investigation',
-        roles: [
-            'SOC analyst (Tier 2)',
-            'Penetration tester',
-            'Cloud security analyst',
-            'Application security engineer',
-            'Cyber risk analyst'
-        ],
-        careers:
-            'Investigate incidents and malware, validate weaknesses, assess cyber risks and secure cloud, application and AI systems.',
         skill: 'demonstrated practical investigation, technical assessment and problem-solving skills.',
         color: '#8b9cff',
         icon: '✥',
@@ -145,7 +201,41 @@ export function initCyberQuiz() {
             <path d="M40 17 V30 M40 50 V63 M17 40 H30 M50 40 H63"
                 stroke="#fff" stroke-width="3" stroke-linecap="round"/>
             <circle cx="40" cy="40" r="4" fill="#fff"/>
-        </svg>`
+        </svg>`,
+        careerOverview: 'Demonstrate practical technical capability, independently investigate security problems and assess weaknesses across complex environments.',
+
+        careerPaths: [
+            {
+                role: 'soc',
+                name: 'Security Operations',
+                title: 'SOC Analyst (Tier 2)',
+                description: 'Correlate security events, investigate complex incidents, analyse attack behaviour and coordinate containment activities.'
+            },
+            {
+                role: 'pentest',
+                name: 'Penetration Testing',
+                title: 'Senior Penetration Tester',
+                description: 'Conduct advanced penetration tests, chain vulnerabilities, evaluate exploitation paths and communicate technical findings.'
+            },
+            {
+                role: 'grc',
+                name: 'Governance, Risk and Compliance',
+                title: 'Senior GRC Analyst',
+                description: 'Evaluate organisational risks, assess control effectiveness, manage audit findings and recommend risk treatments.'
+            },
+            {
+                role: 'security-engineering',
+                name: 'Security Engineering',
+                title: 'Senior Security Engineer',
+                description: 'Design and implement security solutions, investigate complex weaknesses and improve security across infrastructure and applications.'
+            },
+            {
+                role: 'cloud-security',
+                name: 'Cloud Security',
+                title: 'Senior Cloud Security Engineer',
+                description: 'Assess cloud architecture, investigate complex misconfigurations and implement identity, network and workload protections.'
+            }
+        ]
     },
     {
         name: 'Architect',
@@ -154,15 +244,6 @@ export function initCyberQuiz() {
         min: 4500,
         max: 7500,
         sub: 'Designing secure systems',
-        roles: [
-            'Security architect (developing)',
-            'Security engineer',
-            'Cloud security engineer',
-            'DevSecOps engineer',
-            'GRC consultant'
-        ],
-        careers:
-            'Connect security architecture and technical controls with organisational risk, governance and regulatory requirements.',
         skill: 'demonstrated the ability to connect technical security controls with organisational risks and governance.',
         color: '#ffbf57',
         icon: '⛨',
@@ -186,7 +267,41 @@ export function initCyberQuiz() {
                 stroke="#fff" stroke-width="7" stroke-linecap="square"/>
             <path d="M40 23 V53 M25 38 H55"
                 stroke="#fff" stroke-width="3" stroke-linecap="square"/>
-        </svg>`
+        </svg>`,
+        careerOverview: 'Design and integrate security capabilities, make informed architectural decisions and align technical controls with organisational risk.',
+
+        careerPaths: [
+            {
+                role: 'soc',
+                name: 'Security Operations',
+                title: 'SOC Lead',
+                description: 'Coordinate complex incident investigations, improve detection engineering and oversee security monitoring capabilities.'
+            },
+            {
+                role: 'pentest',
+                name: 'Penetration Testing',
+                title: 'Lead Penetration Tester',
+                description: 'Lead complex security assessments, develop testing strategies, evaluate attack paths and guide remediation priorities.'
+            },
+            {
+                role: 'grc',
+                name: 'Governance, Risk and Compliance',
+                title: 'GRC Manager',
+                description: 'Oversee governance programmes, manage enterprise risk, coordinate compliance activities and evaluate control frameworks.'
+            },
+            {
+                role: 'security-engineering',
+                name: 'Security Engineering',
+                title: 'Lead Security Engineer',
+                description: 'Lead security architecture and engineering initiatives, integrate security controls and establish secure design principles.'
+            },
+            {
+                role: 'cloud-security',
+                name: 'Cloud Security',
+                title: 'Cloud Security Architect',
+                description: 'Design secure cloud architectures, establish cloud governance and integrate identity, network and workload security controls.'
+            }
+        ]
     },
     {
         name: 'Expert',
@@ -195,15 +310,6 @@ export function initCyberQuiz() {
         min: 7500,
         max: Infinity,
         sub: 'Strategic security judgement',
-        roles: [
-            'Security architect',
-            'Incident response lead',
-            'Security team lead',
-            'GRC manager',
-            'Chief Information Security Officer (CISO)'
-        ],
-        careers:
-            'Lead security strategy, oversee governance and compliance programmes, manage enterprise risk and guide strategic security decisions.',
         skill: 'reached the highest career rank through sustained performance and strategic security judgement.',
         color: '#ff7da9',
         icon: '✪',
@@ -226,7 +332,42 @@ export function initCyberQuiz() {
             <path d="M40 16 L46 32 H63 L49 42 L54 59 L40 49 L26 59 L31 42 L17 32 H34 Z"
                 fill="#fff" stroke="#fff" stroke-width="1"
                 stroke-linejoin="round"/>
-        </svg>`
+        </svg>`,
+        
+        careerOverview: 'Demonstrate strategic cybersecurity leadership, shape organisational security direction and make high-impact decisions across complex environments.',
+
+        careerPaths: [
+            {
+                role: 'soc',
+                name: 'Security Operations',
+                title: 'Head of Security Operations',
+                description: 'Set SOC strategy, oversee incident response capabilities, establish detection priorities and lead operational security teams.'
+            },
+            {
+                role: 'pentest',
+                name: 'Penetration Testing',
+                title: 'Principal Penetration Tester / Red Team Lead',
+                description: 'Define adversarial testing strategies, lead advanced red-team operations and advise organisations on their defensive resilience.'
+            },
+            {
+                role: 'grc',
+                name: 'Governance, Risk and Compliance',
+                title: 'Head of GRC',
+                description: 'Direct enterprise governance, risk and compliance strategy, oversee regulatory obligations and advise senior leadership on cyber risk.'
+            },
+            {
+                role: 'security-engineering',
+                name: 'Security Engineering',
+                title: 'Security Architect',
+                description: 'Define enterprise security architecture, establish engineering standards and guide strategic security technology decisions.'
+            },
+            {
+                role: 'cloud-security',
+                name: 'Cloud Security',
+                title: 'Principal Cloud Security Architect',
+                description: 'Set cloud security strategy, govern complex multi-cloud environments and lead enterprise-wide cloud security architecture.'
+            }
+        ]
     }
         
     ];
@@ -642,8 +783,8 @@ export function initCyberQuiz() {
                     </div>
     
                     <ul class="career-list">
-                        ${r.roles.map(role => `
-                            <li>${role}</li>
+                        ${r.careerPaths.map(career => `
+                            <li>${career.title}</li>
                         `).join('')}
                     </ul>
                     -->
@@ -1374,11 +1515,11 @@ export function initCyberQuiz() {
                           } ${
                             rank().name
                           } career directions: <strong>${
-                            rank().roles.join(', ')
+                            rank().careerPaths.map(career => career.title).join(', ')
                           }</strong>.`
         
                         : `No completion bonus this time. Review the feedback and try another mission. Suggested career directions: <strong>${
-                            rank().roles.join(', ')
+                            rank().careerPaths.map(career => career.title).join(', ')
                           }</strong>.`;
     
         $('continue').innerHTML =
