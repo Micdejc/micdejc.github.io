@@ -129,19 +129,18 @@
    
    function initialiseCyberQuizzyStatHelp() {
    
+       const message = document.getElementById(
+           "cqStatTooltipMessage"
+       );
+   
+       if (!message) return;
+   
        document.addEventListener("click", (event) => {
    
            const button = event.target.closest(
                ".cyberquiz-root .cq-tooltip-trigger"
            );
    
-           const message = document.getElementById(
-               "cqStatTooltipMessage"
-           );
-   
-           if (!message) return;
-   
-           // Clicking outside a tooltip button closes the message.
            if (!button) {
                closeCyberQuizzyStatHelp();
                return;
@@ -150,19 +149,37 @@
            const wasExpanded =
                button.getAttribute("aria-expanded") === "true";
    
-           // Close any currently displayed message.
            closeCyberQuizzyStatHelp();
    
-           // Clicking the active button closes its message.
            if (wasExpanded) return;
    
-           // Display the selected explanation centrally.
+           // Activate selected button.
            button.classList.add("active");
            button.setAttribute("aria-expanded", "true");
    
+           // Set tooltip message.
            message.textContent = button.dataset.tooltip || "";
            message.hidden = false;
+   
+           // Position tooltip above the selected statistic.
+           const stat = button.closest(
+               ".cq-overview-stats > div"
+           );
+   
+           if (!stat) return;
+   
+           const rect = stat.getBoundingClientRect();
+   
+           message.style.left =
+               `${rect.left + rect.width / 2 + window.scrollX}px`;
+   
+           message.style.top =
+               `${rect.top + window.scrollY - 10}px`;
        });
+   
+       // Reposition the tooltip when the page moves.
+       window.addEventListener("resize", closeCyberQuizzyStatHelp);
+       window.addEventListener("scroll", closeCyberQuizzyStatHelp, true);
    }
 
     // Initialise DLN help independently of navigation dropdowns.
