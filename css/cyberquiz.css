@@ -132,6 +132,15 @@ body.cyberquiz-modal-open {
 .cyberquiz-root {
     width: 100%;
     min-width: 0;
+
+    max-height: none;
+    overflow: visible;
+    padding: clamp(18px, 4vw, 36px);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    background: var(--surface);
+    color: var(--text);
+    box-shadow: none;
 }
 
 .cyberquiz-root .cq-modal {
@@ -139,8 +148,8 @@ body.cyberquiz-modal-open {
     width: 100%;
     max-height: none;
     overflow: visible;
-    padding: clamp(18px, 4vw, 36px);
-    border: 1px solid var(--border);
+    /*padding: clamp(18px, 4vw, 36px);*/
+    /*border: 1px solid var(--border);*/
     border-radius: 20px;
     background: var(--surface);
     color: var(--text);
