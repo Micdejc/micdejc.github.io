@@ -416,7 +416,7 @@ body.cyberquiz-modal-open {
 .cyberquiz-root .cq-stats {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 3px;
+    gap: 4px;
 
     align-self: center;
 }
@@ -565,7 +565,7 @@ body.cyberquiz-modal-open {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 5px;
+    gap: 1px;
     position: relative;
 }
 
@@ -1941,7 +1941,7 @@ body.cyberquiz-modal-open {
     .cyberquiz-root .cq-stats {
         width: 100%;
         max-width: 440px;
-        gap: 0px;
+        gap: 1px;
     }
 
     .cyberquiz-root .cq-bottom-grid {
@@ -2127,7 +2127,7 @@ body.cyberquiz-modal-open {
     }
 
     .cyberquiz-root .cq-stats {
-        gap: 0px;
+        gap: 1px;
     }
 }
 
