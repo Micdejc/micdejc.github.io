@@ -2037,7 +2037,7 @@ body.cyberquiz-modal-open {
 
     .cyberquiz-root .cq-overview-stats {
         justify-content: space-between;
-        gap: 2px;
+        gap: 5px;
     }
 
     .cyberquiz-root .cq-overview-stats strong {
@@ -2045,7 +2045,7 @@ body.cyberquiz-modal-open {
     }
 
     .cyberquiz-root .cq-overview-stats span {
-        font-size: 0.60rem;
+        font-size: 0.62rem;
     }
 
     .cyberquiz-root .career-levels {
