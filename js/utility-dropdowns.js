@@ -204,14 +204,6 @@
            button.classList.add("active");
            button.setAttribute("aria-expanded", "true");
    
-           // Position the tooltip above the selected statistic.
-           const rect = stat.getBoundingClientRect();
-   
-           message.style.position = "fixed";
-           message.style.left =
-               `${rect.left + rect.width / 2}px`;
-   
-           message.style.top = `${rect.top - 10}px`;
        });
    
        // Close when the viewport changes.
