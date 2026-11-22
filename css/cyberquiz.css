@@ -606,14 +606,12 @@ body.cyberquiz-modal-open {
 ======================================== */
 
 .cyberquiz-root .cq-stat-tooltip-message {
-    position: fixed;
-    z-index: 99999;
+    position: relative;
+    z-index: 10;
 
-    transform: translate(-50%, -100%);
-
-    width: max-content;
-    max-width: min(280px, 85vw);
-
+    width: fit-content;
+    max-width: min(480px, 90%);
+    margin: 12px auto 0;
     padding: 10px 14px;
 
     background: var(--surface);
@@ -646,7 +644,7 @@ body.cyberquiz-modal-open {
 
 /* Hide tooltip */
 .cyberquiz-root .cq-stat-tooltip-message[hidden] {
-    display: none;
+    display: none !important;
 }
 
 /* =========================================================
