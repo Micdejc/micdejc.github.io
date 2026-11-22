@@ -222,9 +222,62 @@
    }
 
 
+   
+   /* ========================================
+      DAILY CYBER TIP
+   ======================================== */
+   
+   function displayDailyTip() {
+   
+       const tips = [
+           {
+               title: "Start with the fundamentals.",
+               description: "Build a solid foundation before progressing to more advanced topics."
+           },
+           {
+               title: "Complete your missions.",
+               description: "Work through questions at each rank and accumulate XP towards your next milestone."
+           },
+           {
+               title: "Don't rush through questions.",
+               description: "Take time to understand each scenario and consider why an answer is correct."
+           },
+           {
+               title: "Use your hints wisely.",
+               description: "Save your hint credits for questions where you genuinely need a little guidance."
+           },
+           {
+               title: "Keep your streak alive.",
+               description: "Challenge yourself to maintain consecutive correct answers and earn additional hints."
+           },
+           {
+               title: "Take the Daily Challenge.",
+               description: "Return every day for ten additional questions and an opportunity to earn more XP."
+           },
+           {
+               title: "Read the explanations.",
+               description: "Even when you get an answer right, the explanation can reinforce your understanding."
+           },
+           {
+               title: "Learn from mistakes.",
+               description: "Every incorrect answer is an opportunity to identify a knowledge gap and improve."
+           }
+       ];
+   
+       const tip = tips[Math.floor(Math.random() * tips.length)];
+   
+       document.getElementById('cq-tip-text').textContent = tip.title;
+       document.getElementById('cq-tip-description').textContent = tip.description;
+   }
+
+
+
     // Initialise DLN help independently of navigation dropdowns.
     initialiseDLNStatHelp();
     initialiseCyberQuizzyStatHelp();
+
+    // Display daily tip
+    displayDailyTip();
 
    
     /* ========================================
