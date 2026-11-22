@@ -631,7 +631,7 @@ body.cyberquiz-modal-open {
     /*box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);*/
 }
 
-/* Downward-pointing arrow */
+/* Downward-pointing arrow fill */
 .cyberquiz-root .cq-stat-tooltip-message::after {
     content: "";
     position: absolute;
@@ -648,6 +648,19 @@ body.cyberquiz-modal-open {
         var(--primary) 7%,
         var(--surface)
     ) transparent transparent;;
+}
+
+/* Downward-pointing arrow outline */
+.cyberquiz-root .cq-stat-tooltip-message::before {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+
+    border-width: 8px 8px 0;
+    border-style: solid;
+    border-color: var(--border) transparent transparent;
 }
 
 /* Hide tooltip */
