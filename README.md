@@ -76,6 +76,7 @@ micdejc.github.io/
 │   ├── cyberquiz.js
 │   ├── question.js
 │   ├── blog-posts.js
+│   ├── daily-tips.js
 │   ├── blog-data.txt
 │   └── search.js
 │
@@ -1089,6 +1090,7 @@ The website should remain:
 | Cyber quiz JavaScript  | `js/cyberquiz.js`        |
 | Cyber quiz Database    | `js/question.js`         |
 | Blog JavaScript        | `js/blog.js`             |
+| Daily tip JavaScript   | `js/daily-tips.js`             |
 | Profile assets         | `assets/`                |
 | News images            | `assets/news/`           |
 | Feature logos          | `assets/features/`       |
