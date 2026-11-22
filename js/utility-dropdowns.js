@@ -103,9 +103,9 @@
         });
     }
 
-   /* ========================================
+    /* ========================================
       CYBERQUIZZY STATISTICS TOOLTIPS
-      Uses one centralised message container
+      Centralised tooltip message container
    ======================================== */
    
    function closeCyberQuizzyStatHelp() {
@@ -114,6 +114,7 @@
            "cqStatTooltipMessage"
        );
    
+       // Reset all tooltip buttons.
        document.querySelectorAll(
            ".cyberquiz-root .cq-tooltip-trigger"
        ).forEach((button) => {
@@ -121,6 +122,7 @@
            button.setAttribute("aria-expanded", "false");
        });
    
+       // Hide and clear the centralised message.
        if (message) {
            message.hidden = true;
            message.textContent = "";
@@ -135,12 +137,14 @@
    
        if (!message) return;
    
+       // Event delegation supports dynamically added content.
        document.addEventListener("click", (event) => {
    
            const button = event.target.closest(
                ".cyberquiz-root .cq-tooltip-trigger"
            );
    
+           // Clicking outside a tooltip button closes it.
            if (!button) {
                closeCyberQuizzyStatHelp();
                return;
@@ -149,37 +153,53 @@
            const wasExpanded =
                button.getAttribute("aria-expanded") === "true";
    
+           // Close any previously displayed tooltip.
            closeCyberQuizzyStatHelp();
    
+           // Clicking the active button closes its tooltip.
            if (wasExpanded) return;
    
-           // Activate selected button.
+           // Activate the selected button.
            button.classList.add("active");
            button.setAttribute("aria-expanded", "true");
    
-           // Set tooltip message.
+           // Display the selected explanation.
            message.textContent = button.dataset.tooltip || "";
            message.hidden = false;
    
-           // Position tooltip above the selected statistic.
+           // Find the statistic containing the clicked button.
            const stat = button.closest(
                ".cq-overview-stats > div"
            );
    
-           if (!stat) return;
+           if (!stat) {
+               closeCyberQuizzyStatHelp();
+               return;
+           }
    
+           // Calculate the statistic's position.
            const rect = stat.getBoundingClientRect();
    
+           // Position the tooltip above the selected statistic.
            message.style.left =
                `${rect.left + rect.width / 2 + window.scrollX}px`;
    
            message.style.top =
                `${rect.top + window.scrollY - 10}px`;
        });
-
-       // Reposition the tooltip when the page moves.
-       window.addEventListener("resize", closeCyberQuizzyStatHelp);
-       window.addEventListener("scroll", closeCyberQuizzyStatHelp, true);
+   
+       // Close the tooltip when the viewport changes.
+       window.addEventListener(
+           "resize",
+           closeCyberQuizzyStatHelp
+       );
+   
+       // Close the tooltip when scrolling.
+       window.addEventListener(
+           "scroll",
+           closeCyberQuizzyStatHelp,
+           true
+       );
    }
 
     // Initialise DLN help independently of navigation dropdowns.
