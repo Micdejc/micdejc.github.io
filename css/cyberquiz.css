@@ -872,6 +872,8 @@ body.cyberquiz-modal-open {
 .cq-career-screen {
     padding: 24px;
     animation: cq-screen-enter .35s ease;
+    border: 1px solid var(--border);
+    border-radius: 20px;
 }
 
 #cq-quiz-screen[hidden],
