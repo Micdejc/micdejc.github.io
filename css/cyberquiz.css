@@ -678,17 +678,21 @@ body.cyberquiz-modal-open {
     overflow: hidden;
     margin: 22px 0;
     padding: 20px 22px;
-    border: 1px solid rgba(91, 164, 221, 0.25);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--primary);
     border-radius: 16px;
-    background:
-        linear-gradient(120deg,
-            rgba(27, 55, 83, 0.96),
-            rgba(19, 37, 60, 0.98));
-    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.13);
+
+    background: linear-gradient(
+        120deg,
+        var(--surface),
+        var(--surface-alt)
+    );
+
+    box-shadow: var(--shadow);
     animation: cq-tip-enter 0.65s ease both;
 }
 
-/* Subtle decorative glow */
+/* Subtle decorative background glow */
 .cq-daily-tip::before {
     content: "";
     position: absolute;
@@ -697,7 +701,8 @@ body.cyberquiz-modal-open {
     width: 150px;
     height: 150px;
     border-radius: 50%;
-    background: rgba(80, 164, 225, 0.10);
+    background: var(--accent);
+    opacity: 0.08;
     filter: blur(28px);
     pointer-events: none;
 }
@@ -709,6 +714,7 @@ body.cyberquiz-modal-open {
     gap: 12px;
 }
 
+/* Lightbulb container */
 .cq-tip-icon {
     display: flex;
     align-items: center;
@@ -717,12 +723,12 @@ body.cyberquiz-modal-open {
     width: 42px;
     height: 42px;
     border-radius: 12px;
-    background: rgba(255, 207, 102, 0.13);
-    border: 1px solid rgba(255, 207, 102, 0.22);
-    animation: cq-tip-glow 3s ease-in-out infinite;
+
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
 }
 
-/* Lightbulb animation */
+/* Animated lightbulb */
 .cq-tip-icon span {
     display: inline-block;
     font-size: 21px;
@@ -731,7 +737,7 @@ body.cyberquiz-modal-open {
 
 .cq-tip-heading h3 {
     margin: 0;
-    color: #f4c96b;
+    color: var(--primary);
     font-size: 0.76rem;
     font-weight: 800;
     letter-spacing: 1.2px;
@@ -739,22 +745,25 @@ body.cyberquiz-modal-open {
 
 .cq-tip-heading p {
     margin: 4px 0 0;
-    color: #b6c9dc;
+    color: var(--muted);
     font-size: 0.76rem;
 }
 
+/* Daily insight label */
 .cq-tip-label {
     margin-left: auto;
     padding: 5px 9px;
-    border: 1px solid rgba(91, 190, 151, 0.3);
+    border: 1px solid var(--accent);
     border-radius: 20px;
-    color: #8de0b8;
+    color: var(--accent);
+    background: var(--surface);
     font-size: 0.62rem;
     font-weight: 700;
     letter-spacing: 0.7px;
     white-space: nowrap;
 }
 
+/* Tip content */
 .cq-tip-content {
     position: relative;
     margin-top: 19px;
@@ -762,7 +771,7 @@ body.cyberquiz-modal-open {
 
 .cq-tip-content h4 {
     margin: 0 0 7px;
-    color: #ffffff;
+    color: var(--text);
     font-size: 1.08rem;
     font-weight: 750;
     line-height: 1.4;
@@ -771,16 +780,19 @@ body.cyberquiz-modal-open {
 .cq-tip-content p {
     margin: 0;
     max-width: 650px;
-    color: #d0ddea;
+    color: var(--muted);
     font-size: 0.88rem;
     line-height: 1.65;
 }
 
+/* Animated sparkle */
 .cq-tip-sparkle {
-    color: #f4c96b;
+    color: var(--accent);
     font-size: 18px;
     animation: cq-tip-sparkle 2.5s ease-in-out infinite;
 }
+
+/* ANIMATIONS */
 
 /* Entrance animation */
 @keyframes cq-tip-enter {
@@ -795,18 +807,7 @@ body.cyberquiz-modal-open {
     }
 }
 
-/* Gentle icon glow */
-@keyframes cq-tip-glow {
-    0%, 100% {
-        box-shadow: 0 0 0 rgba(255, 207, 102, 0);
-    }
-
-    50% {
-        box-shadow: 0 0 15px rgba(255, 207, 102, 0.18);
-    }
-}
-
-/* Sparkle animation */
+/* Lightbulb and sparkle animation */
 @keyframes cq-tip-sparkle {
     0%, 100% {
         opacity: 0.65;
@@ -819,7 +820,8 @@ body.cyberquiz-modal-open {
     }
 }
 
-/* Mobile adjustments */
+/* RESPONSIVE DESIGN */
+
 @media (max-width: 480px) {
     .cq-daily-tip {
         padding: 16px;
@@ -839,10 +841,11 @@ body.cyberquiz-modal-open {
     }
 }
 
-/* Respect reduced-motion preferences */
+/* ACCESSIBILITY */
+
 @media (prefers-reduced-motion: reduce) {
     .cq-daily-tip,
-    .cq-tip-icon,
+    .cq-tip-icon span,
     .cq-tip-sparkle {
         animation: none !important;
     }
