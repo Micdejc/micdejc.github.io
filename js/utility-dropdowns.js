@@ -102,8 +102,52 @@
         });
     }
 
+   /* ========================================
+      CYBERQUIZZY STATISTICS TOOLTIPS
+   ======================================== */
+   
+   function closeCyberQuizzyStatHelp() {
+       document.querySelectorAll(
+           ".cyberquiz-root .cq-tooltip-trigger"
+       ).forEach((button) => {
+           button.classList.remove("active");
+           button.setAttribute("aria-expanded", "false");
+       });
+   }
+   
+   function initialiseCyberQuizzyStatHelp() {
+   
+       // Event delegation supports dynamically added content.
+       document.addEventListener("click", (event) => {
+   
+           const button = event.target.closest(
+               ".cyberquiz-root .cq-tooltip-trigger"
+           );
+   
+           // Clicking outside the tooltips closes them.
+           if (!button) {
+               closeCyberQuizzyStatHelp();
+               return;
+           }
+   
+           const wasExpanded =
+               button.getAttribute("aria-expanded") === "true";
+   
+           // Close all other statistic tooltips.
+           closeCyberQuizzyStatHelp();
+   
+           // Clicking the active button closes its tooltip.
+           if (wasExpanded) return;
+   
+           // Open the selected tooltip.
+           button.classList.add("active");
+           button.setAttribute("aria-expanded", "true");
+       });
+   }
+
     // Initialise DLN help independently of navigation dropdowns.
     initialiseDLNStatHelp();
+    initialiseCyberQuizzyStatHelp();
 
    
     /* ========================================
@@ -195,6 +239,8 @@
 
         // Close DLN statistics help.
         closeDLNStatHelp();
+       // Close CyberQuizzy statistics tooltips.
+        closeCyberQuizzyStatHelp();
 
         // Close the open utility dropdown.
         const openUtilityDropdown = document.querySelector(
