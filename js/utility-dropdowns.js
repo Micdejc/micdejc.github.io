@@ -4,6 +4,7 @@
    Insights, Community
    Utility menus: Tools and Explore
    DLN statistics help
+   CyberQuizzy statictics tooltip
 ======================================== */
 
 (() => {
