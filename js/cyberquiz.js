@@ -36,7 +36,7 @@ export function initCyberQuiz() {
     ];
 
     //const ROLE = CAREER_ROLES[0];
-    const ROLE = null;
+    //const ROLE = null;
     
     // For each rank, we have the most common job titles that the data bank support.
     const RANKS = [
@@ -374,6 +374,71 @@ export function initCyberQuiz() {
     ];
 
 
+    // ========================================
+    // CAREER PATHWAY SELECTION
+    // ========================================
+
+    const careerScreen = $('cq-career-screen');
+    const quizScreen = $('cq-quiz-screen');
+    const careerSelect = $('cq-career-role');
+    const careerStart = $('cq-career-start');
+    const careerDescription = $('cq-career-description-text');
+
+    let ROLE = null;
+
+    function showCareerSelection() {
+        ROLE = null;
+
+        careerSelect.value = '';
+
+        careerDescription.textContent =
+            'Choose a pathway to discover the career opportunities and skills you will develop.';
+
+        careerStart.disabled = true;
+
+        careerScreen.hidden = false;
+        quizScreen.hidden = true;
+    }
+
+    function showQuizInterface() {
+        if (!ROLE || !CAREER_ROLES.includes(ROLE)) return;
+
+        careerScreen.hidden = true;
+        quizScreen.hidden = false;
+    }
+
+    function initCareerSelection() {
+        if (!careerScreen || !quizScreen || !careerSelect ||
+            !careerStart || !careerDescription) return;
+
+        careerSelect.addEventListener('change', () => {
+            ROLE = careerSelect.value;
+
+            const career = RANKS[0].careerPaths.find(
+                item => item.role === ROLE
+            );
+
+            careerDescription.textContent = career
+                ? `${career.title}: ${career.description}`
+                : 'Career information unavailable.';
+
+            careerStart.disabled = !ROLE;
+        });
+
+        careerStart.addEventListener('click', () => {
+            if (!ROLE) return;
+
+            showQuizInterface();
+
+            // Your existing quiz-start logic goes here.
+        });
+
+        showCareerSelection();
+    }
+
+    initCareerSelection();
+
+    
     /*
      * =====================================================
      * CAREER PROGRESSION AND REWARD CONFIGURATION
