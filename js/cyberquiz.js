@@ -1754,7 +1754,7 @@ export function initCyberQuiz() {
             if (Number.isFinite(reward) && reward > 0) {
                 state.xp += reward;
                 sessionXP += reward;
-                toast(`🏆 Daily streak milestone! ${state.dailyStreak.count} consecutive days completed!`);
+                toast(`🎯 Daily streak milestone! ${state.dailyStreak.count} consecutive days completed!`);
             }
         }
     }
