@@ -385,7 +385,7 @@ body.cyberquiz-modal-open {
 
 .cq-share-button {
     padding: 9px 13px;
-    border: 1px solid var(--border);
+    border: 2px solid var(--border);
     border-radius: 8px;
     background: var(--surface);
     color: var(--text);
