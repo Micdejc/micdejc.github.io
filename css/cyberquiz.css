@@ -385,10 +385,10 @@ body.cyberquiz-modal-open {
 
 .cq-share-button {
     padding: 9px 13px;
-    border: 1px solid var(--cq-border);
+    border: 1px solid var(--border);
     border-radius: 8px;
-    background: var(--cq-card);
-    color: var(--cq-text);
+    background: var(--surface);
+    color: var(--text);
     cursor: pointer;
     transition: all 0.25s ease;
 }
@@ -404,9 +404,9 @@ body.cyberquiz-modal-open {
     right: 0;
     min-width: 160px;
     padding: 7px;
-    border: 1px solid var(--cq-border);
+    border: 1px solid var(--border);
     border-radius: 10px;
-    background: var(--cq-card);
+    background: var(--surface);
     box-shadow: 0 5px 20px rgba(0,0,0,.15);
     z-index: 1000;
 }
@@ -423,7 +423,7 @@ body.cyberquiz-modal-open {
     border: none;
     border-radius: 6px;
     background: transparent;
-    color: var(--cq-text);
+    color: var(--text);
     font: inherit;
     font-size: .9rem;
     text-decoration: none;
@@ -433,7 +433,7 @@ body.cyberquiz-modal-open {
 
 .cq-share-menu a:hover,
 .cq-share-menu button:hover {
-    background: var(--cq-hover);
+    background: var(--primary);
 }
 
 .cq-share-prompt {
@@ -447,7 +447,7 @@ body.cyberquiz-modal-open {
 
 .cq-share-prompt > span {
     font-size: 0.88rem;
-    color: var(--cq-muted);
+    color: var(--muted);
 }
 
 .cq-share-container {
