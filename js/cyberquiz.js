@@ -2207,8 +2207,118 @@ export function initCyberQuizModal() {
     });
 }
 
+
+
+export function initCyberQuizShare() {
+    const shareButton = document.getElementById('cqShareButton');
+    const shareMenu = document.getElementById('cqShareMenu');
+    const copyButton = document.getElementById('cqCopyShareLink');
+
+    if (!shareButton || !shareMenu || !copyButton) return;
+
+    // Page information
+    const pageUrl = window.location.href;
+    const pageTitle = 'CyberQuiz - Your Cybersecurity Journey';
+    const shareText = 'Enjoying CyberQuiz? Help us spread the word!';
+
+    const url = encodeURIComponent(pageUrl);
+    const text = encodeURIComponent(shareText);
+
+    // Social media sharing links
+    document.getElementById('cqShareLinkedIn').href =
+        `https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
+
+    document.getElementById('cqShareFacebook').href =
+        `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+
+    document.getElementById('cqShareX').href =
+        `https://twitter.com/intent/tweet?url=${url}&text=${text}`;
+
+    document.getElementById('cqShareWhatsApp').href =
+        `https://wa.me/?text=${text}%20${url}`;
+
+    // Dropdown controls
+    const toggleShareMenu = () => {
+        const isOpen = shareMenu.classList.toggle('active');
+        shareButton.setAttribute('aria-expanded', String(isOpen));
+    };
+
+    const closeShareMenu = () => {
+        shareMenu.classList.remove('active');
+        shareButton.setAttribute('aria-expanded', 'false');
+    };
+
+    // Share button
+    shareButton.addEventListener('click', async () => {
+
+        // Native sharing on supported devices
+        if (navigator.share) {
+            try {
+                await navigator.share({
+                    title: pageTitle,
+                    text: shareText,
+                    url: pageUrl
+                });
+
+            } catch (error) {
+                // Ignore user cancellation
+                if (error.name !== 'AbortError') {
+                    toggleShareMenu();
+                }
+            }
+
+        } else {
+            toggleShareMenu();
+        }
+    });
+
+    // Copy link
+    copyButton.addEventListener('click', async () => {
+        const copyText = copyButton.querySelector('span');
+
+        try {
+            await navigator.clipboard.writeText(pageUrl);
+
+            if (copyText) {
+                copyText.textContent = 'Link copied!';
+            }
+
+            // Restore original label
+            setTimeout(() => {
+                if (copyText) {
+                    copyText.textContent = 'Copy link';
+                }
+            }, 2000);
+
+            closeShareMenu();
+
+        } catch {
+            if (copyText) {
+                copyText.textContent = 'Unable to copy';
+            }
+        }
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', (event) => {
+        if (!shareButton.contains(event.target) &&
+            !shareMenu.contains(event.target)) {
+            closeShareMenu();
+        }
+    });
+
+    // Close dropdown with Escape key
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            closeShareMenu();
+        }
+    });
+}
+
+
 export function initCyberQuizApp() {
     initCyberQuiz();
     initCyberQuizModal();
+    initCyberQuizShare();
 }
 
