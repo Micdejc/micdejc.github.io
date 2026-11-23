@@ -334,6 +334,83 @@ body.cyberquiz-modal-open {
     letter-spacing: 0.12em;
 }
 
+
+
+/* =========================================================
+   SHARE BUTTON
+   ========================================================= */
+
+.cq-share-container {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.cq-share-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 9px 13px;
+    border: 1px solid var(--cq-border);
+    border-radius: 8px;
+    background: var(--cq-card);
+    color: var(--cq-text);
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.cq-share-button:hover {
+    transform: translateY(-2px);
+}
+
+.cq-share-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    min-width: 155px;
+    padding: 7px;
+    border: 1px solid var(--cq-border);
+    border-radius: 10px;
+    background: var(--cq-card);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+}
+
+.cq-share-menu.active {
+    display: flex;
+    flex-direction: column;
+}
+
+.cq-share-menu a,
+.cq-share-menu button {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    width: 100%;
+    padding: 9px;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--cq-text);
+    font: inherit;
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.cq-share-menu a:hover,
+.cq-share-menu button:hover {
+    background: var(--cq-hover);
+}
+
+@media (max-width: 480px) {
+
+    .cq-share-button {
+        padding: 8px 10px;
+    }
+}
+
+
 /* =========================================================
    6. CURRENT RANK AND EXPERIENCE PROGRESS
    ========================================================= */
