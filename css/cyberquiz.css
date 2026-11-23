@@ -442,7 +442,7 @@ body.cyberquiz-modal-open {
     justify-content: space-between;
     flex-wrap: wrap;
     gap: 12px;
-    margin-top: 16px;
+    margin: 16px 10px;
 }
 
 .cq-share-prompt > span {
