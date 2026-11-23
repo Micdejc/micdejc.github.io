@@ -434,6 +434,7 @@ body.cyberquiz-modal-open {
 .cq-share-menu a:hover,
 .cq-share-menu button:hover {
     background: var(--primary);
+    color: #fff;
 }
 
 .cq-share-prompt {
