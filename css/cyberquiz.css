@@ -2278,7 +2278,7 @@ body.cyberquiz-modal-open {
 
 @media (max-width: 600px) {
     .cyberquiz-modal {
-        padding: 8px;
+        padding: 5px;
     }
 
     .cyberquiz-modal .cyberquiz-dialog {
@@ -2287,7 +2287,7 @@ body.cyberquiz-modal-open {
     }
 
     .cyberquiz-root .cq-modal {
-        padding: 18px 13px;
+        padding: 13px 8px;
         border-radius: 18px;
     }
 
