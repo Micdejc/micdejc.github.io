@@ -376,7 +376,7 @@ body.cyberquiz-modal-open {
 
 .cyberquiz-root .cq-welcome-copy h2 {
     margin: 0;
-    font-size: 1.7rem;
+    font-size: 1.5rem;
 }
 
 .cyberquiz-root .cq-welcome-copy > p {
@@ -2368,7 +2368,7 @@ body.cyberquiz-modal-open {
     }
 
     .cyberquiz-root .cq-overview-stats span {
-        font-size: 0.62rem;
+        font-size: 0.60rem;
     }
 
     .cyberquiz-root .career-levels {
