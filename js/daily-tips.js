@@ -37,6 +37,30 @@ const DAILY_TIPS = [
     {
         title: "Learn from mistakes.",
         description: "Every incorrect answer is an opportunity to identify a knowledge gap and improve."
+    },
+    {
+        title: "Build consistent habits.",
+        description: "Make regular practice part of your learning routine."
+    },
+    {
+        title: "Revisit challenging topics.",
+        description: "Review difficult subjects to strengthen your understanding."
+    },
+    {
+        title: "Think like a professional.",
+        description: "Consider the risks and decisions behind each security scenario."
+    },
+    {
+        title: "Think beyond memorisation.",
+        description: "Develop the reasoning skills to tackle unfamiliar security challenges."
+    },
+    {
+        title: "Connect learning to careers.",
+        description: "Discover how your knowledge applies to real-world cybersecurity roles."
+    },
+    {
+        title: "Progress at your own pace.",
+        description: "Focus on understanding each level before moving forward."
     }
 ];
 
