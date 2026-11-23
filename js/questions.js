@@ -1,5 +1,5 @@
 /*
- * CyberQuiz question bank - role-based edition (1250 questions)
+ * CyberQuiz question bank - role-based edition (1500 questions)
  *
  * Required properties:
  * id, rank, role, topic, difficulty, q, options,
@@ -10,24 +10,25 @@
  * log excerpt, configuration, code or command output that the
  * question refers to; shown above or beside the question text)
  *
- * Roles (250 questions each):
- * const CAREER_ROLES = ['soc','pentest','grc','security-engineering','cloud-security'];
+ * Roles (250 questions each, six roles):
+ * const CAREER_ROLES = ['soc','pentest','grc','security-engineering','cloud-security','digital-forensics'];
  *
- * Rank levels (50 questions per role per rank, 250 per rank overall):
+ * Rank levels (50 questions per role per rank, 300 per rank overall):
  * 0 = Associate     1 = Professional   2 = Practitioner
  * 3 = Architect     4 = Expert
- * Total: 5 roles x 5 ranks x 50 questions = 1250 questions
+ * Total: 6 roles x 5 ranks x 50 questions = 1500 questions
  *
  * Ids: role-major in blocks of 250 (soc 1-250, pentest 251-500,
- * grc 501-750, security-engineering 751-1000, cloud-security 1001-1250);
+ * grc 501-750, security-engineering 751-1000, cloud-security 1001-1250,
+ * digital-forensics 1251-1500);
  * inside each role the ranks run 0 to 4 in blocks of 50.
  *
  * Question types: single-answer questions and "best answer" questions.
- * In the 172 best-answer questions (all marked BEST in q) two options are
+ * In the 188 best-answer questions (all marked BEST in q) two options are
  * defensible and only one is the BEST choice for the scenario; the
  * explanation (why) names the runner-up and says why it is weaker.
  *
- * Exhibits: 215 questions include an exhibit (logs, configurations,
+ * Exhibits: 244 questions include an exhibit (logs, configurations,
  * policies, reports, tables and command output).
  *
  * Pentest note: questions for the pentest role cover scoping, rules of
@@ -35,7 +36,7 @@
  * findings, and detection and governance; they contain no exploitation
  * procedures.
  *
- * Correct-answer positions are balanced: A=313, B=313, C=312, D=312
+ * Correct-answer positions are balanced: A=375, B=376, C=375, D=374
  * overall, and within each role and rank group of 50 each letter appears 12 or 13 times.
  *
  * Answer-length balance: in each role-rank group of 50 the correct option
@@ -9008,5 +9009,1784 @@ window.CYBERQUIZ_QUESTIONS = [
     options: ["Count how many servers are in the secondary region","Run the test only on paper, then record the result in the ticket","Map dependencies such as keys secrets and DNS for each service","Check the colour of the diagrams"],
     correct: 2, why: "Hidden dependencies break recovery when untested.",
     hint: "Map dependencies."
+  },
+  {
+    id: 1251, rank: 0, role: "digital-forensics", topic: "Purpose of Digital Forensics", difficulty: "BEGINNER",
+    q: "What is the main purpose of digital forensics?",
+    options: ["To replace the need for any incident response plan, as a general rule","To identify collect and analyse digital evidence properly","To remove all traces of an incident from the systems, in most cases","To decide which staff members should be dismissed"],
+    correct: 1, why: "Forensics recovers and interprets evidence in a way that others can verify.",
+    hint: "Evidence handling."
+  },
+  {
+    id: 1252, rank: 0, role: "digital-forensics", topic: "Chain of Custody Meaning", difficulty: "BEGINNER",
+    q: "What does chain of custody record?",
+    options: ["Who handled the evidence and when it changed hands","The names of the people who work in the same office","The colour and brand of the laptop that was seized","The price paid for the storage media at purchase"],
+    correct: 0, why: "An unbroken record shows the evidence was not altered or swapped.",
+    hint: "Who and when."
+  },
+  {
+    id: 1253, rank: 0, role: "digital-forensics", topic: "Write Blocker Role", difficulty: "BEGINNER",
+    q: "Why is a write blocker used when connecting a suspect drive?",
+    options: ["It stops any change being written to the original drive","It makes the copy of the drive run twice as fast","It removes deleted files from the drive for the examiner","It encrypts the drive, and nobody else can read it"],
+    correct: 0, why: "Blocking writes preserves the original state of the evidence.",
+    hint: "Read only."
+  },
+  {
+    id: 1254, rank: 0, role: "digital-forensics", topic: "Hash Value Use", difficulty: "BEGINNER",
+    q: "Why calculate a hash of a disk image?",
+    options: ["To find the owner of the computer that was imaged","To hide the contents from anyone who opens the file","To show later that the image has not changed","To compress the image and it takes less space"],
+    correct: 2, why: "A matching hash proves the data is identical to what was first acquired.",
+    hint: "Integrity check."
+  },
+  {
+    id: 1255, rank: 0, role: "digital-forensics", topic: "Volatile Data Example", difficulty: "BEGINNER",
+    q: "Which of these is volatile data on a running computer?",
+    options: ["Files saved on the hard disk","The contents of memory","Photos stored on a USB stick","A printed report in a drawer"],
+    correct: 1, why: "Memory is lost when the computer is powered off.",
+    hint: "Lost at power off."
+  },
+  {
+    id: 1256, rank: 0, role: "digital-forensics", topic: "First Responder Action", difficulty: "BEGINNER",
+    q: "A suspect laptop is found switched on and unlocked. What is the BEST first action for the first responder?",
+    options: ["Browse the files to see what the user was doing","Close all open programs, and shut the laptop down at once, where that is practical","Photograph the screen and record what is running before any change","Plug in a USB drive and copy the documents folder, as a general rule"],
+    correct: 2, why: "Shutting down at once is the runner-up as it feels safe, but it destroys volatile data that may be the only copy of key evidence.",
+    hint: "Document before touching."
+  },
+  {
+    id: 1257, rank: 0, role: "digital-forensics", topic: "Evidence Bag Labelling", difficulty: "BEGINNER",
+    q: "What information should an evidence label carry?",
+    options: ["Only the brand name of the device inside the bag","The personal opinion of the collector about the case, in most cases","Only the price of the device when it was bought","Item number description date time and the name of the collector"],
+    correct: 3, why: "Clear labelling lets anyone identify and track the item.",
+    hint: "Identify the item."
+  },
+  {
+    id: 1258, rank: 0, role: "digital-forensics", topic: "Forensic Copy vs Backup", difficulty: "BEGINNER",
+    q: "How does a forensic image differ from an ordinary backup?",
+    options: ["It copies only the files that the user chose to keep","It copies every sector including deleted and unused space","It is stored only in the cloud to save disk space","It cannot be verified after it has been made"],
+    correct: 1, why: "A bit-for-bit copy preserves hidden and deleted data.",
+    hint: "Every sector."
+  },
+  {
+    id: 1259, rank: 0, role: "digital-forensics", topic: "Deleted File Behaviour", difficulty: "BEGINNER",
+    q: "What usually happens when a file is deleted in a normal way?",
+    options: ["The data is erased from the disk at that moment","The data is encrypted using the user's password","The data is moved to a secret folder on the network","The space is marked as free but the data often remains"],
+    correct: 3, why: "The data stays until it is overwritten which makes recovery possible.",
+    hint: "Marked not erased."
+  },
+  {
+    id: 1260, rank: 0, role: "digital-forensics", topic: "File Timestamp Exhibit", difficulty: "BEGINNER",
+    exhibit: "File: Q3-report.docx\nCreated:   2025-10-02 09:14:31\nModified:  2025-10-09 17:48:02\nAccessed:  2025-10-10 08:00:12\nSize: 48,120 bytes",
+    q: "What does this file listing suggest about the report file?",
+    options: ["It was created after it was last modified","It was never opened or changed","It was modified after it was created","It was copied from another computer on that day"],
+    correct: 2, why: "A modified time later than the created time shows later changes.",
+    hint: "Compare the dates."
+  },
+  {
+    id: 1261, rank: 0, role: "digital-forensics", topic: "Legal Authority to Search", difficulty: "BEGINNER",
+    q: "Why should an examiner confirm legal authority before examining a device?",
+    options: ["Evidence taken without authority may be unusable","Authority is needed only when the device is new, and has never been used before","Authority makes the examination run more quickly on the examiner's workstation","Authority is never needed for a company laptop as the employer owns the device"],
+    correct: 0, why: "Proper authorisation protects both the examiner and the case.",
+    hint: "Authority first."
+  },
+  {
+    id: 1262, rank: 0, role: "digital-forensics", topic: "Documentation Habit", difficulty: "BEGINNER",
+    q: "Why should an examiner keep detailed contemporaneous notes?",
+    options: ["So that the case can be closed without any review by a second examiner","So that the final report can be made much shorter for the busy managers","So every step can be explained and repeated later","So that the notes can be shared with the suspect before the interview starts"],
+    correct: 2, why: "Good notes make findings credible and reproducible.",
+    hint: "Write as you go."
+  },
+  {
+    id: 1263, rank: 0, role: "digital-forensics", topic: "Working on Copies", difficulty: "BEGINNER",
+    q: "Why should analysis be done on a copy and not the original evidence?",
+    options: ["It protects the original from accidental change","It avoids the need to record any hash value","It makes the analysis finish in half the time","It lets the examiner delete files that are not needed"],
+    correct: 0, why: "The original must stay unchanged as the reference.",
+    hint: "Protect the original."
+  },
+  {
+    id: 1264, rank: 0, role: "digital-forensics", topic: "Metadata Meaning", difficulty: "BEGINNER",
+    q: "What is metadata in a digital file?",
+    options: ["The main text that is visible on the page","The icon that is shown on the desktop","The password that protects the file, as a general rule","Data about the file such as author dates and device"],
+    correct: 3, why: "Metadata can show how and when a file was created or changed.",
+    hint: "Data about data."
+  },
+  {
+    id: 1265, rank: 0, role: "digital-forensics", topic: "Email Header Exhibit", difficulty: "BEGINNER",
+    exhibit: "Received: from mail.example.net (203.0.113.8) by mx1.corp.example with SMTP; Mon, 03 Nov 2025 09:12:40 +0000\nReceived: from [10.4.4.19] by mail.example.net; Mon, 03 Nov 2025 09:12:36 +0000\nFrom: Alex <alex@example.net>\nSubject: Invoice",
+    q: "Which part of this header most helps trace the route of the message?",
+    options: ["The font used in the body of the message, in most cases","The Subject line chosen by the sender, as a general rule","The Received lines showing each server that handled it","The signature block at the end of the message, as a general rule"],
+    correct: 2, why: "Received lines record the servers the message passed through.",
+    hint: "Follow the servers."
+  },
+  {
+    id: 1266, rank: 0, role: "digital-forensics", topic: "Order of Volatility", difficulty: "BEGINNER",
+    q: "Which source of evidence is BEST collected FIRST on a live system?",
+    options: ["Paper records in a filing cabinet","Memory and running processes","Printed network diagrams","Archived backups from last year"],
+    correct: 1, why: "Archived backups are the runner-up as they are valuable, but they do not change quickly while memory can be lost within seconds.",
+    hint: "Most fragile first."
+  },
+  {
+    id: 1267, rank: 0, role: "digital-forensics", topic: "Evidence Storage", difficulty: "BEGINNER",
+    q: "How should seized devices be stored before examination?",
+    options: ["In an open drawer in a shared office, as a general rule","With the suspect and they can keep them safe","In a car for convenience until needed, as a general rule","In a secure location with access limited, and recorded"],
+    correct: 3, why: "Controlled storage maintains integrity and custody.",
+    hint: "Secure and logged."
+  },
+  {
+    id: 1268, rank: 0, role: "digital-forensics", topic: "Photographing the Scene", difficulty: "BEGINNER",
+    q: "Why photograph a device and its connections before moving it?",
+    options: ["To record its original state and layout","To share pictures with the press, as a general rule","To make the case file look larger","To avoid labelling the cables, as a general rule"],
+    correct: 0, why: "Photos show how things were found.",
+    hint: "Record as found."
+  },
+  {
+    id: 1269, rank: 0, role: "digital-forensics", topic: "File Extension Mismatch", difficulty: "BEGINNER",
+    q: "A file named holiday.jpg opens as a program file. What does this suggest?",
+    options: ["The file is a normal picture","The file is damaged by the drive","The file belongs to the examiner","The extension may have been changed to hide the file type"],
+    correct: 3, why: "File signatures show the true type regardless of the name.",
+    hint: "Name versus content."
+  },
+  {
+    id: 1270, rank: 0, role: "digital-forensics", topic: "Browser History Value", difficulty: "BEGINNER",
+    q: "What can browser history help an investigator understand?",
+    options: ["The model of the router, as a general rule","The speed of the internet connection, as a general rule","The password of the user for each site, in most cases","Which sites were visited and roughly when"],
+    correct: 3, why: "Browsing records show user activity over time.",
+    hint: "Sites and times."
+  },
+  {
+    id: 1271, rank: 0, role: "digital-forensics", topic: "Time Zone Awareness", difficulty: "BEGINNER",
+    q: "Why must an examiner note the time zone setting of a system?",
+    options: ["The time zone sets the password rules that the users must follow each month","The time zone decides which files are deleted by the system at midnight","Timestamps may need converting for a correct timeline","The time zone changes the contents of the files that are stored on disk"],
+    correct: 2, why: "Misread time zones produce wrong sequences of events.",
+    hint: "Convert times."
+  },
+  {
+    id: 1272, rank: 0, role: "digital-forensics", topic: "Imaging Log Exhibit", difficulty: "BEGINNER",
+    exhibit: "Source: /dev/sdb  Size: 500107862016 bytes\nSource MD5: 9a1f3c0b77e4d2a8c5e61f09b3d7a412\nImage MD5:  9a1f3c0b77e4d2a8c5e61f09b3d7a412\nBad sectors: 0   Result: SUCCESS",
+    q: "What does this imaging log show about the acquisition?",
+    options: ["The image is different from the source drive","The imaging failed with read errors","The drive was not connected","The image hash matches the source hash"],
+    correct: 3, why: "Matching hashes confirm an exact copy.",
+    hint: "Compare hashes."
+  },
+  {
+    id: 1273, rank: 0, role: "digital-forensics", topic: "Mobile Device Isolation", difficulty: "BEGINNER",
+    q: "A suspect smartphone is on and connected to the network. What is the BEST step to preserve evidence?",
+    options: ["Reset it to factory settings to clear errors","Let it keep receiving messages and nothing is missed","Isolate it from the network using a shielded bag or airplane mode, as a first step","Turn it off and remove the battery at once, and review the outcome at the next monthly meeting"],
+    correct: 2, why: "Powering off is the runner-up as it stops changes, but it can lock the device and lose volatile data while network isolation stops remote wiping.",
+    hint: "Stop remote changes."
+  },
+  {
+    id: 1274, rank: 0, role: "digital-forensics", topic: "Role of an Examiner", difficulty: "BEGINNER",
+    q: "What is the main duty of a forensic examiner when giving findings?",
+    options: ["To report facts objectively within their expertise, in most cases","To avoid mentioning any evidence that does not fit the favoured theory","To support the side that has hired them and to avoid unhelpful facts","To guess what the suspect might have intended when they used the device"],
+    correct: 0, why: "Objectivity is central to credibility.",
+    hint: "Objective facts."
+  },
+  {
+    id: 1275, rank: 0, role: "digital-forensics", topic: "USB Device History", difficulty: "BEGINNER",
+    q: "What can system records show about USB devices?",
+    options: ["The contents of every device ever connected","Which devices were connected, and when","The passwords stored on the devices","The location where the devices were bought"],
+    correct: 1, why: "System logs record device identifiers and times.",
+    hint: "Device connection history."
+  },
+  {
+    id: 1276, rank: 0, role: "digital-forensics", topic: "Cloud Evidence Basics", difficulty: "BEGINNER",
+    q: "Why is evidence in cloud services harder to collect than on a local drive?",
+    options: ["The data cannot be copied in any way once it has been placed in the cloud","The data may be held by a provider in several places","The data is always deleted automatically after one day by every provider","The data is always encrypted with a key that only the examiner would hold"],
+    correct: 1, why: "Cloud data needs legal and provider cooperation.",
+    hint: "Held by others."
+  },
+  {
+    id: 1277, rank: 0, role: "digital-forensics", topic: "Network Logs Evidence", difficulty: "BEGINNER",
+    q: "What can firewall logs help establish in an investigation?",
+    options: ["The names of staff in the building, as a general rule","Which connections were allowed or blocked and when","The documents stored on the servers, as a general rule","The colour of the cabling"],
+    correct: 1, why: "Logs show communication patterns.",
+    hint: "Connections and times."
+  },
+  {
+    id: 1278, rank: 0, role: "digital-forensics", topic: "Hash Algorithm Choice", difficulty: "BEGINNER",
+    q: "Which hash type is preferred today for forensic integrity checks?",
+    options: ["SHA-256, in most cases","The file name in upper case","The date the file was created","A simple checksum of the file length"],
+    correct: 0, why: "Strong modern hashes resist collisions.",
+    hint: "Strong hash."
+  },
+  {
+    id: 1279, rank: 0, role: "digital-forensics", topic: "Report Reader", difficulty: "BEGINNER",
+    q: "Who should a forensic report be written for?",
+    options: ["Readers who are not technical such as managers or lawyers","Only the suspect","Only the vendor of the tools","Only other forensic examiners"],
+    correct: 0, why: "Findings must be understandable by decision makers.",
+    hint: "Plain language."
+  },
+  {
+    id: 1280, rank: 0, role: "digital-forensics", topic: "Recycle Bin Artefact", difficulty: "BEGINNER",
+    q: "What can a recycle bin record show an investigator?",
+    options: ["The user's passwords, in most cases","The language of the keyboard, in most cases","The speed of the disk, in most cases","Files the user deleted and when"],
+    correct: 3, why: "It keeps details of deleted items until emptied.",
+    hint: "Deleted items."
+  },
+  {
+    id: 1281, rank: 0, role: "digital-forensics", topic: "Evidence Transfer Exhibit", difficulty: "BEGINNER",
+    exhibit: "Item 007  Laptop (Dell, S/N 4F7K2)\n2025-11-03 10:20 collected by J. Ames -> evidence store (signed)\n2025-11-05 ??:?? evidence store -> examiner R. Cole (no signature)\n2025-11-06 15:00 examiner R. Cole -> lab (signed)",
+    q: "What is the problem with this transfer record?",
+    options: ["All transfers are signed and timed","There is no signature or time for the second hand-over","The item description is complete","The record is stored securely"],
+    correct: 1, why: "Gaps in a custody record weaken the evidence.",
+    hint: "Look for blanks."
+  },
+  {
+    id: 1282, rank: 0, role: "digital-forensics", topic: "Live vs Dead Acquisition", difficulty: "BEGINNER",
+    q: "What is a dead acquisition?",
+    options: ["Imaging memory of a running system","Imaging a drive from a powered-off system, in most cases","Copying files over email, then record the result in the ticket","Taking photos of the screen, and revisit the decision after the next release"],
+    correct: 1, why: "Dead acquisition avoids running the suspect system.",
+    hint: "Powered off."
+  },
+  {
+    id: 1283, rank: 0, role: "digital-forensics", topic: "Password Protected Files", difficulty: "BEGINNER",
+    q: "What is the best first approach to a password-protected file?",
+    options: ["Seek lawful ways to obtain the password, and keep a record, in most cases","Delete the file to avoid the problem, and revisit the decision after the next release","Ask the vendor to unlock it for free","Guess random words until it opens"],
+    correct: 0, why: "Methods must be lawful and documented.",
+    hint: "Lawful and recorded."
+  },
+  {
+    id: 1284, rank: 0, role: "digital-forensics", topic: "Privacy in Examinations", difficulty: "BEGINNER",
+    q: "How should an examiner treat personal data unrelated to the case?",
+    options: ["Share it with colleagues for fun, until the next scheduled review takes place","Copy it for later interest, and review the outcome at the next monthly meeting","Publish it in the report, and revisit the decision after the next release","Avoid viewing it more than necessary and protect it, in most cases"],
+    correct: 3, why: "Examinations should be proportionate and respect privacy.",
+    hint: "Minimise exposure."
+  },
+  {
+    id: 1285, rank: 0, role: "digital-forensics", topic: "Date Format Confusion", difficulty: "BEGINNER",
+    q: "Why can date formats cause errors in evidence?",
+    options: ["Dates are only used in emails","Dates cannot be stored in files","Different regions place the day, and month in a different order, in most cases","Dates are always in the same format worldwide"],
+    correct: 2, why: "Ambiguous formats may lead to wrong timelines.",
+    hint: "Day and month."
+  },
+  {
+    id: 1286, rank: 0, role: "digital-forensics", topic: "Chain of Events Timeline", difficulty: "BEGINNER",
+    q: "What is a timeline in an investigation?",
+    options: ["A list of tools by price","A list of users by name","An ordered record of events built from many sources, as a general rule","A list of files by size"],
+    correct: 2, why: "Timelines show how an incident developed.",
+    hint: "Events in order."
+  },
+  {
+    id: 1287, rank: 0, role: "digital-forensics", topic: "Photograph of Serial Numbers", difficulty: "BEGINNER",
+    q: "Why record serial numbers of seized devices?",
+    options: ["To identify each item uniquely","To impress the court, as a general rule","To make the label colourful","To avoid hashing, in most cases"],
+    correct: 0, why: "Unique identifiers prevent confusion between similar items.",
+    hint: "Unique id."
+  },
+  {
+    id: 1288, rank: 0, role: "digital-forensics", topic: "Seizure Scope Exhibit", difficulty: "BEGINNER",
+    exhibit: "Warrant: Items: laptop (Dell Latitude S/N 4F7K2)\nFound at scene: laptop, tablet (iPad), two USB drives\nWarrant covers: laptop only",
+    q: "The warrant covers the suspect's laptop only. A tablet is found next to it. What is the BEST action?",
+    options: ["Take it and delete the data it holds, until the next scheduled review takes place","Document it and seek authority before examining it, as a general rule","Examine it as it is in the same room","Leave it with the suspect, and say nothing, and review the outcome at the next monthly meeting"],
+    correct: 1, why: "Examining it is the runner-up as it seems practical, but acting outside authority risks the whole case.",
+    hint: "Stay in scope."
+  },
+  {
+    id: 1289, rank: 0, role: "digital-forensics", topic: "Encryption at the Scene", difficulty: "BEGINNER",
+    q: "A laptop with full-disk encryption is found switched on. Why is this important?",
+    options: ["The laptop must be wiped","The encryption will remove all evidence","Powering it off may make the data unreadable","The laptop is automatically safe"],
+    correct: 2, why: "Live data may be needed before the encryption key is lost.",
+    hint: "Key in memory."
+  },
+  {
+    id: 1290, rank: 0, role: "digital-forensics", topic: "Anti-Forensic Awareness", difficulty: "BEGINNER",
+    q: "What is an anti-forensic technique?",
+    options: ["A way to write reports","A way to label evidence bags, as a general rule","A tool that speeds up analysis, as a general rule","An action intended to hide or destroy evidence"],
+    correct: 3, why: "Examiners must consider attempts to hide traces.",
+    hint: "Hiding traces."
+  },
+  {
+    id: 1291, rank: 0, role: "digital-forensics", topic: "Log Retention Gap", difficulty: "BEGINNER",
+    exhibit: "2025-11-03 08:59:58 service start\n2025-11-03 09:00:12 login ok user=ana\n[no entries]\n2025-11-04 03:41:05 log service start\n2025-11-04 03:41:11 login ok user=svc-admin",
+    q: "What does a gap in a system's log record suggest?",
+    options: ["The logs are always perfect","The logs may have been cleared or the system was off","The logs belong to another system","The gap has no meaning"],
+    correct: 1, why: "Gaps may signal tampering or downtime and need explaining.",
+    hint: "Look at the gap."
+  },
+  {
+    id: 1292, rank: 0, role: "digital-forensics", topic: "Handling of Original Media", difficulty: "BEGINNER",
+    q: "Where should original media be kept once imaged?",
+    options: ["On the examiner's desk for convenience, as a general rule","In the suspect's bag","In the recycling","In secure storage with the custody record updated"],
+    correct: 3, why: "Originals may be needed again by the court.",
+    hint: "Secure storage."
+  },
+  {
+    id: 1293, rank: 0, role: "digital-forensics", topic: "Peer Review Value", difficulty: "BEGINNER",
+    q: "Why is peer review useful in forensic work?",
+    options: ["It helps catch errors and strengthens confidence in results","It removes the need for notes","It delays the work for no reason","It lets the examiner skip validation"],
+    correct: 0, why: "A second view improves quality.",
+    hint: "Second pair of eyes."
+  },
+  {
+    id: 1294, rank: 0, role: "digital-forensics", topic: "Screenshots as Evidence", difficulty: "BEGINNER",
+    q: "What is a limitation of using screenshots alone as evidence?",
+    options: ["They are always more reliable than source data","They contain the full disk contents","They cannot be printed","They can be edited, and lack underlying metadata"],
+    correct: 3, why: "Source artefacts are stronger than images of them.",
+    hint: "Easy to alter."
+  },
+  {
+    id: 1295, rank: 0, role: "digital-forensics", topic: "Case Closing", difficulty: "BEGINNER",
+    q: "What should happen to evidence when a case is closed?",
+    options: ["It is sold","It is left in a drawer indefinitely","It is returned or destroyed following the legal rules, and recorded","It is given to the press"],
+    correct: 2, why: "Disposition must follow policy and law.",
+    hint: "Follow the rules."
+  },
+  {
+    id: 1296, rank: 0, role: "digital-forensics", topic: "Authority for Company Devices", difficulty: "BEGINNER",
+    q: "What should an employer have in place to examine staff devices lawfully?",
+    options: ["A clear policy and legal basis communicated to staff","A promise to the staff to never look, as a general rule","Only a verbal rule","No policy as the devices are owned by the company"],
+    correct: 0, why: "Policies set expectations and legal grounds.",
+    hint: "Policy and basis."
+  },
+  {
+    id: 1297, rank: 0, role: "digital-forensics", topic: "Examiner Workstation Hygiene", difficulty: "BEGINNER",
+    q: "Why should the examiner's own workstation be kept clean and updated?",
+    options: ["To remove the need to validate the tools that are used","To allow other staff to store files on the same machine, as a general rule","To avoid contaminating evidence and to keep tools reliable, in most cases","To make the screen look tidy for visitors to the lab"],
+    correct: 2, why: "A controlled workstation reduces the risk of errors and cross-contamination.",
+    hint: "Clean tools."
+  },
+  {
+    id: 1298, rank: 0, role: "digital-forensics", topic: "Slack Space Meaning", difficulty: "BEGINNER",
+    q: "What is slack space on a drive?",
+    options: ["A list of the programs that start with the system, as a general rule","A folder that holds the user's desktop items, in most cases","Unused space at the end of a file's last allocated block","A special area for the passwords of the users, in most cases"],
+    correct: 2, why: "Slack space can hold remnants of earlier data.",
+    hint: "Leftover space."
+  },
+  {
+    id: 1299, rank: 0, role: "digital-forensics", topic: "Search Term Scope", difficulty: "BEGINNER",
+    q: "Why should keyword searches be agreed with the case owner before starting?",
+    options: ["To avoid recording which terms were used","To keep the examination focused and within authority","To allow the examiner to read every file that is found","To make the search results appear sooner on screen"],
+    correct: 1, why: "Scope control protects privacy and keeps findings relevant.",
+    hint: "Agree the scope."
+  },
+  {
+    id: 1300, rank: 0, role: "digital-forensics", topic: "Registry Last Write", difficulty: "BEGINNER",
+    q: "What can a last-write time on a configuration record indicate?",
+    options: ["When the user was last paid by the company","When that item was last changed on the system","When the computer was first manufactured at the factory","When the network cable was installed in the building"],
+    correct: 1, why: "Change times help place activity on a timeline.",
+    hint: "When changed."
+  },
+  {
+    id: 1301, rank: 1, role: "digital-forensics", topic: "Prefetch Artefact", difficulty: "INTERMEDIATE",
+    q: "What can prefetch records on a Windows system help show?",
+    options: ["The size of the monitor that was attached to the computer in the office","The speed of the keyboard that the person used while they were at the desk","Which programs ran and roughly when","The passwords that the user typed into the logon screen of the system"],
+    correct: 2, why: "Prefetch files record program execution evidence.",
+    hint: "Program execution."
+  },
+  {
+    id: 1302, rank: 1, role: "digital-forensics", topic: "Shellbag Value", difficulty: "INTERMEDIATE",
+    q: "What do shellbag records help establish?",
+    options: ["That the folder was encrypted by the user with a key that the lab cannot see","That the folder was backed up by the company's central backup service last night","That the folder was emailed to an external address by the user of the machine","That a user browsed a folder that was later deleted"],
+    correct: 3, why: "Shellbags keep folder view settings that persist after deletion.",
+    hint: "Folder browsing."
+  },
+  {
+    id: 1303, rank: 1, role: "digital-forensics", topic: "Link File Evidence", difficulty: "INTERMEDIATE",
+    q: "What can a shortcut file created when opening a document show?",
+    options: ["The printer that the user chose when they printed the file on the network","The original path of the target file and its times, in most cases","The weather conditions in the city where the computer was being used that day","The password of the document that the user had set on it before closing it"],
+    correct: 1, why: "Link files preserve details of previously opened items.",
+    hint: "Opened files."
+  },
+  {
+    id: 1304, rank: 1, role: "digital-forensics", topic: "Jump List Use", difficulty: "INTERMEDIATE",
+    q: "What can jump lists tell an examiner?",
+    options: ["The balance of the user's bank account at the time that the file was opened","The model of the graphics card that is installed in the computer under review","Recently used files per program and when they were used","The list of all installed drivers"],
+    correct: 2, why: "Jump lists track recent items for each program.",
+    hint: "Recent files."
+  },
+  {
+    id: 1305, rank: 1, role: "digital-forensics", topic: "Volume Shadow Copies", difficulty: "INTERMEDIATE",
+    q: "Why are volume shadow copies useful to an examiner?",
+    options: ["They always contain the passwords of every account that has used the machine","They remove the need to image","They are created only by attackers who want to hide their activity on the system","They may hold earlier versions of changed files"],
+    correct: 3, why: "Shadow copies preserve snapshots of the file system.",
+    hint: "Older versions."
+  },
+  {
+    id: 1306, rank: 1, role: "digital-forensics", topic: "Master File Table Entry", difficulty: "INTERMEDIATE",
+    q: "What does an NTFS file system record entry usually contain?",
+    options: ["Attributes such as names times and data locations, in most cases","The email address of the user that is stored with every file they ever create","Only the colour of the file icon","The brand of the disk on which the file system is stored in the lab machine"],
+    correct: 0, why: "The record describes each file and its metadata.",
+    hint: "File record."
+  },
+  {
+    id: 1307, rank: 1, role: "digital-forensics", topic: "Event Log Interpretation", difficulty: "INTERMEDIATE",
+    q: "Which Windows event type records a successful interactive logon?",
+    options: ["Event 4624 in the Security log","Event 1 in the Print log that is written when a document is sent to a printer","Event 7 in the Disk log that is created when a drive reports a read error","Event 500 in the Fonts log that is recorded when a new font family is installed"],
+    correct: 0, why: "Security events record logon activity.",
+    hint: "Logon event."
+  },
+  {
+    id: 1308, rank: 1, role: "digital-forensics", topic: "Recovered File Carving", difficulty: "INTERMEDIATE",
+    q: "What is file carving?",
+    options: ["Printing files in colour and the examiner can attach them to the case notes","Deleting files that are unused, and the disk has more free space for the report","Recovering files from raw data using their signatures","Copying files from one folder to another using the names that the user gave them"],
+    correct: 2, why: "Carving works when file system records are missing.",
+    hint: "Use signatures."
+  },
+  {
+    id: 1309, rank: 1, role: "digital-forensics", topic: "Autostart Registry Locations", difficulty: "INTERMEDIATE",
+    q: "Why check run keys in the registry?",
+    options: ["They list the installed fonts only, and say nothing about programs that are run","They list the passwords for users","They list programs that start automatically","They list the monitors in use, and the screen resolution that each one had set"],
+    correct: 2, why: "Autostart locations are common persistence points.",
+    hint: "Autostart."
+  },
+  {
+    id: 1310, rank: 1, role: "digital-forensics", topic: "Acquisition Method Choice", difficulty: "INTERMEDIATE",
+    q: "A drive is failing and may stop working soon. What is the BEST acquisition approach?",
+    options: ["Run a full file system repair on the original drive before making any copy","Copy only the documents folder by hand, and the drive is used as little as possible","Image it first with a method that handles read errors, in most cases","Wait to see whether the drive recovers by itself over the next few days and then try"],
+    correct: 2, why: "A repair is the runner-up as it can make files readable again, but it writes to the original and may destroy evidence.",
+    hint: "Image before anything else."
+  },
+  {
+    id: 1311, rank: 1, role: "digital-forensics", topic: "Hash Mismatch Exhibit", difficulty: "INTERMEDIATE",
+    exhibit: "Source SHA-256: 3f2c9a11b7e0d4c58a96f01e2b4d7c3a9e8f6b5d4c3a2b1f0e9d8c7b6a5f4e3d\nImage  SHA-256: 3f2c9a11b7e0d4c58a96f01e2b4d7c3a9e8f6b5d4c3a2b1f0e9d8c7b6a5f4e3e\nBad sectors reported: 0",
+    q: "What does this verification result mean?",
+    options: ["The drive is new","The image is perfect, and can be used with no further checks at all","The case is closed","The image is not an exact copy"],
+    correct: 3, why: "Different hashes show the data differs from the source.",
+    hint: "Compare the two values."
+  },
+  {
+    id: 1312, rank: 1, role: "digital-forensics", topic: "Sector Size", difficulty: "INTERMEDIATE",
+    q: "What is a sector on a disk?",
+    options: ["A folder of programs that the examiner has to copy before the analysis","The smallest addressable unit of storage","A network zone","A user account"],
+    correct: 1, why: "Sectors are the base unit read by imaging tools.",
+    hint: "Smallest unit."
+  },
+  {
+    id: 1313, rank: 1, role: "digital-forensics", topic: "Imaging Format Choice", difficulty: "INTERMEDIATE",
+    q: "Which feature makes some forensic image formats attractive?",
+    options: ["They avoid any verification","They require no software to open","They store hashes and case notes with the image","They hide the image from the examiner and nobody can view it at all"],
+    correct: 2, why: "Embedded metadata helps integrity and tracking.",
+    hint: "Store metadata."
+  },
+  {
+    id: 1314, rank: 1, role: "digital-forensics", topic: "Memory Acquisition Risk", difficulty: "INTERMEDIATE",
+    q: "What is a known risk when acquiring memory from a live system?",
+    options: ["The tool changes memory slightly while it runs, as a general rule","It makes the disk bigger and and slows down every later step of the work","It deletes the user's account","It changes the time zone permanently"],
+    correct: 0, why: "Any live action alters some state so it must be documented.",
+    hint: "Footprint."
+  },
+  {
+    id: 1315, rank: 1, role: "digital-forensics", topic: "Sparse Evidence Exhibit", difficulty: "INTERMEDIATE",
+    exhibit: "Disk /dev/sda  Size: 500 GB\nPart 1  NTFS  start 2048      size 120 GB\nPart 2  NTFS  start 251660288 size 80 GB\nUnallocated: 300 GB",
+    q: "What does this partition table suggest about the drive?",
+    options: ["A fully used disk with no free space","A drive that has no partitions","A large unallocated area that may contain deleted data","A drive that is a network share"],
+    correct: 2, why: "Unallocated areas can hold remnants of earlier files.",
+    hint: "Look at unallocated."
+  },
+  {
+    id: 1316, rank: 1, role: "digital-forensics", topic: "Examiner Declaration", difficulty: "INTERMEDIATE",
+    q: "What should an examiner state when presenting results?",
+    options: ["Only the strongest conclusion, as a general rule","The methods used and the limits of the findings","Only the date of the work","Only the names of the tools"],
+    correct: 1, why: "Transparency about limits keeps the report honest.",
+    hint: "Be clear on limits."
+  },
+  {
+    id: 1317, rank: 1, role: "digital-forensics", topic: "Duplicate File Detection", difficulty: "INTERMEDIATE",
+    q: "How can hashes help in a large case?",
+    options: ["They remove all of the files from the disk, and nothing is left to review","They identify duplicates and known files to reduce review","They create new evidence","They decrypt the drive"],
+    correct: 1, why: "Hash sets filter known or repeated content.",
+    hint: "Filter by hash."
+  },
+  {
+    id: 1318, rank: 1, role: "digital-forensics", topic: "Triage Imaging", difficulty: "INTERMEDIATE",
+    q: "There are 40 devices at a scene and limited time. What is the BEST approach?",
+    options: ["Take only photographs of the devices, and revisit the decision after the next release","Image none until the case is built by the investigators","Image every device fully in the order they were found","Triage to prioritise devices then fully image the most relevant first"],
+    correct: 3, why: "Imaging all in order is the runner-up as it is thorough, but it wastes time on irrelevant items and delays key evidence.",
+    hint: "Prioritise."
+  },
+  {
+    id: 1319, rank: 1, role: "digital-forensics", topic: "Email Client Artefacts", difficulty: "INTERMEDIATE",
+    q: "What can a local email database help an examiner recover?",
+    options: ["The speed of the internet link that the person had when the messages were sent out","The password of the mail server","Messages attachments, and folders including some deleted items, in most cases","The home address of every person who ever received a message from this user account"],
+    correct: 2, why: "Mail stores hold large amounts of case-relevant content.",
+    hint: "Mail store."
+  },
+  {
+    id: 1320, rank: 1, role: "digital-forensics", topic: "Web Cache Evidence", difficulty: "INTERMEDIATE",
+    q: "What can a browser cache contain that is useful to an examiner?",
+    options: ["The complete list of the user's passwords that they use on every website they visit","Copies of pages and images the user viewed","The full bank statements of the user as they were shown on the bank's own web pages","The hardware serial number of the computer and nothing else that the browser holds"],
+    correct: 1, why: "Cached files show what content was displayed.",
+    hint: "Viewed content."
+  },
+  {
+    id: 1321, rank: 1, role: "digital-forensics", topic: "Search Index Artefact", difficulty: "INTERMEDIATE",
+    q: "Why might a desktop search index be useful in an examination?",
+    options: ["It records the temperature of the processor each time that the user starts a search","It replaces the need for imaging as it is a complete copy of the disk in the system","It always contains the passwords","It may list file names and snippets of removed files"],
+    correct: 3, why: "Index databases retain traces of content.",
+    hint: "Search index."
+  },
+  {
+    id: 1322, rank: 1, role: "digital-forensics", topic: "Thumbnail Cache Exhibit", difficulty: "INTERMEDIATE",
+    exhibit: "Thumbcache entry: hash=0x7f21a  type=JPEG  size=256x256\nSource path: E:\\pics\\IMG_2231.jpg (device removed)\nOriginal file present on disk: no",
+    q: "What can be concluded from this thumbnail cache entry?",
+    options: ["The image is a program file","The image was never opened","The image is still saved in the same folder where the user first placed it on the system disk","An image was viewed on this system even though the original file is gone"],
+    correct: 3, why: "Cached thumbnails can persist after deletion.",
+    hint: "Thumbnail without the file."
+  },
+  {
+    id: 1323, rank: 1, role: "digital-forensics", topic: "Cloud Sync Client Evidence", difficulty: "INTERMEDIATE",
+    q: "What can the local data of a cloud sync client show?",
+    options: ["The geographic location of the data centre where the provider keeps the data","The password of the provider staff","The cost of the service that the customer pays to the provider each month of the year","Files that were synced and when changes occurred"],
+    correct: 3, why: "Sync clients keep logs and cached copies.",
+    hint: "Sync records."
+  },
+  {
+    id: 1324, rank: 1, role: "digital-forensics", topic: "Windows Timeline Sources", difficulty: "INTERMEDIATE",
+    q: "Which approach best builds a Windows activity timeline?",
+    options: ["Combine file system registry and event log times","Use only the user's recollection of the events as told to the examiner at interview","Use a single screenshot of the desktop taken by the first officer at the scene","Use only the date on the case file"],
+    correct: 0, why: "Multiple sources corroborate each other.",
+    hint: "Combine sources."
+  },
+  {
+    id: 1325, rank: 1, role: "digital-forensics", topic: "Memory Artefact Types", difficulty: "INTERMEDIATE",
+    q: "Which item can often be found in a memory image?",
+    options: ["The complete history of the disk including every file that has been deleted over time","Running processes network connections and loaded modules","The user's physical home address as typed into the contact forms of the browser","A copy of the company contracts that were last stored in the legal department folder"],
+    correct: 1, why: "Memory shows the live state of the system.",
+    hint: "Live state."
+  },
+  {
+    id: 1326, rank: 1, role: "digital-forensics", topic: "Timestamp Tampering Sign", difficulty: "INTERMEDIATE",
+    q: "Which sign may suggest timestamps were manipulated?",
+    options: ["A file whose created time is later than its modified time with no copy explanation","A file with the same created and modified times that sits in the user's own folder on the disk of the examiner","A file created on a weekday","A file saved in the user's folder"],
+    correct: 0, why: "Inconsistent patterns may indicate tampering or copying.",
+    hint: "Inconsistent times."
+  },
+  {
+    id: 1327, rank: 1, role: "digital-forensics", topic: "Mobile Backup Value", difficulty: "INTERMEDIATE",
+    q: "Why might a mobile device backup on a computer be valuable?",
+    options: ["It replaces the SIM card, and the phone no longer needs a mobile network at all","It always includes the phone case","It is never encrypted and the examiner can always open it without any password","It may hold data that is no longer on the phone"],
+    correct: 3, why: "Backups preserve earlier content.",
+    hint: "Older content."
+  },
+  {
+    id: 1328, rank: 1, role: "digital-forensics", topic: "SIM Card Content", difficulty: "INTERMEDIATE",
+    q: "What can a SIM card typically provide?",
+    options: ["The operating system image of the phone, and it can be restored on another device","Subscriber identifiers, and some stored contacts","The full photo library of the phone that the SIM card was last placed inside","The user's browsing history from the mobile browser for the whole of the last year"],
+    correct: 1, why: "SIMs hold limited identity data.",
+    hint: "Subscriber id."
+  },
+  {
+    id: 1329, rank: 1, role: "digital-forensics", topic: "Log2timeline Concept", difficulty: "INTERMEDIATE",
+    q: "What is the idea behind a super timeline?",
+    options: ["Merging timestamps from many artefacts into one ordered view","Creating new timestamps, and revisit the decision after the next release","Deleting all timestamps, then record the result in the ticket","Copying the file system, until the next scheduled review takes place"],
+    correct: 0, why: "A unified timeline reveals patterns across sources.",
+    hint: "One merged view."
+  },
+  {
+    id: 1330, rank: 1, role: "digital-forensics", topic: "Network Capture Basics", difficulty: "INTERMEDIATE",
+    q: "What does a packet capture contain?",
+    options: ["The configuration of the firewall","Recorded network traffic that can show communications","A copy of the disk","A list of user passwords"],
+    correct: 1, why: "Captures show what crossed the network.",
+    hint: "Recorded traffic."
+  },
+  {
+    id: 1331, rank: 1, role: "digital-forensics", topic: "Proxy Log Reading Exhibit", difficulty: "INTERMEDIATE",
+    exhibit: "2025-11-07 16:41:09 u=jbrown POST https://share-files.example.org/upload 200 bytes_out=912,448,102 type=application/zip\n2025-11-07 16:40:01 u=jbrown GET http://intranet/hr 200 bytes_in=12,044",
+    q: "What does this proxy log extract suggest?",
+    options: ["A user uploaded a large archive to an external file sharing site","A user updated their antivirus","A user opened a printer page","A user read the company intranet"],
+    correct: 0, why: "Large uploads to external sites may indicate data leaving.",
+    hint: "Direction and size."
+  },
+  {
+    id: 1332, rank: 1, role: "digital-forensics", topic: "Metadata of Photographs", difficulty: "INTERMEDIATE",
+    q: "What can embedded photo metadata sometimes reveal?",
+    options: ["The password of the photographer","The weather forecast","The camera model and in some cases the time and location, as a general rule","The home address of the viewer"],
+    correct: 2, why: "EXIF data can show origin details.",
+    hint: "EXIF."
+  },
+  {
+    id: 1333, rank: 1, role: "digital-forensics", topic: "Examining Printers", difficulty: "INTERMEDIATE",
+    q: "What can a network printer's logs sometimes show?",
+    options: ["Print jobs with user names, and times","The user's browsing history, in most cases","The user's bank details, as a general rule","The contents of the user's email, in most cases"],
+    correct: 0, why: "Printer logs record job metadata.",
+    hint: "Job records."
+  },
+  {
+    id: 1334, rank: 1, role: "digital-forensics", topic: "Backup Tape Recovery", difficulty: "INTERMEDIATE",
+    q: "Why might old backups be valuable in an investigation?",
+    options: ["They are quicker to read than live systems","They are never encrypted","They always contain the attacker's identity","They may preserve data that has since been deleted or changed"],
+    correct: 3, why: "Backups provide historic snapshots.",
+    hint: "Historic copies."
+  },
+  {
+    id: 1335, rank: 1, role: "digital-forensics", topic: "Defensible Tool Use", difficulty: "INTERMEDIATE",
+    q: "An examiner wants to use a new forensic tool for a case. What is the BEST approach?",
+    options: ["Use it without telling the reviewer, and revisit the decision after the next release","Use it only on the original evidence, and review the outcome at the next monthly meeting","Validate it on known data and record the results before relying on it","Use it immediately as the vendor says it is reliable"],
+    correct: 2, why: "Trusting the vendor is the runner-up as it saves time, but validation shows the tool works correctly for the task.",
+    hint: "Validate tools."
+  },
+  {
+    id: 1336, rank: 1, role: "digital-forensics", topic: "Account Attribution Caution", difficulty: "INTERMEDIATE",
+    q: "Why is attributing activity to a person from a logon alone risky?",
+    options: ["Logons are never recorded","Logons cannot be linked to times","Several people may have access to the account or device","Logons always show the real person"],
+    correct: 2, why: "Attribution needs corroborating evidence.",
+    hint: "More than a logon."
+  },
+  {
+    id: 1337, rank: 1, role: "digital-forensics", topic: "Deleted Partition Recovery", difficulty: "INTERMEDIATE",
+    q: "What may help recover a deleted partition?",
+    options: ["Formatting the drive again, as a general rule","Scanning the disk for file system signatures","Running a defragmentation, and revisit the decision after the next release","Installing a new operating system on it, and review the outcome at the next monthly meeting"],
+    correct: 1, why: "Signature scanning can find lost structures.",
+    hint: "Scan for signatures."
+  },
+  {
+    id: 1338, rank: 1, role: "digital-forensics", topic: "Anti-Virus Logs Value", difficulty: "INTERMEDIATE",
+    q: "How can antivirus logs help an investigation?",
+    options: ["They replace the need for disk images","They list the passwords of users","They store the contents of all files","They show detections quarantines and the times they happened"],
+    correct: 3, why: "Logs reveal malware events.",
+    hint: "Detections."
+  },
+  {
+    id: 1339, rank: 1, role: "digital-forensics", topic: "Chain of Events Exhibit", difficulty: "INTERMEDIATE",
+    exhibit: "2025-11-08 02:11:40 4720 A user account was created: backup_svc2\n2025-11-08 02:12:03 4732 Member added to Administrators: backup_svc2\n2025-11-08 02:13:11 4624 Logon: backup_svc2 type=10",
+    q: "What sequence does this log excerpt show?",
+    options: ["A new user was created and then added to the administrators group","A user shut down the system","A user changed their wallpaper","A user printed a document"],
+    correct: 0, why: "Account creation followed by privilege change is a key event pair.",
+    hint: "Read the order."
+  },
+  {
+    id: 1340, rank: 1, role: "digital-forensics", topic: "Report Structure", difficulty: "INTERMEDIATE",
+    q: "Which section is essential in a forensic report?",
+    options: ["Methods findings and limitations","The favourite colour of the examiner","A joke to open the report","A list of unrelated cases"],
+    correct: 0, why: "Reports should be clear and complete.",
+    hint: "Methods and findings."
+  },
+  {
+    id: 1341, rank: 1, role: "digital-forensics", topic: "Expert Evidence Limits", difficulty: "INTERMEDIATE",
+    q: "What should an examiner do when asked about something outside their expertise?",
+    options: ["Say it is outside their expertise and suggest who can help","Give a confident guess, then record the result in the ticket","Change the subject","Refuse to answer anything, then record the result in the ticket"],
+    correct: 0, why: "Honesty protects credibility.",
+    hint: "Stay in scope."
+  },
+  {
+    id: 1342, rank: 1, role: "digital-forensics", topic: "Disk Encryption Detection", difficulty: "INTERMEDIATE",
+    q: "What suggests a drive uses full-disk encryption?",
+    options: ["A clearly readable file system","A drive with many partitions","An unreadable file system with a recognisable encryption header","A drive that is empty"],
+    correct: 2, why: "Headers and unreadable data indicate encryption.",
+    hint: "Look for headers."
+  },
+  {
+    id: 1343, rank: 1, role: "digital-forensics", topic: "Case Prioritisation", difficulty: "INTERMEDIATE",
+    q: "How should an examiner prioritise work across several cases?",
+    options: ["By the colour of the folder","By the length of the case name","By the order in which they like the cases, in most cases","By urgency legal deadlines, and risk of evidence loss"],
+    correct: 3, why: "Prioritisation should be risk based.",
+    hint: "Deadlines and loss."
+  },
+  {
+    id: 1344, rank: 1, role: "digital-forensics", topic: "Authentication Log Exhibit", difficulty: "INTERMEDIATE",
+    exhibit: "11:02:01 FAIL user=admin src=198.51.100.9\n11:02:02 FAIL user=admin src=198.51.100.9\n11:02:03 FAIL user=admin src=198.51.100.9\n11:02:04 FAIL user=admin src=198.51.100.9\n11:02:05 OK   user=admin src=198.51.100.9",
+    q: "What pattern do these logs suggest?",
+    options: ["A user changing their password","A brute force attempt that ended in a successful logon, in most cases","A scheduled task","A normal start of the day"],
+    correct: 1, why: "Many failures followed by success suggest guessing.",
+    hint: "Failures then success."
+  },
+  {
+    id: 1345, rank: 1, role: "digital-forensics", topic: "Page File Evidence", difficulty: "INTERMEDIATE",
+    q: "What might a Windows page file contain that is useful to an examiner?",
+    options: ["A complete copy of the user's documents folder, as a general rule","The configuration of the network switch, as a general rule","Fragments of memory content that were written to disk","The list of all users on the domain, as a general rule"],
+    correct: 2, why: "Paging can store pieces of earlier memory including text and names.",
+    hint: "Memory on disk."
+  },
+  {
+    id: 1346, rank: 1, role: "digital-forensics", topic: "Hibernation File Value", difficulty: "INTERMEDIATE",
+    q: "Why can a hibernation file be valuable?",
+    options: ["It contains the full history of the internet","It holds a snapshot of memory from the time of hibernation","It is created only when a virus is present","It stores the passwords of every user in clear text"],
+    correct: 1, why: "The file preserves the system state in memory.",
+    hint: "Memory snapshot."
+  },
+  {
+    id: 1347, rank: 1, role: "digital-forensics", topic: "USB Serial Exhibit", difficulty: "INTERMEDIATE",
+    exhibit: "USBSTOR\\Disk&Ven_Kingston&Prod_DataTraveler&Rev_1.00\\60A44C413F2AE1319FF5A8B3&0\nFirst connected: 2025-10-21 08:44:12\nLast connected: 2025-11-07 16:38:55\nVolume label: BACKUP_USB",
+    q: "What can be concluded from this device record?",
+    options: ["The drive was formatted by the user","A user changed the keyboard layout","A printer was installed on the network","A specific USB drive was connected and last used at the stated time"],
+    correct: 3, why: "Device identifiers and times link media to a system.",
+    hint: "Serial and time."
+  },
+  {
+    id: 1348, rank: 1, role: "digital-forensics", topic: "Remote Access Traces", difficulty: "INTERMEDIATE",
+    q: "What may show that remote administration software was used on a machine?",
+    options: ["Installed program records and connection logs from that software","The speed of the processor in use","The colour of the desktop background","The brand of the keyboard that was fitted"],
+    correct: 0, why: "Remote tools leave configuration and log traces.",
+    hint: "Software logs."
+  },
+  {
+    id: 1349, rank: 1, role: "digital-forensics", topic: "Chain of Custody Digital", difficulty: "INTERMEDIATE",
+    q: "How can chain of custody be maintained for evidence stored digitally?",
+    options: ["Keep only a verbal record of access to the files, as soon as practical","Record hashes access and transfers in a controlled system","Store the files on an open shared drive for convenience, wherever possible","Rename files as they are shared between staff"],
+    correct: 1, why: "Digital evidence needs logged and verifiable handling.",
+    hint: "Hashes and logs."
+  },
+  {
+    id: 1350, rank: 1, role: "digital-forensics", topic: "Interview Support", difficulty: "INTERMEDIATE",
+    q: "How can forensic findings support an interview of a suspect?",
+    options: ["By being invented to pressure the person, as a general rule","By being shown only after the case is closed","By replacing the need for any questions","By providing objective facts that can be put to the person"],
+    correct: 3, why: "Facts from evidence give interviewers reliable material.",
+    hint: "Objective facts."
+  },
+  {
+    id: 1351, rank: 2, role: "digital-forensics", topic: "Process Tree Anomaly", difficulty: "ADVANCED",
+    q: "Which finding in a memory process list is the most suspicious?",
+    options: ["A browser with several helper processes","A service host started by the service manager","The system idle process","A document viewer that started a command shell as a child process"],
+    correct: 3, why: "Office-style applications rarely spawn shells so this pattern suggests malicious content ran.",
+    hint: "Parent and child."
+  },
+  {
+    id: 1352, rank: 2, role: "digital-forensics", topic: "Unlinked Process Detection", difficulty: "ADVANCED",
+    q: "How can an examiner find a hidden process in a memory image?",
+    options: ["Check the colour of the process names, and revisit the decision after the next release","Ask the user to list the programs they installed, and review the outcome at the next monthly meeting","Compare the active process list with structures found by scanning memory","Restart the computer and look at the task manager, and revisit the decision after the next release"],
+    correct: 2, why: "Scanning can reveal processes removed from the normal list.",
+    hint: "Cross-check views."
+  },
+  {
+    id: 1353, rank: 2, role: "digital-forensics", topic: "Network Connection Artefact", difficulty: "ADVANCED",
+    q: "What can network connection records in memory show?",
+    options: ["The password for each remote server that the process connected to over the network","Which processes had connections to which remote addresses","The colour of the network cable","The make of the router in the building"],
+    correct: 1, why: "Connection tables tie processes to remote systems.",
+    hint: "Process to address."
+  },
+  {
+    id: 1354, rank: 2, role: "digital-forensics", topic: "Command History Recovery", difficulty: "ADVANCED",
+    q: "Why recover command line history from memory or logs?",
+    options: ["It is only used for printer settings","It lists the monitors that were attached to the computer during the incident","It stores the typed passwords in order","It can show exactly what actions a user or attacker performed"],
+    correct: 3, why: "Commands reveal intent and sequence of actions.",
+    hint: "Commands run."
+  },
+  {
+    id: 1355, rank: 2, role: "digital-forensics", topic: "Timeline Gap Interpretation", difficulty: "ADVANCED",
+    q: "A timeline shows no activity for two days between login events. What should the examiner conclude?",
+    options: ["That the system was clean","That the logs are perfect","That the user was on holiday during those two days and, and the system was quiet","Nothing yet and should check logging coverage, and other sources"],
+    correct: 3, why: "Gaps need explaining before any conclusion is drawn.",
+    hint: "Check coverage."
+  },
+  {
+    id: 1356, rank: 2, role: "digital-forensics", topic: "Registry Hive Analysis", difficulty: "ADVANCED",
+    q: "Why examine the user registry hive for a case?",
+    options: ["It lists the staff of the company","It holds the operating system source code that the vendor released to the public in recent years","It holds recent files typed paths and program use for that user","It stores the files of the user's mailbox in full, and mail need not be recovered separately"],
+    correct: 2, why: "User hives show activity linked to an account.",
+    hint: "User-level data."
+  },
+  {
+    id: 1357, rank: 2, role: "digital-forensics", topic: "Cloud Audit Log Source", difficulty: "ADVANCED",
+    q: "Which log source best shows administrative changes in a cloud account?",
+    options: ["The printer queue","The provider's audit trail of management API calls","The user's browser bookmarks that were saved in the profile of the person on the laptop","The local screen saver settings that the administrator chose for the machines in the office"],
+    correct: 1, why: "Audit trails record who changed what and when.",
+    hint: "Audit trail."
+  },
+  {
+    id: 1358, rank: 2, role: "digital-forensics", topic: "Malware Persistence Artefact", difficulty: "ADVANCED",
+    q: "Which artefact is the best indicator of persistence on a compromised host?",
+    options: ["A change in the desktop wallpaper that the user made after the security awareness course","A new bookmark in the browser that points to the intranet page of the finance department","A new font installed by the user","A new scheduled task running an unknown program at startup"],
+    correct: 3, why: "Scheduled tasks and services keep malware running after reboots.",
+    hint: "Start at boot."
+  },
+  {
+    id: 1359, rank: 2, role: "digital-forensics", topic: "Authentication Artefact", difficulty: "ADVANCED",
+    q: "What do Kerberos ticket requests in logs help show?",
+    options: ["Which accounts requested access to which services, and when, in most cases","The password in plain text exactly as it was typed by the person into the sign-in dialog","The version of the printer driver","The shape of the user's keyboard and the layout of the keys that were used to sign in"],
+    correct: 0, why: "Ticket events trace authentication paths in a domain.",
+    hint: "Service access."
+  },
+  {
+    id: 1360, rank: 2, role: "digital-forensics", topic: "Mobile Extraction Choice", difficulty: "ADVANCED",
+    q: "An examiner must choose how to extract data from a locked phone. What is the BEST approach?",
+    options: ["Ask a friend to unlock it informally, until the next scheduled review takes place","Reset the device to remove the lock","Use whichever method is quickest","Use the most complete method that is lawful and supported and record it"],
+    correct: 3, why: "Quickest is the runner-up as it saves time, but it may give an incomplete extraction or change data.",
+    hint: "Complete and lawful."
+  },
+  {
+    id: 1361, rank: 2, role: "digital-forensics", topic: "Memory Image Integrity", difficulty: "ADVANCED",
+    q: "What should be done immediately after acquiring a memory image?",
+    options: ["Delete the original process list, then record the result in the ticket","Open it in a text editor to browse it, wherever possible","Hash the image and record the tool version and time","Rename it to a short name, then record the result in the ticket"],
+    correct: 2, why: "Integrity and context must be recorded at once.",
+    hint: "Hash and record."
+  },
+  {
+    id: 1362, rank: 2, role: "digital-forensics", topic: "Dump File Meaning", difficulty: "ADVANCED",
+    q: "What is a crash dump file?",
+    options: ["A list of the users that were logged in during the previous quarter","A report that the vendor writes about every update released","A backup of the whole disk that the system made during the night","A snapshot of memory at the time of a crash"],
+    correct: 3, why: "Dumps can contain useful memory artefacts.",
+    hint: "Memory at crash."
+  },
+  {
+    id: 1363, rank: 2, role: "digital-forensics", topic: "Network Flow Records", difficulty: "ADVANCED",
+    q: "What does a flow record summarise?",
+    options: ["The brand of every switch that the traffic passed through on its way","The full content of every packet that crossed the network in the week","Who talked to whom and how much","The passwords that were sent between two servers on the network"],
+    correct: 2, why: "Flows give metadata of communications.",
+    hint: "Metadata only."
+  },
+  {
+    id: 1364, rank: 2, role: "digital-forensics", topic: "DNS Cache Value", difficulty: "ADVANCED",
+    q: "What can a DNS cache show an examiner?",
+    options: ["The full list of passwords that were used on the local network","Names recently looked up by the host","The complete text of every web page that the host had downloaded","The contents of all emails that were exchanged with the server"],
+    correct: 1, why: "Name lookups reveal contacted domains.",
+    hint: "Looked-up names."
+  },
+  {
+    id: 1365, rank: 2, role: "digital-forensics", topic: "Hash Set Purpose", difficulty: "ADVANCED",
+    q: "What is a known-good hash set used for?",
+    options: ["Excluding standard system files from review","Creating a new set of timestamps for the files on the system","Proving that every file on the disk is a copy of the case file","Encrypting evidence, and only the examiner can ever open it"],
+    correct: 0, why: "Filtering known files reduces review time.",
+    hint: "Filter known files."
+  },
+  {
+    id: 1366, rank: 2, role: "digital-forensics", topic: "Volatility of Network Data", difficulty: "ADVANCED",
+    q: "Why capture network state early?",
+    options: ["Connections change quickly and can be lost","Captures are legally required to be made on a Friday afternoon only","The network cable becomes weaker after it has been used for a week","The examiner must always finish the capture before the disk image starts"],
+    correct: 0, why: "Network state is volatile.",
+    hint: "Changes quickly."
+  },
+  {
+    id: 1367, rank: 2, role: "digital-forensics", topic: "Mobile App Data", difficulty: "ADVANCED",
+    q: "Where does app data on a phone usually reside?",
+    options: ["In a single public folder that all users on the network can see freely","In the app's own storage area on the device","In the SIM card that holds the subscriber identity of the phone","Only on the manufacturer's servers and never on the device itself"],
+    correct: 1, why: "Per-app storage holds databases and caches.",
+    hint: "App storage."
+  },
+  {
+    id: 1368, rank: 2, role: "digital-forensics", topic: "Report Review Exhibit", difficulty: "ADVANCED",
+    exhibit: "Finding 4: The user deleted the project files on 2025-10-11 to hide them.\nSupporting exhibit: (none cited)\nMethod: (not stated)\nReviewer: -",
+    q: "What is wrong with this report finding?",
+    options: ["It states a conclusion without citing the supporting evidence","It was reviewed by a second examiner before it was issued","It cites the exhibit number and the hash value of the image","It explains the method used and its known limits"],
+    correct: 0, why: "Conclusions need traceable support.",
+    hint: "Where is the evidence?"
+  },
+  {
+    id: 1369, rank: 2, role: "digital-forensics", topic: "Browser Artefact Location", difficulty: "ADVANCED",
+    q: "Where are Chrome history records normally kept?",
+    options: ["In one text file stored on the shared network drive","In the computer's BIOS","In a database file inside the user's profile folder","In the printer's memory"],
+    correct: 2, why: "Browsers store history in per-user databases.",
+    hint: "User profile."
+  },
+  {
+    id: 1370, rank: 2, role: "digital-forensics", topic: "Prefetch vs Amcache", difficulty: "ADVANCED",
+    q: "What does Amcache evidence help show?",
+    options: ["That the monitor was replaced by the supplier last year","That a user changed their wallpaper on a given date","That the printer was installed in the building by the facilities team","That a program existed or ran on the system with its hash"],
+    correct: 3, why: "Amcache records program metadata and hashes.",
+    hint: "Program record."
+  },
+  {
+    id: 1371, rank: 2, role: "digital-forensics", topic: "Email Recovery Source", difficulty: "ADVANCED",
+    q: "Where might deleted email still be found?",
+    options: ["Only on the user's printer in the memory that holds the last pages that were printed","In the monitor's memory","In the mail database or server backups until overwritten, as a general rule","Nowhere once it has been deleted as the mail system erases all of the data at once"],
+    correct: 2, why: "Mail stores and backups retain items.",
+    hint: "Stores and backups."
+  },
+  {
+    id: 1372, rank: 2, role: "digital-forensics", topic: "Chat Application Evidence", difficulty: "ADVANCED",
+    q: "What do local databases of chat apps often contain?",
+    options: ["The full source code of the app that the user installed","The credit card numbers of every user who installed it","Messages contacts, and timestamps, as a general rule","The home address of the app developers, and their staff"],
+    correct: 2, why: "Local stores keep message content and times.",
+    hint: "Local database."
+  },
+  {
+    id: 1373, rank: 2, role: "digital-forensics", topic: "Cloud Storage Logs", difficulty: "ADVANCED",
+    q: "What do cloud storage access logs show?",
+    options: ["The internal design documents of the provider","The model of the laptop that the owner uses at home","The sizes of the staff's salary payments each month","Who accessed which object from where, and when"],
+    correct: 3, why: "Access logs support investigations.",
+    hint: "Who accessed."
+  },
+  {
+    id: 1374, rank: 2, role: "digital-forensics", topic: "File Signature Analysis", difficulty: "ADVANCED",
+    q: "Why compare a file's signature with its extension?",
+    options: ["To rename the files to a new standard, in most cases","To delete files that are old","To increase the file size on the disk, as a general rule","To find files whose type was disguised"],
+    correct: 3, why: "Mismatches may indicate hiding.",
+    hint: "Signature mismatch."
+  },
+  {
+    id: 1375, rank: 2, role: "digital-forensics", topic: "Log Source Reliability", difficulty: "ADVANCED",
+    q: "Why should an examiner consider how reliable a log source is?",
+    options: ["Logs never contain times, and cannot be ordered into a sequence of events at any point","Logs can be incomplete altered or have incorrect time settings","Logs cannot be copied","Logs are always accurate and, and they never need any checking by the examiner at all"],
+    correct: 1, why: "Reliability affects the weight of the evidence.",
+    hint: "Check reliability."
+  },
+  {
+    id: 1376, rank: 2, role: "digital-forensics", topic: "Collecting from a Server", difficulty: "ADVANCED",
+    q: "A production server cannot be taken offline. What is the BEST way to collect evidence?",
+    options: ["Pull the power cord immediately","Copy files by drag, and drop, until the next scheduled review takes place","Use a documented live collection with minimal footprint and verify it","Delete logs to keep it running smoothly"],
+    correct: 2, why: "Pulling the power is the runner-up as it stops changes, but it harms availability and loses volatile data.",
+    hint: "Minimal footprint."
+  },
+  {
+    id: 1377, rank: 2, role: "digital-forensics", topic: "Linux Log Source Exhibit", difficulty: "ADVANCED",
+    exhibit: "Nov  9 03:11:02 srv sshd[8812]: Failed password for root from 203.0.113.51 port 50122 ssh2\nNov  9 03:11:04 srv sshd[8815]: Failed password for root from 203.0.113.51 port 50124 ssh2\nNov  9 03:11:07 srv sshd[8819]: Failed password for root from 203.0.113.51 port 50126 ssh2\nNov  9 03:11:09 srv sshd[8822]: Accepted password for root from 203.0.113.51 port 50128 ssh2",
+    q: "What does this log excerpt show?",
+    options: ["Repeated failed SSH logins followed by a success from the same address","A scheduled cron job running","A user logging out","A kernel update"],
+    correct: 0, why: "Many failures then success suggest guessing.",
+    hint: "Failures then success."
+  },
+  {
+    id: 1378, rank: 2, role: "digital-forensics", topic: "Bash History Limits", difficulty: "ADVANCED",
+    q: "Why can bash history alone be unreliable?",
+    options: ["It stores the passwords of all users","It always records every command in every session","It cannot be read by an examiner","It can be edited cleared or not written for some sessions"],
+    correct: 3, why: "History files depend on user settings and can be changed.",
+    hint: "Not guaranteed."
+  },
+  {
+    id: 1379, rank: 2, role: "digital-forensics", topic: "Docker Evidence", difficulty: "ADVANCED",
+    q: "What can an examiner collect from a container host?",
+    options: ["Nothing at all","Image layers container logs, and runtime metadata, in most cases","Only the monitor settings","The BIOS of the cloud provider"],
+    correct: 1, why: "Container state can be captured from the host.",
+    hint: "Layers and logs."
+  },
+  {
+    id: 1380, rank: 2, role: "digital-forensics", topic: "Windows Services Review", difficulty: "ADVANCED",
+    q: "What is a good first check on suspicious services?",
+    options: ["Change the service name","Compare the binary path and signer against known good values, in most cases","Restart the computer repeatedly, and revisit the decision after the next release","Delete the service without recording it, and revisit the decision after the next release"],
+    correct: 1, why: "Path and signer reveal unusual services.",
+    hint: "Path and signer."
+  },
+  {
+    id: 1381, rank: 2, role: "digital-forensics", topic: "Registry Persistence Exhibit", difficulty: "ADVANCED",
+    exhibit: "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run\n  Updater = C:\\Users\\jlee\\AppData\\Local\\Temp\\svch0st.exe -s\n  OneDrive = C:\\Users\\jlee\\AppData\\Local\\Microsoft\\OneDrive\\OneDrive.exe /background",
+    q: "What does this autorun entry suggest?",
+    options: ["A font is installed","A program in a user temp folder is set to start at logon","A standard system component starts at logon, as a general rule","A printer driver is loaded"],
+    correct: 1, why: "Autoruns pointing to temp folders are suspicious.",
+    hint: "Where does it run from?"
+  },
+  {
+    id: 1382, rank: 2, role: "digital-forensics", topic: "Data Exfiltration Indicators", difficulty: "ADVANCED",
+    q: "Which combination best suggests data exfiltration?",
+    options: ["Large archive creation followed by a big upload to an unknown host","A routine software update download from the vendor that finishes in a few minutes","A user reading email in the morning as part of the normal work routine for the team","A scheduled report job"],
+    correct: 0, why: "Staging and outbound transfer are typical.",
+    hint: "Stage then send."
+  },
+  {
+    id: 1383, rank: 2, role: "digital-forensics", topic: "Email Forensics Header Spoof", difficulty: "ADVANCED",
+    q: "A message appears to come from a manager but the Return-Path differs. What does this suggest?",
+    options: ["The message was sent from the user's own phone","The message was encrypted","The message is always genuine","The sender address may have been forged"],
+    correct: 3, why: "Header mismatches can indicate spoofing.",
+    hint: "Compare headers."
+  },
+  {
+    id: 1384, rank: 2, role: "digital-forensics", topic: "Endpoint Telemetry Gap", difficulty: "ADVANCED",
+    q: "What is a limitation of relying only on endpoint tool alerts?",
+    options: ["Alerts are always legally admissible","Alerts replace disk images","Tools never miss anything","Activity the tool does not log or detect will be missed"],
+    correct: 3, why: "Coverage gaps leave blind spots.",
+    hint: "Coverage."
+  },
+  {
+    id: 1385, rank: 2, role: "digital-forensics", topic: "Legal Hold Process", difficulty: "ADVANCED",
+    q: "What is a legal hold?",
+    options: ["A process to speed up the backups","An instruction to preserve relevant data and not delete it","A request to delete old data, and the storage cost is reduced for the legal department","A type of encryption"],
+    correct: 1, why: "Holds prevent loss of potentially relevant material.",
+    hint: "Preserve."
+  },
+  {
+    id: 1386, rank: 2, role: "digital-forensics", topic: "Time Source Validation", difficulty: "ADVANCED",
+    q: "How can an examiner check the accuracy of a system clock?",
+    options: ["Compare it with an authoritative time source, and record the offset, as a general rule","Assume it is correct","Reset it to the current time","Ask the user"],
+    correct: 0, why: "Offsets are needed to correct timestamps.",
+    hint: "Measure the offset."
+  },
+  {
+    id: 1387, rank: 2, role: "digital-forensics", topic: "Wiping Tool Indicators", difficulty: "ADVANCED",
+    q: "What may suggest a secure deletion tool was used?",
+    options: ["A normal looking document folder that contains the usual files for the department's project","A recent software update","A new desktop icon","Large areas of uniform patterned data and tool execution traces"],
+    correct: 3, why: "Patterns and tool traces point to wiping.",
+    hint: "Patterns and traces."
+  },
+  {
+    id: 1388, rank: 2, role: "digital-forensics", topic: "Interpreting Hash Hits", difficulty: "ADVANCED",
+    q: "A file hash matches a known malicious sample. What is the correct next step?",
+    options: ["Ignore it","Delete the file at once, until the next scheduled review takes place","Treat it as strong evidence and corroborate it with other artefacts","Close the case"],
+    correct: 2, why: "Corroboration strengthens the finding.",
+    hint: "Corroborate."
+  },
+  {
+    id: 1389, rank: 2, role: "digital-forensics", topic: "Collecting Router Logs", difficulty: "ADVANCED",
+    q: "Why might router logs be useful in an incident?",
+    options: ["They hold the user's passwords","They can show traffic paths and connections between networks","They store the contents of all user documents","They replace the need for firewalls"],
+    correct: 1, why: "Network devices log communications.",
+    hint: "Traffic paths."
+  },
+  {
+    id: 1390, rank: 2, role: "digital-forensics", topic: "Ephemeral Data Exhibit", difficulty: "ADVANCED",
+    exhibit: "Scene note 11:20: Server found with suspicious process. Technician rebooted to 'clear the problem' at 11:35.\nMemory image: not captured\nDisk image: taken 14:10 after reboot",
+    q: "What is the concern in this evidence note?",
+    options: ["Volatile data was lost because the machine was rebooted before collection","A custody form was completed","The memory image was hashed, and stored","A write blocker was used for the disk"],
+    correct: 0, why: "Rebooting destroys memory contents.",
+    hint: "What was lost?"
+  },
+  {
+    id: 1391, rank: 2, role: "digital-forensics", topic: "Social Media Evidence", difficulty: "ADVANCED",
+    q: "How should an examiner capture a social media post as evidence?",
+    options: ["Memorise the content","Share it with colleagues","Preserve the content with its URL timestamp and capture method documented","Take a rough photo with no details, and review the outcome at the next monthly meeting"],
+    correct: 2, why: "Context and method make web evidence credible.",
+    hint: "Document capture."
+  },
+  {
+    id: 1392, rank: 2, role: "digital-forensics", topic: "Examiner Bias", difficulty: "ADVANCED",
+    q: "What is confirmation bias in an examination?",
+    options: ["Favouring evidence that supports an existing theory","Writing short notes, until the next scheduled review takes place","Checking hashes, until the next scheduled review takes place","Choosing the best tool, until the next scheduled review takes place"],
+    correct: 0, why: "Examiners should test alternative explanations.",
+    hint: "Alternative theories."
+  },
+  {
+    id: 1393, rank: 2, role: "digital-forensics", topic: "Cross-Validation of Tools", difficulty: "ADVANCED",
+    q: "Why verify an important finding with a second tool?",
+    options: ["To delay the case","To make the report longer, and it appears more detailed to the reader of the report","To confirm that the result is not an error of one tool","To avoid taking notes"],
+    correct: 2, why: "Independent confirmation strengthens reliability.",
+    hint: "Second tool."
+  },
+  {
+    id: 1394, rank: 2, role: "digital-forensics", topic: "Disk Slack Exhibit", difficulty: "ADVANCED",
+    exhibit: "Offset 0x1A4F20 (slack of file report_v2.docx): '...salary adjustments for Q4 are attached. Please do not forward outside HR...'\nFile report_v2.docx contains: unrelated meeting notes",
+    q: "What does this carved text from slack space suggest?",
+    options: ["Fragments of a previously existing document remained on the disk","The text is a virus","The disk is blank","The disk is encrypted"],
+    correct: 0, why: "Slack and unallocated areas can retain old data.",
+    hint: "Where was it found?"
+  },
+  {
+    id: 1395, rank: 2, role: "digital-forensics", topic: "Wireless Log Evidence", difficulty: "ADVANCED",
+    q: "What can wireless controller logs show in an investigation?",
+    options: ["The speed test results of each employee who visited the building","Which devices associated with which access point, and when","The passwords that staff have chosen for their personal phones","The contents of every message sent over the wireless network"],
+    correct: 1, why: "Association logs link devices to locations and times.",
+    hint: "Device and AP."
+  },
+  {
+    id: 1396, rank: 2, role: "digital-forensics", topic: "Browser Download Records", difficulty: "ADVANCED",
+    q: "What do browser download records help show?",
+    options: ["The model of the printer that was used to print the pages","Which files were downloaded from where, and when","The passwords saved in the profile of the user at the machine","The full content of the web pages that were last opened by the person"],
+    correct: 1, why: "Download records tie files to sources.",
+    hint: "Source and time."
+  },
+  {
+    id: 1397, rank: 2, role: "digital-forensics", topic: "Email Server Logs", difficulty: "ADVANCED",
+    q: "What do mail server logs add to an examination of a single mailbox?",
+    options: ["Delivery and routing records that can confirm when messages were sent","The names of the staff who built the mail system years ago, in most cases","The hardware passwords of every server in the data centre, as a general rule","A copy of every attachment that all users have ever sent"],
+    correct: 0, why: "Server logs corroborate client-side evidence.",
+    hint: "Server side."
+  },
+  {
+    id: 1398, rank: 2, role: "digital-forensics", topic: "Virtual Machine Evidence", difficulty: "ADVANCED",
+    q: "What should an examiner collect from a suspect virtual machine?",
+    options: ["The virtual disk and any memory or snapshot files with hashes","Only a screenshot of the guest desktop that the user left open","A shortcut to the virtual machine from the host's desktop folder","Nothing as virtual machines hold no useful data at all"],
+    correct: 0, why: "Virtual machine files contain the full guest state.",
+    hint: "Disk plus state."
+  },
+  {
+    id: 1399, rank: 2, role: "digital-forensics", topic: "Spreadsheet Metadata Exhibit", difficulty: "ADVANCED",
+    exhibit: "Document: Forecast-Q4.xlsx\nCreated: 2025-09-12 10:02  Author: m.hughes\nLast saved: 2025-10-29 22:47  Last saved by: temp_contractor\nCompany: Northwind Ltd  Revision: 31",
+    q: "What does this document metadata suggest?",
+    options: ["The file was last saved by a different user than its author","The file belongs to the examiner","The file was created by the printer","The file was never saved"],
+    correct: 0, why: "Author and last-saved-by fields show different accounts handled the file.",
+    hint: "Compare the users."
+  },
+  {
+    id: 1400, rank: 2, role: "digital-forensics", topic: "Quality Control in the Lab", difficulty: "ADVANCED",
+    q: "What does a laboratory quality system usually require?",
+    options: ["No records, and cases remain secret","Different methods for each examiner on each day","Documented procedures validated tools and regular checks","Informal habits that change with each case"],
+    correct: 2, why: "Quality systems make results repeatable and defensible.",
+    hint: "Documented procedures."
+  },
+  {
+    id: 1401, rank: 3, role: "digital-forensics", topic: "Forensic Readiness Programme", difficulty: "EXPERT",
+    q: "What is the main aim of forensic readiness?",
+    options: ["To remove all records after a year","To replace incident response","To make sure useful evidence is available, and usable when an incident occurs","To avoid collecting any logs, and the company holds no data that could be demanded later"],
+    correct: 2, why: "Readiness plans logging retention and handling in advance.",
+    hint: "Prepare in advance."
+  },
+  {
+    id: 1402, rank: 3, role: "digital-forensics", topic: "Evidence Management System", difficulty: "EXPERT",
+    q: "Which feature is most important in an evidence management system?",
+    options: ["Unlimited public access to files","Automatic deletion after every case","Tamper-evident records of every access transfer and hash check","A colourful dashboard for visitors that shows the number of cases handled by the laboratory"],
+    correct: 2, why: "Custody and integrity records give the system value.",
+    hint: "Tamper-evident."
+  },
+  {
+    id: 1403, rank: 3, role: "digital-forensics", topic: "Lab Accreditation Value", difficulty: "EXPERT",
+    q: "Why might a forensic lab seek accreditation to a recognised standard?",
+    options: ["It removes the need to keep notes of the work as the standard says it is optional","It demonstrates validated methods and consistent quality to courts","It makes all of the findings automatically true and courts never question the lab","It lets the lab skip peer review"],
+    correct: 1, why: "Accreditation signals competence and control.",
+    hint: "Demonstrate quality."
+  },
+  {
+    id: 1404, rank: 3, role: "digital-forensics", topic: "Centralised Log Design", difficulty: "EXPERT",
+    q: "Which design best supports later investigations?",
+    options: ["Logs deleted every week to keep the storage cost for the monitoring platform at a low level","Central protected storage of key logs with agreed retention and time sync, in most cases","Logs readable by everyone","Logs kept only on each machine where the local administrator can read, and change them freely"],
+    correct: 1, why: "Central, protected and time-aligned logs support reliable analysis.",
+    hint: "Central and protected."
+  },
+  {
+    id: 1405, rank: 3, role: "digital-forensics", topic: "Triage at Scale", difficulty: "EXPERT",
+    q: "How should a team investigate a possible breach across thousands of hosts?",
+    options: ["Image every host in full at once","Wait for users to report problems","Examine only the oldest machines","Use scripted triage collection to find affected hosts before deep imaging"],
+    correct: 3, why: "Triage scales the work and prioritises hosts for deeper analysis.",
+    hint: "Triage first."
+  },
+  {
+    id: 1406, rank: 3, role: "digital-forensics", topic: "Cloud Evidence Strategy", difficulty: "EXPERT",
+    q: "What should an organisation plan for evidence in a cloud service?",
+    options: ["Contractual access to logs and snapshots plus tested collection procedures","Only screenshots taken by the administrator of the console on the day that the incident occurs","Deleting data quickly","Nothing at all as the provider handles all of the evidence needs of every customer account"],
+    correct: 0, why: "Provider cooperation and technical methods must be arranged beforehand.",
+    hint: "Plan access."
+  },
+  {
+    id: 1407, rank: 3, role: "digital-forensics", topic: "Retention Policy Design", difficulty: "EXPERT",
+    q: "What is the BEST way to set a log retention period?",
+    options: ["Let each administrator choose","Base it on legal duties and the time attacks usually take to be found","Keep logs only for one day to save space","Keep every log forever regardless of cost"],
+    correct: 1, why: "One day is the runner-up as it is cheap, but most breaches are found weeks later when the evidence has gone.",
+    hint: "Legal and detection need."
+  },
+  {
+    id: 1408, rank: 3, role: "digital-forensics", topic: "Evidence Held Abroad", difficulty: "EXPERT",
+    q: "What must be considered when evidence is stored in another country?",
+    options: ["The colour of the servers that the provider uses in the data centre of the region","Only the language in which the files were written by the users of the system in that country","Only the size of the files that were found on the servers in the other country","Local law on access privacy and transfer of the data"],
+    correct: 3, why: "Jurisdiction affects how evidence may be accessed and moved.",
+    hint: "Jurisdiction."
+  },
+  {
+    id: 1409, rank: 3, role: "digital-forensics", topic: "Insider Case Handling", difficulty: "EXPERT",
+    q: "Why involve legal and HR early in an insider investigation?",
+    options: ["To ensure the work is lawful proportionate, and fair to the employee","To tell the suspect about it at once, and they can prepare their answers for the meeting","To avoid keeping any records","To delay the case until the employee has left the company, and cannot be asked any questions"],
+    correct: 0, why: "Early advice protects the integrity of the process.",
+    hint: "Lawful and fair."
+  },
+  {
+    id: 1410, rank: 3, role: "digital-forensics", topic: "Preservation Notice", difficulty: "EXPERT",
+    q: "What should a preservation notice to the business make clear?",
+    options: ["Which staff to blame for the incident and managers can start their disciplinary process","Where to buy the tools that will be needed to collect the evidence from the devices","What must be kept who is responsible and for how long","How to delete the data quickly and it does not take up space on the file servers"],
+    correct: 2, why: "A clear notice avoids loss of relevant data.",
+    hint: "What and who."
+  },
+  {
+    id: 1411, rank: 3, role: "digital-forensics", topic: "Single Point of Failure", difficulty: "EXPERT",
+    q: "What is a risk of having one examiner with all the knowledge?",
+    options: ["The examiner would never want to use any of the tools that the lab has bought","The examiner would be unable to read the evidence that other people have collected","The examiner would always make errors in the reports that they write for the courts","Work stops if they are absent"],
+    correct: 3, why: "Knowledge should be shared and documented.",
+    hint: "Key person risk."
+  },
+  {
+    id: 1412, rank: 3, role: "digital-forensics", topic: "Tool Validation Plan", difficulty: "EXPERT",
+    q: "What is the purpose of tool validation?",
+    options: ["To confirm a tool works as expected","To avoid the need for any training of the staff who will use the tool in future","To let the lab buy a cheaper tool without testing it on any evidence","To prove that the vendor of the tool is the best one on the market in every case"],
+    correct: 0, why: "Validation shows fitness for purpose.",
+    hint: "Fit for purpose."
+  },
+  {
+    id: 1413, rank: 3, role: "digital-forensics", topic: "Timeline Tool Trust", difficulty: "EXPERT",
+    q: "How should results from a timeline tool be treated?",
+    options: ["As a replacement for the original evidence which can then be safely deleted","As leads to verify against source artefacts, in most cases","As something that never contains any errors if the tool is expensive","As final proof that needs no further checking by any examiner in the lab"],
+    correct: 1, why: "Tools can misinterpret data so verification is needed.",
+    hint: "Verify."
+  },
+  {
+    id: 1414, rank: 3, role: "digital-forensics", topic: "Evidence Room Exhibit", difficulty: "EXPERT",
+    exhibit: "Evidence store E-02\nKey holders: 14 staff (incl. cleaning contractor)\nAccess log: none\nCCTV: not installed\nLast audit: 2022",
+    q: "Which weakness does this access list show?",
+    options: ["Too many people can enter and no entry is recorded","Entry is limited to two named custodians and every visit is recorded in a signed register","Only the custodian has a key","A camera covers the door"],
+    correct: 0, why: "Uncontrolled access breaks custody.",
+    hint: "Who can enter?"
+  },
+  {
+    id: 1415, rank: 3, role: "digital-forensics", topic: "Backup of Case Data", difficulty: "EXPERT",
+    q: "How should case data be protected against loss?",
+    options: ["Encrypted backups stored separately with access control, as a general rule","A copy on a shared folder that every employee in the company can open, and edit","A copy emailed to a private account, and it is always available to the examiner","A single copy on a laptop that the examiner takes home on the train every evening"],
+    correct: 0, why: "Backups must be secure and independent.",
+    hint: "Secure backups."
+  },
+  {
+    id: 1416, rank: 3, role: "digital-forensics", topic: "Court Presentation Planning", difficulty: "EXPERT",
+    q: "What helps a lay jury understand technical evidence?",
+    options: ["A promise that the examiner is always right, and should never be questioned at all","Clear simple explanations with visual aids","Long lists of file names which the jury members can read during the lunch break","Dense technical language that shows the expertise of the witness in every sentence"],
+    correct: 1, why: "Clarity helps decision makers.",
+    hint: "Simple and visual."
+  },
+  {
+    id: 1417, rank: 3, role: "digital-forensics", topic: "Evidence Retention Exhibit", difficulty: "EXPERT",
+    exhibit: "Source          Retention (days)\nFirewall        14\nAuthentication  14\nEmail gateway   365\nEndpoint EDR    90\nLegal minimum for incident evidence: 180",
+    q: "What problem does this retention table reveal?",
+    options: ["All logs are kept for a full year and the retention has been approved by the legal team","Logs are backed up offsite","Firewall and authentication logs are kept for only 14 days","Retention is reviewed by the legal department each year and updated to the newest rule"],
+    correct: 2, why: "Short retention for key logs will lose evidence.",
+    hint: "Look at the days."
+  },
+  {
+    id: 1418, rank: 3, role: "digital-forensics", topic: "Distributed Acquisition Tools", difficulty: "EXPERT",
+    q: "What is a benefit of remote forensic collection agents?",
+    options: ["They encrypt the whole network","They allow evidence collection from many sites without travel","They make the evidence public","They eliminate the need for hashes as the agent software records the state itself"],
+    correct: 1, why: "Remote tools speed response across locations.",
+    hint: "Remote collection."
+  },
+  {
+    id: 1419, rank: 3, role: "digital-forensics", topic: "Case Management Metrics", difficulty: "EXPERT",
+    q: "Which metric best shows a lab is managing cases well?",
+    options: ["Turnaround time for priority cases and rework rate","The number of printers in the lab, as a general rule","The number of staff on holiday","The colour of the lab"],
+    correct: 0, why: "Timeliness and quality show management health.",
+    hint: "Time and quality."
+  },
+  {
+    id: 1420, rank: 3, role: "digital-forensics", topic: "Mobile Fleet Readiness", difficulty: "EXPERT",
+    q: "How can an organisation prepare to investigate company phones?",
+    options: ["Collect personal data from all staff constantly","Ban all phones from the building","Use management tools that keep inventory logs and allow lawful collection","Allow any device without records"],
+    correct: 2, why: "Preparedness enables proportionate investigation.",
+    hint: "Inventory and logs."
+  },
+  {
+    id: 1421, rank: 3, role: "digital-forensics", topic: "Chain of Custody for Cloud", difficulty: "EXPERT",
+    q: "How can custody be shown for data collected from a cloud service?",
+    options: ["Copy the data by hand","Record the provider method time hashes and who performed the collection","Ask the provider to confirm verbally, and review the outcome at the next monthly meeting","Take a screenshot only, and review the outcome at the next monthly meeting"],
+    correct: 1, why: "Digital records support the chain.",
+    hint: "Record the method."
+  },
+  {
+    id: 1422, rank: 3, role: "digital-forensics", topic: "Escalation to Law Enforcement", difficulty: "EXPERT",
+    q: "An investigation shows serious crime. What is the BEST approach regarding law enforcement?",
+    options: ["Share the evidence publicly first, and review the outcome at the next monthly meeting","Decide informally without legal input, and revisit the decision after the next release","Delete data before they arrive","Involve legal counsel and follow a defined escalation and evidence handover process"],
+    correct: 3, why: "Informal decisions are the runner-up as they are quick, but they risk mishandling evidence and legal exposure.",
+    hint: "Defined process."
+  },
+  {
+    id: 1423, rank: 3, role: "digital-forensics", topic: "Examiner Training Plan", difficulty: "EXPERT",
+    q: "What should a training plan for examiners include?",
+    options: ["Only vendor sales events that the tool suppliers run for the benefit of their customers","No updates after the first year as the skills learned at the start do not go out of date","A single exam once","Core skills new technologies and regular competence checks"],
+    correct: 3, why: "Continuous development keeps skills current.",
+    hint: "Ongoing."
+  },
+  {
+    id: 1424, rank: 3, role: "digital-forensics", topic: "Time Normalisation Design", difficulty: "EXPERT",
+    q: "How should a platform store timestamps from many sources?",
+    options: ["In whatever format each source uses with no notes, as a general rule","In one standard time with the original value, and offset kept","Rounded to the nearest day","Without time zones"],
+    correct: 1, why: "Normalisation keeps correlation accurate and traceable.",
+    hint: "Standard plus original."
+  },
+  {
+    id: 1425, rank: 3, role: "digital-forensics", topic: "Collection Authority Exhibit", difficulty: "EXPERT",
+    exhibit: "Request: Image 12 employee laptops for suspected data leak\nApproved by: IT Manager\nDate: 2025-11-04  Ticket: SEC-8841\nLegal basis: (blank)   Privacy review: (blank)   HR notified: no",
+    q: "What does this approval record lack?",
+    options: ["The legal basis for collecting personal data from staff devices","The name of the approver who signed the request on behalf of the information technology team","The date of approval that is needed to show when the request was made and by whom it was made","The ticket number that links the request to the service desk system of the company"],
+    correct: 0, why: "Collection must be lawful and proportionate.",
+    hint: "Legal basis."
+  },
+  {
+    id: 1426, rank: 3, role: "digital-forensics", topic: "Lab Contamination Control", difficulty: "EXPERT",
+    q: "How can contamination between cases be avoided?",
+    options: ["Skip hashing","Share one folder for all cases, until the next scheduled review takes place","Use sanitised media and clean workstations with documented checks","Reuse drives without wiping, until the next scheduled review takes place"],
+    correct: 2, why: "Clean media avoid mixing evidence.",
+    hint: "Sanitised media."
+  },
+  {
+    id: 1427, rank: 3, role: "digital-forensics", topic: "Disk Encryption Policy for Investigations", difficulty: "EXPERT",
+    q: "How can an organisation prepare for investigating encrypted laptops?",
+    options: ["Avoid using any encryption, as a general rule","Disable encryption to make access easy","Print passwords for each user, as a general rule","Escrow recovery keys under strict governance"],
+    correct: 3, why: "Key escrow allows lawful access.",
+    hint: "Recovery keys."
+  },
+  {
+    id: 1428, rank: 3, role: "digital-forensics", topic: "Information Sharing", difficulty: "EXPERT",
+    q: "How should an organisation share investigation findings with other bodies?",
+    options: ["By posting the findings online and other organisations can see, and learn from them at once","By email to everyone in the company and all staff are aware of the investigation","Through approved channels with sensitive data minimised","By sending the raw evidence to every outside body that has shown any interest in it"],
+    correct: 2, why: "Sharing should be controlled and lawful.",
+    hint: "Approved channels."
+  },
+  {
+    id: 1429, rank: 3, role: "digital-forensics", topic: "Examiner Wellbeing", difficulty: "EXPERT",
+    q: "Why is examiner wellbeing a governance concern?",
+    options: ["It never matters","Exposure to disturbing material can harm staff and quality","It only affects managers","It is a tool problem"],
+    correct: 1, why: "Support improves safety and work quality.",
+    hint: "Protect staff."
+  },
+  {
+    id: 1430, rank: 3, role: "digital-forensics", topic: "Automation in Lab Work", difficulty: "EXPERT",
+    q: "What is a risk of heavily automated analysis pipelines?",
+    options: ["They always make errors","Errors can go unnoticed if results are not reviewed","They cannot save time","They produce no logs"],
+    correct: 1, why: "Automation needs checks.",
+    hint: "Review output."
+  },
+  {
+    id: 1431, rank: 3, role: "digital-forensics", topic: "Strategy for Ransomware Cases", difficulty: "EXPERT",
+    q: "After a ransomware attack, what is the BEST evidence priority for the investigation?",
+    options: ["Wipe the encrypted disks to avoid confusion, and review the outcome at the next monthly meeting","Rebuild all systems immediately to restore service","Pay, and delete all logs","Preserve volatile data logs and a representative set of affected images before rebuilding"],
+    correct: 3, why: "Immediate rebuild is the runner-up since it restores service, but it destroys evidence needed to find the entry point and scope.",
+    hint: "Preserve before rebuild."
+  },
+  {
+    id: 1432, rank: 3, role: "digital-forensics", topic: "Digital Evidence Admissibility", difficulty: "EXPERT",
+    q: "What commonly affects whether digital evidence is accepted by a court?",
+    options: ["Whether it was obtained lawfully and its integrity can be shown","Whether it is long enough to fill the folder that the court clerk has set aside for it","Whether it is held on a new device that the examiner has just bought from the supplier","Whether it has colour screenshots that make the pages in the bundle easier to read"],
+    correct: 0, why: "Legality and integrity are key.",
+    hint: "Lawful and intact."
+  },
+  {
+    id: 1433, rank: 3, role: "digital-forensics", topic: "Review of Findings Exhibit", difficulty: "EXPERT",
+    exhibit: "Conclusion: 'Mr Davies stole the customer database on 8 Nov.'\nEvidence: laptop of Mr Davies had a 4 GB archive created 8 Nov 17:12; account davies logged on at 17:05.\nNot examined: other users of the laptop; network upload logs.",
+    q: "What should the reviewer challenge in this conclusion?",
+    options: ["The limits are stated","The tool versions are recorded","The hashes are listed","The conclusion goes beyond what the evidence shows"],
+    correct: 3, why: "Overstated conclusions harm credibility.",
+    hint: "Evidence versus claim."
+  },
+  {
+    id: 1434, rank: 3, role: "digital-forensics", topic: "Incident Evidence Triage Policy", difficulty: "EXPERT",
+    q: "What should a triage policy define?",
+    options: ["The type of laptop to buy","The staff holiday dates","The colour of the labels","Which evidence is collected first and by whom"],
+    correct: 3, why: "Clear order of collection avoids loss.",
+    hint: "Order and owner."
+  },
+  {
+    id: 1435, rank: 3, role: "digital-forensics", topic: "Handling Privileged Data", difficulty: "EXPERT",
+    q: "How should material protected by legal privilege be handled during a review?",
+    options: ["Delete it","Share it with the suspect, and review the outcome at the next monthly meeting","Separate it using a defined process and keep it from the investigators","Read it all and decide later"],
+    correct: 2, why: "Privilege requires a controlled review.",
+    hint: "Separate it."
+  },
+  {
+    id: 1436, rank: 3, role: "digital-forensics", topic: "Supply of Tools", difficulty: "EXPERT",
+    q: "How should a lab manage the licences and versions of its forensic tools?",
+    options: ["Ignore versions, and revisit the decision after the next release","Keep an inventory and record the version used in each case","Share licences freely, and review the outcome at the next monthly meeting","Use whichever copy is found"],
+    correct: 1, why: "Version records support reproducibility.",
+    hint: "Record versions."
+  },
+  {
+    id: 1437, rank: 3, role: "digital-forensics", topic: "Forensic Data Lake Design", difficulty: "EXPERT",
+    q: "What is a key control for a platform holding evidence from many cases?",
+    options: ["Strict case-level access control and audit logging, as a general rule","One shared account that every analyst in the company uses to log in to the platform each day","Public access","No logging"],
+    correct: 0, why: "Cases must be separated and accountable.",
+    hint: "Case-level access."
+  },
+  {
+    id: 1438, rank: 3, role: "digital-forensics", topic: "Cost Benefit of Readiness", difficulty: "EXPERT",
+    q: "How can leaders judge the value of forensic readiness spending?",
+    options: ["By comparing it with the cost, and impact of incidents it helps resolve","By counting the tools bought","By the number of staff","By the length of policies"],
+    correct: 0, why: "Value is shown in better outcomes.",
+    hint: "Outcomes."
+  },
+  {
+    id: 1439, rank: 3, role: "digital-forensics", topic: "Chain of Custody Audit", difficulty: "EXPERT",
+    q: "What should an internal audit of custody records check?",
+    options: ["That the room is tidy","That the staff are happy","That the labels are pretty","That every transfer is signed timed and matched to the item"],
+    correct: 3, why: "Auditors test completeness and accuracy.",
+    hint: "Complete records."
+  },
+  {
+    id: 1440, rank: 3, role: "digital-forensics", topic: "Report Template Governance", difficulty: "EXPERT",
+    q: "Why standardise a forensic report template?",
+    options: ["It hides the method","It removes the need for opinions","It keeps reports consistent complete and easier to review","It shortens every case"],
+    correct: 2, why: "Standard structure supports quality.",
+    hint: "Consistency."
+  },
+  {
+    id: 1441, rank: 3, role: "digital-forensics", topic: "Large Evidence Volumes", difficulty: "EXPERT",
+    q: "What helps an examiner cope with terabytes of evidence in a time-limited case?",
+    options: ["Targeted collection keyword and hash filtering and a clear scope","Ignoring the evidence, and review the outcome at the next monthly meeting","Copying it to USB, and review the outcome at the next monthly meeting","Reading every file by hand"],
+    correct: 0, why: "Filtering and scoping make review manageable.",
+    hint: "Filter and scope."
+  },
+  {
+    id: 1442, rank: 3, role: "digital-forensics", topic: "Insider Evidence Source Mix", difficulty: "EXPERT",
+    q: "Which evidence mix best supports an insider data theft case?",
+    options: ["Only the date on which the suspect handed in their resignation letter","Only a list of the files that the suspect has access to on the file server","Device artefacts access logs and network upload records together","Only the suspect's own statement about what was done on the device"],
+    correct: 2, why: "Several independent sources corroborate each other.",
+    hint: "Multiple sources."
+  },
+  {
+    id: 1443, rank: 3, role: "digital-forensics", topic: "Preserving Chat Collaboration Data", difficulty: "EXPERT",
+    q: "What is important when preserving data from a team chat platform?",
+    options: ["Delete the old channels, and the platform is faster for the people using it","Take a handwritten note of the messages that appear most interesting to the case","Use the platform's lawful export or hold features and record how it was done","Ask the staff to forward the messages they remember to a private mailbox"],
+    correct: 2, why: "Native exports keep context and metadata.",
+    hint: "Native export."
+  },
+  {
+    id: 1444, rank: 3, role: "digital-forensics", topic: "Evidence Handover Checklist", difficulty: "EXPERT",
+    q: "What should a handover of evidence to another party include?",
+    options: ["A photograph of the building where the evidence was stored for the case","A list of the names of the staff who work in the evidence room","A verbal promise that everything is in the box with no further record","A signed inventory with hashes and the condition of each item"],
+    correct: 3, why: "A signed inventory shows what was transferred.",
+    hint: "Inventory."
+  },
+  {
+    id: 1445, rank: 3, role: "digital-forensics", topic: "Business Continuity and Evidence", difficulty: "EXPERT",
+    q: "A system under investigation is critical to operations. What is the BEST approach?",
+    options: ["Switch it off at once without telling anyone in the business, then record the result in the ticket","Agree a plan to preserve evidence, and restore service in a coordinated way","Leave it running and do nothing about the evidence","Rebuild it first and then think about whether evidence is needed"],
+    correct: 1, why: "Rebuilding first is the runner-up as it restores service, but it risks destroying the evidence needed to understand the attack.",
+    hint: "Coordinate."
+  },
+  {
+    id: 1446, rank: 3, role: "digital-forensics", topic: "Policy on Personal Devices", difficulty: "EXPERT",
+    q: "What should a bring-your-own-device policy say about investigations?",
+    options: ["When and how personal devices may be examined with a lawful basis","That personal devices can never be examined for any reason at all","That staff must hand over their passwords to anyone who asks for them","That investigations are not covered and, and nothing needs to be said"],
+    correct: 0, why: "Clear rules set lawful limits.",
+    hint: "Consent or basis."
+  },
+  {
+    id: 1447, rank: 3, role: "digital-forensics", topic: "Detecting Evidence Tampering Exhibit", difficulty: "EXPERT",
+    exhibit: "File: export_01.pst\nAcquired 2025-10-20  SHA-256: a71f...c3d2\nChecked   2025-10-27  SHA-256: a71f...c3d2  OK\nChecked   2025-11-05  SHA-256: 99b0...e81a  MISMATCH\nAccess log: 3 users opened file (2025-10-29)",
+    q: "What does this hash register comparison show?",
+    options: ["All hashes matched at every check","The register was blank","Hashes are not required","One file's hash changed after the original acquisition"],
+    correct: 3, why: "A changed hash means the file is no longer identical to what was acquired.",
+    hint: "Compare the checks."
+  },
+  {
+    id: 1448, rank: 3, role: "digital-forensics", topic: "Overseeing External Providers", difficulty: "EXPERT",
+    q: "How should an organisation oversee an external forensic provider?",
+    options: ["By paying them in advance","Through contract terms audit rights, and review of methods, as a general rule","By choosing the cheapest","By trusting them completely with no review of their methods or of their reports at all"],
+    correct: 1, why: "Oversight maintains standards.",
+    hint: "Contract and review."
+  },
+  {
+    id: 1449, rank: 3, role: "digital-forensics", topic: "Records for Court", difficulty: "EXPERT",
+    q: "Why keep the working papers of a case after the report is issued?",
+    options: ["They are always destroyed immediately after the report, and no copy can be requested later","They are the property of the suspect","They may be needed to explain and defend the work later","They make the report invalid"],
+    correct: 2, why: "Work must be reproducible and explainable.",
+    hint: "Defend the work."
+  },
+  {
+    id: 1450, rank: 3, role: "digital-forensics", topic: "Incident Command Link", difficulty: "EXPERT",
+    q: "How should the forensic lead fit into the incident command structure?",
+    options: ["Report evidence findings to the commander and advise on preservation","Avoid the incident team","Take over the commander's role","Work alone, and share nothing"],
+    correct: 0, why: "Coordination ensures evidence supports decisions.",
+    hint: "Advise the commander."
+  },
+  {
+    id: 1451, rank: 4, role: "digital-forensics", topic: "Expert Witness Duty", difficulty: "EXPERT",
+    q: "What is an expert witness's primary duty?",
+    options: ["To avoid admitting any uncertainty","To win the case for their client","To assist the court impartially within their area of expertise","To support the party who pays their fee in every case that they accept"],
+    correct: 2, why: "The duty is to the court and not to the instructing party.",
+    hint: "Impartial."
+  },
+  {
+    id: 1452, rank: 4, role: "digital-forensics", topic: "Cross-Examination Handling", difficulty: "EXPERT",
+    q: "A lawyer asks a question outside your expertise during cross-examination. What is the BEST response?",
+    options: ["Agree with whatever the lawyer suggests","Give your best guess to appear helpful, until the next scheduled review takes place","State it is outside your expertise and explain what you can say","Refuse to answer and leave the room, and revisit the decision after the next release"],
+    correct: 2, why: "A guess is the runner-up as it avoids awkwardness, but it risks an error that undermines credibility.",
+    hint: "Know your limits."
+  },
+  {
+    id: 1453, rank: 4, role: "digital-forensics", topic: "Error Rate Disclosure", difficulty: "EXPERT",
+    q: "Why should an examiner disclose known error rates or limitations of a method?",
+    options: ["It lets the court judge how much weight the result deserves","It makes the report longer and it looks more thorough to the reader of the report","It avoids the need for notes as the court can read the results directly","It hides the method"],
+    correct: 0, why: "Transparency about reliability supports fair decisions.",
+    hint: "Reliability."
+  },
+  {
+    id: 1454, rank: 4, role: "digital-forensics", topic: "Alternative Hypothesis Testing", difficulty: "EXPERT",
+    q: "How should an examiner treat a competing explanation for the evidence?",
+    options: ["Present it as certain, then record the result in the ticket","Test it fairly against the evidence and report the result","Delete the evidence supporting it, and review the outcome at the next monthly meeting","Ignore it unless the lawyer raises it, as soon as practical"],
+    correct: 1, why: "Considering alternatives reduces bias.",
+    hint: "Test alternatives."
+  },
+  {
+    id: 1455, rank: 4, role: "digital-forensics", topic: "Attribution Confidence", difficulty: "EXPERT",
+    q: "How should an examiner express confidence about who performed an action?",
+    options: ["Avoid explaining the reasoning","Use calibrated language that matches the strength of the evidence","Always say that the suspect is guilty when any trace links them to the device","Always say it is impossible to know"],
+    correct: 1, why: "Language should match the evidence.",
+    hint: "Calibrated."
+  },
+  {
+    id: 1456, rank: 4, role: "digital-forensics", topic: "Anti-Forensic Detection", difficulty: "EXPERT",
+    q: "Which finding best suggests deliberate timestamp manipulation?",
+    options: ["One file saved on a Monday afternoon by the user during the normal working day","A folder with many pictures","A tool trace, and many files with identical unusually round times","A document with a long name"],
+    correct: 2, why: "Patterns plus tool traces strengthen the inference.",
+    hint: "Patterns and traces."
+  },
+  {
+    id: 1457, rank: 4, role: "digital-forensics", topic: "Standards Awareness", difficulty: "EXPERT",
+    q: "What is the purpose of international guidance on digital evidence handling?",
+    options: ["To stop digital evidence from ever being used in any hearing in any court at all","To make cases longer","To replace the need for training","To promote consistent defensible practices across organisations"],
+    correct: 3, why: "Standards support reliability and cross-border acceptance.",
+    hint: "Consistency."
+  },
+  {
+    id: 1458, rank: 4, role: "digital-forensics", topic: "Large Incident Scoping", difficulty: "EXPERT",
+    q: "How should an examiner scope a breach affecting many systems?",
+    options: ["Image every system equally","Use indicators, and triage data to find the affected systems then deepen analysis, until the next scheduled review takes place","Examine only one system","Wait for the attackers to finish"],
+    correct: 1, why: "Evidence-led scoping uses time wisely.",
+    hint: "Indicators and triage."
+  },
+  {
+    id: 1459, rank: 4, role: "digital-forensics", topic: "Encrypted Container Strategy", difficulty: "EXPERT",
+    q: "An encrypted container is found. What approach is both lawful and sensible?",
+    options: ["Attempt random guesses with no record","Ask the suspect to delete it","Destroy the container","Look for keys in memory backups and other lawful sources and record the method, in most cases"],
+    correct: 3, why: "Lawful and documented efforts preserve the integrity of the case.",
+    hint: "Lawful sources."
+  },
+  {
+    id: 1460, rank: 4, role: "digital-forensics", topic: "Reporting Uncertainty", difficulty: "EXPERT",
+    q: "How should uncertainty be shown in a report?",
+    options: ["State what is known what is inferred and what is unknown","Use technical words only","Hide it to appear confident, until the next scheduled review takes place","Avoid conclusions"],
+    correct: 0, why: "Clear separation of fact and inference is vital.",
+    hint: "Known inferred unknown."
+  },
+  {
+    id: 1461, rank: 4, role: "digital-forensics", topic: "Evidence in Containers", difficulty: "EXPERT",
+    q: "Why is evidence from short-lived containers hard to preserve?",
+    options: ["They are too small to hash","They are always encrypted by default and nobody can collect anything from them at all","They never produce any logs at all and, and there is nothing for the examiner to collect","They may be destroyed and their state lost before collection"],
+    correct: 3, why: "Ephemeral workloads need logging and snapshots in advance.",
+    hint: "Ephemeral."
+  },
+  {
+    id: 1462, rank: 4, role: "digital-forensics", topic: "Peer Challenge Culture", difficulty: "EXPERT",
+    q: "What does a good peer review culture encourage?",
+    options: ["Quiet agreement with the senior examiner in every single meeting that the team holds","Hiding any errors from the rest of the laboratory team to protect the staff","Constructive challenge, in most cases","Avoiding all review and the work is finished more quickly in the end"],
+    correct: 2, why: "Challenge improves reliability.",
+    hint: "Challenge."
+  },
+  {
+    id: 1463, rank: 4, role: "digital-forensics", topic: "Memory Forensics Limits", difficulty: "EXPERT",
+    q: "What is a limitation of memory analysis?",
+    options: ["It always shows the whole history of the computer as the day that it was installed","It requires that the computer must be switched off for the whole analysis","Data can be incomplete or altered","It cannot ever be combined with any other source of evidence from the system"],
+    correct: 2, why: "Memory is a snapshot and may be partial.",
+    hint: "Snapshot."
+  },
+  {
+    id: 1464, rank: 4, role: "digital-forensics", topic: "Hash Collision Awareness", difficulty: "EXPERT",
+    q: "Why are weak hashes a concern for evidence?",
+    options: ["They remove all metadata from the files that are used in the examination","They make the examiner's workstation run more slowly during large cases","They make the files bigger when they are stored in the evidence system","Collisions could allow two different files to match"],
+    correct: 3, why: "Strong hashes support integrity claims.",
+    hint: "Collisions."
+  },
+  {
+    id: 1465, rank: 4, role: "digital-forensics", topic: "Deepfake Evidence", difficulty: "EXPERT",
+    q: "What should an examiner consider about images or video in a case?",
+    options: ["Only whether they are in colour or in black and white at the time of display","Only the date on which the files were last copied to the lab workstation","Only the file size that the court clerk has recorded in the case papers","Whether they may be synthetic or altered"],
+    correct: 3, why: "Authenticity must be assessed.",
+    hint: "Authenticity."
+  },
+  {
+    id: 1466, rank: 4, role: "digital-forensics", topic: "Source Code Evidence", difficulty: "EXPERT",
+    q: "What matters when presenting software as evidence?",
+    options: ["Only the colour of the editor that was used by the programmer at the time","Only the name of the programmer who first wrote the very earliest version","Its provenance and integrity","Only how many lines it has in each file that was extracted from the repository"],
+    correct: 2, why: "Origin and unchanged state support reliability.",
+    hint: "Provenance."
+  },
+  {
+    id: 1467, rank: 4, role: "digital-forensics", topic: "Cloud Provider Response Exhibit", difficulty: "EXPERT",
+    exhibit: "Reply from provider (2025-11-10): 'We retain management API logs for 30 days. Requests for earlier periods cannot be fulfilled.'\nIncident start (estimated): 2025-08-14\nCustomer-held audit trail: not enabled",
+    q: "What does this provider reply imply for the case?",
+    options: ["All logs are kept for ten years","The logs are public","Logs older than 30 days are no longer available","The provider has no logs"],
+    correct: 2, why: "Short provider retention limits what can be recovered.",
+    hint: "Retention period."
+  },
+  {
+    id: 1468, rank: 4, role: "digital-forensics", topic: "Chain of Reasoning Review", difficulty: "EXPERT",
+    q: "What should a reviewer check in a conclusion?",
+    options: ["That the report contains many pages about topics which the examiner found of interest","That the report uses the latest fashionable technical words from the conference","That the examiner has a long list of qualifications on the front page","That each step follows from evidence"],
+    correct: 3, why: "Logic must link evidence to conclusions.",
+    hint: "Logical links."
+  },
+  {
+    id: 1469, rank: 4, role: "digital-forensics", topic: "Ethics of Disclosure", difficulty: "EXPERT",
+    q: "What should an examiner do on finding evidence that helps the other side?",
+    options: ["Disclose it as the duty requires","Hide it, and the instructing party is not disappointed by the final report","Mention it only if asked a direct question during the cross-examination","Delete it before the evidence is passed to the legal team of the case"],
+    correct: 0, why: "Honesty and impartiality are essential.",
+    hint: "Disclose."
+  },
+  {
+    id: 1470, rank: 4, role: "digital-forensics", topic: "Research Reproducibility", difficulty: "EXPERT",
+    q: "Why publish validation methods for forensic techniques?",
+    options: ["So that competitors will be unable to learn from them at any later stage","So that no one can criticise them in future when the technique is used in court","So others can test and reproduce them","So that the lab can charge a higher price for the use of the technique"],
+    correct: 2, why: "Reproducibility underpins scientific reliability.",
+    hint: "Reproduce."
+  },
+  {
+    id: 1471, rank: 4, role: "digital-forensics", topic: "Timeline Conflict Exhibit", difficulty: "EXPERT",
+    exhibit: "Mail server: message sent 2025-11-05 09:02 UTC\nProxy log: user logged on to webmail 2025-11-05 10:15 UTC\nWorkstation clock offset: unmeasured (BIOS +1 h 11 min on 2025-11-06)\nUser statement: 'I sent it at 9am'",
+    q: "What should the examiner do about this conflict between sources?",
+    options: ["Remove the email record, and review the outcome at the next monthly meeting","Investigate clock offsets and source reliability before concluding","Ignore the proxy log","Choose the source that fits the theory, then record the result in the ticket"],
+    correct: 1, why: "Conflicts need explanation not suppression.",
+    hint: "Reconcile."
+  },
+  {
+    id: 1472, rank: 4, role: "digital-forensics", topic: "Reverse Engineering Boundaries", difficulty: "EXPERT",
+    q: "How far should a forensic examiner go when analysing unknown software?",
+    options: ["Fully reverse engineer every sample whatever the question, as a general rule","As far as the instruction and expertise allow and report limits","Never look at unknown software","Run it on a production server, and revisit the decision after the next release"],
+    correct: 1, why: "Work should be proportionate and within competence.",
+    hint: "Proportionate."
+  },
+  {
+    id: 1473, rank: 4, role: "digital-forensics", topic: "Ephemeral Messaging Evidence", difficulty: "EXPERT",
+    q: "How might an examiner approach disappearing messages?",
+    options: ["Ask the app maker to publish the messages","Assume nothing can ever be found","Look for remnants in backups notifications, and device artefacts lawfully, as a general rule","Alter the app to keep them"],
+    correct: 2, why: "Residual traces may remain.",
+    hint: "Look for remnants."
+  },
+  {
+    id: 1474, rank: 4, role: "digital-forensics", topic: "Database Forensics Basics", difficulty: "EXPERT",
+    q: "What can transaction logs of a database help show?",
+    options: ["The brand of the server","The order and content of changes made to data","The password policy of the company, in most cases","The ambient temperature"],
+    correct: 1, why: "Logs record modification history.",
+    hint: "Change history."
+  },
+  {
+    id: 1475, rank: 4, role: "digital-forensics", topic: "IoT Device Evidence", difficulty: "EXPERT",
+    q: "What is a challenge in examining IoT devices?",
+    options: ["Limited standard interfaces, and varied proprietary storage","They always contain full disk images that can be read with a standard laptop tool","They never connect to anything","They cannot be powered at all and, and are never found at any scene that the lab visits"],
+    correct: 0, why: "Diversity makes extraction difficult.",
+    hint: "Diverse formats."
+  },
+  {
+    id: 1476, rank: 4, role: "digital-forensics", topic: "Vehicle Data Sources", difficulty: "EXPERT",
+    q: "What kind of data might connected vehicles hold?",
+    options: ["The owner's medical files, as a general rule","The owner's bank statements","Location records and connection logs","Full tax records of the owner, as a general rule"],
+    correct: 2, why: "Telematics can show movements and device use.",
+    hint: "Location logs."
+  },
+  {
+    id: 1477, rank: 4, role: "digital-forensics", topic: "Examiner Conflict of Interest", difficulty: "EXPERT",
+    q: "What should an examiner do if they have a conflict of interest in a case?",
+    options: ["Ask a friend to do the work in their name","Declare it and withdraw if it cannot be managed","Continue as normal","Keep it secret"],
+    correct: 1, why: "Independence must be protected.",
+    hint: "Declare it."
+  },
+  {
+    id: 1478, rank: 4, role: "digital-forensics", topic: "Format Conversion Risk", difficulty: "EXPERT",
+    q: "Why note any conversion of evidence between formats?",
+    options: ["Conversion may alter or lose data and must be documented","It is always required","It makes the evidence invalid by law in all cases","It removes the need for hashes"],
+    correct: 0, why: "Changes to format must be traceable.",
+    hint: "Document conversions."
+  },
+  {
+    id: 1479, rank: 4, role: "digital-forensics", topic: "Case Law Awareness", difficulty: "EXPERT",
+    q: "Why should an examiner know the legal rules for expert evidence in the relevant court?",
+    options: ["To ignore the instructions","To make sure the work and report meet the required standard","To avoid writing a report as the court will rely on the opinion of the lawyers","To choose which court should hear the case, and the most favourable venue is used"],
+    correct: 1, why: "Compliance supports admissibility.",
+    hint: "Court rules."
+  },
+  {
+    id: 1480, rank: 4, role: "digital-forensics", topic: "Cognitive Bias Safeguards", difficulty: "EXPERT",
+    q: "Which practice helps reduce contextual bias?",
+    options: ["Limit exposure to unnecessary case information during analysis","Work faster","Discuss the desired result with the client","Read all the investigator's theories before starting"],
+    correct: 0, why: "Blinding reduces influence of expectations.",
+    hint: "Limit context."
+  },
+  {
+    id: 1481, rank: 4, role: "digital-forensics", topic: "Hash Database Verification Exhibit", difficulty: "EXPERT",
+    exhibit: "Reference set: NSRL-style (2.1 M entries)\nFiles hashed: 18,204\nKnown (matched): 18,202\nUnknown: 2 (svc_upd.exe, driver_x64.dll)",
+    q: "What does this tool output imply?",
+    options: ["The database is empty","All items matched known files and, and no further review of the set is needed at all","The files are encrypted","Two items in the set were not found in the reference database"],
+    correct: 3, why: "Unmatched items need separate review.",
+    hint: "Count the unknowns."
+  },
+  {
+    id: 1482, rank: 4, role: "digital-forensics", topic: "Detecting Wiped Free Space", difficulty: "EXPERT",
+    q: "How might wiped free space be recognised?",
+    options: ["By a recent software update","By large regions filled with a uniform pattern and tool traces","By a larger than usual font size in the documents that were found by the examiner","By a user's name on the folder"],
+    correct: 1, why: "Uniform fill patterns are unusual in normal free space.",
+    hint: "Pattern in free space."
+  },
+  {
+    id: 1483, rank: 4, role: "digital-forensics", topic: "Handling Child Safety Material Policy", difficulty: "EXPERT",
+    q: "What should an examiner do if they unexpectedly find illegal material while working on a different matter?",
+    options: ["Copy it for later, and revisit the decision after the next release","Delete it","Stop and follow the legal and organisational reporting procedure","Show colleagues, and review the outcome at the next monthly meeting"],
+    correct: 2, why: "Specific legal duties apply and must be followed.",
+    hint: "Stop and report."
+  },
+  {
+    id: 1484, rank: 4, role: "digital-forensics", topic: "Triage of Volatile Cloud Data", difficulty: "EXPERT",
+    q: "What is the BEST first step when a cloud workload is suspected to be compromised?",
+    options: ["Snapshot the volumes and preserve logs then isolate the workload","Terminate the instance at once, and revisit the decision after the next release","Wait a week, and watch, until the next scheduled review takes place","Delete the security groups"],
+    correct: 0, why: "Terminating is the runner-up as it stops the attacker, but it removes the running state and some data forever.",
+    hint: "Preserve then isolate."
+  },
+  {
+    id: 1485, rank: 4, role: "digital-forensics", topic: "Remote Work Evidence Challenges", difficulty: "EXPERT",
+    q: "What challenge do remote workers create for forensic collection?",
+    options: ["Devices may be off-site on private networks and hard to collect from","Devices cannot hold data when they are used away from the office network at all","Logs are always complete","Staff always return the devices on the day after the incident and, and nothing is lost"],
+    correct: 0, why: "Collection needs remote tools and planning.",
+    hint: "Off-site devices."
+  },
+  {
+    id: 1486, rank: 4, role: "digital-forensics", topic: "Triage Report for Executives", difficulty: "EXPERT",
+    q: "What should an executive summary of a major forensic investigation contain?",
+    options: ["Every command that was run by the analysts during the whole of the investigation","A list of tool vendors","The names of all analysts","What happened the impact the confidence level and next actions"],
+    correct: 3, why: "Executives need a decision-ready view.",
+    hint: "Decision ready."
+  },
+  {
+    id: 1487, rank: 4, role: "digital-forensics", topic: "File System Journal Value", difficulty: "EXPERT",
+    q: "What can a file system journal show?",
+    options: ["Recent file and folder changes even after deletion","The colour of the icons","The font of a document","The user's age"],
+    correct: 0, why: "Journals record operations on the file system.",
+    hint: "Recent changes."
+  },
+  {
+    id: 1488, rank: 4, role: "digital-forensics", topic: "Chain of Custody Failure Exhibit", difficulty: "EXPERT",
+    exhibit: "Item 14 (SSD)\n2025-11-01 09:00 stored E-02\n2025-11-02 14:00 signed out R. Cole\n[no entries 2025-11-02 14:00 to 2025-11-05 11:30]\n2025-11-05 11:30 returned E-02 (signed)",
+    q: "What is the most serious flaw in this custody record?",
+    options: ["The record names the custodian","The item was hashed at acquisition","The item has a clear label","The item was out of the evidence store for three days with no entry"],
+    correct: 3, why: "Unaccounted time breaks the chain.",
+    hint: "Look for gaps."
+  },
+  {
+    id: 1489, rank: 4, role: "digital-forensics", topic: "Algorithmic Bias in Tools", difficulty: "EXPERT",
+    q: "Why should an examiner understand the limits of automated classification tools?",
+    options: ["They are always correct and, and no examiner has to check any of their output","They never miss items","Automated results may be wrong or biased, and need checking","They can replace the examiner"],
+    correct: 2, why: "Human review remains essential.",
+    hint: "Check automated results."
+  },
+  {
+    id: 1490, rank: 4, role: "digital-forensics", topic: "Communicating with Non-Experts", difficulty: "EXPERT",
+    q: "How should an examiner explain a technical concept to a judge?",
+    options: ["Using only technical terms, until the next scheduled review takes place","Using slang, and revisit the decision after the next release","Using plain words, and a relevant analogy, as a first step","Using no explanation, until the next scheduled review takes place"],
+    correct: 2, why: "Clarity helps the court.",
+    hint: "Plain words."
+  },
+  {
+    id: 1491, rank: 4, role: "digital-forensics", topic: "Post Incident Learning", difficulty: "EXPERT",
+    q: "What should a forensic review after a major case produce?",
+    options: ["Lessons learned and improvements to readiness, and methods, in most cases","No records","Only a bill for the work","A list of the people to blame for the incident, and managers can discipline them"],
+    correct: 0, why: "Learning improves future response.",
+    hint: "Improve."
+  },
+  {
+    id: 1492, rank: 4, role: "digital-forensics", topic: "Quantum and Crypto Future", difficulty: "EXPERT",
+    q: "How might advances in cryptography affect forensic work?",
+    options: ["They remove the need for encryption","They may make encrypted evidence harder to access and need new approaches","They have no effect","They will make all evidence easily readable"],
+    correct: 1, why: "Examiners must prepare for stronger protections.",
+    hint: "Harder access."
+  },
+  {
+    id: 1493, rank: 4, role: "digital-forensics", topic: "Documenting Deviations", difficulty: "EXPERT",
+    q: "What should an examiner do if they must deviate from standard procedure?",
+    options: ["Record the deviation and the reason and assess the impact","Hide it","Blame the equipment, and revisit the decision after the next release","Ignore the standard, until the next scheduled review takes place"],
+    correct: 0, why: "Transparent deviations keep the work defensible.",
+    hint: "Record why."
+  },
+  {
+    id: 1494, rank: 4, role: "digital-forensics", topic: "Weighting Circumstantial Evidence", difficulty: "EXPERT",
+    q: "How should an examiner treat evidence that is consistent with guilt and innocence alike?",
+    options: ["Leave it out of the report altogether, and it does not confuse anyone","Present it as proof of guilt in the report","Treat it as proof of innocence whenever the suspect gives a statement","Say it does not discriminate between the explanations"],
+    correct: 3, why: "Evidence that fits both views has little value in choosing between them.",
+    hint: "Does not discriminate."
+  },
+  {
+    id: 1495, rank: 4, role: "digital-forensics", topic: "Authenticity of Screenshots Exhibit", difficulty: "EXPERT",
+    exhibit: "Exhibit 12: 6 screenshots of a chat (cropped, no header, no device name)\nSource device: not collected\nDatabase export: none\nProvided by: complainant by email",
+    q: "What weakness does this evidence summary have?",
+    options: ["The chat database was collected with hashes","The key chat records are only cropped screenshots with no source data","The device was examined by two analysts","The message times were corrected for the time zone"],
+    correct: 1, why: "Images alone cannot show origin or completeness.",
+    hint: "Source data?"
+  },
+  {
+    id: 1496, rank: 4, role: "digital-forensics", topic: "Resilient Archive Design", difficulty: "EXPERT",
+    q: "How should a lab keep long-term evidence readable for many years?",
+    options: ["Delete files that have not been opened during the last twelve months","Plan media refresh format review and periodic integrity checks","Store everything on one old drive and hope it keeps working for the whole period","Convert everything to paper prints every time that a new case is closed"],
+    correct: 1, why: "Long-term preservation needs active care.",
+    hint: "Refresh and check."
+  },
+  {
+    id: 1497, rank: 4, role: "digital-forensics", topic: "Handling Conflicting Instructions", difficulty: "EXPERT",
+    q: "Two parties give an expert contradictory instructions. What is the BEST action?",
+    options: ["Follow the party who spoke last","Ignore both, and work alone","Follow whichever instruction is more profitable","Seek written clarification from the instructing solicitor and note it, as soon as practical"],
+    correct: 3, why: "Following the more profitable one is the runner-up as it seems practical, but it risks bias and breach of duty.",
+    hint: "Clarify in writing."
+  },
+  {
+    id: 1498, rank: 4, role: "digital-forensics", topic: "Machine Learning Triage Use", difficulty: "EXPERT",
+    q: "How should a lab use machine learning to prioritise large evidence sets?",
+    options: ["As a replacement for the written procedures that the examiners have to follow","As the sole decision maker for every item in the set that the lab receives","As a secret tool that is never mentioned in the report of the case","As a triage aid with human review, and documented validation"],
+    correct: 3, why: "Automation helps with scale if it is validated and checked.",
+    hint: "Aid not decider."
+  },
+  {
+    id: 1499, rank: 4, role: "digital-forensics", topic: "Chain of Events Reconstruction", difficulty: "EXPERT",
+    q: "What makes a reconstruction of events convincing in court?",
+    options: ["Corroboration from independent sources with clear reasoning","A timeline that has been simplified by removing the awkward events","A long list of artefacts with no explanation of how they link to each other","One source presented with great confidence by the examiner during the hearing"],
+    correct: 0, why: "Corroboration and clarity give weight.",
+    hint: "Independent sources."
+  },
+  {
+    id: 1500, rank: 4, role: "digital-forensics", topic: "Peer Challenge of Expert Reports", difficulty: "EXPERT",
+    q: "Why might an expert report be reviewed by another expert before service?",
+    options: ["To avoid disclosure","To catch errors and unsupported claims","To remove the need for any evidence, as a general rule","To make the report more favourable"],
+    correct: 1, why: "Independent review improves quality.",
+    hint: "Quality check."
   }
 ];
