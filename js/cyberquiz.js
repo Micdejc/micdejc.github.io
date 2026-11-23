@@ -1625,6 +1625,17 @@ export function initCyberQuiz() {
 
         const rankCompleted = rankIndex() > missionRank;
 
+        // Retrieve career directions for the selected role
+        // from all superior ranks, excluding the current rank.
+        const careerDirections = RANKS
+            .slice(rankIndex() + 1)
+            .flatMap(rank =>
+                rank.careerPaths
+                    .filter(career => career.role === ROLE)
+                    .map(career => career.title)
+            )
+            .join(', ');
+
         $('result-message').innerHTML =
             !eligibleForRewards
                 ? `Practice completed. No XP, streak rewards or completion bonus awarded. ${
@@ -1645,13 +1656,10 @@ export function initCyberQuiz() {
                                 : 'Strong work.'
                           } ${
                             rank().name
-                          } career directions: <strong>${
-                            rank().careerPaths.map(career => career.title).join(', ')
-                          }</strong>.`
+                          } career directions: <strong>${careerDirections}</strong>.`
         
-                        : `No completion bonus this time. Review the feedback and try another mission. Suggested career directions: <strong>${
-                            rank().careerPaths.map(career => career.title).join(', ')
-                          }</strong>.`;
+                        : `No completion bonus this time. Review the feedback and try another mission. 
+                        Suggested career directions: <strong>${careerDirections}</strong>.`;
     
         $('continue').innerHTML =
             rankCompleted
