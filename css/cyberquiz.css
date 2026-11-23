@@ -2282,7 +2282,7 @@ body.cyberquiz-modal-open {
     }
 
     .cyberquiz-root {
-        padding: clamp(8px, 4vw, 12px);
+        padding: clamp(8px, 2vw, 12px);
     }
 
     .cyberquiz-modal .cyberquiz-dialog {
