@@ -2281,6 +2281,10 @@ body.cyberquiz-modal-open {
         padding: 5px;
     }
 
+    .cyberquiz-root {
+        padding: clamp(8px, 4vw, 12px);
+    }
+
     .cyberquiz-modal .cyberquiz-dialog {
         max-height: calc(100vh - 16px);
         border-radius: 18px;
