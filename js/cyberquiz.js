@@ -32,7 +32,8 @@ export function initCyberQuiz() {
         'pentest',
         'grc',
         'security-engineering',
-        'cloud-security'
+        'cloud-security',
+        'digital-forensics'
     ];
 
     //const ROLE = CAREER_ROLES[0];
@@ -103,6 +104,12 @@ export function initCyberQuiz() {
                 name: 'Cloud Security',
                 title: 'Junior Cloud Security Analyst',
                 description: 'Understand cloud security fundamentals, shared responsibility, identity management and basic cloud risks.'
+            },
+            {
+                role: 'digital-forensics',
+                name: 'Digital Forensics',
+                title: 'Junior Digital Forensics Analyst',
+                description: 'Develop foundational skills in digital evidence identification, preservation, acquisition and basic forensic examination.'
             }
         ]
     },
@@ -168,6 +175,12 @@ export function initCyberQuiz() {
                 name: 'Cloud Security',
                 title: 'Cloud Security Engineer',
                 description: 'Configure cloud security controls, review permissions, monitor cloud environments and address common misconfigurations.'
+            },
+            {
+                role: 'digital-forensics',
+                name: 'Digital Forensics',
+                title: 'Digital Forensics Analyst',
+                description: 'Conduct forensic examinations, analyse digital artefacts, investigate incidents and document findings using established forensic procedures.'
             }
         ]
     },
@@ -235,6 +248,12 @@ export function initCyberQuiz() {
                 name: 'Cloud Security',
                 title: 'Senior Cloud Security Engineer',
                 description: 'Assess cloud architecture, investigate complex misconfigurations and implement identity, network and workload protections.'
+            },
+            {
+                role: 'digital-forensics',
+                name: 'Digital Forensics',
+                title: 'Senior Digital Forensics Analyst',
+                description: 'Lead complex forensic examinations, correlate evidence across multiple sources and reconstruct sophisticated cyber incidents.'
             }
         ]
     },
@@ -301,6 +320,12 @@ export function initCyberQuiz() {
                 name: 'Cloud Security',
                 title: 'Cloud Security Architect',
                 description: 'Design secure cloud architectures, establish cloud governance and integrate identity, network and workload security controls.'
+            },
+            {
+                role: 'digital-forensics',
+                name: 'Digital Forensics',
+                title: 'Digital Forensics Lead',
+                description: 'Lead forensic investigations, establish examination methodologies, oversee evidence handling and coordinate complex investigative activities.'
             }
         ]
     },
@@ -367,6 +392,12 @@ export function initCyberQuiz() {
                 name: 'Cloud Security',
                 title: 'Principal Cloud Security Architect',
                 description: 'Set cloud security strategy, govern complex multi-cloud environments and lead enterprise-wide cloud security architecture.'
+            },
+            {
+                role: 'digital-forensics',
+                name: 'Digital Forensics',
+                title: 'Principal Digital Forensics Investigator',
+                description: 'Define forensic investigation strategy, provide expert technical direction and advance organisational capabilities in complex digital investigations.'
             }
         ]
     }
