@@ -345,10 +345,45 @@ body.cyberquiz-modal-open {
     flex-shrink: 0;
 }
 
-.cq-share-button {
-    display: inline-flex;
+.cq-share-button,
+.cq-share-menu a,
+.cq-share-menu button {
+    display: flex;
     align-items: center;
-    gap: 7px;
+    gap: 9px;
+}
+
+.cq-share-button svg,
+.cq-share-menu svg {
+    width: 17px;
+    height: 17px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    flex-shrink: 0;
+}
+
+.cq-share-menu a:nth-child(1) svg,
+.cq-share-menu a:nth-child(2) svg,
+.cq-share-menu a:nth-child(3) svg {
+    fill: currentColor;
+    stroke: none;
+}
+
+.cq-share-menu a:nth-child(4) svg {
+    width: 18px;
+    height: 18px;
+}
+
+.cq-share-menu a:nth-child(4) svg,
+.cq-share-menu a:nth-child(4) svg path {
+    fill: none;
+    stroke: currentColor;
+}
+
+.cq-share-button {
     padding: 9px 13px;
     border: 1px solid var(--cq-border);
     border-radius: 8px;
@@ -367,12 +402,12 @@ body.cyberquiz-modal-open {
     position: absolute;
     top: calc(100% + 8px);
     right: 0;
-    min-width: 155px;
+    min-width: 160px;
     padding: 7px;
     border: 1px solid var(--cq-border);
     border-radius: 10px;
     background: var(--cq-card);
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 5px 20px rgba(0,0,0,.15);
     z-index: 1000;
 }
 
@@ -383,9 +418,6 @@ body.cyberquiz-modal-open {
 
 .cq-share-menu a,
 .cq-share-menu button {
-    display: flex;
-    align-items: center;
-    gap: 9px;
     width: 100%;
     padding: 9px;
     border: none;
@@ -393,21 +425,15 @@ body.cyberquiz-modal-open {
     background: transparent;
     color: var(--cq-text);
     font: inherit;
-    text-align: left;
+    font-size: .9rem;
     text-decoration: none;
+    text-align: left;
     cursor: pointer;
 }
 
 .cq-share-menu a:hover,
 .cq-share-menu button:hover {
     background: var(--cq-hover);
-}
-
-@media (max-width: 480px) {
-
-    .cq-share-button {
-        padding: 8px 10px;
-    }
 }
 
 
