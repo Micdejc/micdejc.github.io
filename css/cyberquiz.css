@@ -135,7 +135,7 @@ body.cyberquiz-modal-open {
 
     max-height: none;
     overflow: visible;
-    padding: clamp(18px, 4vw, 36px);
+    padding: clamp(20px, 4vw, 25px);
     border: 1px solid var(--border);
     border-radius: 20px;
     background: var(--surface);
@@ -2368,7 +2368,7 @@ body.cyberquiz-modal-open {
     }
 
     .cyberquiz-root .cq-overview-stats span {
-        font-size: 0.60rem;
+        font-size: 0.62rem;
     }
 
     .cyberquiz-root .career-levels {
