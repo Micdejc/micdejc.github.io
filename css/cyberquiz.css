@@ -436,6 +436,24 @@ body.cyberquiz-modal-open {
     background: var(--cq-hover);
 }
 
+.cq-share-prompt {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.cq-share-prompt > span {
+    font-size: 0.88rem;
+    color: var(--cq-muted);
+}
+
+.cq-share-container {
+    position: relative;
+    flex-shrink: 0;
+}
 
 /* =========================================================
    6. CURRENT RANK AND EXPERIENCE PROGRESS
