@@ -1656,10 +1656,10 @@ export function initCyberQuiz() {
                                 : 'Strong work.'
                           } ${
                             rank().name
-                          } career directions: <strong>${careerDirections}</strong>.`
+                          } career progression: <strong>${careerDirections}</strong>.`
         
                         : `No completion bonus this time. Review the feedback and try another mission. 
-                        Suggested career directions: <strong>${careerDirections}</strong>.`;
+                        Suggested career progression: <strong>${careerDirections}</strong>.`;
     
         $('continue').innerHTML =
             rankCompleted
