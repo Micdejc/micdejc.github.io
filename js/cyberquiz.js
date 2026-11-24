@@ -115,7 +115,7 @@ export function initCyberQuiz() {
             {
                 role: 'generalist',
                 name: 'Cybersecurity Generalist',
-                title: 'Junior Cybersecurity Generalist',
+                title: 'Junior Cybersecurity Consultant',
                 description: 'Develop broad cybersecurity foundations across networking, operating systems, access management and security awareness.'
             }
         ]
@@ -192,7 +192,7 @@ export function initCyberQuiz() {
             {
                 role: 'generalist',
                 name: 'Cybersecurity Generalist',
-                title: 'Cybersecurity Analyst',
+                title: 'Cybersecurity Consultant',
                 description: 'Apply broad cybersecurity knowledge across vulnerability management, network security, identity and access management, risk awareness and security compliance.'
             }
         ]
@@ -271,7 +271,7 @@ export function initCyberQuiz() {
             {
                 role: 'generalist',
                 name: 'Cybersecurity Generalist',
-                title: 'Cybersecurity Generalist',
+                title: 'Senior Cybersecurity Consultant',
                 description: 'Independently investigate security issues, assess vulnerabilities, analyse threats, evaluate security controls and coordinate practical security improvements.'
             }
         ]
@@ -349,7 +349,7 @@ export function initCyberQuiz() {
             {
                 role: 'generalist',
                 name: 'Cybersecurity Generalist',
-                title: 'Senior Cybersecurity Generalist',
+                title: 'Lead Cybersecurity Consultant',
                 description: 'Integrate security capabilities across technical and organisational domains, evaluate complex risks and coordinate security initiatives.'
             }
         ]
