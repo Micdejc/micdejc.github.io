@@ -921,8 +921,8 @@ The game is integrated directly into the website through a responsive modal and 
 
 **CyberQuizzy** is an interactive cybersecurity quiz available on my personal website, developed by me, and designed to test cybersecurity knowledge, strengthen security awareness, and develop practical skills through engaging, scenario-based questions.
 
-## Six cybersecurity pathways
-- 🌐 **Cybersecurity Generalist:** Build broad cybersecurity knowledge across multiple domains.
+## Seven cybersecurity pathways
+- 🌐 **Cybersecurity Consultant:** Build broad cybersecurity knowledge and expertise across multiple domains.
 - 🛡️ **Security Operations (SOC):** Detect, investigate and respond to cyber threats.
 - 🎯 **Penetration Testing:** Identify vulnerabilities and assess security weaknesses.
 - ⚖️ **Governance, Risk & Compliance (GRC):** Manage security risks, governance and compliance.
@@ -941,6 +941,7 @@ The game is integrated directly into the website through a responsive modal and 
 ## Key Features
 
 - **Topic-based questions:** Explore phishing, password security, identity and access management, incident response, cloud security, AI security, and more.
+- **2,500 Unique Questions:** Access an extensive question bank covering a wide range of cybersecurity topics, career paths and difficulty levels.
 - **Explanations:** Learn why an answer is correct and reinforce key cybersecurity concepts.
 - **Hints:** Get guidance when you need help answering a question.
 - **Daily Challenge:** Put your knowledge to the test with a daily challenge.
