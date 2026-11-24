@@ -42,6 +42,37 @@
  * Answer-length balance: in each role-rank group of 50 the correct option
  * is the longest in about a quarter of questions and the shortest in about
  * a quarter, so no consistent length pattern identifies it.
+ * -----------------------------------------------------------------
+ * FOR CAREER_ROLE = 'generalist' (Within ids 1501-2500)
+ * ------------------------------------------------------------------
+ * Rank levels and number of questions:
+ * 0 = Associate     (200 questions)
+ * 1 = Professional  (200 questions)
+ * 2 = Practitioner  (200 questions)
+ * 3 = Architect     (200 questions)
+ * 4 = Expert        (200 questions)
+ * Total: 1000 questions
+ *
+ * Coverage: all five ranks cover 13 domains: awareness and social
+ * engineering, identity and access, endpoint and data protection,
+ * network and email security, cloud, application security and
+ * architecture, cryptography, incident response and resilience,
+ * monitoring and detection, GRC and privacy, AI (LLM) security,
+ * malware analysis and penetration testing.
+ *
+ * Question types: single-answer questions and "best answer" questions.
+ * 195 questions are marked BEST in q: two options are defensible and
+ * only one is the BEST choice for the scenario; the explanation (why)
+ * names the runner-up and says why it is weaker.
+ *
+ * Exhibits: 221 questions include an exhibit (emails, headers, logs,
+ * configurations, code, command output, tables and reports).
+ *
+ * Note: all 1000 questions have no duplicate question text, 1000 distinct topic labels.
+ *
+ * Correct-answer positions are balanced across A/B/C/D:
+ * A=250, B=250, C=250, D=250 overall, and 50 of each letter in every rank.
+ *
  */
 
 window.CYBERQUIZ_QUESTIONS = [
