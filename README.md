@@ -922,9 +922,9 @@ The game is integrated directly into the website through a responsive modal and 
 **CyberQuizzy** is an interactive cybersecurity quiz available on my personal website, developed by me, and designed to test cybersecurity knowledge, strengthen security awareness, and develop practical skills through engaging, scenario-based questions.
 
 ## Six cybersecurity pathways
-
-- 🛡️  **Security Operations (SOC):** Detect, investigate and respond to cyber threats.
-- 🎯  **Penetration Testing:** Identify vulnerabilities and assess security weaknesses.
+- 🌐 **Cybersecurity Generalist:** Build broad cybersecurity knowledge across multiple domains.
+- 🛡️ **Security Operations (SOC):** Detect, investigate and respond to cyber threats.
+- 🎯 **Penetration Testing:** Identify vulnerabilities and assess security weaknesses.
 - ⚖️ **Governance, Risk & Compliance (GRC):** Manage security risks, governance and compliance.
 - 🧑‍💻 **Security Engineering:** Design, implement and maintain secure systems.
 - ☁️ **Cloud Security:** Protect cloud infrastructure, applications and data.
