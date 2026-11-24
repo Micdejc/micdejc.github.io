@@ -28,6 +28,7 @@ export function initCyberQuiz() {
     // ========================================
     
     const CAREER_ROLES = [
+        'generalist',
         'soc',
         'pentest',
         'grc',
@@ -110,6 +111,12 @@ export function initCyberQuiz() {
                 name: 'Digital Forensics',
                 title: 'Junior Digital Forensics Analyst',
                 description: 'Develop foundational skills in digital evidence identification, preservation, acquisition and basic forensic examination.'
+            },
+            {
+                role: 'generalist',
+                name: 'Cybersecurity Generalist',
+                title: 'Junior Cybersecurity Generalist',
+                description: 'Develop broad cybersecurity foundations across networking, operating systems, access management and security awareness.'
             }
         ]
     },
@@ -181,6 +188,12 @@ export function initCyberQuiz() {
                 name: 'Digital Forensics',
                 title: 'Digital Forensics Analyst',
                 description: 'Conduct forensic examinations, analyse digital artefacts, investigate incidents and document findings using established forensic procedures.'
+            },
+            {
+                role: 'generalist',
+                name: 'Cybersecurity Generalist',
+                title: 'Cybersecurity Analyst',
+                description: 'Apply broad cybersecurity knowledge across vulnerability management, network security, identity and access management, risk awareness and security compliance.'
             }
         ]
     },
@@ -254,6 +267,12 @@ export function initCyberQuiz() {
                 name: 'Digital Forensics',
                 title: 'Senior Digital Forensics Analyst',
                 description: 'Lead complex forensic examinations, correlate evidence across multiple sources and reconstruct sophisticated cyber incidents.'
+            },
+            {
+                role: 'generalist',
+                name: 'Cybersecurity Generalist',
+                title: 'Cybersecurity Generalist',
+                description: 'Independently investigate security issues, assess vulnerabilities, analyse threats, evaluate security controls and coordinate practical security improvements.'
             }
         ]
     },
@@ -326,6 +345,12 @@ export function initCyberQuiz() {
                 name: 'Digital Forensics',
                 title: 'Digital Forensics Lead',
                 description: 'Lead forensic investigations, establish examination methodologies, oversee evidence handling and coordinate complex investigative activities.'
+            },
+            {
+                role: 'generalist',
+                name: 'Cybersecurity Generalist',
+                title: 'Senior Cybersecurity Generalist',
+                description: 'Integrate security capabilities across technical and organisational domains, evaluate complex risks and coordinate security initiatives.'
             }
         ]
     },
@@ -398,6 +423,12 @@ export function initCyberQuiz() {
                 name: 'Digital Forensics',
                 title: 'Principal Digital Forensics Investigator',
                 description: 'Define forensic investigation strategy, provide expert technical direction and advance organisational capabilities in complex digital investigations.'
+            },
+            {
+                role: 'generalist',
+                name: 'Cybersecurity Generalist',
+                title: 'Principal Cybersecurity Consultant',
+                description: 'Provide strategic cybersecurity direction, advise on enterprise-wide risks, establish security governance priorities and guide organisational security transformation.'
             }
         ]
     }
@@ -817,9 +848,12 @@ export function initCyberQuiz() {
         //$('rank-name').textContent = currentRank.name;
 
         const careerTitle = getCareerTitle(currentIndex, ROLE);
-
+        /*
         $('rank-name').textContent =
             `${currentRank.name}${careerTitle ? ` (${careerTitle})` : ''}`;
+        */
+        $('rank-name').textContent =
+            `${currentRank.name}${careerTitle && ROLE !== 'generalist' ? ` (${careerTitle})` : ''}`;
 
         // The rank symbol is included in index.html.
         $('rank-symbol').textContent = currentRank.icon;
@@ -1151,12 +1185,18 @@ export function initCyberQuiz() {
         $('question-view').classList.remove('hidden');
         $('result').classList.add('hidden');
         
-
+        /*
         $('mission-title').textContent =
             `${daily
                 ? 'DAILY CHALLENGE'
                 : RANKS[rankNumber].name.toUpperCase()
             } · ${ROLE.toUpperCase()} MISSION`;
+        */
+        $('mission-title').textContent =
+            `${daily
+                ? 'DAILY CHALLENGE'
+                : RANKS[rankNumber].name.toUpperCase()
+            }${ROLE === 'generalist' ? '' : ` · ${ROLE.toUpperCase()}`} MISSION`;
 
         renderQuestion();
 
