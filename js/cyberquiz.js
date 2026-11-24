@@ -2002,7 +2002,7 @@ export function initCyberQuiz() {
        ===================================================== */
 
         function startDailyChallenge() {
-            //console.log('[CyberQuizzy] Daily Challenge clicked');
+            console.log('[CyberQuizzy] Daily Challenge clicked');
         
             const today = new Date().toISOString().slice(0, 10);
         
@@ -2012,10 +2012,10 @@ export function initCyberQuiz() {
                 return;
             }
         
-            /*console.log('[CyberQuizzy] Starting mission', {
+            console.log('[CyberQuizzy] Starting mission', {
                 rank: rankIndex(),
                 questions: (window.CYBERQUIZ_QUESTIONS || []).length
-            });*/
+            });
 
             // Discard previous day's unfinished challenge.
             if (state.dailyStartedDate !== today) {
