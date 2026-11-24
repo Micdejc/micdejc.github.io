@@ -2259,7 +2259,7 @@ export function initCyberQuizShare() {
     // Page information
     const pageUrl = window.location.href;
     const pageTitle = 'CyberQuizzy - Your Cybersecurity Journey';
-    const shareText = 'Enjoying CyberQuizzy? Help us spread the word!';
+    const shareText = 'Enjoying CyberQuizzy? Help me spread the word!';
 
     const url = encodeURIComponent(pageUrl);
     const text = encodeURIComponent(shareText);
