@@ -134,7 +134,8 @@ body.cyberquiz-modal-open {
     min-width: 0;
 
     max-height: none;
-    overflow: visible;
+    /*overflow: visible;*/
+    overflow-y: auto;
     padding: clamp(20px, 4vw, 25px);
     border: 1px solid var(--border);
     border-radius: 20px;
@@ -2411,6 +2412,7 @@ body.cyberquiz-modal-open {
 
     .cyberquiz-root {
         padding: clamp(8px, 2vw, 12px);
+        max-height: 88vh;
     }
 
     .cyberquiz-modal .cyberquiz-dialog {
