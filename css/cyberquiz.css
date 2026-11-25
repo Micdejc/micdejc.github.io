@@ -203,7 +203,7 @@ body.cyberquiz-modal-open {
     align-items: center;
     gap: 16px;
 
-    /*margin: 0 34px 28px 0;*/
+    margin: 0 34px 28px 0;
 }
 
 .cyberquiz-root .cq-game-icon {
@@ -2435,7 +2435,7 @@ body.cyberquiz-modal-open {
 
     .cyberquiz-root .cq-header {
         gap: 5px;
-        /*margin: 0 30px 20px 0;*/
+        margin: 0 30px 20px 0;
     }
 
     .cyberquiz-root .cq-game-icon {
