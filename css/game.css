@@ -1160,7 +1160,8 @@ body.game-modal-open {
     .game-modal-content {
         padding: 20px;
 
-        max-height: 94vh;
+        /*max-height: 94vh;*/
+        max-height: 88vh;
 
         border-radius: 14px;
     }
