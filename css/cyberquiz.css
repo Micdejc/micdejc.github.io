@@ -2441,6 +2441,11 @@ body.cyberquiz-modal-open {
         font-size: 3.5rem;
     }
 
+    .cq-game-icon img {
+          width: 60px;
+          height: 60px;
+    }
+
     .cyberquiz-root .cq-header h1 {
         font-size: 2rem;
     }
