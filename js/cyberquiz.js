@@ -62,7 +62,7 @@ export function initCyberQuiz() {
             'Nope!',
             'Not quite there!',
             'Wrong pick!',
-            'Missed it!',
+            'Missed it!'
     ];
     
     
