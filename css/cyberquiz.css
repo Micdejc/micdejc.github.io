@@ -2433,7 +2433,7 @@ body.cyberquiz-modal-open {
 
     .cyberquiz-root .cq-header {
         gap: 10px;
-        margin: 0 30px 20px 0;
+        /*margin: 0 30px 20px 0;*/
     }
 
     .cyberquiz-root .cq-game-icon {
