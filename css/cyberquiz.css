@@ -211,6 +211,12 @@ body.cyberquiz-modal-open {
     line-height: 1;
 }
 
+.cq-game-icon img {
+    width: 25px;
+    height: 25px;
+    object-fit: contain;
+}
+
 .cyberquiz-root .cq-header h1 {
     margin: 0;
 
