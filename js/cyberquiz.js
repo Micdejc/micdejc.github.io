@@ -39,6 +39,32 @@ export function initCyberQuiz() {
 
     //const ROLE = CAREER_ROLES[0];
     //const ROLE = null;
+
+    const CORRECT_MESSAGES = [
+            'Correct!',
+            'Well done!',
+            'Excellent!',
+            'Brilliant!',
+            'Spot on!',
+            'Great job!',
+            'Fantastic!',
+            'Superb!',
+            'You got it!',
+            'Perfect!'
+    ];
+    const INCORRECT_MESSAGES = [
+            'Incorrect.',
+            'Not quite.',
+            'Not this time.',
+            'Not quite right!',
+            'That’s not it!',
+            'A miss this time!',
+            'Nope!',
+            'Not quite there!',
+            'Wrong pick!',
+            'Missed it!',
+    ];
+    
     
     // For each rank, we have the most common job titles that the data bank support.
     const RANKS = [
@@ -465,7 +491,7 @@ export function initCyberQuiz() {
         XPStreakLength: 5,
 
         //Extra XP awarded for daily challenges streak achieved 
-        dailyStreakLength: 5,
+        dailyStreakLength: 3,
         dailyStreakBonus: 50,
         //Number of questions per daily challenge
         dailyChallengeCount: 10,
@@ -1419,7 +1445,9 @@ export function initCyberQuiz() {
         if (correct) {
             sessionCorrect++;
             state.correct++;
-        
+            
+            const randomMessage = CORRECT_MESSAGES[Math.floor(Math.random() * CORRECT_MESSAGES.length)];
+            
             if (eligibleForRewards) {
                 state.streak++;
                 /*
@@ -1435,12 +1463,16 @@ export function initCyberQuiz() {
                     state.streak
                 );
 
+                const totalStreakReward =
+                    Math.floor(state.streak / PROGRESSION.streakLength) *
+                    PROGRESSION.streakBonus;
+                
                 // Notify every PROGRESSION.bestStreakLength streaks
                 if (
                     state.streak > 0 &&
                     state.streak % PROGRESSION.bestStreakLength === 0
                 ) {
-                    toast(`🔥 Streak milestone! ${state.streak} consecutive correct answers!`);
+                    toast(`🔥 Streak milestone! +${totalStreakReward} XP · ${state.streak} consecutive correct answers!`);
                 }
 
         
@@ -1454,20 +1486,33 @@ export function initCyberQuiz() {
         
                 state.xp += earned;
                 sessionXP += earned;
-        
+
+                /*
                 $('feedback').textContent =
                     `Correct! +${earned} XP · ${question.why}`;
+                */
+                $('feedback').textContent =
+                    `${randomMessage} +${earned} XP · ${question.why}`;
             } else {
+                /*
                 $('feedback').textContent =
                     `Correct! Practice only · No XP or streak rewards. ${question.why}`;
+                */
+                $('feedback').textContent =
+                    `${randomMessage} Practice only · No XP or streak rewards. ${question.why}`;
             }
         } else {
             if (eligibleForRewards) {
                 state.streak = 0;
             }
-        
+
+            const randomMessage = INCORRECT_MESSAGES[Math.floor(Math.random() * INCORRECT_MESSAGES.length)];
+            /*
             $('feedback').textContent =
                 `Incorrect. ${question.why}`;
+            */
+            $('feedback').textContent =
+                `${randomMessage} ${question.why}`;
         }
 
 
@@ -2104,6 +2149,7 @@ export function initCyberQuiz() {
         if (
             Number.isInteger(milestone) &&
             milestone > 0 &&
+            state.dailyStreak.count > 0 &&
             state.dailyStreak.count % milestone === 0
         ) {
             const reward = PROGRESSION.dailyStreakBonus;
@@ -2111,7 +2157,8 @@ export function initCyberQuiz() {
             if (Number.isFinite(reward) && reward > 0) {
                 state.xp += reward;
                 sessionXP += reward;
-                toast(`🎯 Daily streak milestone! ${state.dailyStreak.count} consecutive days completed!`);
+                const totalStreakReward = Math.floor(state.dailyStreak.count / milestone) * reward;
+                toast(`🎯 Daily streak milestone! +${totalStreakReward} XP · ${state.dailyStreak.count} consecutive days completed!`);
             }
         }
     }
