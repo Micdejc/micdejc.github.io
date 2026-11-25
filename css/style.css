@@ -443,8 +443,9 @@
         .utility-menu > button:hover,
         .utility-menu > button:focus-visible {
             background: var(--surface);
-            color: var(--text);
+            color: var(--primary);
             outline: none;
+            font-weight: 600;
         }
         
         /* Keep icons visually consistent */
