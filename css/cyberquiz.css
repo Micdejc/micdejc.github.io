@@ -676,9 +676,13 @@ body.cyberquiz-modal-open {
 /* Overall player statistics */
 
 .cyberquiz-root .cq-overview-stats {
+    /*
     display: flex;
     gap: clamp(125px, 5vw, 40px);
-
+    */
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    
     margin: 19px 2px 0;
     justify-content: center;
     text-align: center;
