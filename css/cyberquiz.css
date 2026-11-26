@@ -691,27 +691,6 @@ body.cyberquiz-modal-open {
     box-shadow: 0 3px 12px rgba(20, 35, 70, 0.035);
 }
 
-/* Main heading */
-
-.cyberquiz-root .cq-stats-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.cyberquiz-root .cq-stats-header h3 {
-    margin: 0;
-    font-size: 1.05rem;
-    font-weight: 750;
-    color: var(--text, #172033);
-}
-
-.cyberquiz-root .cq-stats-header p {
-    margin: 4px 0 0;
-    font-size: 0.8rem;
-    color: var(--muted);
-}
-
 /* Statistics sections */
 
 .cyberquiz-root .cq-stats-section {
@@ -2593,17 +2572,9 @@ body.cyberquiz-modal-open {
         border-radius: 14px;
     }
 
-    .cyberquiz-root .cq-stats-header h3 {
-        font-size: 0.98rem;
-    }
-
-    .cyberquiz-root .cq-stats-header p {
-        font-size: 0.74rem;
-    }
-
     .cyberquiz-root .cq-stats-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 9px;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 6px;
     }
 
     .cyberquiz-root .cq-stat-card {
