@@ -1857,9 +1857,9 @@ export function initCyberQuiz() {
             piece.style.height = `${6 + Math.random() * 10}px`;
     
             // Random falling duration.
-            //const duration = 1.8 + Math.random() * 1.5;
+            const duration = 1.8 + Math.random() * 1.5;
             // Random falling speed: 1.0–2.5 seconds.
-            const duration = 1.0 + Math.random() * 1.5;
+            //const duration = 1.0 + Math.random() * 1.5;
             piece.style.animationDuration = `${duration}s`;
     
             // Random starting delay: 0–0.5 seconds.
@@ -1883,7 +1883,8 @@ export function initCyberQuiz() {
             // Random colour.
             piece.style.background =
                 colours[Math.floor(Math.random() * colours.length)];
-    
+
+            /*
             // Random shape.
             const shape = Math.random();
     
@@ -1893,7 +1894,7 @@ export function initCyberQuiz() {
                 piece.style.width = '5px';
                 piece.style.height = '5px';
             }
-
+            */
             // Random particle size.
             //piece.style.width = `${4 + Math.random() * 5}px`;
             //piece.style.height = `${4 + Math.random() * 5}px`;
