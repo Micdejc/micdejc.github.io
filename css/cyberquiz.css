@@ -733,7 +733,7 @@ body.cyberquiz-modal-open {
     min-width: 0;
     padding: 17px 10px;
 
-    background: color-mix(in srgb, var(--primary) 20%, var(--surface));
+    background: color-mix(in srgb, var(--primary) 4%, var(--surface-alt));
     border: 1px solid var(--border);
     border-radius: 12px;
 
