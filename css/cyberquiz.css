@@ -700,8 +700,9 @@ body.cyberquiz-modal-open {
 }
 
 .cyberquiz-root .cq-stats-section + .cq-stats-section {
-    padding-top: 18px;
-    border-top: 1px solid var(--border);
+    padding-top: 0px;
+    /*padding-top: 18px;*/
+    /*border-top: 1px solid var(--border);*/
 }
 
 .cyberquiz-root .cq-stats-section-title {
