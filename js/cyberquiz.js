@@ -2391,8 +2391,8 @@ export function initCyberQuizShare() {
     if (!shareButton || !shareMenu || !copyButton) return;
 
     // Page information
-    //const pageUrl = window.location.href;
-    const pageUrl = `${window.location.origin}/#cyberquizzy`;
+    //const pageUrl = `${window.location.origin}/#cyberquizzy`;
+    const pageUrl = `${window.location.origin}/cyberquizzy.html`;
     const pageTitle = 'CyberQuizzy - Your Cybersecurity Journey';
     const shareText = 'Enjoying CyberQuizzy? Help me spread the word!';
 
