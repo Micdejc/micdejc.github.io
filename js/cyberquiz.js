@@ -1826,56 +1826,6 @@ export function initCyberQuiz() {
     /* =====================================================
        15.1 CONFETTI CELEBRATION
        ===================================================== */
-/*
-    function confetti() {
-        const host = $('confetti');
-        
-        if (!host) return;
-        
-        host.innerHTML = '';
-
-        const colours = [
-            '#27e6a2',
-            '#43d9ff',
-            '#ffc857',
-            '#ff6fa5',
-            '#8b9cff'
-        ];
-
-        for (let i = 0; i < 100; i++) {
-            const piece = document.createElement('i');
-
-            piece.className = 'confetti-piece';
-
-            // Keep the particles within the central 80% of the screen.
-            piece.style.left = 
-                `${10 + Math.random() * 80}%`;
-            
-            // Random falling speed: 1.0–2.5 seconds.
-            piece.style.animationDuration =
-                `${1.0 + Math.random() * 1.5}s`;
-
-            // Stagger particle starts: 0–0.5 seconds.
-            piece.style.animationDelay =
-                `${Math.random() * 0.5}s`;
-
-          
-            // Random particle size.
-            //piece.style.width = `${4 + Math.random() * 5}px`;
-            //piece.style.height = `${4 + Math.random() * 5}px`;
-
-            piece.style.background =
-                colours[Math.floor(Math.random() * colours.length)];
-
-            host.appendChild(piece);
-        }
-
-        setTimeout(() => {
-            host.innerHTML = '';
-        }, 2800);
-    }
-*/
-
 
     function confetti() {
         const host = $('confetti');
@@ -1907,13 +1857,15 @@ export function initCyberQuiz() {
             piece.style.height = `${6 + Math.random() * 10}px`;
     
             // Random falling duration.
-            const duration = 1.8 + Math.random() * 1.5;
+            //const duration = 1.8 + Math.random() * 1.5;
+            // Random falling speed: 1.0–2.5 seconds.
+            const duration = 1.0 + Math.random() * 1.5;
             piece.style.animationDuration = `${duration}s`;
     
-            // Random starting delay.
+            // Random starting delay: 0–0.5 seconds.
             const delay = Math.random() * 0.5;
             piece.style.animationDelay = `${delay}s`;
-    
+
             maxDuration = Math.max(maxDuration, duration + delay);
     
             // Random horizontal drift.
@@ -1941,13 +1893,23 @@ export function initCyberQuiz() {
                 piece.style.width = '5px';
                 piece.style.height = '5px';
             }
+
+            // Random particle size.
+            //piece.style.width = `${4 + Math.random() * 5}px`;
+            //piece.style.height = `${4 + Math.random() * 5}px`;
     
             host.appendChild(piece);
         }
-    
+
+        /*
+        setTimeout(() => {
+            host.innerHTML = '';
+        }, 2800);
+        */
         setTimeout(() => {
             host.innerHTML = '';
         }, (maxDuration + 0.2) * 1000);
+        
     }
 
 
