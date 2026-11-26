@@ -2254,7 +2254,7 @@ export function initCyberQuiz() {
 
 }
 
-
+/*
 export function initCyberQuizModal() {
     const modal = document.getElementById('cyberquizModal');
     const toggle = document.getElementById('cyberquizToggle');
@@ -2300,6 +2300,85 @@ export function initCyberQuizModal() {
             closeModal();
         }
     });
+}
+
+*/
+
+export function initCyberQuizModal() {
+    const modal = document.getElementById('cyberquizModal');
+    const toggle = document.getElementById('cyberquizToggle');
+    const close = document.getElementById('cyberquizClose');
+    const backdrop = document.getElementById('cyberquizBackdrop');
+    const dialog = modal?.querySelector('.cyberquiz-dialog');
+
+    if (!modal || !toggle || !close || !backdrop || !dialog) {
+        console.warn('CyberQuizzy modal elements were not found.');
+        return;
+    }
+
+    // Prevent duplicate event listeners.
+    if (modal.dataset.modalInitialised === 'true') return;
+    modal.dataset.modalInitialised = 'true';
+
+    const CYBERQUIZZY_HASH = '#cyberquizzy';
+
+    let previousFocus = null;
+
+    function openModal(updateUrl = true) {
+        // Avoid reopening an already open modal.
+        if (modal.classList.contains('is-open')) return;
+
+        previousFocus = document.activeElement;
+
+        modal.classList.add('is-open');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('cyberquiz-modal-open');
+
+        // Update the URL when opening CyberQuizzy.
+        if (updateUrl && window.location.hash !== CYBERQUIZZY_HASH) {
+            history.replaceState(null, '', CYBERQUIZZY_HASH);
+        }
+
+        dialog.focus();
+    }
+
+    function closeModal(updateUrl = true) {
+        if (!modal.classList.contains('is-open')) return;
+
+        modal.classList.remove('is-open');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('cyberquiz-modal-open');
+
+        // Always return to the root URL when closing.
+        if (updateUrl) {
+            history.replaceState(
+                null,
+                '',
+                window.location.pathname
+            );
+        }
+
+        previousFocus?.focus?.();
+    }
+
+    // Open CyberQuizzy when the button is clicked.
+    toggle.addEventListener('click', () => openModal());
+
+    // Close CyberQuizzy.
+    close.addEventListener('click', () => closeModal());
+    backdrop.addEventListener('click', () => closeModal());
+
+    // Close CyberQuizzy when Escape is pressed.
+    modal.addEventListener('keydown', event => {
+        if (event.key === 'Escape') {
+            closeModal();
+        }
+    });
+
+    // Automatically open CyberQuizzy when visiting its direct URL.
+    if (window.location.hash === CYBERQUIZZY_HASH) {
+        openModal(false);
+    }
 }
 
 
