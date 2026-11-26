@@ -1826,7 +1826,7 @@ export function initCyberQuiz() {
     /* =====================================================
        15.1 CONFETTI CELEBRATION
        ===================================================== */
-
+/*
     function confetti() {
         const host = $('confetti');
         
@@ -1851,17 +1851,6 @@ export function initCyberQuiz() {
             piece.style.left = 
                 `${10 + Math.random() * 80}%`;
             
-            /*
-            //Keep confetti within whole the screen
-            piece.style.left =
-                `${Math.random() * 100}%`;
-            */
-            
-            // Random falling speed between 2 to 3.5 seconds.
-            /*
-            piece.style.animationDuration =
-                `${2.0 + Math.random() * 1.5}s`;
-            */
             // Random falling speed: 1.0–2.5 seconds.
             piece.style.animationDuration =
                 `${1.0 + Math.random() * 1.5}s`;
@@ -1885,7 +1874,104 @@ export function initCyberQuiz() {
             host.innerHTML = '';
         }, 2800);
     }
+*/
 
+    
+    function confetti() {
+    
+        const host = $('confetti');
+    
+        if (!host) return;
+    
+        // Respect reduced-motion preferences.
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            host.innerHTML = '';
+            return;
+        }
+    
+        // Clear previous animation.
+        host.innerHTML = '';
+    
+        const colours = [
+            '#27e6a2',
+            '#43d9ff',
+            '#ffc857',
+            '#ff6fa5',
+            '#8b9cff'
+        ];
+    
+        const particleCount = 100;
+    
+        for (let i = 0; i < particleCount; i++) {
+    
+            const piece = document.createElement('i');
+    
+            piece.className = 'confetti-piece';
+    
+            // Random horizontal starting position.
+            piece.style.left = `${10 + Math.random() * 80}%`;
+    
+            // Random particle dimensions.
+            const width = 4 + Math.random() * 6;
+            const height = 6 + Math.random() * 10;
+    
+            piece.style.width = `${width}px`;
+            piece.style.height = `${height}px`;
+    
+            // Random particle shapes.
+            const shape = Math.random();
+    
+            if (shape < 0.65) {
+                // Rectangular confetti.
+                piece.style.borderRadius = '2px';
+            } else if (shape < 0.85) {
+                // Small squares.
+                piece.style.borderRadius = '1px';
+            } else {
+                // Circular confetti.
+                piece.style.borderRadius = '50%';
+            }
+    
+            // Random horizontal drift.
+            const drift = -15 + Math.random() * 30;
+    
+            piece.style.setProperty(
+                '--drift-x',
+                `${drift}vw`
+            );
+    
+            // Random rotation.
+            const rotation = Math.random() < 0.5 ? -1 : 1;
+    
+            piece.style.setProperty(
+                '--spin',
+                `${rotation * (360 + Math.random() * 720)}deg`
+            );
+    
+            // Random falling speed: 2.2–3.6 seconds.
+            piece.style.setProperty(
+                '--fall-duration',
+                `${2.2 + Math.random() * 1.4}s`
+            );
+    
+            // Stagger particle starts: 0–0.4 seconds.
+            piece.style.setProperty(
+                '--fall-delay',
+                `${Math.random() * 0.4}s`
+            );
+    
+            // Random colour.
+            piece.style.background =
+                colours[Math.floor(Math.random() * colours.length)];
+    
+            // Remove particles when their animation finishes.
+            piece.addEventListener('animationend', () => {
+                piece.remove();
+            }, { once: true });
+    
+            host.appendChild(piece);
+        }
+    }
     /* =====================================================
        15.2 CONFETTI EXPLOSION CELEBRATION
        ===================================================== */
