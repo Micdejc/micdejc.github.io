@@ -2350,22 +2350,19 @@ body.cyberquiz-modal-open {
     position: fixed;
     inset: 0;
     z-index: 10003;
-
     overflow: hidden;
     pointer-events: none;
 }
 
-/* Individual confetti particles */
+/* Individual particles */
 .cyberquiz-root .confetti-piece {
     position: absolute;
     top: -15%;
 
     display: block;
 
-    width: 8px;
-    height: 13px;
-
     opacity: 0;
+    border-radius: 2px;
 
     transform-origin: center;
 
@@ -2373,8 +2370,8 @@ body.cyberquiz-modal-open {
 
     animation:
         cqConfetti
-        var(--fall-duration, 3s)
-        cubic-bezier(0.22, 0.61, 0.36, 1)
+        var(--fall-duration, 4s)
+        linear
         var(--fall-delay, 0s)
         forwards;
 }
@@ -2544,33 +2541,32 @@ body.cyberquiz-modal-open {
     }
 }*/
 
-/* Falling, rotating and fading animation */
+/* Gentle falling motion */
 @keyframes cqConfetti {
 
     0% {
         opacity: 0;
-        transform: translate3d(0, 0, 0) rotate(0deg);
+        transform: translate3d(0, -5vh, 0) rotate(0deg);
     }
 
-    8% {
+    12% {
         opacity: 1;
     }
 
-    65% {
-        opacity: 1;
+    75% {
+        opacity: 0.9;
     }
 
     100% {
         opacity: 0;
         transform:
             translate3d(var(--drift-x, 0), 115vh, 0)
-            rotate(var(--spin, 720deg));
+            rotate(var(--spin, 360deg));
     }
 }
 
-/* Accessibility: reduced motion */
+/* Accessibility */
 @media (prefers-reduced-motion: reduce) {
-
     .cyberquiz-root .confetti-piece {
         animation: none !important;
         display: none;
