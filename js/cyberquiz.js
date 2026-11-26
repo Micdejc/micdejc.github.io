@@ -1910,61 +1910,39 @@ export function initCyberQuiz() {
     
             // Random horizontal starting position.
             piece.style.left = `${10 + Math.random() * 80}%`;
+            // Vary particle sizes.
+            piece.style.width = `${5 + Math.random() * 3}px`;
+            piece.style.height = `${8 + Math.random() * 5}px`;
     
-            // Random particle dimensions.
-            const width = 4 + Math.random() * 6;
-            const height = 6 + Math.random() * 10;
-    
-            piece.style.width = `${width}px`;
-            piece.style.height = `${height}px`;
-    
-            // Random particle shapes.
-            const shape = Math.random();
-    
-            if (shape < 0.65) {
-                // Rectangular confetti.
-                piece.style.borderRadius = '2px';
-            } else if (shape < 0.85) {
-                // Small squares.
-                piece.style.borderRadius = '1px';
-            } else {
-                // Circular confetti.
-                piece.style.borderRadius = '50%';
-            }
-    
-            // Random horizontal drift.
-            const drift = -15 + Math.random() * 30;
-    
+            // Gentle horizontal drift.
             piece.style.setProperty(
                 '--drift-x',
-                `${drift}vw`
+                `${-6 + Math.random() * 12}vw`
             );
     
-            // Random rotation.
-            const rotation = Math.random() < 0.5 ? -1 : 1;
-    
+            // Slow, gentle rotation.
             piece.style.setProperty(
                 '--spin',
-                `${rotation * (360 + Math.random() * 720)}deg`
+                `${180 + Math.random() * 180}deg`
             );
     
-            // Random falling speed: 2.2–3.6 seconds.
+            // Falling duration: 3.5–4.5 seconds.
             piece.style.setProperty(
                 '--fall-duration',
-                `${2.2 + Math.random() * 1.4}s`
+                `${3.5 + Math.random()}s`
             );
     
-            // Stagger particle starts: 0–0.4 seconds.
+            // Gradually stagger particle starts.
             piece.style.setProperty(
                 '--fall-delay',
-                `${Math.random() * 0.4}s`
+                `${Math.random() * 0.8}s`
             );
     
             // Random colour.
             piece.style.background =
                 colours[Math.floor(Math.random() * colours.length)];
     
-            // Remove particles when their animation finishes.
+            // Remove each particle after its animation.
             piece.addEventListener('animationend', () => {
                 piece.remove();
             }, { once: true });
