@@ -871,8 +871,11 @@ export function initCyberQuiz() {
           ? Math.round((state.correct / state.answered) * 100)
           : 0;
         
-        $('hero-correct').textContent = state.correct;
+        //$('hero-correct').textContent = state.correct;
 
+        $('hero-correct').textContent =
+            `${state.correct} <span id="hero-accuracy">(${accuracy}%)</span>`;
+        
         //$('hero-accuracy').textContent = `(${accuracy}%)`;
         
         $('hero-xp').textContent = state.bestXP;
