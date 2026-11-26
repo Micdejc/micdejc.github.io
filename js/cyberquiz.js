@@ -1883,12 +1883,6 @@ export function initCyberQuiz() {
     
         if (!host) return;
     
-        // Respect reduced-motion preferences.
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-            host.innerHTML = '';
-            return;
-        }
-    
         // Clear previous animation.
         host.innerHTML = '';
     
@@ -1971,6 +1965,10 @@ export function initCyberQuiz() {
     
             host.appendChild(piece);
         }
+
+        setTimeout(() => {
+            host.innerHTML = '';
+        }, 2800);
     }
     /* =====================================================
        15.2 CONFETTI EXPLOSION CELEBRATION
