@@ -866,7 +866,15 @@ export function initCyberQuiz() {
         $('dailystrk').textContent = state.dailyStreak.count;
 
         $('hero-done').textContent = state.answered;
+        
+        const accuracy = state.answered > 0
+          ? Math.round((state.correct / state.answered) * 100)
+          : 0;
+        
         $('hero-correct').textContent = state.correct;
+
+        $('hero-accuracy').textContent = `(${accuracy}%)`;
+        
         $('hero-xp').textContent = state.bestXP;
         $('hero-daily').textContent = state.bestDailyStreak;
         $('hero-streak').textContent = state.bestStreak;
