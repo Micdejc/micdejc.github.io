@@ -837,9 +837,6 @@ body.cyberquiz-modal-open {
     color: var(--text);
 }
 
-/* ========================================
-   CENTRALISED STATISTICS TOOLTIP
-======================================== */
 
 /* ========================================
    CENTRALISED STATISTICS TOOLTIP
@@ -876,6 +873,7 @@ body.cyberquiz-modal-open {
 
     overflow-wrap: anywhere;
     transform-origin: bottom;
+    animation: cq-tooltip-fade 0.2s ease;
 }
 
 /* Tooltip heading */
@@ -929,6 +927,17 @@ body.cyberquiz-modal-open {
 /* Hide tooltip */
 .cyberquiz-root .cq-stat-tooltip-message[hidden] {
     display: none !important;
+}
+
+@keyframes cq-tooltip-fade {
+    from {
+        opacity: 0;
+        transform: translateY(3px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 
