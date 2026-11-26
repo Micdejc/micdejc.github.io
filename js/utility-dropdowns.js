@@ -127,6 +127,7 @@
        }
    }
    
+
    function initialiseCyberQuizzyStatHelp() {
    
        // Prevent duplicate event listeners.
@@ -142,23 +143,24 @@
    
            // Clicking elsewhere closes the tooltip.
            if (!button) {
-               //closeCyberQuizzyStatHelp();
+               closeCyberQuizzyStatHelp();
                return;
            }
    
-           // Find the centralised message container.
+           // Find the centralised message elements.
            const message = document.getElementById(
                "cqStatTooltipMessage"
            );
    
-           if (!message) {
-              /*
-               console.error(
-                   "[CyberQuizzy] Centralised tooltip container not found."
-               );
-               */
-               return;
-           }
+           const title = document.getElementById(
+               "cqStatTooltipTitle"
+           );
+   
+           const text = document.getElementById(
+               "cqStatTooltipText"
+           );
+   
+           if (!message || !title || !text) return;
    
            // Check whether this button is already active.
            const wasExpanded =
@@ -170,35 +172,20 @@
            // Clicking the active button closes it.
            if (wasExpanded) return;
    
-           // Find the selected statistic.
-           const stat = button.closest(
-               ".cq-overview-stats > div"
-           );
-   
-           if (!stat) {
-              /*
-               console.error(
-                   "[CyberQuizzy] Statistic container not found."
-               );
-               */
-               return;
-           }
-          
-           // Get the explanation.
+           // Get the selected statistic's title and explanation.
+           const tooltipTitle = button.dataset.tooltipTitle;
            const tooltipText = button.dataset.tooltip;
    
-           if (!tooltipText || !tooltipText.trim()) {
-               /*
-               console.error(
-                   "[CyberQuizzy] Tooltip text is missing."
-               );
-               */
-               return;
-           }
-           
+           if (
+               !tooltipTitle?.trim() ||
+               !tooltipText?.trim()
+           ) return;
+   
+           // Update the shared tooltip zone.
+           title.textContent = tooltipTitle;
+           text.textContent = tooltipText;
    
            // Display the centralised message.
-           message.textContent = tooltipText;
            message.hidden = false;
    
            // Activate the selected button.
