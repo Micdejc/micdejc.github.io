@@ -677,7 +677,7 @@ body.cyberquiz-modal-open {
 
 .cyberquiz-root .cq-overview-stats {
     display: flex;
-    gap: clamp(150px, 5vw, 48px);
+    gap: clamp(125px, 5vw, 40px);
 
     margin: 19px 2px 0;
     justify-content: center;
