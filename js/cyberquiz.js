@@ -1876,20 +1876,12 @@ export function initCyberQuiz() {
     }
 */
 
-    
+
     function confetti() {
-    
         const host = $('confetti');
     
         if (!host) return;
-
-        // Respect reduced-motion preferences.
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-            host.innerHTML = '';
-            return;
-        }
     
-        // Clear previous animation.
         host.innerHTML = '';
     
         const colours = [
@@ -1900,57 +1892,65 @@ export function initCyberQuiz() {
             '#8b9cff'
         ];
     
-        const particleCount = 100;
+        let maxDuration = 0;
     
-        for (let i = 0; i < particleCount; i++) {
-    
+        for (let i = 0; i < 100; i++) {
             const piece = document.createElement('i');
     
             piece.className = 'confetti-piece';
     
-            // Random horizontal starting position.
+            // Random horizontal position.
             piece.style.left = `${10 + Math.random() * 80}%`;
-            // Vary particle sizes.
-            piece.style.width = `${5 + Math.random() * 3}px`;
-            piece.style.height = `${8 + Math.random() * 5}px`;
     
-            // Gentle horizontal drift.
+            // Random particle size.
+            piece.style.width = `${4 + Math.random() * 6}px`;
+            piece.style.height = `${6 + Math.random() * 10}px`;
+    
+            // Random falling duration.
+            const duration = 1.8 + Math.random() * 1.5;
+            piece.style.animationDuration = `${duration}s`;
+    
+            // Random starting delay.
+            const delay = Math.random() * 0.5;
+            piece.style.animationDelay = `${delay}s`;
+    
+            maxDuration = Math.max(maxDuration, duration + delay);
+    
+            // Random horizontal drift.
             piece.style.setProperty(
-                '--drift-x',
-                `${-6 + Math.random() * 12}vw`
+                '--drift',
+                `${-35 + Math.random() * 70}px`
             );
     
-            // Slow, gentle rotation.
+            // Random rotation.
             piece.style.setProperty(
-                '--spin',
-                `${180 + Math.random() * 180}deg`
-            );
-    
-            // Falling duration: 3.5–4.5 seconds.
-            piece.style.setProperty(
-                '--fall-duration',
-                `${3.5 + Math.random()}s`
-            );
-    
-            // Gradually stagger particle starts.
-            piece.style.setProperty(
-                '--fall-delay',
-                `${Math.random() * 0.8}s`
+                '--rotation',
+                `${360 + Math.random() * 720}deg`
             );
     
             // Random colour.
             piece.style.background =
                 colours[Math.floor(Math.random() * colours.length)];
     
-            // Remove each particle after its animation.
-            piece.addEventListener('animationend', () => {
-                piece.remove();
-            }, { once: true });
+            // Random shape.
+            const shape = Math.random();
+    
+            if (shape < 0.25) {
+                piece.style.borderRadius = '50%';
+            } else if (shape < 0.5) {
+                piece.style.width = '5px';
+                piece.style.height = '5px';
+            }
     
             host.appendChild(piece);
         }
-
+    
+        setTimeout(() => {
+            host.innerHTML = '';
+        }, (maxDuration + 0.2) * 1000);
     }
+
+
     /* =====================================================
        15.2 CONFETTI EXPLOSION CELEBRATION
        ===================================================== */
