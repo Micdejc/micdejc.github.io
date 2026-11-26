@@ -394,7 +394,19 @@
         class="cq-stat-tooltip-message"
         role="status"
         aria-live="polite"
+        aria-atomic="true"
         hidden>
+    
+        <strong
+            id="cqStatTooltipTitle"
+            class="cq-stat-tooltip-title">
+        </strong>
+    
+        <span
+            id="cqStatTooltipText"
+            class="cq-stat-tooltip-text">
+        </span>
+    
     </div>
     <!-- Performance Overview -->
     <div class="cq-stats-section">
@@ -417,6 +429,7 @@
                             type="button"
                             aria-label="About Attempts"
                             aria-expanded="false"
+                            data-tooltip-title="Attempts"
                             data-tooltip="The total number of questions you have attempted across all missions and Daily Challenges.">?</button>
                 </span>
             </div>
@@ -437,6 +450,7 @@
                             type="button"
                             aria-label="About Correct"
                             aria-expanded="false"
+                            data-tooltip-title="Correct Answers"
                             data-tooltip="The total number of questions you have answered correctly across all missions and Daily Challenges.">?</button>
                 </span>
             </div>
@@ -456,6 +470,7 @@
                             type="button"
                             aria-label="About Accuracy"
                             aria-expanded="false"
+                            data-tooltip-title="Accuracy"
                             data-tooltip="The overall accuracy rate across all your missions and Daily Challenges.">?</button>
                 </span>
             </div>
@@ -481,6 +496,7 @@
                             type="button"
                             aria-label="About Best XP"
                             aria-expanded="false"
+                            data-tooltip-title="Best XP"
                             data-tooltip="The highest total of experience points you earned across all missions and Daily Challenges, including bonus rewards.">?</button>
                 </span>
             </div>
@@ -498,6 +514,7 @@
                             type="button"
                             aria-label="About Best streak"
                             aria-expanded="false"
+                            data-tooltip-title="Best streak"
                             data-tooltip="The longest consecutive correct-answer streak you achieved across quiz attempts.">?</button>
                 </span>
             </div>
@@ -521,6 +538,7 @@
                             type="button"
                             aria-label="About Best daily"
                             aria-expanded="false"
+                            data-tooltip-title="Best daily"
                             data-tooltip="The longest streak of consecutive days you achieved when completing a Daily Challenge.">?</button>
                 </span>
             </div>
