@@ -2325,7 +2325,7 @@ body.cyberquiz-modal-open {
     }
 }
 
-
+/*
 .cyberquiz-root .cq-confetti {
     position: fixed;
     inset: 0;
@@ -2335,16 +2335,49 @@ body.cyberquiz-modal-open {
     pointer-events: none;
 }
 
+
 .cyberquiz-root .confetti-piece {
     position: absolute;
-    /*top: -12px;*/
     top: -15%;
 
     width: 8px;
     height: 13px;
-
-    /*animation: cqConfetti 3s ease-in forwards;*/
     animation: cqConfetti 2.3s ease-in forwards;
+}
+*/
+
+.cyberquiz-root .cq-confetti {
+    position: fixed;
+    inset: 0;
+    z-index: 10003;
+
+    overflow: hidden;
+    pointer-events: none;
+    contain: layout paint;
+}
+
+/* Individual confetti particles */
+.cyberquiz-root .confetti-piece {
+    position: absolute;
+    top: -15%;
+
+    display: block;
+
+    width: 8px;
+    height: 13px;
+
+    opacity: 0;
+
+    transform-origin: center;
+
+    will-change: transform, opacity;
+
+    animation:
+        cqConfetti
+        var(--fall-duration, 3s)
+        cubic-bezier(0.22, 0.61, 0.36, 1)
+        var(--fall-delay, 0s)
+        forwards;
 }
 
 .cyberquiz-root .confetti-rocket {
@@ -2503,12 +2536,45 @@ body.cyberquiz-modal-open {
         transform: translateY(0);
     }
 }
-
+/*
 @keyframes cqConfetti {
     to {
         /*transform: translateY(105vh) rotate(600deg);*/
         transform: translateY(120vh) rotate(600deg);
         opacity: 0;
+    }
+}*/
+
+/* Falling, rotating and fading animation */
+@keyframes cqConfetti {
+
+    0% {
+        opacity: 0;
+        transform: translate3d(0, 0, 0) rotate(0deg);
+    }
+
+    8% {
+        opacity: 1;
+    }
+
+    65% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        transform:
+            translate3d(var(--drift-x, 0), 115vh, 0)
+            rotate(var(--spin, 720deg));
+    }
+}
+
+/* Accessibility: reduced motion */
+@media (prefers-reduced-motion: reduce) {
+
+    .cyberquiz-root .confetti-piece {
+        animation: none !important;
+        display: none;
     }
 }
 
