@@ -114,6 +114,15 @@
            "cqStatTooltipMessage"
        );
    
+       const title = document.getElementById(
+           "cqStatTooltipTitle"
+       );
+   
+       const text = document.getElementById(
+           "cqStatTooltipText"
+       );
+   
+       // Reset all tooltip buttons.
        document.querySelectorAll(
            ".cyberquiz-root .cq-tooltip-trigger"
        ).forEach((button) => {
@@ -121,9 +130,17 @@
            button.setAttribute("aria-expanded", "false");
        });
    
+       // Hide and clear the centralised tooltip.
        if (message) {
            message.hidden = true;
-           message.textContent = "";
+       }
+   
+       if (title) {
+           title.textContent = "";
+       }
+   
+       if (text) {
+           text.textContent = "";
        }
    }
    
