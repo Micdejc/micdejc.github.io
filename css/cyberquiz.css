@@ -841,17 +841,30 @@ body.cyberquiz-modal-open {
    CENTRALISED STATISTICS TOOLTIP
 ======================================== */
 
+/* ========================================
+   CENTRALISED STATISTICS TOOLTIP
+======================================== */
+
 .cyberquiz-root .cq-stat-tooltip-message {
     position: relative;
     z-index: 10;
 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+
     width: fit-content;
-    /*max-width: min(480px, 90%);*/
+    max-width: min(480px, 90%);
     margin: 12px auto 0;
     padding: 10px 14px;
 
-    /*background: var(--surface);*/
-    background: color-mix( in srgb, var(--primary) 7%, var(--surface) );
+    background: color-mix(
+        in srgb,
+        var(--primary) 7%,
+        var(--surface)
+    );
+
     color: var(--text);
 
     border: 1px solid var(--border);
@@ -863,8 +876,20 @@ body.cyberquiz-modal-open {
 
     overflow-wrap: anywhere;
     transform-origin: bottom;
+}
 
-    /*box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);*/
+/* Tooltip heading */
+.cyberquiz-root .cq-stat-tooltip-title {
+    font-size: 0.82rem;
+    font-weight: 750;
+    color: var(--text);
+}
+
+/* Tooltip description */
+.cyberquiz-root .cq-stat-tooltip-text {
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: var(--muted);
 }
 
 /* Downward-pointing arrow fill */
@@ -879,23 +904,25 @@ body.cyberquiz-modal-open {
 
     border-width: 7px 7px 0;
     border-style: solid;
-    border-color: color-mix(
-        in srgb,
-        var(--primary) 7%,
-        var(--surface)
-    ) transparent transparent;;
+
+    border-color:
+        color-mix(in srgb, var(--primary) 7%, var(--surface))
+        transparent transparent;
 }
 
 /* Downward-pointing arrow outline */
 .cyberquiz-root .cq-stat-tooltip-message::before {
     content: "";
     position: absolute;
+
     top: 100%;
     left: 50%;
+
     transform: translateX(-50%);
 
     border-width: 8px 8px 0;
     border-style: solid;
+
     border-color: var(--border) transparent transparent;
 }
 
@@ -2534,6 +2561,11 @@ body.cyberquiz-modal-open {
     .cyberquiz-root .cq-stats-section-title {
         font-size: 0.73rem;
     }
+
+    .cyberquiz-root .cq-stat-tooltip-message {
+        max-width: 95%;
+        padding: 9px 12px;
+    }
 }
 
 /* =========================================================
@@ -2670,6 +2702,20 @@ body.cyberquiz-modal-open {
     .cyberquiz-root .cq-stat-icon {
     width: 22px;
     height: 22px;
+    }
+
+    .cyberquiz-root .cq-stat-tooltip-message {
+        margin-top: 10px;
+        padding: 9px 11px;
+        font-size: 0.78rem;
+    }
+
+    .cyberquiz-root .cq-stat-tooltip-title {
+        font-size: 0.77rem;
+    }
+
+    .cyberquiz-root .cq-stat-tooltip-text {
+        font-size: 0.74rem;
     }
 
     .cyberquiz-root .career-levels {
