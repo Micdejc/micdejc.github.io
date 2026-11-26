@@ -873,7 +873,7 @@ export function initCyberQuiz() {
         
         //$('hero-correct').textContent = state.correct;
 
-        $('hero-correct').textContent =
+        $('hero-correct').innerHTML =
             `${state.correct} <span id="hero-accuracy">(${accuracy}%)</span>`;
         
         //$('hero-accuracy').textContent = `(${accuracy}%)`;
