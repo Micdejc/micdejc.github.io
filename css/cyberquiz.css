@@ -683,8 +683,8 @@ body.cyberquiz-modal-open {
     margin: 24px 2px 0;
     padding: 22px;
 
-    background: var(--surface, #ffffff);
-    border: 1px solid var(--border, #e0e5ef);
+    background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: 18px;
 
     text-align: left;
@@ -701,7 +701,7 @@ body.cyberquiz-modal-open {
 
 .cyberquiz-root .cq-stats-section + .cq-stats-section {
     padding-top: 18px;
-    border-top: 1px solid var(--border, #e0e5ef);
+    border-top: 1px solid var(--border);
 }
 
 .cyberquiz-root .cq-stats-section-title {
@@ -733,8 +733,8 @@ body.cyberquiz-modal-open {
     min-width: 0;
     padding: 17px 10px;
 
-    background: var(--stat-bg, #f3f6fc);
-    border: 1px solid var(--border, #e5e9f1);
+    background: color-mix(in srgb, var(--primary) 20%, var(--surface));
+    border: 1px solid var(--border);
     border-radius: 12px;
 
     text-align: center;
@@ -744,7 +744,7 @@ body.cyberquiz-modal-open {
     font-size: 1.4rem;
     line-height: 1.2;
     font-weight: 750;
-    color: var(--text, #172033);
+    color: var(--text);
     overflow-wrap: anywhere;
 }
 
@@ -763,7 +763,7 @@ body.cyberquiz-modal-open {
 /* Personal bests: subtle visual distinction */
 
 .cyberquiz-root .cq-personal-best {
-    background: var(--surface, #ffffff);
+    background: var(--surface);
 }
 
 /* Statistics SVG icons */
@@ -932,7 +932,7 @@ body.cyberquiz-modal-open {
 @keyframes cq-tooltip-fade {
     from {
         opacity: 0;
-        transform: translateY(3px);
+        transform: translateY(10px);
     }
     to {
         opacity: 1;
