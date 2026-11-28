@@ -19,6 +19,8 @@ const newsFiles = [
     "bashfam-series.html",
     "cyber-drama-series.html",
     "cyberquizzy.html",
+    "startupbootcamp-mentor.html",
+    "head-talks-analyst.html"
 ];
 
 const NEWS_PER_PAGE = 5;
